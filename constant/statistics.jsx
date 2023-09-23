@@ -18,7 +18,7 @@ const Statistics = () => {
           <Text style={{ fontSize: 20, fontWeight: 700, color: "#1F1F1F" }}>
             지출 통계
           </Text>
-          <Text style={{ fontSize: 20, fontWeight: 700, color: "#5C5C5C" }}>
+          <Text style={{ fontSize: 20, fontWeight: 700, color: "#C1C1C1" }}>
             지출 내역
           </Text>
         </View>
@@ -34,7 +34,7 @@ const Statistics = () => {
             style={{
               width: "50%",
               height: 1.5,
-              backgroundColor: "#5C5C5C",
+              backgroundColor: "#C1C1C1",
             }}
           />
         </View>

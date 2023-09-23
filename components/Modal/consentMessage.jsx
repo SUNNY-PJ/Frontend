@@ -56,6 +56,8 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: "#1F1F1F",
     backgroundColor: "#fff",
+    borderBottomWidth: 3,
+    borderRightWidth: 3,
   },
   closeButtonContainer: {
     alignSelf: "flex-end",

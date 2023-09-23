@@ -4,6 +4,7 @@ import { TouchableOpacity, Text, View } from "react-native";
 const LargeBtnBasic = ({ text, onClick }) => {
   return (
     <TouchableOpacity
+      activeOpacity={0.6}
       style={{
         paddingVertical: 12,
         paddingHorizontal: 0,
