@@ -46,6 +46,8 @@ const Login = ({ navigation }) => {
         style={{
           marginTop: 75,
           alignSelf: "center",
+          width: 120,
+          height: 170,
         }}
       />
       <Text
