@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,8 +7,27 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import Message from "../components/Modal/message";
+import RefuseMessage from "../components/Modal/refuseMessage";
+import ConsentMessage from "../components/Modal/consentMessage";
 
 function FriendsList({ navigation }) {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isOpenRefuseMessage, setIsOpenRefuseMessage] = useState(false);
+  const [isOpenConsentMessage, setIsOpenConsentMessage] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const openRefuseMessage = () => {
+    setIsOpenRefuseMessage(!isOpenRefuseMessage);
+  };
+
+  const openConsentMessage = () => {
+    setIsOpenConsentMessage(!isOpenConsentMessage);
+  };
+
   return (
     <View
       style={{
@@ -82,13 +101,13 @@ function FriendsList({ navigation }) {
               </Text>
             </View>
             <View style={{ flexDirection: "row", gap: 16 }}>
-              <TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.6} onPress={toggleModal}>
                 <Image
                   source={require("../assets/messageBlack.png")}
                   style={styles.icon}
                 />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.6} onPress={openRefuseMessage}>
                 <Image
                   source={require("../assets/VersusIcon.png")}
                   style={styles.icon}
@@ -186,7 +205,10 @@ function FriendsList({ navigation }) {
                   style={styles.icon}
                 />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={openConsentMessage}
+              >
                 <Image
                   source={require("../assets/VersusIconRed.png")}
                   style={styles.icon}
@@ -462,6 +484,15 @@ function FriendsList({ navigation }) {
           </View>
         </View>
       </ScrollView>
+      <Message isVisible={isModalVisible} toggleModal={toggleModal} />
+      <RefuseMessage
+        isOpenRefuseMessage={isOpenRefuseMessage}
+        openRefuseMessage={openRefuseMessage}
+      />
+      <ConsentMessage
+        isOpenConsentMessage={isOpenConsentMessage}
+        openConsentMessage={openConsentMessage}
+      />
     </View>
   );
 }
