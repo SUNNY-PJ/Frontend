@@ -37,7 +37,10 @@ const RefuseMessage = ({ isOpenRefuseMessage, openRefuseMessage }) => {
               source={require("../../assets/refuse.png")}
               style={{ width: 120, height: 120, alignSelf: "center" }}
             />
-            <Text style={styles.title}>수연님이 대결 신청을 거절했어요</Text>
+            <Text style={styles.title}>
+              수연님이 대결 신청을{" "}
+              <Text style={{ color: "#D32F2F" }}>거절</Text>했어요
+            </Text>
           </View>
         </View>
       </View>

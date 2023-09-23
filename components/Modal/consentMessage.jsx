@@ -37,7 +37,11 @@ const ConsentMessage = ({ isOpenConsentMessage, openConsentMessage }) => {
               source={require("../../assets/consent.png")}
               style={{ width: 120, height: 120, alignSelf: "center" }}
             />
-            <Text style={styles.title}>수연님이 대결 신청을 승낙했어요</Text>
+            <Text style={styles.title}>
+              수연님이 대결 신청을{" "}
+              <Text style={{ color: "#007560" }}>승낙</Text>
+              했어요
+            </Text>
           </View>
         </View>
       </View>
