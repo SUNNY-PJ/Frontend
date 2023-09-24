@@ -1,43 +1,11 @@
 import { useState } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Bar from "../components/Bar";
 
 const Statistics = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            gap: 116,
-            marginTop: 25,
-            marginBottom: 12,
-          }}
-        >
-          <Text style={{ fontSize: 20, fontWeight: 700, color: "#1F1F1F" }}>
-            지출 통계
-          </Text>
-          <Text style={{ fontSize: 20, fontWeight: 700, color: "#C1C1C1" }}>
-            지출 내역
-          </Text>
-        </View>
-        <View style={{ flexDirection: "row", marginBottom: 12 }}>
-          <View
-            style={{
-              width: "50%",
-              height: 2,
-              backgroundColor: "#1F1F1F",
-            }}
-          />
-          <View
-            style={{
-              width: "50%",
-              height: 1.5,
-              backgroundColor: "#C1C1C1",
-            }}
-          />
-        </View>
         <Image source={require("../assets/shirt.png")} style={styles.image} />
         <Bar text={"의류"} />
         <View
@@ -79,10 +47,7 @@ const styles = StyleSheet.create({
     minHeight: "100%",
   },
   contentContainer: {
-    // marginTop: 25,
     marginBottom: 40,
-    // paddingLeft: 28,
-    // paddingRight: 27,
   },
   image: {
     width: 32,
