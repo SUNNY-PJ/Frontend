@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { View, Text, TouchableOpacity } from "react-native";
+import { ACCESS_TOKEN } from "./AccessToken";
 
 const ApiTest = () => {
   const proxyUrl = "http://43.201.176.22:8080";
@@ -12,9 +13,6 @@ const ApiTest = () => {
   console.log("url_get:::", url_get);
   console.log("url_post:::", url_post);
 
-  const AccessToken =
-    "eyJyZWdEYXRlIjoxNjk1NTQ0NTM3NDY0LCJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJlbWFpbCI6ImNvbW1ldG9pX3llb25pQG5hdmVyLmNvbSIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwic3ViIjoiYWNjZXNzVG9rZW4iLCJleHAiOjE2OTU1NDYzMzd9.BmPyvQYt5yfvn1l00I11AOihA0yPG2qIpQHjuGcz-dbiZNblG7KQCAxUzk_FG7El3leNLWI5Htp2cJyM9EYXtQ";
-
   const fetchData = async () => {
     console.log("get 실행");
     try {
@@ -22,7 +20,7 @@ const ApiTest = () => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           //   "Access-Control-Allow-Origin": "*",
-          Authorization: `Bearer ${AccessToken}`,
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
         },
       });
       console.log("데이터:", response.data);
@@ -51,7 +49,7 @@ const ApiTest = () => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           //   "Access-Control-Allow-Origin": "*",
-          Authorization: `Bearer ${AccessToken}`,
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
         },
       });
 
