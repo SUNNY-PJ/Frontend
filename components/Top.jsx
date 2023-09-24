@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import * as Notifications from "expo-notifications";
 
 const Top = ({ navigation }) => {
   const [progress, setProgress] = useState(50);
@@ -30,10 +31,24 @@ const Top = ({ navigation }) => {
           </Text>
         </View>
         <Image source={require("../assets/setting.png")} style={styles.icon} />
-        <Image
-          source={require("../assets/notification.png")}
-          style={styles.icon}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            Notifications.scheduleNotificationAsync({
+              content: {
+                title: "알림 테스트입니다.",
+                body: "Change sides!",
+              },
+              trigger: {
+                seconds: 10,
+              },
+            });
+          }}
+        >
+          <Image
+            source={require("../assets/notification.png")}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );
