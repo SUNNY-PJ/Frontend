@@ -18,8 +18,10 @@ const Kakao = () => {
       const response = await axios.get(
         "http://43.201.176.22:8080/oauth2/authorize/kakao?redirect_uri=http://43.201.176.22:8080/auth/token"
       );
+      console.log("데이터:", response);
+      console.log("데이터1111:", response.data.data);
 
-      console.log("데이터:", response.data);
+      // console.log("데이터:", response.data);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -28,71 +30,6 @@ const Kakao = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  // function KakaoLoginWebView(data) {
-  //   console.log("카카오 로그인 시도");
-  //   const exp = "code=";
-  //   var condition = data.indexOf(exp);
-  //   if (condition != -1) {
-  //     var authorize_code = data.substring(condition + exp.length);
-  //     console.log("코드:::", authorize_code);
-  //     requestToken(authorize_code);
-  //   }
-  // }
-
-  // const requestToken = async (authorize_code) => {
-  //   var AccessToken = "none";
-  //   axios({
-  //     method: "post",
-  //     url: "https://kauth.kakao.com/oauth/token",
-  //     params: {
-  //       grant_type: "authorization_code",
-  //       client_id: REST_API_KEY,
-  //       redirect_uri: REDIRECT_URI,
-  //       code: authorize_code,
-  //     },
-  //   })
-  //     .then((response) => {
-  //       AccessToken = response.data.access_token;
-  //       console.log("토큰:::", AccessToken);
-  //       requestUserInfo(AccessToken);
-  //       // storeData(AccessToken);
-  //     })
-  //     .catch(function (error) {
-  //       console.log("error", error);
-  //     });
-  //   navigation.navigate("FriendsList", { screen: "FriendsList" });
-  // };
-
-  // function requestUserInfo(AccessToken) {
-  //   axios({
-  //     method: "GET",
-  //     url: "https://kapi.kakao.com/v2/user/me",
-  //     headers: {
-  //       Authorization: `Bearer ${AccessToken}`,
-  //     },
-  //   })
-  //     .then((response) => {
-  //       // var user_emil = response.data.kakao_account.email;
-  //       // var user_range = response.data.kakao_account.age_range;
-  //       // var user_gender = response.data.kakao_account.gender;
-  //       // console.log("user_emil", user_emil);
-  //       // console.log("user_range", user_range);
-  //       // console.log("user_gender", user_gender);
-  //       console.log(response.data);
-  //     })
-  //     .catch(function (error) {
-  //       console.log("error", error);
-  //     });
-  //   return;
-  // }
-
-  // const storeData = async (returnValue) => {
-  //   try {
-  //     await AsyncStorage.setItem("userAccessToken", returnValue);
-  //     console.log(userAccessToken);
-  //   } catch (error) {}
-  // };
 
   return (
     <View style={Styles.container}>
