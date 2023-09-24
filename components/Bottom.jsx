@@ -40,7 +40,10 @@ const Bottom = () => {
                 style={{ width: 64, height: 80 }}
               />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={1}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => navigation.navigate("Community")}
+            >
               <Image
                 source={require("../assets/rightBtn.png")}
                 style={{ width: 64, height: 80 }}
@@ -67,7 +70,7 @@ const Bottom = () => {
         <TouchableOpacity
           activeOpacity={1}
           style={styles.menuItem}
-          onPress={() => navigation.navigate("Statistics")}
+          onPress={() => navigation.navigate("ApiTest")}
         >
           <Image
             source={require("../assets/message.png")}
