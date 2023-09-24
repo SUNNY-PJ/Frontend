@@ -7,8 +7,16 @@ import {
   Image,
   Alert,
 } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 
 const SiginUp = ({ navigation }) => {
+  useFocusEffect(
+    React.useCallback(() => {
+      navigation.setOptions({ headerShown: false });
+    }, [])
+  );
+  const showBottom = false;
+
   const [isInputFocused, setInputFocused] = useState(false);
 
   return (
@@ -24,6 +32,8 @@ const SiginUp = ({ navigation }) => {
         style={{
           marginTop: 75,
           alignSelf: "center",
+          width: 120,
+          height: 170,
         }}
       />
       <Text
@@ -78,8 +88,8 @@ const SiginUp = ({ navigation }) => {
           height: 48,
           alignSelf: "center",
           marginTop: 278,
-          alignItems: "center", // 버튼 내부의 텍스트를 가운데 정렬
-          justifyContent: "center", // 버튼 내부의 텍스트를 가운데 정렬
+          alignItems: "center",
+          justifyContent: "center",
         }}
         onPress={() => {
           // 버튼 클릭 시 실행할 함수
