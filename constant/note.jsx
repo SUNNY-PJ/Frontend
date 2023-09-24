@@ -1,7 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-import Bottom from "../components/Bottom";
-import Top from "../components/Top";
 import Input from "../components/Input/input";
 import LargeBtnBasic from "../components/Btn/largeBtnBasic";
 

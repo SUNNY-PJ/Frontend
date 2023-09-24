@@ -13,27 +13,10 @@ import { useNavigation } from "@react-navigation/native";
 // const Bottom = ({ navigation }) => {
 const Bottom = () => {
   const navigation = useNavigation();
-  const [leftIconVisible, setLeftIconVisible] = useState(false);
-  const [rightIconVisible, setRightIconVisible] = useState(false);
+  const [iconVisible, setIconVisible] = useState(false);
 
   const toggleIcons = () => {
-    setLeftIconVisible(!leftIconVisible);
-    setRightIconVisible(!rightIconVisible);
-  };
-
-  const rotateRightIcon = () => {
-    Animated.sequence([
-      Animated.timing(rightIconRotation, {
-        toValue: 45,
-        duration: 300,
-        useNativeDriver: false,
-      }),
-      Animated.timing(rightIconRotation, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: false,
-      }),
-    ]).start();
+    setIconVisible(!iconVisible);
   };
 
   return (
@@ -46,24 +29,24 @@ const Bottom = () => {
           alignSelf: "center",
         }}
       >
-        {leftIconVisible && (
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => navigation.navigate("Login")}
-          >
-            <Image
-              source={require("../assets/lefrBtn.png")}
-              style={{ width: 64, height: 80 }}
-            />
-          </TouchableOpacity>
-        )}
-        {rightIconVisible && (
-          <TouchableOpacity activeOpacity={1}>
-            <Image
-              source={require("../assets/rightBtn.png")}
-              style={{ width: 64, height: 80 }}
-            />
-          </TouchableOpacity>
+        {iconVisible && (
+          <View style={{ flexDirection: "row", gap: 40 }}>
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => navigation.navigate("Login")}
+            >
+              <Image
+                source={require("../assets/lefrBtn.png")}
+                style={{ width: 64, height: 80 }}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={1}>
+              <Image
+                source={require("../assets/rightBtn.png")}
+                style={{ width: 64, height: 80 }}
+              />
+            </TouchableOpacity>
+          </View>
         )}
       </View>
       <ImageBackground
@@ -116,7 +99,7 @@ const Bottom = () => {
         <TouchableOpacity
           activeOpacity={1}
           style={styles.menuItem}
-          onPress={() => navigation.navigate("FriendsList")} // 마이페이지 스크린으로 이동
+          onPress={() => navigation.navigate("Spending")}
         >
           <Image
             source={require("../assets/profile.png")}
