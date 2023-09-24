@@ -13,6 +13,7 @@ import Kakao from "./constant/kakao";
 import Spending from "./constant/spending";
 import History from "./constant/history";
 import ApiTest from "./constant/apiTest";
+import Community from "./constant/Community/community";
 import * as Notifications from "expo-notifications";
 
 const Stack = createNativeStackNavigator();
@@ -121,6 +122,7 @@ export default class App extends React.Component {
           <Stack.Screen name="Spending" component={Spending} />
           <Stack.Screen name="SiginUp" component={SiginUp} />
           <Stack.Screen name="ApiTest" component={ApiTest} />
+          <Stack.Screen name="Community" component={Community} />
         </Stack.Navigator>
         <Bottom />
       </NavigationContainer>
