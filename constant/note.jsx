@@ -1,9 +1,92 @@
-import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import React, { useEffect } from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Input from "../components/Input/input";
 import LargeBtnBasic from "../components/Btn/largeBtnBasic";
+import axios from "axios";
+import { ACCESS_TOKEN } from "./AccessToken";
 
 function Note({ navigation }) {
+  const proxyUrl = "http://43.201.176.22:8080";
+  const endpoint = "/api​/v1​/compettion ";
+
+  const inputURL = "/api/v1/compettion";
+  const cleanedURL = inputURL.replace(/[\u200B]/g, "");
+
+  const url = proxyUrl + cleanedURL;
+  console.log("url:::", url);
+
+  // const fetchData = async () => {
+  //   console.log("api 실행");
+  //   try {
+  //     const response = await axios.get(url, {
+  //       headers: {
+  //         "Content-Type": "application/json; charset=utf-8",
+  //         Authorization: `Bearer ${AccessToken}`,
+  //       },
+  //     });
+  //     console.log("데이터:", response.data);
+  //   } catch (error) {
+  //     console.error("에러:", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+        },
+      });
+      console.log("url:::", url);
+
+      console.log("데이터:", response.data);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  const postData = async () => {
+    console.log("post 실행");
+    try {
+      const bodyData = {
+        compensation: "string",
+        end_date: "2023-09-24",
+        friends_id: 2,
+        message: "string",
+        price: 0,
+        start_date: "2023-09-24",
+      };
+
+      const response = await axios.post(url, {
+        bodyData,
+        // JSON.stringify(bodyData),
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          // "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+        },
+      });
+      console.log("url:::::::", url);
+      console.log(response);
+      //   const data = await response.json();
+      console.log("데이터:", response.data);
+      console.log("error ::", response.data.error);
+      console.log("error status::", response.data.status);
+      console.log("error message::", response.data.message);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  const handlePostApiTestStart = () => {
+    postData();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -55,7 +138,9 @@ function Note({ navigation }) {
         <Text style={styles.label}>언제 쓰셨나요?</Text>
         <Input placeholder={"지출 일자"} />
         <View style={styles.buttonContainer}>
-          <LargeBtnBasic text={"등록하기"} onClick={() => {}} />
+          {/* <TouchableOpacity onPress={handlePostApiTestStart}> */}
+          <LargeBtnBasic text={"등록하기"} onClick={handlePostApiTestStart} />
+          {/* </TouchableOpacity> */}
         </View>
       </View>
     </View>
