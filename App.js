@@ -8,12 +8,12 @@ import Statistics from "./constant/statistics";
 import Top from "./components/Top";
 import Bottom from "./components/Bottom";
 import Login from "./constant/Login";
+import SiginUp from "./constant/SiginUp";
 import Kakao from "./constant/kakao";
 import Spending from "./constant/spending";
 import History from "./constant/history";
 
 const Stack = createNativeStackNavigator();
-// Stack object를 반환함. { Screen, Navigator }로 구성됨.
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
     <NavigationContainer>
       {/* <Top /> */}
       <Stack.Navigator
-        initialRouteName="Note"
+        // initialRouteName="Note"
         screenOptions={{
           header: (props) => <Top {...props} />,
         }}
@@ -30,9 +30,18 @@ function App() {
         <Stack.Screen name="Note" component={Note} />
         <Stack.Screen name="Statistics" component={Statistics} />
         <Stack.Screen name="History" component={History} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Kakao" component={Kakao} />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Kakao"
+          component={Kakao}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="Spending" component={Spending} />
+        <Stack.Screen name="SiginUp" component={SiginUp} />
       </Stack.Navigator>
       <Bottom />
     </NavigationContainer>
