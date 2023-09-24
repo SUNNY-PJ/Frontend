@@ -22,7 +22,7 @@
       },
       "versionCode": 25,
       "permissions": ["CAMERA", "NOTIFICATIONS"],
-      "package": "com.taejin.inout_webview",
+      "package": "com.sunny.inout_webview",
       "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json"
     },
