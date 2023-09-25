@@ -6,10 +6,12 @@ import { ACCESS_TOKEN } from "./AccessToken";
 const ApiTest = () => {
   const proxyUrl = "http://43.201.176.22:8080";
   const getUrl = "/api/v1/friends";
-  const postUrl = "​/consumption";
+  const postUrl = "/api/v1/compettion/accept";
+
+  const cleanedURL = postUrl.replace(/[\u200B]/g, "");
 
   const url_get = proxyUrl + getUrl;
-  const url_post = proxyUrl + postUrl;
+  const url_post = proxyUrl + cleanedURL;
   console.log("url_get:::", url_get);
   console.log("url_post:::", url_post);
 
@@ -33,22 +35,16 @@ const ApiTest = () => {
     console.log("post 실행");
     try {
       const bodyData = {
-        // contents: "contents test 입니다",
-        // title: "title test 입니다",
-        // type: "type test 입니다",
-        date_field: "2023-09-24",
-        money: 0,
-        name: "string",
-        place: "string",
+        approve: "Y",
+        competition_id: 1,
       };
 
-      const response = await axios.post(url_post, {
-        bodyData,
-        // : JSON.stringify(bodyData),
-        method: "POST",
+      console.log(bodyData);
+
+      const response = await axios.post(url_post, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          //   "Access-Control-Allow-Origin": "*",
+          // "Access-Control-Allow-Origin": "*",
           Authorization: `Bearer ${ACCESS_TOKEN}`,
         },
       });
@@ -56,9 +52,8 @@ const ApiTest = () => {
       console.log(response);
       //   const data = await response.json();
       console.log("데이터:", response.data);
-      console.log("error ::", response.data.error);
-      console.log("error status::", response.data.status);
-      console.log("error message::", response.data.message);
+      console.log(" status::", response.data.status);
+      console.log(" message::", response.data.message);
     } catch (error) {
       console.error("에러:", error);
     }

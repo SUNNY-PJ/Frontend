@@ -61,10 +61,7 @@ function Note({ navigation }) {
         start_date: "2023-09-24",
       };
 
-      const response = await axios.post(url, {
-        bodyData,
-        // JSON.stringify(bodyData),
-        method: "POST",
+      const response = await axios.post(url, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           // "Access-Control-Allow-Origin": "*",
@@ -75,9 +72,8 @@ function Note({ navigation }) {
       console.log(response);
       //   const data = await response.json();
       console.log("데이터:", response.data);
-      console.log("error ::", response.data.error);
-      console.log("error status::", response.data.status);
-      console.log("error message::", response.data.message);
+      console.log("status::", response.data.status);
+      console.log("message::", response.data.message);
     } catch (error) {
       console.error("에러:", error);
     }
