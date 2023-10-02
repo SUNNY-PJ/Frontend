@@ -8,9 +8,9 @@ const Bar = ({ text, path }) => {
 
   return (
     <View style={styles.container}>
-      {/* <Image source={{ uri: path }} style={styles.image} /> */}
-      <Text style={styles.text}>{text}</Text>
+      <Text style={styles.text}>{text}원</Text>
       <View style={styles.progressContainer}>
+        {/* <Image source={{ uri: path }} style={styles.image} />*/}
         <View style={styles.progressBar}>
           <View
             style={[
@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     marginTop: 12,
-    marginBottom: 12,
+    // marginBottom: 12,
     alignItems: "center",
-    paddingLeft: 28,
-    paddingRight: 27,
+    // paddingLeft: 28,
+    // paddingRight: 27,
   },
   image: {
     width: 32,
@@ -42,15 +42,15 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   text: {
-    color: "#1F1F1F",
-    fontSize: 20,
+    color: "#5C5C5C",
+    fontSize: 15,
     fontWeight: "700",
-    alignSelf: "center",
+    alignSelf: "flex-end",
   },
   progressContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 16,
+    marginTop: 8,
   },
   progressBar: {
     position: "relative",
