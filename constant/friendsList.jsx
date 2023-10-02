@@ -10,11 +10,15 @@ import {
 import Message from "../components/Modal/message";
 import RefuseMessage from "../components/Modal/refuseMessage";
 import ConsentMessage from "../components/Modal/consentMessage";
+import WinnerModal from "../components/Modal/winnerModal";
+import LoserModal from "../components/Modal/loserModal";
 
 function FriendsList({ navigation }) {
   const [isModalVisible, setModalVisible] = useState(false);
   const [isOpenRefuseMessage, setIsOpenRefuseMessage] = useState(false);
   const [isOpenConsentMessage, setIsOpenConsentMessage] = useState(false);
+  const [isOpenWinnerModal, setIsOpenWinnerModal] = useState(false);
+  const [isOpenLoserModal, setIsOpenLoserModal] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -26,6 +30,14 @@ function FriendsList({ navigation }) {
 
   const openConsentMessage = () => {
     setIsOpenConsentMessage(!isOpenConsentMessage);
+  };
+
+  const openWinnerModal = () => {
+    setIsOpenWinnerModal(!isOpenWinnerModal);
+  };
+
+  const openLoserModal = () => {
+    setIsOpenLoserModal(!isOpenLoserModal);
   };
 
   return (
@@ -146,17 +158,17 @@ function FriendsList({ navigation }) {
                   alignSelf: "center",
                 }}
               >
-                친구1
+                친구2
               </Text>
             </View>
             <View style={{ flexDirection: "row", gap: 16 }}>
-              <TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.6} onPress={openWinnerModal}>
                 <Image
                   source={require("../assets/messageBlack.png")}
                   style={styles.icon}
                 />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.6} onPress={openLoserModal}>
                 <Image
                   source={require("../assets/VersusIcon.png")}
                   style={styles.icon}
@@ -318,7 +330,7 @@ function FriendsList({ navigation }) {
                 alignSelf: "center",
               }}
             >
-              친구1
+              친구2
             </Text>
           </View>
           <View style={{ flexDirection: "row", gap: 16 }}>
@@ -492,6 +504,14 @@ function FriendsList({ navigation }) {
       <ConsentMessage
         isOpenConsentMessage={isOpenConsentMessage}
         openConsentMessage={openConsentMessage}
+      />
+      <WinnerModal
+        isOpenWinnerModal={isOpenWinnerModal}
+        openWinnerModal={openWinnerModal}
+      />
+      <LoserModal
+        isOpenLoserModal={isOpenLoserModal}
+        openLoserModal={openLoserModal}
       />
     </View>
   );
