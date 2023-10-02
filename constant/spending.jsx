@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: "row",
-    marginBottom: 12,
+    // marginBottom: 12,
   },
   tabBarLine: {
     flex: 1,
