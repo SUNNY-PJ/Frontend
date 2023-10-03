@@ -20,7 +20,7 @@ const Board = () => {
             justifyContent: "space-between",
             paddingLeft: 16,
             paddingRight: 24,
-            marginTop: 5,
+            marginTop: 17,
             marginBottom: 18,
           }}
         >
