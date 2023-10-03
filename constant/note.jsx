@@ -1,9 +1,18 @@
-import React, { useEffect } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ImageBackground,
+} from "react-native";
 import Input from "../components/Input/input";
 import LargeBtnBasic from "../components/Btn/largeBtnBasic";
 import axios from "axios";
 import { ACCESS_TOKEN } from "./AccessToken";
+import Notice from "../components/Modal/notice";
+import LoserModal from "../components/Modal/loserModal";
 
 function Note({ navigation }) {
   const proxyUrl = "http://43.201.176.22:8080";
@@ -14,6 +23,12 @@ function Note({ navigation }) {
 
   const url = proxyUrl + cleanedURL;
   console.log("url:::", url);
+
+  const [isOpenNoticeMsg, setIsOpenNoticeMsg] = useState(false);
+
+  const openNoticeMsg = () => {
+    setIsOpenNoticeMsg(!isOpenNoticeMsg);
+  };
 
   // const fetchData = async () => {
   //   console.log("api 실행");
@@ -89,15 +104,21 @@ function Note({ navigation }) {
         <Text style={styles.headerText}>지출 내역 추가</Text>
         <Text style={styles.label}>어떤 이름으로 기록할까요?</Text>
         <Input placeholder={"지출 내용"} />
+        <View>
+          {isOpenNoticeMsg && <Notice openNoticeMsg={openNoticeMsg} />}
+        </View>
         <View style={styles.labelContainer}>
           <Text style={styles.label}>어디에 쓰셨나요?</Text>
-          <View style={styles.noticeContainer}>
-            <Image
-              source={require("../assets/notice.png")}
-              style={styles.noticeIcon}
-            />
-            <Text style={styles.noticeText}>구분 기준</Text>
-          </View>
+          <TouchableOpacity activeOpacity={1} onPress={openNoticeMsg}>
+            {/* <TouchableOpacity activeOpacity={0.6} onPress={openLoserModal}> */}
+            <View style={styles.noticeContainer}>
+              <Image
+                source={require("../assets/notice.png")}
+                style={styles.noticeIcon}
+              />
+              <Text style={styles.noticeText}>구분 기준</Text>
+            </View>
+          </TouchableOpacity>
         </View>
         <View style={{ flexDirection: "row", gap: 16 }}>
           <View style={styles.radioContainer}>
@@ -172,11 +193,12 @@ const styles = StyleSheet.create({
   labelContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
+    // marginBottom: 8,
   },
   noticeContainer: {
     flexDirection: "row",
     alignSelf: "flex-end",
+    top: 17,
   },
   noticeIcon: {
     width: 16,
