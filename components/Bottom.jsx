@@ -70,7 +70,7 @@ const Bottom = () => {
         <TouchableOpacity
           activeOpacity={1}
           style={styles.menuItem}
-          onPress={() => navigation.navigate("ApiTest")}
+          onPress={() => navigation.navigate("SiginUp")}
         >
           <Image
             source={require("../assets/message.png")}
@@ -85,7 +85,7 @@ const Bottom = () => {
         >
           <Image
             source={require("../assets/bottomIcon.png")}
-            style={{ width: 64, height: 64, top: -50 }}
+            style={{ width: 64, height: 64, top: -40, left: 5 }}
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -118,7 +118,7 @@ const Bottom = () => {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    bottom: 0,
+    bottom: -10,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
@@ -127,15 +127,17 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   menuItem: {
-    flex: 1,
+    // flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: 20,
   },
   menuText: {
     fontSize: 10,
     fontWeight: "500",
     color: "#1F1F1F",
     textAlign: "center",
+    marginTop: 10,
   },
   icon: {
     height: 24,
