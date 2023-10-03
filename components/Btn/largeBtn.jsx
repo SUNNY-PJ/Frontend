@@ -24,7 +24,9 @@ const LargeBtn = ({ text, onClick, backgroundColor }) => {
       }}
       onPress={onClick}
     >
-      <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>{text}</Text>
+      <Text style={{ color: "#1F1F1F ", fontSize: 20, fontWeight: 700 }}>
+        {text}
+      </Text>
     </TouchableOpacity>
   );
 };

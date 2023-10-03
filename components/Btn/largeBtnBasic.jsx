@@ -10,7 +10,7 @@ const LargeBtnBasic = ({ text, onClick }) => {
         paddingHorizontal: 0,
         borderRadius: 8,
         borderWidth: 1.5,
-        borderColor: "#1F1F1F",
+        borderColor: "#C1C1C1",
         backgroundColor: "white",
         shadowColor: "#1F1F1F",
         shadowOffset: { width: 1.5, height: 1.5 },
@@ -25,7 +25,9 @@ const LargeBtnBasic = ({ text, onClick }) => {
       }}
       onPress={onClick}
     >
-      <Text style={{ color: "#1F1F1F", fontWeight: "bold" }}>{text}</Text>
+      <Text style={{ color: "#5C5C5C", fontSize: 20, fontWeight: 700 }}>
+        {text}
+      </Text>
     </TouchableOpacity>
   );
 };
