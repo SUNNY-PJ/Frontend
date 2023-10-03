@@ -8,6 +8,7 @@ import {
   Alert,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import LargeBtnBasic from "../components/Btn/largeBtnBasic";
 
 const SiginUp = ({ navigation }) => {
   useFocusEffect(
@@ -72,36 +73,12 @@ const SiginUp = ({ navigation }) => {
           fontWeight: 500,
           color: "#1F1F1F",
           textAlign: "center",
+          marginBottom: 278,
         }}
       >
         * 2~10자 이내, 특수문자 및 숫자 사용 가능, 이모지 사용 불가
       </Text>
-      <TouchableOpacity
-        activeOpacity={0.6}
-        style={{
-          paddingVertical: 12,
-          paddingHorizontal: 0,
-          borderRadius: 8,
-          borderWidth: 1.5,
-          borderColor: "#C1C1C1",
-          backgroundColor: "white",
-          width: 335,
-          // height: 48,
-          paddingBottom: 11,
-          paddingTop: 12,
-          alignSelf: "center",
-          marginTop: 278,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        onPress={() => {
-          // 버튼 클릭 시 실행할 함수
-        }}
-      >
-        <Text style={{ color: "#5C5C5C", fontSize: 20, fontWeight: 700 }}>
-          시작하기
-        </Text>
-      </TouchableOpacity>
+      <LargeBtnBasic text={"시작하기"} />
     </View>
   );
 };
