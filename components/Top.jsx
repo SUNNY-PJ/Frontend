@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 24,
     borderWidth: 1.5,
     borderColor: "#1F1F1F",
+    borderTopColor: "#fff",
     backgroundColor: "#FFF",
   },
   progressContainer: {

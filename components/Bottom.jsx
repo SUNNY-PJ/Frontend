@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Image,
@@ -15,9 +15,23 @@ const Bottom = () => {
   const navigation = useNavigation();
   const [iconVisible, setIconVisible] = useState(false);
 
-  const toggleIcons = () => {
+  const [selectedIcon, setSelectedIcon] = useState("Note");
+
+  const toggleIcons = (iconName) => {
+    if (selectedIcon !== iconName) {
+      setSelectedIcon(iconName);
+    }
+  };
+
+  const handleMainIcon = () => {
     setIconVisible(!iconVisible);
   };
+
+  useEffect(() => {
+    if (!selectedIcon) {
+      setSelectedIcon("Note");
+    }
+  }, []);
 
   return (
     <View>
@@ -58,8 +72,14 @@ const Bottom = () => {
       >
         <TouchableOpacity
           activeOpacity={1}
-          style={styles.menuItem}
-          onPress={() => navigation.navigate("Note")}
+          style={[
+            styles.menuItem,
+            selectedIcon === "Note" && styles.selectedIconContainer,
+          ]}
+          onPress={() => {
+            toggleIcons("Note");
+            navigation.navigate("Note");
+          }}
         >
           <Image
             source={require("../assets/community.png")}
@@ -69,8 +89,14 @@ const Bottom = () => {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={1}
-          style={styles.menuItem}
-          onPress={() => navigation.navigate("SiginUp")}
+          style={[
+            styles.menuItem,
+            selectedIcon === "SiginUp" && styles.selectedIconContainer,
+          ]}
+          onPress={() => {
+            toggleIcons("SiginUp");
+            navigation.navigate("SiginUp");
+          }}
         >
           <Image
             source={require("../assets/message.png")}
@@ -81,7 +107,7 @@ const Bottom = () => {
         <TouchableOpacity
           activeOpacity={1}
           style={styles.menuItem}
-          onPress={toggleIcons}
+          onPress={handleMainIcon}
         >
           <Image
             source={require("../assets/bottomIcon.png")}
@@ -90,8 +116,14 @@ const Bottom = () => {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={1}
-          style={styles.menuItem}
-          onPress={() => navigation.navigate("FriendsList")}
+          style={[
+            styles.menuItem,
+            selectedIcon === "FriendsList" && styles.selectedIconContainer,
+          ]}
+          onPress={() => {
+            toggleIcons("FriendsList");
+            navigation.navigate("FriendsList");
+          }}
         >
           <Image
             source={require("../assets/friends.png")}
@@ -101,8 +133,14 @@ const Bottom = () => {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={1}
-          style={styles.menuItem}
-          onPress={() => navigation.navigate("Spending")}
+          style={[
+            styles.menuItem,
+            selectedIcon === "Spending" && styles.selectedIconContainer,
+          ]}
+          onPress={() => {
+            toggleIcons("Spending");
+            navigation.navigate("Spending");
+          }}
         >
           <Image
             source={require("../assets/profile.png")}
@@ -119,6 +157,7 @@ const styles = StyleSheet.create({
   container: {
     position: "absolute",
     bottom: -10,
+    // right: 1,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
@@ -142,6 +181,11 @@ const styles = StyleSheet.create({
   icon: {
     height: 24,
     width: 24,
+  },
+  selectedIconContainer: {
+    backgroundColor: "#6ADCA3",
+    // padding: 6,
+    borderRadius: 8,
   },
 });
 
