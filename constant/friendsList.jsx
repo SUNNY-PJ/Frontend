@@ -12,6 +12,7 @@ import RefuseMessage from "../components/Modal/refuseMessage";
 import ConsentMessage from "../components/Modal/consentMessage";
 import WinnerModal from "../components/Modal/winnerModal";
 import LoserModal from "../components/Modal/loserModal";
+import MatchMsg from "../components/Modal/matchMsg";
 
 function FriendsList({ navigation }) {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -19,6 +20,7 @@ function FriendsList({ navigation }) {
   const [isOpenConsentMessage, setIsOpenConsentMessage] = useState(false);
   const [isOpenWinnerModal, setIsOpenWinnerModal] = useState(false);
   const [isOpenLoserModal, setIsOpenLoserModal] = useState(false);
+  const [isMatchModal, setIsMatchModal] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -38,6 +40,10 @@ function FriendsList({ navigation }) {
 
   const openLoserModal = () => {
     setIsOpenLoserModal(!isOpenLoserModal);
+  };
+
+  const matchModal = () => {
+    setIsMatchModal(!isMatchModal);
   };
 
   return (
@@ -207,11 +213,11 @@ function FriendsList({ navigation }) {
                   alignSelf: "center",
                 }}
               >
-                친구1
+                친구3
               </Text>
             </View>
             <View style={{ flexDirection: "row", gap: 16 }}>
-              <TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.6} onPress={matchModal}>
                 <Image
                   source={require("../assets/messageBlack.png")}
                   style={styles.icon}
@@ -513,6 +519,7 @@ function FriendsList({ navigation }) {
         isOpenLoserModal={isOpenLoserModal}
         openLoserModal={openLoserModal}
       />
+      <MatchMsg isMatchModal={isMatchModal} matchModal={matchModal} />
     </View>
   );
 }
