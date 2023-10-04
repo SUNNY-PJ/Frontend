@@ -16,6 +16,15 @@ const MatchMsg = ({ isMatchModal, matchModal }) => {
       style={styles.modal} // 모달 스타일 추가
     >
       <View style={styles.modalContainer}>
+        <View
+          style={{
+            width: 64,
+            height: 4,
+            backgroundColor: "#C1C1C1",
+            alignSelf: "center",
+            borderRadius: 12,
+          }}
+        />
         <Text
           style={{
             fontSize: 22,
@@ -23,7 +32,7 @@ const MatchMsg = ({ isMatchModal, matchModal }) => {
             color: "#1F1F1F",
             alignSelf: "center",
             marginBottom: 24,
-            marginTop: 20,
+            marginTop: 24,
           }}
         >
           민규에게 대결 신청
@@ -63,6 +72,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 28,
+    paddingTop: 20,
   },
   modalContent: {
     marginBottom: 24,
