@@ -55,12 +55,11 @@ const SiginUp = ({ navigation }) => {
           height: 48,
           padding: "14px 11px",
           paddingLeft: 10,
-          borderWidth: isInputFocused ? 1.5 : 1.5, // 테두리 두께 설정
+          borderWidth: isInputFocused ? 1.5 : 1.5,
           borderColor: isInputFocused ? "#FFA851" : "#C1C1C1",
           borderRadius: 8,
           marginTop: 16,
           alignSelf: "center",
-          outline: "none",
           color: "black",
         }}
         onFocus={() => setInputFocused(true)}
