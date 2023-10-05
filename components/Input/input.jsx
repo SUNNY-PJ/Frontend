@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 
-const Input = ({ placeholder }) => {
+const Input = ({ placeholder, onInputChange }) => {
   const [isInputFocused, setInputFocused] = useState(false);
   const [inputValue, setInputValue] = useState(""); // 입력값 상태 추가
 
@@ -15,6 +15,7 @@ const Input = ({ placeholder }) => {
 
   const handleInputChange = (text) => {
     setInputValue(text);
+    onInputChange(text);
   };
 
   return (
