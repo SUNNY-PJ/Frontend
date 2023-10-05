@@ -37,9 +37,9 @@ const CalendarComponent = () => {
           selectedColor: "deeppink",
           customStyles: {
             container: {
-              borderWidth: 2, // 테두리 두께
-              borderColor: "orange", // 테두리 색상
-              borderRadius: 8, // 테두리 모서리 둥글기
+              borderWidth: 2,
+              borderColor: "orange",
+              borderRadius: 8,
             },
           },
         },
