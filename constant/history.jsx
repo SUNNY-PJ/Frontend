@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     minHeight: "100%",
   },
   contentContainer: {
-    // marginTop: 25,
-    marginBottom: 40,
+    marginTop: 24,
+    // marginBottom: 40,
     // paddingLeft: 28,
     // paddingRight: 27,
   },
