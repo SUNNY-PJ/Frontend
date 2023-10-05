@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import Bar from "../components/Bar";
 import Statistics from "./statistics";
 import History from "./history";
 
