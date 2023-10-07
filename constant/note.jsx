@@ -1,96 +1,73 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ImageBackground,
-} from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Input from "../components/Input/input";
 import LargeBtnBasic from "../components/Btn/largeBtnBasic";
 import axios from "axios";
-import { ACCESS_TOKEN } from "./AccessToken";
 import Notice from "../components/Modal/notice";
-import LoserModal from "../components/Modal/loserModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Note({ navigation }) {
   const proxyUrl = "http://43.201.176.22:8080";
-  const endpoint = "/api​/v1​/compettion ";
-
-  const inputURL = "/api/v1/compettion";
+  const inputURL = "/consumption";
   const cleanedURL = inputURL.replace(/[\u200B]/g, "");
 
   const url = proxyUrl + cleanedURL;
   console.log("url:::", url);
 
   const [isOpenNoticeMsg, setIsOpenNoticeMsg] = useState(false);
+  const [date, setDate] = useState("");
+  const [place, setPlace] = useState("");
+  const [name, setName] = useState("");
+  const [money, setMoney] = useState("");
+
+  console.log(date);
+  console.log(name);
+  console.log(money);
+
+  const handleDateChange = (text) => {
+    setDate(text);
+  };
+
+  const handleNameChange = (text) => {
+    setName(text);
+  };
+
+  const handleMoneyChange = (text) => {
+    setMoney(text);
+  };
 
   const openNoticeMsg = () => {
     setIsOpenNoticeMsg(!isOpenNoticeMsg);
   };
 
-  // const fetchData = async () => {
-  //   console.log("api 실행");
-  //   try {
-  //     const response = await axios.get(url, {
-  //       headers: {
-  //         "Content-Type": "application/json; charset=utf-8",
-  //         Authorization: `Bearer ${AccessToken}`,
-  //       },
-  //     });
-  //     console.log("데이터:", response.data);
-  //   } catch (error) {
-  //     console.error("에러:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
-        },
-      });
-      console.log("url:::", url);
-
-      console.log("데이터:", response.data);
-    } catch (error) {
-      console.error("에러:", error);
-    }
-  };
-
   const postData = async () => {
-    console.log("post 실행");
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log("post 실행111");
+    console.log(access_token);
     try {
       const bodyData = {
-        compensation: "string",
-        end_date: "2023-09-24",
-        friends_id: 2,
-        message: "string",
-        price: 0,
-        start_date: "2023-09-24",
+        date_field: date,
+        money: money,
+        name: name,
+        place: "의류",
       };
 
       const response = await axios.post(url, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          // "Access-Control-Allow-Origin": "*",
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${access_token}`,
         },
       });
       console.log("url:::::::", url);
       console.log(response);
       //   const data = await response.json();
       console.log("데이터:", response.data);
-      console.log("status::", response.data.status);
-      console.log("message::", response.data.message);
     } catch (error) {
-      console.error("에러:", error);
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+      } else {
+        console.error("에러:", error);
+      }
     }
   };
 
@@ -103,7 +80,7 @@ function Note({ navigation }) {
       <View style={styles.contentContainer}>
         <Text style={styles.headerText}>지출 내역 추가</Text>
         <Text style={styles.label}>어떤 이름으로 기록할까요?</Text>
-        <Input placeholder={"지출 내용"} />
+        <Input placeholder={"지출 내용"} onInputChange={handleNameChange} />
         <View>
           {isOpenNoticeMsg && <Notice openNoticeMsg={openNoticeMsg} />}
         </View>
@@ -151,13 +128,11 @@ function Note({ navigation }) {
           </View>
         </View>
         <Text style={styles.label}>얼마를 쓰셨나요?</Text>
-        <Input placeholder={"지출 금액"} />
+        <Input placeholder={"지출 금액"} onInputChange={handleMoneyChange} />
         <Text style={styles.label}>언제 쓰셨나요?</Text>
-        <Input placeholder={"지출 일자"} />
+        <Input placeholder={"지출 일자"} onInputChange={handleDateChange} />
         <View style={styles.buttonContainer}>
-          {/* <TouchableOpacity onPress={handlePostApiTestStart}> */}
           <LargeBtnBasic text={"등록하기"} onClick={handlePostApiTestStart} />
-          {/* </TouchableOpacity> */}
         </View>
       </View>
     </View>
