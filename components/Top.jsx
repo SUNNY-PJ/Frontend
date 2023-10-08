@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import * as Notifications from "expo-notifications";
-import Login from "../constant/Login";
+import Login from "../screen/Login";
 
 const Top = ({ navigation }) => {
   const [progress, setProgress] = useState(50);
