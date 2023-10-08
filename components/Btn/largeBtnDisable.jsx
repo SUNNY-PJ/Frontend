@@ -17,7 +17,7 @@ const LargeBtnDisable = ({ text, onClick }) => {
         shadowOpacity: 0,
         shadowRadius: 0,
         elevation: 2,
-        width: 335,
+        width: "100%",
         height: 48,
         alignSelf: "center",
         alignItems: "center",
