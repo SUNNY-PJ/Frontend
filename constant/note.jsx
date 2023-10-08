@@ -6,7 +6,7 @@ import axios from "axios";
 import Notice from "../components/Modal/notice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DatePicker from "../components/DatePicker/datePicker";
-import { proxyUrl } from "./AccessToken";
+import { proxyUrl } from "./common";
 import LargeBtn from "../components/Btn/largeBtn";
 
 function Note({ navigation }) {
