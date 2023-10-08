@@ -38,7 +38,7 @@ const Kakao = () => {
         }
         console.log("데이터:::::", response.data);
         // 임시 경로
-        navigation.navigate("FriendsList", { screen: "FriendsList" });
+        navigation.navigate("SiginUp", { screen: "SiginUp" });
       }
     } catch (error) {
       console.log("errorMessage:::", error.message);
