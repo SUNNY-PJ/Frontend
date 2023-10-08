@@ -14,7 +14,6 @@ const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from
 const Kakao = () => {
   console.log("페이지 진입");
   const navigation = useNavigation();
-  const [code, setCode] = useState("");
 
   const kakao_url =
     "https://kauth.kakao.com/oauth/authorize?client_id=7ff971db2010c97a3e191dd319ec45cd&redirect_uri=http://43.201.176.22:8080/auth/kakao/callback&response_type=code";
@@ -29,18 +28,22 @@ const Kakao = () => {
       });
       console.log(response.data);
       if (response) {
-        if (response.data.data.accessToken) {
+        if (response.data.data) {
           const access_token = response.data.data.accessToken;
+          const refresh_token = response.data.data.refreshToken;
+
           console.log("accessToken:::::", access_token);
           storeData(access_token);
+          storeData(refresh_token);
         }
         console.log("데이터:::::", response.data);
+        // 임시 경로
         navigation.navigate("FriendsList", { screen: "FriendsList" });
       }
     } catch (error) {
       console.log("errorMessage:::", error.message);
       if (error.response) {
-        console.error("서버 응답 오류:", error.response);
+        console.error("서버  응답 오류:", error.response);
       } else {
         console.error("에러:", error);
       }
@@ -51,8 +54,6 @@ const Kakao = () => {
     fetchData();
   }, []);
 
-  // 로그인 페이지(임시로 지출현황 버튼 클릭 후 로그인 페이지 진입)에서
-  // 카카오 로그인 버튼 누른 후 로그인까지 해야 코드/토큰 발급 받을 수 있음
   function KakaoLoginWebView(data) {
     console.log("카카오 로그인 시도:::");
     const exp = "code=";
@@ -67,6 +68,8 @@ const Kakao = () => {
   const storeData = async (returnValue) => {
     try {
       await AsyncStorage.setItem("access_token", returnValue);
+      await AsyncStorage.setItem("refresh_token", returnValue);
+
       console.log("Token stored successfully:", returnValue);
     } catch (error) {
       console.error("Error storing token:", error);
