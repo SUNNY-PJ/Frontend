@@ -9,6 +9,8 @@ const LargeBtn = ({ text, onClick, backgroundColor }) => {
         paddingHorizontal: 0,
         borderRadius: 8,
         borderWidth: 1.5,
+        borderBottomWidth: 3,
+        borderRightWidth: 3,
         borderColor: "#1F1F1F",
         backgroundColor: backgroundColor || "#FFC891",
         shadowColor: "#1F1F1F",

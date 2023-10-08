@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, Text, View } from "react-native";
 
-const LargeBtnBasic = ({ text, onClick }) => {
+const LargeBtnDisable = ({ text, onClick }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.6}
@@ -32,4 +32,4 @@ const LargeBtnBasic = ({ text, onClick }) => {
   );
 };
 
-export default LargeBtnBasic;
+export default LargeBtnDisable;
