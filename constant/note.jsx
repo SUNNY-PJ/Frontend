@@ -76,6 +76,7 @@ function Note({ navigation }) {
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 메세지:", error.message);
       } else {
         console.error("에러:", error);
       }
@@ -114,42 +115,50 @@ function Note({ navigation }) {
               source={require("../assets/RadioBtnF.png")}
               style={styles.radioIcon}
             />
-            <Text style={styles.radioText}>의류</Text>
+            <Text style={styles.radioText} value={"의류"}>
+              의류
+            </Text>
           </View>
           <View style={styles.radioContainer}>
             <Image
               source={require("../assets/RadioBtnF.png")}
               style={styles.radioIcon}
             />
-            <Text style={styles.radioText}>식생활</Text>
+            <Text style={styles.radioText} value={"식생활"}>
+              식생활
+            </Text>
           </View>
           <View style={styles.radioContainer}>
             <Image
               source={require("../assets/RadioBtnF.png")}
               style={styles.radioIcon}
             />
-            <Text style={styles.radioText}>주거</Text>
+            <Text style={styles.radioText} value={"주거"}>
+              주거
+            </Text>
           </View>
           <View style={styles.radioContainer}>
             <Image
               source={require("../assets/RadioBtnF.png")}
               style={styles.radioIcon}
             />
-            <Text style={styles.radioText}>기타</Text>
+            <Text style={styles.radioText} value={"기타"}>
+              기타
+            </Text>
           </View>
         </View>
         <Text style={styles.label}>얼마를 쓰셨나요?</Text>
         <Input placeholder={"지출 금액"} onInputChange={handleMoneyChange} />
         <Text style={styles.label}>언제 쓰셨나요?</Text>
-        <Input placeholder={"지출 일자"} onInputChange={handleDateChange} />
+        {/* <Input placeholder={"지출 일자"} onInputChange={handleDateChange} /> */}
         <TouchableOpacity onPress={showDatePicker}>
           <DatePicker
             showDatePicker={showDatePicker}
             hideDatePicker={hideDatePicker}
             isDatePickerVisible={isDatePickerVisible}
+            handleDateChange={handleDateChange}
           />
         </TouchableOpacity>
-
         <View style={styles.buttonContainer}>
           <LargeBtnBasic text={"등록하기"} onClick={handlePostApiTestStart} />
         </View>
