@@ -13,6 +13,7 @@ import ConsentMessage from "../components/Modal/consentMessage";
 import WinnerModal from "../components/Modal/winnerModal";
 import LoserModal from "../components/Modal/loserModal";
 import MatchMsg from "../components/Modal/matchMsg";
+import ErrorModal from "../components/Modal/errorModal";
 
 function FriendsList({ navigation }) {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -21,6 +22,7 @@ function FriendsList({ navigation }) {
   const [isOpenWinnerModal, setIsOpenWinnerModal] = useState(false);
   const [isOpenLoserModal, setIsOpenLoserModal] = useState(false);
   const [isMatchModal, setIsMatchModal] = useState(false);
+  const [isOpenErrorModal, setIsOpenErrorModal] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -44,6 +46,10 @@ function FriendsList({ navigation }) {
 
   const matchModal = () => {
     setIsMatchModal(!isMatchModal);
+  };
+
+  const openErrorModal = () => {
+    setIsOpenErrorModal(!isOpenErrorModal);
   };
 
   return (
@@ -291,7 +297,7 @@ function FriendsList({ navigation }) {
             </Text>
           </View>
           <View style={{ flexDirection: "row", gap: 16 }}>
-            <TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.6} onPress={openErrorModal}>
               <Image
                 source={require("../assets/messageBlack.png")}
                 style={styles.icon}
@@ -520,6 +526,10 @@ function FriendsList({ navigation }) {
         openLoserModal={openLoserModal}
       />
       <MatchMsg isMatchModal={isMatchModal} matchModal={matchModal} />
+      <ErrorModal
+        isOpenErrorModal={isOpenErrorModal}
+        openErrorModal={openErrorModal}
+      />
     </View>
   );
 }
