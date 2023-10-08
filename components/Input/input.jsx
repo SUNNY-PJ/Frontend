@@ -26,6 +26,8 @@ const Input = ({ placeholder, inputValue, handleInputChange }) => {
               : isInputFocused
               ? "#FFA851"
               : "#C1C1C1",
+            borderBottomWidth: inputValue ? "3px" : "1.5px",
+            borderRightWidth: inputValue ? "3px" : "1.5px",
           },
         ]}
         onFocus={handleFocus}
@@ -48,7 +50,6 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderRadius: 8,
     alignSelf: "center",
-    color: "black",
   },
 });
 

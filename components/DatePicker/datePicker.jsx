@@ -52,6 +52,8 @@ const DatePicker = ({
               : isInputFocused
               ? "#FFA851"
               : "#C1C1C1",
+            borderBottomWidth: selectedDate ? "3px" : "1.5px",
+            borderRightWidth: selectedDate ? "3px" : "1.5px",
           },
         ]}
         onFocus={handleFocus}
