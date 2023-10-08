@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Input from "../Input/input";
-import LargeBtnBasic from "../Btn/largeBtnBasic";
+import LargeBtnDisable from "../Btn/largeBtnDisable";
 import Modal from "react-native-modal";
 
 const MatchMsg = ({ isMatchModal, matchModal }) => {
@@ -55,7 +55,7 @@ const MatchMsg = ({ isMatchModal, matchModal }) => {
           <Input placeholder={"대결 금액"} />
         </View>
         <View style={{ marginBottom: 31 }}>
-          <LargeBtnBasic text={"전송하기"} />
+          <LargeBtnDisable text={"전송하기"} />
         </View>
       </View>
     </Modal>
