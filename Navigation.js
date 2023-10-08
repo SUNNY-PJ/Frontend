@@ -48,7 +48,6 @@ function StackScreen() {
         component={SignUp}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen name="FriendsList" component={FriendsList} />
       <Stack.Screen name="Note" component={Note} />
       <Stack.Screen name="Statistics" component={Statistics} />
@@ -57,18 +56,6 @@ function StackScreen() {
       <Stack.Screen name="ApiTest" component={ApiTest} />
       <Stack.Screen name="Community" component={Community} />
     </Stack.Navigator>
-  );
-}
-
-const BottomTab = createBottomTabNavigator();
-
-function BottomStack() {
-  return (
-    <BottomTab.Navigator>
-      <BottomTab.Screen name="Community" component={Community} />
-      <BottomTab.Screen name="Statistics" component={Statistics} />
-      <BottomTab.Screen name="ApiTest" component={ApiTest} />
-    </BottomTab.Navigator>
   );
 }
 
