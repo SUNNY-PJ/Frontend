@@ -1,24 +1,12 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  Alert,
-  Image,
-  TouchableOpacity,
-} from "react-native";
-import WebView from "react-native-webview";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 
-const Login = ({ navigation }) => {
-  const REST_API_KEY = "56e15a4c7aaa857397437034b58c0016";
-  const REDIRECT_URI = "http://192.168.50.45:19000";
-
-  const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from webView')`;
+const Login = () => {
+  const navigation = useNavigation();
 
   const handleKakaoLogin = () => {
-    navigation.navigate("Kakao");
+    navigation.navigate("Kakao", { screen: "Kakao" });
   };
 
   return (
@@ -29,18 +17,6 @@ const Login = ({ navigation }) => {
         backgroundColor: "#FFFBF6",
       }}
     >
-      {/* <WebView
-        style={{ flex: 1 }}
-        source={{
-          uri: `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`,
-        }}
-        injectedJavaScript={INJECTED_JAVASCRIPT}
-        javaScriptEnabled
-        onMessage={(event) => {
-          const data = event.nativeEvent.url;
-          getCode(data);
-        }}
-      /> */}
       <Image
         source={require("../assets/SUNNY.png")}
         style={{
