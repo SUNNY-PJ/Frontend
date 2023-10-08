@@ -17,6 +17,7 @@ function Note({ navigation }) {
 
   const [isOpenNoticeMsg, setIsOpenNoticeMsg] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [selectedRadio, setSelectedRadio] = useState("의류");
 
   const [date, setDate] = useState("");
   const [place, setPlace] = useState("");
@@ -26,6 +27,10 @@ function Note({ navigation }) {
   console.log(date);
   console.log(name);
   console.log(money);
+
+  const handleRadioClick = (value) => {
+    setSelectedRadio(value);
+  };
 
   const handleDateChange = (text) => {
     setDate(text);
@@ -54,7 +59,7 @@ function Note({ navigation }) {
   const postData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     console.log("post 실행111");
-    console.log(access_token);
+    // console.log(access_token);
     try {
       const bodyData = {
         date_field: date,
@@ -88,82 +93,110 @@ function Note({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <Text style={styles.headerText}>지출 내역 추가</Text>
-        <Text style={styles.label}>어떤 이름으로 기록할까요?</Text>
-        <Input placeholder={"지출 내용"} onInputChange={handleNameChange} />
-        <View>
-          {isOpenNoticeMsg && <Notice openNoticeMsg={openNoticeMsg} />}
-        </View>
-        <View style={styles.labelContainer}>
-          <Text style={styles.label}>어디에 쓰셨나요?</Text>
-          <TouchableOpacity activeOpacity={1} onPress={openNoticeMsg}>
-            {/* <TouchableOpacity activeOpacity={0.6} onPress={openLoserModal}> */}
-            <View style={styles.noticeContainer}>
+    <TouchableOpacity onPress={openNoticeMsg} activeOpacity={1}>
+      <View style={styles.container}>
+        <View style={styles.contentContainer}>
+          <Text style={styles.headerText}>지출 내역 추가</Text>
+          <Text style={styles.label}>어떤 이름으로 기록할까요?</Text>
+          <Input placeholder={"지출 내용"} onInputChange={handleNameChange} />
+          <View>
+            {isOpenNoticeMsg && <Notice openNoticeMsg={openNoticeMsg} />}
+          </View>
+          <View style={styles.labelContainer}>
+            <Text style={styles.label}>어디에 쓰셨나요?</Text>
+            <TouchableOpacity activeOpacity={1} onPress={openNoticeMsg}>
+              {/* <TouchableOpacity activeOpacity={0.6} onPress={openLoserModal}> */}
+              <View style={styles.noticeContainer}>
+                <Image
+                  source={require("../assets/notice.png")}
+                  style={styles.noticeIcon}
+                />
+                <Text style={styles.noticeText}>구분 기준</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{ flexDirection: "row", gap: 16 }}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => handleRadioClick("의류")}
+              style={styles.radioContainer}
+            >
               <Image
-                source={require("../assets/notice.png")}
-                style={styles.noticeIcon}
+                source={
+                  selectedRadio === "의류"
+                    ? require("../assets/RadioBtnT.png")
+                    : require("../assets/RadioBtnF.png")
+                }
+                style={styles.radioIcon}
               />
-              <Text style={styles.noticeText}>구분 기준</Text>
-            </View>
+              <Text style={styles.radioText}>의류</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => handleRadioClick("식생활")}
+              style={styles.radioContainer}
+            >
+              <Image
+                source={
+                  selectedRadio === "식생활"
+                    ? require("../assets/RadioBtnT.png")
+                    : require("../assets/RadioBtnF.png")
+                }
+                style={styles.radioIcon}
+              />
+              <Text style={styles.radioText}>식생활</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => handleRadioClick("주거")}
+              style={styles.radioContainer}
+            >
+              <Image
+                activeOpacity={0.6}
+                source={
+                  selectedRadio === "주거"
+                    ? require("../assets/RadioBtnT.png")
+                    : require("../assets/RadioBtnF.png")
+                }
+                style={styles.radioIcon}
+              />
+              <Text style={styles.radioText}>주거</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => handleRadioClick("기타")}
+              style={styles.radioContainer}
+            >
+              <Image
+                source={
+                  selectedRadio === "기타"
+                    ? require("../assets/RadioBtnT.png")
+                    : require("../assets/RadioBtnF.png")
+                }
+                style={styles.radioIcon}
+              />
+              <Text style={styles.radioText}>기타</Text>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.label}>얼마를 쓰셨나요?</Text>
+          <Input placeholder={"지출 금액"} onInputChange={handleMoneyChange} />
+          <Text style={styles.label}>언제 쓰셨나요?</Text>
+          {/* <Input placeholder={"지출 일자"} onInputChange={handleDateChange} /> */}
+          <TouchableOpacity onPress={showDatePicker}>
+            <DatePicker
+              showDatePicker={showDatePicker}
+              hideDatePicker={hideDatePicker}
+              isDatePickerVisible={isDatePickerVisible}
+              handleDateChange={handleDateChange}
+            />
           </TouchableOpacity>
-        </View>
-        <View style={{ flexDirection: "row", gap: 16 }}>
-          <View style={styles.radioContainer}>
-            <Image
-              source={require("../assets/RadioBtnF.png")}
-              style={styles.radioIcon}
-            />
-            <Text style={styles.radioText} value={"의류"}>
-              의류
-            </Text>
+          <View style={styles.buttonContainer}>
+            <LargeBtnBasic text={"등록하기"} onClick={handlePostApiTestStart} />
           </View>
-          <View style={styles.radioContainer}>
-            <Image
-              source={require("../assets/RadioBtnF.png")}
-              style={styles.radioIcon}
-            />
-            <Text style={styles.radioText} value={"식생활"}>
-              식생활
-            </Text>
-          </View>
-          <View style={styles.radioContainer}>
-            <Image
-              source={require("../assets/RadioBtnF.png")}
-              style={styles.radioIcon}
-            />
-            <Text style={styles.radioText} value={"주거"}>
-              주거
-            </Text>
-          </View>
-          <View style={styles.radioContainer}>
-            <Image
-              source={require("../assets/RadioBtnF.png")}
-              style={styles.radioIcon}
-            />
-            <Text style={styles.radioText} value={"기타"}>
-              기타
-            </Text>
-          </View>
-        </View>
-        <Text style={styles.label}>얼마를 쓰셨나요?</Text>
-        <Input placeholder={"지출 금액"} onInputChange={handleMoneyChange} />
-        <Text style={styles.label}>언제 쓰셨나요?</Text>
-        {/* <Input placeholder={"지출 일자"} onInputChange={handleDateChange} /> */}
-        <TouchableOpacity onPress={showDatePicker}>
-          <DatePicker
-            showDatePicker={showDatePicker}
-            hideDatePicker={hideDatePicker}
-            isDatePickerVisible={isDatePickerVisible}
-            handleDateChange={handleDateChange}
-          />
-        </TouchableOpacity>
-        <View style={styles.buttonContainer}>
-          <LargeBtnBasic text={"등록하기"} onClick={handlePostApiTestStart} />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

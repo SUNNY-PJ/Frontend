@@ -12,7 +12,6 @@ import {
 const Notice = ({ openNoticeMsg }) => {
   return (
     <View style={styles.modalContainer}>
-      {/* <ImageBackground source={require("../../assets/noticeBackground.png")}> */}
       <ImageBackground
         source={require("../../assets/noticeBackground.png")}
         style={{ width: 176, height: 91 }}
