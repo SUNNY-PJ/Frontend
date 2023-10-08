@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import Input from "../components/Input/input";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
 import axios from "axios";
@@ -8,6 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import DatePicker from "../components/DatePicker/datePicker";
 import { proxyUrl } from "./common";
 import LargeBtn from "../components/Btn/largeBtn";
+import Bottom from "../components/Bottom";
 
 function Note({ navigation }) {
   const inputURL = "/consumption";
@@ -121,128 +129,129 @@ function Note({ navigation }) {
   };
 
   return (
-    <TouchableOpacity onPress={closeNoticeMsg} activeOpacity={1}>
-      <View style={styles.container}>
-        <View style={styles.contentContainer}>
-          <Text style={styles.headerText}>지출 내역 추가</Text>
-          <Text style={styles.label}>어떤 이름으로 기록할까요?</Text>
-          <Input
-            placeholder={"지출 내용"}
-            inputValue={name}
-            handleInputChange={handleNameChange}
-          />
-          <View>
-            {isOpenNoticeMsg && <Notice openNoticeMsg={openNoticeMsg} />}
-          </View>
-          <View style={styles.labelContainer}>
-            <Text style={styles.label}>어디에 쓰셨나요?</Text>
-            <TouchableOpacity activeOpacity={1} onPress={openNoticeMsg}>
-              <View style={styles.noticeContainer}>
-                <Image
-                  source={require("../assets/notice.png")}
-                  style={styles.noticeIcon}
-                />
-                <Text style={styles.noticeText}>구분 기준</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-
-          <View style={{ flexDirection: "row", gap: 16 }}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => handleRadioClick("의류")}
-              style={styles.radioContainer}
-            >
-              <Image
-                source={
-                  place === "의류"
-                    ? require("../assets/RadioBtnT.png")
-                    : require("../assets/RadioBtnF.png")
-                }
-                style={styles.radioIcon}
-              />
-              <Text style={styles.radioText}>의류</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => handleRadioClick("식생활")}
-              style={styles.radioContainer}
-            >
-              <Image
-                source={
-                  place === "식생활"
-                    ? require("../assets/RadioBtnT.png")
-                    : require("../assets/RadioBtnF.png")
-                }
-                style={styles.radioIcon}
-              />
-              <Text style={styles.radioText}>식생활</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => handleRadioClick("주거")}
-              style={styles.radioContainer}
-            >
-              <Image
-                activeOpacity={0.6}
-                source={
-                  place === "주거"
-                    ? require("../assets/RadioBtnT.png")
-                    : require("../assets/RadioBtnF.png")
-                }
-                style={styles.radioIcon}
-              />
-              <Text style={styles.radioText}>주거</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => handleRadioClick("기타")}
-              style={styles.radioContainer}
-            >
-              <Image
-                source={
-                  place === "기타"
-                    ? require("../assets/RadioBtnT.png")
-                    : require("../assets/RadioBtnF.png")
-                }
-                style={styles.radioIcon}
-              />
-              <Text style={styles.radioText}>기타</Text>
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.label}>얼마를 쓰셨나요?</Text>
-          <Input
-            placeholder={"지출 금액"}
-            inputValue={money}
-            handleInputChange={handleMoneyChange}
-          />
-          <Text style={styles.label}>언제 쓰셨나요?</Text>
-          <TouchableOpacity onPress={showDatePicker}>
-            <DatePicker
-              showDatePicker={showDatePicker}
-              hideDatePicker={hideDatePicker}
-              isDatePickerVisible={isDatePickerVisible}
-              handleDateChange={handleDateChange}
+    <View style={styles.container}>
+      <TouchableOpacity onPress={closeNoticeMsg} activeOpacity={1}>
+        <ScrollView>
+          <View style={styles.contentContainer}>
+            <Text style={styles.headerText}>지출 내역 추가</Text>
+            <Text style={styles.label}>어떤 이름으로 기록할까요?</Text>
+            <Input
+              placeholder={"지출 내용"}
+              inputValue={name}
+              handleInputChange={handleNameChange}
             />
-          </TouchableOpacity>
-          <View style={styles.buttonContainer}>
-            {isAllFieldsFilled ? (
-              <LargeBtn text={"등록하기"} onClick={handlePostApiTestStart} />
-            ) : (
-              <LargeBtnDisable text={"등록하기"} />
-            )}
+            <View>
+              {isOpenNoticeMsg && <Notice openNoticeMsg={openNoticeMsg} />}
+            </View>
+            <View style={styles.labelContainer}>
+              <Text style={styles.label}>어디에 쓰셨나요?</Text>
+              <TouchableOpacity activeOpacity={1} onPress={openNoticeMsg}>
+                <View style={styles.noticeContainer}>
+                  <Image
+                    source={require("../assets/notice.png")}
+                    style={styles.noticeIcon}
+                  />
+                  <Text style={styles.noticeText}>구분 기준</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ flexDirection: "row", gap: 16 }}>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => handleRadioClick("의류")}
+                style={styles.radioContainer}
+              >
+                <Image
+                  source={
+                    place === "의류"
+                      ? require("../assets/RadioBtnT.png")
+                      : require("../assets/RadioBtnF.png")
+                  }
+                  style={styles.radioIcon}
+                />
+                <Text style={styles.radioText}>의류</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => handleRadioClick("식생활")}
+                style={styles.radioContainer}
+              >
+                <Image
+                  source={
+                    place === "식생활"
+                      ? require("../assets/RadioBtnT.png")
+                      : require("../assets/RadioBtnF.png")
+                  }
+                  style={styles.radioIcon}
+                />
+                <Text style={styles.radioText}>식생활</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => handleRadioClick("주거")}
+                style={styles.radioContainer}
+              >
+                <Image
+                  activeOpacity={0.6}
+                  source={
+                    place === "주거"
+                      ? require("../assets/RadioBtnT.png")
+                      : require("../assets/RadioBtnF.png")
+                  }
+                  style={styles.radioIcon}
+                />
+                <Text style={styles.radioText}>주거</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => handleRadioClick("기타")}
+                style={styles.radioContainer}
+              >
+                <Image
+                  source={
+                    place === "기타"
+                      ? require("../assets/RadioBtnT.png")
+                      : require("../assets/RadioBtnF.png")
+                  }
+                  style={styles.radioIcon}
+                />
+                <Text style={styles.radioText}>기타</Text>
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.label}>얼마를 쓰셨나요?</Text>
+            <Input
+              placeholder={"지출 금액"}
+              inputValue={money}
+              handleInputChange={handleMoneyChange}
+            />
+            <Text style={styles.label}>언제 쓰셨나요?</Text>
+            <TouchableOpacity onPress={showDatePicker}>
+              <DatePicker
+                showDatePicker={showDatePicker}
+                hideDatePicker={hideDatePicker}
+                isDatePickerVisible={isDatePickerVisible}
+                handleDateChange={handleDateChange}
+              />
+            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              {isAllFieldsFilled ? (
+                <LargeBtn text={"등록하기"} onClick={handlePostApiTestStart} />
+              ) : (
+                <LargeBtnDisable text={"등록하기"} />
+              )}
+            </View>
           </View>
-        </View>
-      </View>
-    </TouchableOpacity>
+        </ScrollView>
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
     backgroundColor: "#FFFBF6",
-    minHeight: "100%",
+    height: "100%",
   },
   contentContainer: {
     marginTop: 25,
