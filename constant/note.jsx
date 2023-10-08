@@ -5,6 +5,7 @@ import LargeBtnBasic from "../components/Btn/largeBtnBasic";
 import axios from "axios";
 import Notice from "../components/Modal/notice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import DatePicker from "../components/DatePicker/datePicker";
 
 function Note({ navigation }) {
   const proxyUrl = "http://43.201.176.22:8080";
@@ -15,6 +16,8 @@ function Note({ navigation }) {
   console.log("url:::", url);
 
   const [isOpenNoticeMsg, setIsOpenNoticeMsg] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
   const [date, setDate] = useState("");
   const [place, setPlace] = useState("");
   const [name, setName] = useState("");
@@ -38,6 +41,14 @@ function Note({ navigation }) {
 
   const openNoticeMsg = () => {
     setIsOpenNoticeMsg(!isOpenNoticeMsg);
+  };
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
   };
 
   const postData = async () => {
@@ -131,6 +142,14 @@ function Note({ navigation }) {
         <Input placeholder={"지출 금액"} onInputChange={handleMoneyChange} />
         <Text style={styles.label}>언제 쓰셨나요?</Text>
         <Input placeholder={"지출 일자"} onInputChange={handleDateChange} />
+        <TouchableOpacity onPress={showDatePicker}>
+          <DatePicker
+            showDatePicker={showDatePicker}
+            hideDatePicker={hideDatePicker}
+            isDatePickerVisible={isDatePickerVisible}
+          />
+        </TouchableOpacity>
+
         <View style={styles.buttonContainer}>
           <LargeBtnBasic text={"등록하기"} onClick={handlePostApiTestStart} />
         </View>
