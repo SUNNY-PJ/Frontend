@@ -50,7 +50,7 @@ const DatePicker = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
-        <Text>{`${
+        <Text style={{ color: "#C1C1C1" }}>{`${
           selectedDate ? moment(selectedDate).format("YYYY-MM-DD") : "지출 일자"
         }`}</Text>
         <Button title="Show Date Picker" onPress={showDatePicker} />
