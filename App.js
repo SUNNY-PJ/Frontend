@@ -1,20 +1,7 @@
 import * as React from "react";
-import { View, Text } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import FriendsList from "./constant/friendsList";
-import Note from "./constant/note";
-import Statistics from "./constant/statistics";
-import Top from "./components/Top";
-import Bottom from "./components/Bottom";
-import Login from "./constant/Login";
-import SiginUp from "./constant/SiginUp";
-import Kakao from "./constant/kakao";
-import Spending from "./constant/spending";
-import History from "./constant/history";
-import ApiTest from "./constant/apiTest";
-import Community from "./constant/Community/community";
 import * as Notifications from "expo-notifications";
+import Navigation from "./Navigation";
 
 const Stack = createNativeStackNavigator();
 
@@ -95,37 +82,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    return (
-      // NavigationContainer로 감싸야 함.
-      <NavigationContainer>
-        {/* <Top /> */}
-        <Stack.Navigator
-          // initialRouteName="Note"
-          screenOptions={{
-            header: (props) => <Top {...props} />,
-          }}
-        >
-          <Stack.Screen name="FriendsList" component={FriendsList} />
-          <Stack.Screen name="Note" component={Note} />
-          <Stack.Screen name="Statistics" component={Statistics} />
-          <Stack.Screen name="History" component={History} />
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Kakao"
-            component={Kakao}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen name="Spending" component={Spending} />
-          <Stack.Screen name="SiginUp" component={SiginUp} />
-          <Stack.Screen name="ApiTest" component={ApiTest} />
-          <Stack.Screen name="Community" component={Community} />
-        </Stack.Navigator>
-        <Bottom />
-      </NavigationContainer>
-    );
+    return <Navigation />;
   }
 }
