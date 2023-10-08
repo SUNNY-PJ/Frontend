@@ -17,19 +17,20 @@ function Note({ navigation }) {
 
   const [isOpenNoticeMsg, setIsOpenNoticeMsg] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [selectedRadio, setSelectedRadio] = useState("의류");
+  // const [resetDate, setResetDate] = useState(true);
 
   const [date, setDate] = useState("");
-  const [place, setPlace] = useState("");
+  const [place, setPlace] = useState("의류");
   const [name, setName] = useState("");
   const [money, setMoney] = useState("");
 
   console.log(date);
   console.log(name);
   console.log(money);
+  console.log(place);
 
   const handleRadioClick = (value) => {
-    setSelectedRadio(value);
+    setPlace(value);
   };
 
   const handleDateChange = (text) => {
@@ -46,6 +47,10 @@ function Note({ navigation }) {
 
   const openNoticeMsg = () => {
     setIsOpenNoticeMsg(!isOpenNoticeMsg);
+  };
+
+  const closeNoticeMsg = () => {
+    setIsOpenNoticeMsg(false);
   };
 
   const showDatePicker = () => {
@@ -65,7 +70,7 @@ function Note({ navigation }) {
         date_field: date,
         money: money,
         name: name,
-        place: "의류",
+        place: place,
       };
 
       const response = await axios.post(url, bodyData, {
@@ -78,6 +83,8 @@ function Note({ navigation }) {
       console.log(response);
       //   const data = await response.json();
       console.log("데이터:", response.data);
+
+      navigation.navigate("FriendsList", { screen: "FriendsList" });
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
@@ -93,7 +100,7 @@ function Note({ navigation }) {
   };
 
   return (
-    <TouchableOpacity onPress={openNoticeMsg} activeOpacity={1}>
+    <TouchableOpacity onPress={closeNoticeMsg} activeOpacity={1}>
       <View style={styles.container}>
         <View style={styles.contentContainer}>
           <Text style={styles.headerText}>지출 내역 추가</Text>
@@ -124,7 +131,7 @@ function Note({ navigation }) {
             >
               <Image
                 source={
-                  selectedRadio === "의류"
+                  place === "의류"
                     ? require("../assets/RadioBtnT.png")
                     : require("../assets/RadioBtnF.png")
                 }
@@ -139,7 +146,7 @@ function Note({ navigation }) {
             >
               <Image
                 source={
-                  selectedRadio === "식생활"
+                  place === "식생활"
                     ? require("../assets/RadioBtnT.png")
                     : require("../assets/RadioBtnF.png")
                 }
@@ -155,7 +162,7 @@ function Note({ navigation }) {
               <Image
                 activeOpacity={0.6}
                 source={
-                  selectedRadio === "주거"
+                  place === "주거"
                     ? require("../assets/RadioBtnT.png")
                     : require("../assets/RadioBtnF.png")
                 }
@@ -170,7 +177,7 @@ function Note({ navigation }) {
             >
               <Image
                 source={
-                  selectedRadio === "기타"
+                  place === "기타"
                     ? require("../assets/RadioBtnT.png")
                     : require("../assets/RadioBtnF.png")
                 }
@@ -189,6 +196,7 @@ function Note({ navigation }) {
               hideDatePicker={hideDatePicker}
               isDatePickerVisible={isDatePickerVisible}
               handleDateChange={handleDateChange}
+              // resetDate={resetDate}
             />
           </TouchableOpacity>
           <View style={styles.buttonContainer}>

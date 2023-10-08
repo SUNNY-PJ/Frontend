@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, View, StyleSheet, Text } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
@@ -8,6 +8,7 @@ const DatePicker = ({
   showDatePicker,
   hideDatePicker,
   handleDateChange,
+  //   resetDate,
 }) => {
   const [selectedDate, setSelectedDate] = useState();
   console.log(selectedDate);
@@ -33,6 +34,12 @@ const DatePicker = ({
     hideDatePicker();
     handleDateChange(date);
   };
+  //   console.log(resetDate);
+  //   useEffect(() => {
+  //     if (resetDate === false) {
+  //       setSelectedDate();
+  //     }
+  //   }, []);
 
   return (
     <View style={styles.container}>
@@ -50,9 +57,12 @@ const DatePicker = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
-        <Text style={{ color: "#C1C1C1" }}>{`${
-          selectedDate ? moment(selectedDate).format("YYYY-MM-DD") : "지출 일자"
-        }`}</Text>
+        {selectedDate ? (
+          <Text>{`${moment(selectedDate).format("YYYY-MM-DD")}`}</Text>
+        ) : (
+          <Text style={{ color: "#C1C1C1" }}>지출 일자</Text>
+        )}
+
         <Button title="Show Date Picker" onPress={showDatePicker} />
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
