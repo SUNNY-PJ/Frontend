@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Input from "../components/Input/input";
-import LargeBtnBasic from "../components/Btn/largeBtnBasic";
+import LargeBtnDisable from "../components/Btn/largeBtnDisable";
 import axios from "axios";
 import Notice from "../components/Modal/notice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DatePicker from "../components/DatePicker/datePicker";
+import { proxyUrl } from "./AccessToken";
+import LargeBtn from "../components/Btn/largeBtn";
 
 function Note({ navigation }) {
-  const proxyUrl = "http://43.201.176.22:8080";
   const inputURL = "/consumption";
   const cleanedURL = inputURL.replace(/[\u200B]/g, "");
 
   const url = proxyUrl + cleanedURL;
-  console.log("url:::", url);
 
   const [isOpenNoticeMsg, setIsOpenNoticeMsg] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  // const [resetDate, setResetDate] = useState(true);
+  const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
 
   const [date, setDate] = useState("");
   const [place, setPlace] = useState("의류");
@@ -41,10 +41,6 @@ function Note({ navigation }) {
     setName(text);
   };
 
-  const handleMoneyChange = (text) => {
-    setMoney(text);
-  };
-
   const openNoticeMsg = () => {
     setIsOpenNoticeMsg(!isOpenNoticeMsg);
   };
@@ -61,14 +57,40 @@ function Note({ navigation }) {
     setDatePickerVisibility(false);
   };
 
+  // 콤마(,)를 제거하고 숫자 형태로 파싱
+  const formattedMoney = (value) => {
+    const parsedValue = parseFloat(value.replace(/,/g, ""));
+
+    // 숫자가 유효하면 포맷팅된 문자열 반환, 그렇지 않으면 빈 문자열 반환
+    if (!isNaN(parsedValue)) {
+      return parsedValue.toLocaleString();
+    } else {
+      return "";
+    }
+  };
+
+  // money 상태 변수 업데이트
+  const handleMoneyChange = (text) => {
+    const cleanedText = text.replace(/[^0-9,]/g, "");
+    const formattedValue = formattedMoney(cleanedText);
+    setMoney(formattedValue);
+  };
+
+  useEffect(() => {
+    if (name && money && date) {
+      setIsAllFieldsFilled(true);
+    } else {
+      setIsAllFieldsFilled(false);
+    }
+  }, [name, money, date]);
+
   const postData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     console.log("post 실행111");
-    // console.log(access_token);
     try {
       const bodyData = {
         date_field: date,
-        money: money,
+        money: money.replace(/,/g, ""),
         name: name,
         place: place,
       };
@@ -81,7 +103,6 @@ function Note({ navigation }) {
       });
       console.log("url:::::::", url);
       console.log(response);
-      //   const data = await response.json();
       console.log("데이터:", response.data);
 
       navigation.navigate("FriendsList", { screen: "FriendsList" });
@@ -105,14 +126,17 @@ function Note({ navigation }) {
         <View style={styles.contentContainer}>
           <Text style={styles.headerText}>지출 내역 추가</Text>
           <Text style={styles.label}>어떤 이름으로 기록할까요?</Text>
-          <Input placeholder={"지출 내용"} onInputChange={handleNameChange} />
+          <Input
+            placeholder={"지출 내용"}
+            inputValue={name}
+            handleInputChange={handleNameChange}
+          />
           <View>
             {isOpenNoticeMsg && <Notice openNoticeMsg={openNoticeMsg} />}
           </View>
           <View style={styles.labelContainer}>
             <Text style={styles.label}>어디에 쓰셨나요?</Text>
             <TouchableOpacity activeOpacity={1} onPress={openNoticeMsg}>
-              {/* <TouchableOpacity activeOpacity={0.6} onPress={openLoserModal}> */}
               <View style={styles.noticeContainer}>
                 <Image
                   source={require("../assets/notice.png")}
@@ -187,20 +211,26 @@ function Note({ navigation }) {
             </TouchableOpacity>
           </View>
           <Text style={styles.label}>얼마를 쓰셨나요?</Text>
-          <Input placeholder={"지출 금액"} onInputChange={handleMoneyChange} />
+          <Input
+            placeholder={"지출 금액"}
+            inputValue={money}
+            handleInputChange={handleMoneyChange}
+          />
           <Text style={styles.label}>언제 쓰셨나요?</Text>
-          {/* <Input placeholder={"지출 일자"} onInputChange={handleDateChange} /> */}
           <TouchableOpacity onPress={showDatePicker}>
             <DatePicker
               showDatePicker={showDatePicker}
               hideDatePicker={hideDatePicker}
               isDatePickerVisible={isDatePickerVisible}
               handleDateChange={handleDateChange}
-              // resetDate={resetDate}
             />
           </TouchableOpacity>
           <View style={styles.buttonContainer}>
-            <LargeBtnBasic text={"등록하기"} onClick={handlePostApiTestStart} />
+            {isAllFieldsFilled ? (
+              <LargeBtn text={"등록하기"} onClick={handlePostApiTestStart} />
+            ) : (
+              <LargeBtnDisable text={"등록하기"} />
+            )}
           </View>
         </View>
       </View>
@@ -237,7 +267,6 @@ const styles = StyleSheet.create({
   labelContainer: {
     flexDirection: "row",
     alignItems: "center",
-    // marginBottom: 8,
   },
   noticeContainer: {
     flexDirection: "row",
