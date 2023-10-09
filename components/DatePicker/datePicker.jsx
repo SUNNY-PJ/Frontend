@@ -44,6 +44,7 @@ const DatePicker = ({
   return (
     <View style={styles.container}>
       <View
+        onPress={showDatePicker}
         style={[
           styles.input,
           {
@@ -64,12 +65,10 @@ const DatePicker = ({
         ) : (
           <Text style={{ color: "#C1C1C1" }}>지출 일자</Text>
         )}
-
-        <Button title="Show Date Picker" onPress={showDatePicker} />
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="date"
-          //   locale="ko"
+          locale="ko-KR"
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />
