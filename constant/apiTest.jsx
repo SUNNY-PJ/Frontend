@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { View, Text, TouchableOpacity } from "react-native";
-import { ACCESS_TOKEN } from "./AccessToken";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ApiTest = () => {
   const proxyUrl = "http://43.201.176.22:8080";
   const getUrl = "/api/v1/friends";
-  const postUrl = "/api/v1/compettion/accept";
+  const postUrl = "/api/v1/compettion";
 
   const cleanedURL = postUrl.replace(/[\u200B]/g, "");
 
@@ -16,13 +16,15 @@ const ApiTest = () => {
   console.log("url_post:::", url_post);
 
   const fetchData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
     console.log("get 실행");
     try {
       const response = await axios.get(url_get, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           //   "Access-Control-Allow-Origin": "*",
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${access_token}`,
         },
       });
       console.log("데이터:", response.data);
@@ -32,11 +34,16 @@ const ApiTest = () => {
   };
 
   const postData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
     console.log("post 실행");
     try {
       const bodyData = {
-        approve: "Y",
-        competition_id: 1,
+        compensation: "string",
+        end_date: "2023-10-05",
+        friends_id: 0,
+        message: "string",
+        price: 0,
+        start_date: "2023-10-05",
       };
 
       console.log(bodyData);
@@ -44,8 +51,7 @@ const ApiTest = () => {
       const response = await axios.post(url_post, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          // "Access-Control-Allow-Origin": "*",
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${access_token}`,
         },
       });
 
