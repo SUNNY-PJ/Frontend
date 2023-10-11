@@ -7,6 +7,7 @@ import {
   Image,
   Alert,
 } from "react-native";
+import { proxyUrl } from "./common";
 import { useNavigation } from "@react-navigation/native";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
 import Input from "../components/Input/input";
@@ -31,6 +32,43 @@ const SignUp = () => {
 
   const handleNavigate = () => {
     navigation.navigate("Note", { screen: "Note" });
+  };
+
+  const postData = async () => {
+    const inputURL = "/auth/nickname";
+    const cleanedURL = inputURL.replace(/[\u200B]/g, "");
+
+    const url = proxyUrl + cleanedURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log("별명을 등록합니다.");
+    try {
+      const bodyData = {
+        name: name,
+      };
+
+      const response = await axios.post(url, bodyData, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      console.log("url:::::::", url);
+      console.log(response);
+      console.log("데이터:", response.data);
+
+      navigation.navigate("Note", { screen: "Note" });
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 메세지:", error.message);
+      } else {
+        console.error("에러:", error);
+      }
+    }
+  };
+
+  const handlePostApiTestStart = () => {
+    postData();
   };
 
   return (
@@ -82,7 +120,7 @@ const SignUp = () => {
         * 2~10자 이내, 특수문자 및 숫자 사용 가능, 이모지 사용 불가
       </Text>
       {isAllFieldsFilled ? (
-        <LargeBtn text={"시작하기"} onClick={handleNavigate} />
+        <LargeBtn text={"시작하기"} onClick={handlePostApiTestStart} />
       ) : (
         <LargeBtnDisable text={"시작하기"} />
       )}
