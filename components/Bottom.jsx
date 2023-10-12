@@ -34,7 +34,7 @@ const Bottom = () => {
   }, []);
 
   return (
-    <View>
+    <View style={styles.bottomContainer}>
       <View
         style={{
           flexDirection: "row",
@@ -91,11 +91,11 @@ const Bottom = () => {
           activeOpacity={1}
           style={[
             styles.menuItem,
-            selectedIcon === "SiginUp" && styles.selectedIconContainer,
+            selectedIcon === "ApiTest" && styles.selectedIconContainer,
           ]}
           onPress={() => {
-            toggleIcons("SiginUp");
-            navigation.navigate("SiginUp");
+            toggleIcons("ApiTest");
+            navigation.navigate("ApiTest");
           }}
         >
           <Image
@@ -186,6 +186,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#6ADCA3",
     // padding: 6,
     borderRadius: 8,
+  },
+  bottomContainer: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
   },
 });
 
