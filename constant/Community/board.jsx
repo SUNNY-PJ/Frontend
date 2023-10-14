@@ -9,28 +9,17 @@ import {
   Animated,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Line from "../../components/Line";
 
 const Board = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingLeft: 16,
-            paddingRight: 24,
-            marginTop: 17,
-            marginBottom: 18,
-          }}
-        >
+        <View style={styles.section}>
           <View style={{ flexDirection: "row", gap: 3 }}>
             <Image
               source={require("../../assets/sort.png")}
-              style={{
-                width: 20,
-                height: 20,
-              }}
+              style={styles.icon}
             />
             <Text
               style={{
@@ -51,31 +40,35 @@ const Board = () => {
           >
             <Image
               source={require("../../assets/search.png")}
-              style={{
-                width: 20,
-                height: 20,
-              }}
+              style={styles.icon}
             />
             <Image
               source={require("../../assets/write.png")}
-              style={{
-                width: 20,
-                height: 20,
-              }}
+              style={styles.icon}
             />
           </View>
         </View>
-        <View style={styles.tabBar}>
-          <View style={styles.tabBarLine} />
+        <Line color={"#C1C1C1"} />
+        <View style={styles.box}>
+          <Text style={styles.title}>test</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.description}>하루1</Text>
+            <Text style={styles.description}>20 시간 전</Text>
+            <Text style={styles.description}>조회 1,411</Text>
+            <Text style={styles.description}>댓글 22</Text>
+          </View>
         </View>
-        <View>
-          <Text style={{ fontSize: 20, color: "#000", fontWeight: 500 }}>
-            test
-          </Text>
+        <Line color={"#C1C1C1"} />
+        <View style={styles.box}>
+          <Text style={styles.title}>test</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.description}>하루2</Text>
+            <Text style={styles.description}>1 시간 전</Text>
+            <Text style={styles.description}>조회 2</Text>
+            <Text style={styles.description}>댓글 0</Text>
+          </View>
         </View>
-        <View style={styles.tabBar}>
-          <View style={styles.tabBarLine} />
-        </View>
+        <Line color={"#C1C1C1"} />
       </View>
     </View>
   );
@@ -90,6 +83,14 @@ const styles = StyleSheet.create({
   contentContainer: {
     marginBottom: 40,
   },
+  section: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingLeft: 16,
+    paddingRight: 24,
+    marginTop: 17,
+    marginBottom: 18,
+  },
   image: {
     width: 32,
     height: 32,
@@ -98,12 +99,31 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: "row",
-    marginBottom: 12,
+    // marginBottom: 12,
   },
   tabBarLine: {
     flex: 1,
     height: 2,
     backgroundColor: "#C1C1C1",
+  },
+  icon: {
+    width: 20,
+    height: 20,
+  },
+  box: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 12,
+    paddingTop: 12,
+    backgroundColor: "#fff",
+  },
+  title: { fontSize: 20, color: "#000", fontWeight: 500, padding: 4 },
+  description: {
+    fontSize: 12,
+    color: "#000",
+    fontWeight: 500,
+    padding: 4,
+    gap: 8,
   },
 });
 
