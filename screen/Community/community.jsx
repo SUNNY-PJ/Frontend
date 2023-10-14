@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Bar from "../../components/Bar";
-import Statistics from "../statistics";
+import Statistics from "../../constant/statistics";
 import Board from "./board";
+import Tip from "./tip";
 
 const Community = () => {
   const [board, setBoard] = useState(false);
-  const [statistics, setStatistics] = useState(true);
+  const [tip, setTip] = useState(true);
 
   const historyClick = () => {
     setBoard(true);
-    setStatistics(false);
+    setTip(false);
   };
 
-  const statisticsClick = () => {
-    setStatistics(true);
+  const tipClick = () => {
+    setTip(true);
     setBoard(false);
   };
 
@@ -30,8 +31,8 @@ const Community = () => {
             marginBottom: 18,
           }}
         >
-          <TouchableOpacity onPress={statisticsClick} activeOpacity={0.6}>
-            <Text style={[styles.tabText, statistics && styles.activeTabText]}>
+          <TouchableOpacity onPress={tipClick} activeOpacity={0.6}>
+            <Text style={[styles.tabText, tip && styles.activeTabText]}>
               절약 꿀팁
             </Text>
           </TouchableOpacity>
@@ -42,12 +43,10 @@ const Community = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.tabBar}>
-          <View
-            style={[styles.tabBarLine, statistics && styles.activeTabBarLine]}
-          />
+          <View style={[styles.tabBarLine, tip && styles.activeTabBarLine]} />
           <View style={[styles.tabBarLine, board && styles.activeTabBarLine]} />
         </View>
-        {statistics && <Statistics />}
+        {tip && <Tip />}
         {board && <Board />}
       </View>
     </View>

@@ -1,17 +1,8 @@
 import React, { useState } from "react";
-import {
-  View,
-  Image,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { View, Image, Text, StyleSheet } from "react-native";
 import Line from "../../components/Line";
 
-const Board = () => {
+const Tip = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -48,9 +39,9 @@ const Board = () => {
             />
           </View>
         </View>
-        <Line color={"#C1C1C1"} />
+        <Line color={"#C1C1C1"} h={2} />
         <View style={styles.box}>
-          <Text style={styles.title}>test</Text>
+          <Text style={styles.title}>절약 꿀팁 게시판입니다</Text>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.description}>하루1</Text>
             <Text style={styles.description}>20 시간 전</Text>
@@ -58,7 +49,7 @@ const Board = () => {
             <Text style={styles.description}>댓글 22</Text>
           </View>
         </View>
-        <Line color={"#C1C1C1"} />
+        <Line color={"#C1C1C1"} h={2} />
         <View style={styles.box}>
           <Text style={styles.title}>test</Text>
           <View style={{ flexDirection: "row" }}>
@@ -68,7 +59,7 @@ const Board = () => {
             <Text style={styles.description}>댓글 0</Text>
           </View>
         </View>
-        <Line color={"#C1C1C1"} />
+        <Line color={"#C1C1C1"} h={2} />
       </View>
     </View>
   );
@@ -127,4 +118,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Board;
+export default Tip;
