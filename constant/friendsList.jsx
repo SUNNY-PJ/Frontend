@@ -58,6 +58,7 @@ function FriendsList({ navigation }) {
       style={{
         flexDirection: "column",
         backgroundColor: "#FFFBF6",
+        minHeight: "100%",
       }}
     >
       <View
@@ -90,7 +91,7 @@ function FriendsList({ navigation }) {
         >
           대결중인 친구
         </Text>
-        <Line color={"#C1C1C1"} />
+        <Line color={"#C1C1C1"} h={2} />
         <ScrollView>
           <View
             style={{
@@ -134,7 +135,7 @@ function FriendsList({ navigation }) {
               </TouchableOpacity>
             </View>
           </View>
-          <Line color={"#C1C1C1"} />
+          <Line color={"#C1C1C1"} h={2} />
           <View
             style={{
               flexDirection: "row",
@@ -177,7 +178,7 @@ function FriendsList({ navigation }) {
               </TouchableOpacity>
             </View>
           </View>
-          <Line color={"#C1C1C1"} />
+          <Line color={"#C1C1C1"} h={2} />
           <View
             style={{
               flexDirection: "row",
@@ -224,7 +225,7 @@ function FriendsList({ navigation }) {
             </View>
           </View>
         </ScrollView>
-        <Line color={"#C1C1C1"} />
+        <Line color={"#C1C1C1"} h={2} />
       </View>
       {/* 친구 목록 */}
       <Text
@@ -238,7 +239,7 @@ function FriendsList({ navigation }) {
       >
         친구
       </Text>
-      <Line color={"#C1C1C1"} />
+      <Line color={"#C1C1C1"} h={2} />
       <ScrollView>
         <View
           style={{
@@ -282,7 +283,7 @@ function FriendsList({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        <Line color={"#C1C1C1"} />
+        <Line color={"#C1C1C1"} h={2} />
         <View
           style={{
             flexDirection: "row",
@@ -325,7 +326,7 @@ function FriendsList({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        <Line color={"#C1C1C1"} />
+        <Line color={"#C1C1C1"} h={2} />
         <View
           style={{
             flexDirection: "row",
@@ -368,7 +369,7 @@ function FriendsList({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        <Line color={"#C1C1C1"} />
+        <Line color={"#C1C1C1"} h={2} />
         <View
           style={{
             flexDirection: "row",
@@ -411,7 +412,7 @@ function FriendsList({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        <Line color={"#C1C1C1"} />
+        <Line color={"#C1C1C1"} h={2} />
         <View
           style={{
             flexDirection: "row",

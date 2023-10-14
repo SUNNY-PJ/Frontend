@@ -1,10 +1,10 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 
-const Line = ({ color }) => {
+const Line = ({ color, h }) => {
   return (
     <View style={{ flexDirection: "row" }}>
-      <View style={{ flex: 1, height: 2, backgroundColor: color }} />
+      <View style={{ flex: 1, height: h, backgroundColor: color }} />
     </View>
   );
 };
