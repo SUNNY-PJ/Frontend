@@ -9,8 +9,11 @@ import {
   Animated,
 } from "react-native";
 import Line from "../../components/Line";
+import { useNavigation } from "@react-navigation/native";
 
-const MyPage = ({ navigate }) => {
+const MyPage = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -29,13 +32,21 @@ const MyPage = ({ navigate }) => {
           />
           <View style={{ gap: 8 }}>
             <Text style={styles.name}>사용자12</Text>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.setting}>프로필 설정</Text>
-              <Image
-                source={require("../../assets/myPage_setting.png")}
-                style={{ width: 16, height: 16, padding: 2, top: 2 }}
-              />
-            </View>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("SettingProfile", {
+                  screen: "SettingProfile",
+                })
+              }
+            >
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.setting}>프로필 설정</Text>
+                <Image
+                  source={require("../../assets/myPage_setting.png")}
+                  style={{ width: 16, height: 16, padding: 2, top: 2 }}
+                />
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
         <Line color={"#C1C1C1"} h={4} />
