@@ -16,7 +16,8 @@ import Kakao from "./constant/kakao";
 import Spending from "./constant/spending";
 import History from "./constant/history";
 import ApiTest from "./constant/apiTest";
-import Community from "./constant/Community/community";
+import Community from "./screen/Community/community";
+import MyPage from "./screen/MyPage/myPage";
 
 const Stack = createStackNavigator();
 
@@ -55,6 +56,7 @@ function StackScreen() {
       <Stack.Screen name="Spending" component={Spending} />
       <Stack.Screen name="ApiTest" component={ApiTest} />
       <Stack.Screen name="Community" component={Community} />
+      <Stack.Screen name="MyPage" component={MyPage} />
     </Stack.Navigator>
   );
 }
