@@ -8,12 +8,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const ConsentMessage = ({ isOpenConsentMessage, openConsentMessage }) => {
+const RefuseMsg = ({ isOpenRefuseMessage, openRefuseMessage }) => {
   return (
     <Modal
       animationType="slide"
       transparent={true}
-      visible={isOpenConsentMessage}
+      visible={isOpenRefuseMessage}
     >
       <View
         style={{
@@ -25,7 +25,7 @@ const ConsentMessage = ({ isOpenConsentMessage, openConsentMessage }) => {
       >
         <View style={styles.container}>
           <View style={styles.closeButtonContainer}>
-            <TouchableOpacity onPress={openConsentMessage}>
+            <TouchableOpacity onPress={openRefuseMessage}>
               <Image
                 source={require("../../assets/close.png")}
                 style={{ width: 16, height: 16 }}
@@ -34,13 +34,12 @@ const ConsentMessage = ({ isOpenConsentMessage, openConsentMessage }) => {
           </View>
           <View style={styles.content}>
             <Image
-              source={require("../../assets/consent.png")}
+              source={require("../../assets/refuse.png")}
               style={{ width: 120, height: 120, alignSelf: "center" }}
             />
             <Text style={styles.title}>
               수연님이 대결 신청을{" "}
-              <Text style={{ color: "#007560" }}>승낙</Text>
-              했어요
+              <Text style={{ color: "#D32F2F" }}>거절</Text>했어요
             </Text>
           </View>
         </View>
@@ -76,4 +75,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ConsentMessage;
+export default RefuseMsg;

@@ -1,170 +1,115 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   View,
   Text,
   StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-  Keyboard,
+  Image,
+  Modal,
+  TouchableOpacity,
 } from "react-native";
-import Input from "../Input/input";
-import LargeBtnDisable from "../Btn/largeBtnDisable";
-import LargeBtn from "../Btn/largeBtn";
-import Modal from "react-native-modal";
+import MiddleBtn from "../Btn/middleBtn";
+import MiddleBtnBlack from "../Btn/middleBtnBlack";
 
-const MatchMsg = ({ isMatchModal, matchModal }) => {
-  const [date, setDate] = useState("");
-  const [message, setMessage] = useState("");
-  const [money, setMoney] = useState("");
-  const [compensation, setCompensation] = useState("");
-  const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
-
-  const handleDateChange = (text) => {
-    setDate(text);
-  };
-
-  const handleMessageChange = (text) => {
-    setMessage(text);
-  };
-
-  const handleCompensationChange = (text) => {
-    setCompensation(text);
-  };
-
-  const formattedMoney = (value) => {
-    const parsedValue = parseFloat(value.replace(/,/g, ""));
-    if (!isNaN(parsedValue)) {
-      return parsedValue.toLocaleString();
-    } else {
-      return "";
-    }
-  };
-
-  // money 상태 변수 업데이트
-  const handleMoneyChange = (text) => {
-    const cleanedText = text.replace(/[^0-9,]/g, "");
-    const formattedValue = formattedMoney(cleanedText);
-    setMoney(formattedValue);
-  };
-
-  const handlePostApiTestStart = () => {
-    alert("등록");
-  };
-
-  useEffect(() => {
-    if (message && money && date) {
-      setIsAllFieldsFilled(true);
-    } else {
-      setIsAllFieldsFilled(false);
-    }
-  }, [message, money, date, compensation]);
-
+const MatchMsg = ({ isVisible, toggleModal }) => {
   return (
-    <Modal
-      isVisible={isMatchModal}
-      animationIn="slideInUp"
-      animationOut="slideOutDown"
-      onSwipeComplete={matchModal}
-      swipeDirection="down"
-      style={styles.modal}
-    >
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.modalContainer}
+    <Modal animationType="slide" transparent={true} visible={isVisible}>
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          // backgroundColor: "rgba(0, 0, 0, 0.5)",
+          height: "100%",
+        }}
       >
-        <View
-          style={{
-            width: 64,
-            height: 4,
-            backgroundColor: "#C1C1C1",
-            alignSelf: "center",
-            borderRadius: 12,
-          }}
-        />
-        <Text
-          style={{
-            fontSize: 22,
-            fontWeight: "bold",
-            color: "#1F1F1F",
-            alignSelf: "center",
-            marginBottom: 24,
-            marginTop: 24,
-          }}
-        >
-          민규에게 대결 신청
-        </Text>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalText}>친구를 도발해보세요!</Text>
-          <Input
-            placeholder={"도발 메세지"}
-            inputValue={message}
-            handleInputChange={handleMessageChange}
-          />
-          <Text style={styles.subText}>* 최대 20자</Text>
-        </View>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalText}>무엇을 걸고 대결할까요?</Text>
-          <Input
-            placeholder={"대결 보상"}
-            inputValue={compensation}
-            handleInputChange={handleCompensationChange}
-          />
-        </View>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalText}>대결 기간과 금액을 설정해 주세요</Text>
-          <Input
-            placeholder={"대결 기간"}
-            inputValue={date}
-            handleInputChange={handleDateChange}
-          />
-          <Text style={styles.subText}>
-            * 상대가 승낙한 시점부터 대결이 시작됩니다
+        <View style={styles.container}>
+          <View style={styles.closeButtonContainer}>
+            <TouchableOpacity onPress={toggleModal}>
+              <Image
+                source={require("../../assets/close.png")}
+                style={{ width: 16, height: 16 }}
+              />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.title}>
+            @@님에게서
+            {"\n"}대결 신청이 왔어요!
           </Text>
-          <Input
-            placeholder={"대결 금액"}
-            inputValue={money}
-            handleInputChange={handleMoneyChange}
-          />
+          <View style={styles.textContainer}>
+            <View style={styles.textRow}>
+              <Text style={styles.textLabel}>도발 메세지</Text>
+              <Text style={styles.textValue}>도발 메세지</Text>
+            </View>
+            <View style={styles.textRow}>
+              <Text style={styles.textLabel}>대결 보상</Text>
+              <Text style={styles.textValue}>맘스터치 기프티콘</Text>
+            </View>
+            <View style={styles.textRow}>
+              <Text style={styles.textLabel}>대결 기간/보상</Text>
+              <Text style={styles.textValue}>7일</Text>
+              <Text style={styles.textValue}>150,000원</Text>
+            </View>
+          </View>
+          <View style={styles.buttonContainer}>
+            <MiddleBtn text={"승낙"} />
+            <MiddleBtnBlack text={"거절"} />
+          </View>
         </View>
-        <View style={{ marginBottom: 31 }}>
-          {isAllFieldsFilled ? (
-            <LargeBtn text={"등록하기"} onClick={handlePostApiTestStart} />
-          ) : (
-            <LargeBtnDisable text={"전송하기"} />
-          )}
-        </View>
-      </KeyboardAvoidingView>
+      </View>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  modal: {
-    margin: 0,
-    justifyContent: "flex-end",
+  container: {
+    width: 335,
+    // height: 480,
+    borderRadius: 16,
+    borderWidth: 1.5,
+    borderColor: "#1F1F1F",
+    backgroundColor: "#fff",
+    borderBottomWidth: 3,
+    borderRightWidth: 3,
   },
-  modalContainer: {
-    backgroundColor: "white",
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    padding: 28,
-    paddingTop: 20,
+  closeButtonContainer: {
+    alignSelf: "flex-end",
+    paddingTop: 16,
+    paddingRight: 16,
   },
-  modalContent: {
+  title: {
+    fontSize: 22,
+    fontWeight: "700",
     marginBottom: 24,
+    textAlign: "center",
+    color: "#000",
+  },
+  textContainer: {
+    flexDirection: "cloumns",
+    gap: 24,
+    paddingLeft: 24,
+    // marginBottom: 24,
+  },
+  textRow: {
+    flexDirection: "cloumns",
     gap: 8,
+    // justifyContent: "space-between",
+    // marginBottom: 8,
   },
-  modalText: {
+  textLabel: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#000",
+  },
+  textValue: {
     fontSize: 16,
-    fontWeight: 500,
-    color: "#1F1F1F",
-    paddingLeft: 10,
+    fontWeight: "500",
+    color: "#000",
   },
-  subText: {
-    fontSize: 12,
-    fontWeight: 500,
-    color: "#5C5C5C",
-    paddingLeft: 10,
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 15,
+    marginTop: 40,
+    marginBottom: 39,
   },
 });
 

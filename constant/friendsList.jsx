@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import Message from "../components/Modal/message";
-import RefuseMessage from "../components/Modal/refuseMessage";
-import ConsentMessage from "../components/Modal/consentMessage";
+import RefuseMsg from "../components/Modal/refuseMsg";
 import WinnerModal from "../components/Modal/winnerModal";
 import LoserModal from "../components/Modal/loserModal";
 import MatchMsg from "../components/Modal/matchMsg";
 import ErrorModal from "../components/Modal/errorModal";
+import ConsentMsg from "../components/Modal/consentMsg";
+import MatchSendMsg from "../components/Modal/matchSendMsg";
 
 function FriendsList({ navigation }) {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -508,12 +508,12 @@ function FriendsList({ navigation }) {
           </View>
         </View>
       </ScrollView>
-      <Message isVisible={isModalVisible} toggleModal={toggleModal} />
-      <RefuseMessage
+      <MatchMsg isVisible={isModalVisible} toggleModal={toggleModal} />
+      <RefuseMsg
         isOpenRefuseMessage={isOpenRefuseMessage}
         openRefuseMessage={openRefuseMessage}
       />
-      <ConsentMessage
+      <ConsentMsg
         isOpenConsentMessage={isOpenConsentMessage}
         openConsentMessage={openConsentMessage}
       />
@@ -525,7 +525,7 @@ function FriendsList({ navigation }) {
         isOpenLoserModal={isOpenLoserModal}
         openLoserModal={openLoserModal}
       />
-      <MatchMsg isMatchModal={isMatchModal} matchModal={matchModal} />
+      <MatchSendMsg isMatchModal={isMatchModal} matchModal={matchModal} />
       <ErrorModal
         isOpenErrorModal={isOpenErrorModal}
         openErrorModal={openErrorModal}
