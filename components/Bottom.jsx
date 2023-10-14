@@ -17,6 +17,13 @@ const Bottom = () => {
 
   const [selectedIcon, setSelectedIcon] = useState("Note");
 
+  const imageSource =
+    selectedIcon === "MyPage"
+      ? require("../assets/profileClick.png")
+      : require("../assets/profile.png");
+
+  <Image source={imageSource} />;
+
   const toggleIcons = (iconName) => {
     if (selectedIcon !== iconName) {
       setSelectedIcon(iconName);
@@ -27,6 +34,7 @@ const Bottom = () => {
     setIconVisible(!iconVisible);
   };
 
+  // default 아이콘 선택 값
   useEffect(() => {
     if (!selectedIcon) {
       setSelectedIcon("Note");
@@ -104,6 +112,7 @@ const Bottom = () => {
           />
           <Text style={styles.menuText}>대화</Text>
         </TouchableOpacity>
+        {/* 중앙 아이콘 */}
         <TouchableOpacity
           activeOpacity={1}
           style={styles.menuItem}
@@ -133,18 +142,15 @@ const Bottom = () => {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={1}
-          style={[
-            styles.menuItem,
-            selectedIcon === "Spending" && styles.selectedIconContainer,
-          ]}
+          style={[styles.menuItem]}
           onPress={() => {
-            toggleIcons("Spending");
-            navigation.navigate("Spending");
+            toggleIcons("MyPage");
+            navigation.navigate("MyPage");
           }}
         >
           <Image
-            source={require("../assets/profile.png")}
-            style={styles.icon}
+            style={[styles.icon, selectedIcon === "MyPage" && styles.iconClick]}
+            source={imageSource}
           />
           <Text style={styles.menuText}>마이페이지</Text>
         </TouchableOpacity>
@@ -193,6 +199,10 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 1,
+  },
+  iconClick: {
+    width: 36,
+    height: 36,
   },
 });
 
