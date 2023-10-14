@@ -14,6 +14,7 @@ import MatchMsg from "../components/Modal/matchMsg";
 import ErrorModal from "../components/Modal/errorModal";
 import ConsentMsg from "../components/Modal/consentMsg";
 import MatchSendMsg from "../components/Modal/matchSendMsg";
+import Line from "../components/Line";
 
 function FriendsList({ navigation }) {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -89,13 +90,7 @@ function FriendsList({ navigation }) {
         >
           대결중인 친구
         </Text>
-        <View
-          style={{
-            width: "100%",
-            height: 2,
-            backgroundColor: "#C1C1C1",
-          }}
-        />
+        <Line color={"#C1C1C1"} />
         <ScrollView>
           <View
             style={{
@@ -139,21 +134,15 @@ function FriendsList({ navigation }) {
               </TouchableOpacity>
             </View>
           </View>
-          <View
-            style={{
-              width: "100%",
-              height: 2,
-              backgroundColor: "#C1C1C1",
-              marginBottom: 20,
-            }}
-          />
+          <Line color={"#C1C1C1"} />
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
               paddingLeft: 28,
               paddingRight: 28,
-              marginBottom: 20,
+              paddingBottom: 20,
+              paddingTop: 20,
             }}
           >
             <View style={{ flexDirection: "row" }}>
@@ -188,21 +177,15 @@ function FriendsList({ navigation }) {
               </TouchableOpacity>
             </View>
           </View>
-          <View
-            style={{
-              width: "100%",
-              height: 2,
-              backgroundColor: "#C1C1C1",
-              marginBottom: 20,
-            }}
-          />
+          <Line color={"#C1C1C1"} />
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
               paddingLeft: 28,
               paddingRight: 28,
-              marginBottom: 20,
+              paddingBottom: 20,
+              paddingTop: 20,
             }}
           >
             <View style={{ flexDirection: "row" }}>
@@ -241,13 +224,7 @@ function FriendsList({ navigation }) {
             </View>
           </View>
         </ScrollView>
-        <View
-          style={{
-            width: "100%",
-            height: 2,
-            backgroundColor: "#1F1F1F",
-          }}
-        />
+        <Line color={"#C1C1C1"} />
       </View>
       {/* 친구 목록 */}
       <Text
@@ -261,13 +238,7 @@ function FriendsList({ navigation }) {
       >
         친구
       </Text>
-      <View
-        style={{
-          width: "100%",
-          height: 2,
-          backgroundColor: "#C1C1C1",
-        }}
-      />
+      <Line color={"#C1C1C1"} />
       <ScrollView>
         <View
           style={{
@@ -311,21 +282,15 @@ function FriendsList({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        <View
-          style={{
-            width: "100%",
-            height: 2,
-            backgroundColor: "#C1C1C1",
-            marginBottom: 20,
-          }}
-        />
+        <Line color={"#C1C1C1"} />
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
             paddingLeft: 28,
             paddingRight: 28,
-            marginBottom: 20,
+            paddingBottom: 20,
+            paddingTop: 20,
           }}
         >
           <View style={{ flexDirection: "row" }}>
@@ -360,21 +325,15 @@ function FriendsList({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        <View
-          style={{
-            width: "100%",
-            height: 2,
-            backgroundColor: "#C1C1C1",
-            marginBottom: 20,
-          }}
-        />
+        <Line color={"#C1C1C1"} />
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
             paddingLeft: 28,
             paddingRight: 28,
-            marginBottom: 20,
+            paddingBottom: 20,
+            paddingTop: 20,
           }}
         >
           <View style={{ flexDirection: "row" }}>
@@ -409,21 +368,15 @@ function FriendsList({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        <View
-          style={{
-            width: "100%",
-            height: 2,
-            backgroundColor: "#C1C1C1",
-            marginBottom: 20,
-          }}
-        />
+        <Line color={"#C1C1C1"} />
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
             paddingLeft: 28,
             paddingRight: 28,
-            marginBottom: 20,
+            paddingBottom: 20,
+            paddingTop: 20,
           }}
         >
           <View style={{ flexDirection: "row" }}>
@@ -458,21 +411,15 @@ function FriendsList({ navigation }) {
             </TouchableOpacity>
           </View>
         </View>
-        <View
-          style={{
-            width: "100%",
-            height: 2,
-            backgroundColor: "#C1C1C1",
-            marginBottom: 20,
-          }}
-        />
+        <Line color={"#C1C1C1"} />
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
             paddingLeft: 28,
             paddingRight: 28,
-            marginBottom: 20,
+            paddingBottom: 20,
+            paddingTop: 20,
           }}
         >
           <View style={{ flexDirection: "row" }}>
