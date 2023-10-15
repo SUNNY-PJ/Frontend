@@ -25,8 +25,7 @@ const Community = () => {
         <View
           style={{
             flexDirection: "row",
-            justifyContent: "center",
-            gap: 116,
+            justifyContent: "space-around",
             marginTop: 25,
             marginBottom: 18,
           }}
