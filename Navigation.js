@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 import Splash from "./screen/splash";
-import FriendsList from "./constant/friendsList";
+import FriendsList from "./screen/Friends/friendsList";
 import Note from "./constant/note";
 import Statistics from "./constant/statistics";
 import Top from "./components/Top";
@@ -23,6 +23,7 @@ import MyInfo from "./screen/MyPage/myInfo";
 import MyScrap from "./screen/MyPage/myScrap";
 import MyWrite from "./screen/MyPage/myWrite";
 import MyComment from "./screen/MyPage/myComment";
+import FriendProfile from "./screen/Friends/friendProfile";
 
 const Stack = createStackNavigator();
 
@@ -67,6 +68,11 @@ function StackScreen() {
       <Stack.Screen name="MyScrap" component={MyScrap} />
       <Stack.Screen name="MyWrite" component={MyWrite} />
       <Stack.Screen name="MyComment" component={MyComment} />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="FriendProfile"
+        component={FriendProfile}
+      />
     </Stack.Navigator>
   );
 }
