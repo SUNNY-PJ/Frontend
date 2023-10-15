@@ -35,10 +35,10 @@ const Kakao = () => {
           console.log("accessToken:::::", access_token);
           storeData(access_token);
           storeData(refresh_token);
+          navigation.navigate("SignUp", { screen: "SignUp" });
         }
         console.log("데이터:::::", response.data);
         // 임시 경로
-        navigation.navigate("SignUp", { screen: "SignUp" });
       }
     } catch (error) {
       console.log("errorMessage:::", error.message);
