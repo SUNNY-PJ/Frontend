@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignSelf: "center",
     color: "black",
+    backgroundColor: "#fff",
   },
 });
 
