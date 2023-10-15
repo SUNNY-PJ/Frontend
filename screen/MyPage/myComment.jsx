@@ -17,22 +17,34 @@ const MyComment = () => {
   return (
     <View style={styles.container}>
       <View style={styles.box}>
-        <Text style={styles.title}>게시글 제목</Text>
+        <Text style={styles.title}>댓글 내용 댓글 내내용용</Text>
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.description}>짱구</Text>
-          <Text style={styles.description}>20 시간 전</Text>
-          <Text style={styles.description}>조회 1,411</Text>
-          <Text style={styles.description}>댓글 22</Text>
+          <Text style={styles.description}>2023.11.17 17:19</Text>
         </View>
       </View>
       <Line color={"#C1C1C1"} h={1} />
       <View style={styles.box}>
-        <Text style={styles.title}>하윙</Text>
+        <Text style={styles.title}>여긴 댓글 내용임</Text>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.description}>뿡뿡이</Text>
-          <Text style={styles.description}>2023.11.17</Text>
-          <Text style={styles.description}>조회 1,411</Text>
-          <Text style={styles.description}>댓글 22</Text>
+          <Text style={styles.description}>뿡뿡이는 무얼 먹을까</Text>
+          <Text style={styles.description}>2023.11.17 17:19</Text>
+        </View>
+      </View>
+      <Line color={"#C1C1C1"} h={1} />
+      <View style={styles.box}>
+        <Text style={styles.title}>댓글임</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.description}>롯데월드 갈 사람</Text>
+          <Text style={styles.description}>2023.09.09 09:23</Text>
+        </View>
+      </View>
+      <Line color={"#C1C1C1"} h={1} />
+      <View style={styles.box}>
+        <Text style={styles.title}>내가 쓴 댓글임</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.description}>하윙</Text>
+          <Text style={styles.description}>2023.09.09 07:09</Text>
         </View>
       </View>
       <Line color={"#C1C1C1"} h={1} />
@@ -40,29 +52,7 @@ const MyComment = () => {
         <Text style={styles.title}>댓글임</Text>
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.description}>알라리알라숑</Text>
-          <Text style={styles.description}>2023.09.09</Text>
-          <Text style={styles.description}>조회 0</Text>
-          <Text style={styles.description}>댓글 2</Text>
-        </View>
-      </View>
-      <Line color={"#C1C1C1"} h={1} />
-      <View style={styles.box}>
-        <Text style={styles.title}>댓글임</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.description}>알라리알라숑</Text>
-          <Text style={styles.description}>2023.09.09</Text>
-          <Text style={styles.description}>조회 0</Text>
-          <Text style={styles.description}>댓글 2</Text>
-        </View>
-      </View>
-      <Line color={"#C1C1C1"} h={1} />
-      <View style={styles.box}>
-        <Text style={styles.title}>댓글임</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.description}>알라리알라숑</Text>
-          <Text style={styles.description}>2023.09.09</Text>
-          <Text style={styles.description}>조회 0</Text>
-          <Text style={styles.description}>댓글 2</Text>
+          <Text style={styles.description}>2023.09.09 07:09</Text>
         </View>
       </View>
       <Line color={"#C1C1C1"} h={1} />

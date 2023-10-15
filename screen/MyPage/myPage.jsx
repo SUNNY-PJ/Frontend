@@ -13,6 +13,9 @@ import { useNavigation } from "@react-navigation/native";
 
 const MyPage = () => {
   const navigation = useNavigation();
+  const handleTabClick = (tab) => {
+    navigation.navigate("MyInfo", { activeTab: tab });
+  };
 
   return (
     <View style={styles.container}>
@@ -63,20 +66,34 @@ const MyPage = () => {
         >
           커뮤니티
         </Text>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           activeOpacity={0.6}
           onPress={() =>
             navigation.navigate("MyInfo", {
               screen: "MyInfo",
             })
           }
+        > */}
+        <TouchableOpacity
+          activeOpacity={0.6}
+          onPress={() => handleTabClick("scrap")}
         >
           <Text style={styles.description}>스크랩</Text>
         </TouchableOpacity>
         <Line color={"#C1C1C1"} h={1} />
-        <Text style={styles.description}>작성글</Text>
+        <TouchableOpacity
+          activeOpacity={0.6}
+          onPress={() => handleTabClick("write")}
+        >
+          <Text style={styles.description}>작성글</Text>
+        </TouchableOpacity>
         <Line color={"#C1C1C1"} h={1} />
-        <Text style={styles.description}>작성 댓글</Text>
+        <TouchableOpacity
+          activeOpacity={0.6}
+          onPress={() => handleTabClick("comment")}
+        >
+          <Text style={styles.description}>작성 댓글</Text>
+        </TouchableOpacity>
         <Line color={"#C1C1C1"} h={4} />
         <Text
           style={{

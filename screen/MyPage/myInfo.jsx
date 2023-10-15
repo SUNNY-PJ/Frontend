@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Animated,
 } from "react-native";
-import Line from "../../components/Line";
+import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import MyScrap from "./myScrap";
 import MyWrite from "./myWrite";
@@ -16,27 +16,13 @@ import MyComment from "./myComment";
 
 const MyInfo = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const activeTabVal = route.params?.activeTab || "scrap";
 
-  const [scrap, setScrap] = useState(false);
-  const [write, setWrite] = useState(true);
-  const [comment, setComment] = useState(false);
+  const [activeTab, setActiveTab] = useState(activeTabVal);
 
-  const scrapClick = () => {
-    setScrap(true);
-    setWrite(false);
-    setComment(false);
-  };
-
-  const writeClick = () => {
-    setWrite(true);
-    setScrap(false);
-    setComment(false);
-  };
-
-  const commentClick = () => {
-    setComment(true);
-    setWrite(false);
-    setScrap(false);
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
   };
 
   return (
@@ -98,39 +84,70 @@ const MyInfo = () => {
           }}
         >
           <TouchableOpacity
-            onPress={scrapClick}
+            onPress={() => handleTabClick("scrap")}
             activeOpacity={0.6}
-            style={{ paddingLeft: 30 }}
+            style={{ paddingLeft: 34 }}
           >
-            <Text style={[styles.tabText, scrap && styles.activeTabText]}>
+            <Text
+              style={[
+                styles.tabText,
+                activeTab === "scrap" && styles.activeTabText,
+              ]}
+            >
               스크랩
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={writeClick} activeOpacity={0.6}>
-            <Text style={[styles.tabText, write && styles.activeTabText]}>
+          <TouchableOpacity
+            onPress={() => handleTabClick("write")}
+            activeOpacity={0.6}
+          >
+            <Text
+              style={[
+                styles.tabText,
+                activeTab === "write" && styles.activeTabText,
+              ]}
+            >
               작성글
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={commentClick}
+            onPress={() => handleTabClick("comment")}
             activeOpacity={0.6}
-            style={{ paddingRight: 30 }}
+            style={{ paddingRight: 34 }}
           >
-            <Text style={[styles.tabText, comment && styles.activeTabText]}>
+            <Text
+              style={[
+                styles.tabText,
+                activeTab === "comment" && styles.activeTabText,
+              ]}
+            >
               작성 댓글
             </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.tabBar}>
-          <View style={[styles.tabBarLine, scrap && styles.activeTabBarLine]} />
-          <View style={[styles.tabBarLine, write && styles.activeTabBarLine]} />
           <View
-            style={[styles.tabBarLine, comment && styles.activeTabBarLine]}
+            style={[
+              styles.tabBarLine,
+              activeTab === "scrap" && styles.activeTabBarLine,
+            ]}
+          />
+          <View
+            style={[
+              styles.tabBarLine,
+              activeTab === "write" && styles.activeTabBarLine,
+            ]}
+          />
+          <View
+            style={[
+              styles.tabBarLine,
+              activeTab === "comment" && styles.activeTabBarLine,
+            ]}
           />
         </View>
-        {scrap && <MyScrap />}
-        {write && <MyWrite />}
-        {comment && <MyComment />}
+        {activeTab === "scrap" && <MyScrap />}
+        {activeTab === "write" && <MyWrite />}
+        {activeTab === "comment" && <MyComment />}
       </View>
     </View>
   );
