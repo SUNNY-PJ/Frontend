@@ -33,6 +33,7 @@ const MyPage = () => {
           <View style={{ gap: 8 }}>
             <Text style={styles.name}>사용자12</Text>
             <TouchableOpacity
+              activeOpacity={0.6}
               onPress={() =>
                 navigation.navigate("SettingProfile", {
                   screen: "SettingProfile",
@@ -62,7 +63,16 @@ const MyPage = () => {
         >
           커뮤니티
         </Text>
-        <Text style={styles.description}>스크랩</Text>
+        <TouchableOpacity
+          activeOpacity={0.6}
+          onPress={() =>
+            navigation.navigate("MyInfo", {
+              screen: "MyInfo",
+            })
+          }
+        >
+          <Text style={styles.description}>스크랩</Text>
+        </TouchableOpacity>
         <Line color={"#C1C1C1"} h={1} />
         <Text style={styles.description}>작성글</Text>
         <Line color={"#C1C1C1"} h={1} />
