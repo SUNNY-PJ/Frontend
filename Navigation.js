@@ -19,6 +19,10 @@ import ApiTest from "./constant/apiTest";
 import Community from "./screen/Community/community";
 import MyPage from "./screen/MyPage/myPage";
 import SettingProfile from "./screen/MyPage/settingProfile";
+import MyInfo from "./screen/MyPage/myInfo";
+import MyScrap from "./screen/MyPage/myScrap";
+import MyWrite from "./screen/MyPage/myWrite";
+import MyComment from "./screen/MyPage/myComment";
 
 const Stack = createStackNavigator();
 
@@ -59,6 +63,10 @@ function StackScreen() {
       <Stack.Screen name="Community" component={Community} />
       <Stack.Screen name="MyPage" component={MyPage} />
       <Stack.Screen name="SettingProfile" component={SettingProfile} />
+      <Stack.Screen name="MyInfo" component={MyInfo} />
+      <Stack.Screen name="MyScrap" component={MyScrap} />
+      <Stack.Screen name="MyWrite" component={MyWrite} />
+      <Stack.Screen name="MyComment" component={MyComment} />
     </Stack.Navigator>
   );
 }
