@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
   box: {
     paddingLeft: 16,
     paddingRight: 16,
-    paddingBottom: 12,
-    paddingTop: 12,
+    paddingBottom: 8,
+    paddingTop: 8,
     backgroundColor: "#fff",
   },
   title: { fontSize: 20, color: "#000", fontWeight: 500, padding: 4 },
