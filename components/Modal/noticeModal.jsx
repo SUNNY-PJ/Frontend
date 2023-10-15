@@ -10,9 +10,9 @@ import {
 } from "react-native";
 import RegularBtnOrange from "../Btn/regularBtnOrange";
 
-const NoticeModal = ({ isOpenErrorModal, openErrorModal }) => {
+const NoticeModal = ({ isOpenNoticeModal, openNoticeModal }) => {
   return (
-    <Modal animationType="slide" transparent={true} visible={isOpenErrorModal}>
+    <Modal animationType="slide" transparent={true} visible={isOpenNoticeModal}>
       <View
         style={{
           justifyContent: "center",
@@ -31,7 +31,7 @@ const NoticeModal = ({ isOpenErrorModal, openErrorModal }) => {
               아직 준비 중이에요{"\n"}
               빠르게 준비해 찾아뵐게요!
             </Text>
-            <TouchableOpacity onPress={openErrorModal} activeOpacity={0.6}>
+            <TouchableOpacity onPress={openNoticeModal} activeOpacity={0.6}>
               <RegularBtnOrange text={"확인"} />
             </TouchableOpacity>
           </View>

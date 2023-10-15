@@ -15,6 +15,7 @@ import ErrorModal from "../components/Modal/errorModal";
 import ConsentMsg from "../components/Modal/consentMsg";
 import MatchSendMsg from "../components/Modal/matchSendMsg";
 import Line from "../components/Line";
+import NoticeModal from "../components/Modal/noticeModal";
 
 function FriendsList({ navigation }) {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -24,6 +25,7 @@ function FriendsList({ navigation }) {
   const [isOpenLoserModal, setIsOpenLoserModal] = useState(false);
   const [isMatchModal, setIsMatchModal] = useState(false);
   const [isOpenErrorModal, setIsOpenErrorModal] = useState(false);
+  const [isOpenNoticeModal, setIsOpenNoticeModal] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -51,6 +53,10 @@ function FriendsList({ navigation }) {
 
   const openErrorModal = () => {
     setIsOpenErrorModal(!isOpenErrorModal);
+  };
+
+  const openNoticeModal = () => {
+    setIsOpenNoticeModal(!isOpenNoticeModal);
   };
 
   return (
@@ -275,7 +281,7 @@ function FriendsList({ navigation }) {
                 style={styles.icon}
               />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.6} onPress={openNoticeModal}>
               <Image
                 source={require("../assets/VersusIconBlack.png")}
                 style={styles.icon}
@@ -477,6 +483,10 @@ function FriendsList({ navigation }) {
       <ErrorModal
         isOpenErrorModal={isOpenErrorModal}
         openErrorModal={openErrorModal}
+      />
+      <NoticeModal
+        isOpenNoticeModal={isOpenNoticeModal}
+        openNoticeModal={openNoticeModal}
       />
     </View>
   );
