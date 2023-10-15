@@ -7,17 +7,20 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import RefuseMsg from "../components/Modal/refuseMsg";
-import WinnerModal from "../components/Modal/winnerModal";
-import LoserModal from "../components/Modal/loserModal";
-import MatchMsg from "../components/Modal/matchMsg";
-import ErrorModal from "../components/Modal/errorModal";
-import ConsentMsg from "../components/Modal/consentMsg";
-import MatchSendMsg from "../components/Modal/matchSendMsg";
-import Line from "../components/Line";
-import NoticeModal from "../components/Modal/noticeModal";
+import { useNavigation } from "@react-navigation/native";
+import RefuseMsg from "../../components/Modal/refuseMsg";
+import WinnerModal from "../../components/Modal/winnerModal";
+import LoserModal from "../../components/Modal/loserModal";
+import MatchMsg from "../../components/Modal/matchMsg";
+import ErrorModal from "../../components/Modal/errorModal";
+import ConsentMsg from "../../components/Modal/consentMsg";
+import MatchSendMsg from "../../components/Modal/matchSendMsg";
+import Line from "../../components/Line";
+import NoticeModal from "../../components/Modal/noticeModal";
 
-function FriendsList({ navigation }) {
+function FriendsList() {
+  const navigation = useNavigation();
+
   const [isModalVisible, setModalVisible] = useState(false);
   const [isOpenRefuseMessage, setIsOpenRefuseMessage] = useState(false);
   const [isOpenConsentMessage, setIsOpenConsentMessage] = useState(false);
@@ -110,10 +113,19 @@ function FriendsList({ navigation }) {
             }}
           >
             <View style={{ flexDirection: "row" }}>
-              <Image
-                source={require("../assets/Avatar.png")}
-                style={styles.icon}
-              />
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() =>
+                  navigation.navigate("FriendProfile", {
+                    screen: "FriendProfile",
+                  })
+                }
+              >
+                <Image
+                  source={require("../../assets/Avatar.png")}
+                  style={styles.icon}
+                />
+              </TouchableOpacity>
               <Text
                 style={{
                   marginLeft: 8,
@@ -129,13 +141,13 @@ function FriendsList({ navigation }) {
             <View style={{ flexDirection: "row", gap: 16 }}>
               <TouchableOpacity activeOpacity={0.6} onPress={toggleModal}>
                 <Image
-                  source={require("../assets/messageBlack.png")}
+                  source={require("../../assets/messageBlack.png")}
                   style={styles.icon}
                 />
               </TouchableOpacity>
               <TouchableOpacity activeOpacity={0.6} onPress={openRefuseMessage}>
                 <Image
-                  source={require("../assets/VersusIcon.png")}
+                  source={require("../../assets/VersusIcon.png")}
                   style={styles.icon}
                 />
               </TouchableOpacity>
@@ -153,10 +165,12 @@ function FriendsList({ navigation }) {
             }}
           >
             <View style={{ flexDirection: "row" }}>
-              <Image
-                source={require("../assets/Avatar.png")}
-                style={styles.icon}
-              />
+              <TouchableOpacity activeOpacity={0.6}>
+                <Image
+                  source={require("../../assets/Avatar.png")}
+                  style={styles.icon}
+                />
+              </TouchableOpacity>
               <Text
                 style={{
                   marginLeft: 8,
@@ -172,13 +186,13 @@ function FriendsList({ navigation }) {
             <View style={{ flexDirection: "row", gap: 16 }}>
               <TouchableOpacity activeOpacity={0.6} onPress={openWinnerModal}>
                 <Image
-                  source={require("../assets/messageBlack.png")}
+                  source={require("../../assets/messageBlack.png")}
                   style={styles.icon}
                 />
               </TouchableOpacity>
               <TouchableOpacity activeOpacity={0.6} onPress={openLoserModal}>
                 <Image
-                  source={require("../assets/VersusIcon.png")}
+                  source={require("../../assets/VersusIcon.png")}
                   style={styles.icon}
                 />
               </TouchableOpacity>
@@ -197,7 +211,7 @@ function FriendsList({ navigation }) {
           >
             <View style={{ flexDirection: "row" }}>
               <Image
-                source={require("../assets/Avatar.png")}
+                source={require("../../assets/Avatar.png")}
                 style={styles.icon}
               />
               <Text
@@ -215,7 +229,7 @@ function FriendsList({ navigation }) {
             <View style={{ flexDirection: "row", gap: 16 }}>
               <TouchableOpacity activeOpacity={0.6} onPress={matchModal}>
                 <Image
-                  source={require("../assets/messageBlack.png")}
+                  source={require("../../assets/messageBlack.png")}
                   style={styles.icon}
                 />
               </TouchableOpacity>
@@ -224,7 +238,7 @@ function FriendsList({ navigation }) {
                 onPress={openConsentMessage}
               >
                 <Image
-                  source={require("../assets/VersusIconRed.png")}
+                  source={require("../../assets/VersusIconRed.png")}
                   style={styles.icon}
                 />
               </TouchableOpacity>
@@ -259,7 +273,7 @@ function FriendsList({ navigation }) {
         >
           <View style={{ flexDirection: "row" }}>
             <Image
-              source={require("../assets/Avatar.png")}
+              source={require("../../assets/Avatar.png")}
               style={styles.icon}
             />
             <Text
@@ -277,190 +291,19 @@ function FriendsList({ navigation }) {
           <View style={{ flexDirection: "row", gap: 16 }}>
             <TouchableOpacity activeOpacity={0.6} onPress={openErrorModal}>
               <Image
-                source={require("../assets/messageBlack.png")}
+                source={require("../../assets/messageBlack.png")}
                 style={styles.icon}
               />
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.6} onPress={openNoticeModal}>
               <Image
-                source={require("../assets/VersusIconBlack.png")}
+                source={require("../../assets/VersusIconBlack.png")}
                 style={styles.icon}
               />
             </TouchableOpacity>
           </View>
         </View>
         <Line color={"#C1C1C1"} h={2} />
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingLeft: 28,
-            paddingRight: 28,
-            paddingBottom: 20,
-            paddingTop: 20,
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              source={require("../assets/Avatar.png")}
-              style={styles.icon}
-            />
-            <Text
-              style={{
-                marginLeft: 8,
-                fontSize: 16,
-                fontWeight: 500,
-                color: "#1F1F1F",
-                alignSelf: "center",
-              }}
-            >
-              친구2
-            </Text>
-          </View>
-          <View style={{ flexDirection: "row", gap: 16 }}>
-            <TouchableOpacity>
-              <Image
-                source={require("../assets/messageBlack.png")}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image
-                source={require("../assets/VersusIconBlack.png")}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <Line color={"#C1C1C1"} h={2} />
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingLeft: 28,
-            paddingRight: 28,
-            paddingBottom: 20,
-            paddingTop: 20,
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              source={require("../assets/Avatar.png")}
-              style={styles.icon}
-            />
-            <Text
-              style={{
-                marginLeft: 8,
-                fontSize: 16,
-                fontWeight: 500,
-                color: "#1F1F1F",
-                alignSelf: "center",
-              }}
-            >
-              친구1
-            </Text>
-          </View>
-          <View style={{ flexDirection: "row", gap: 16 }}>
-            <TouchableOpacity>
-              <Image
-                source={require("../assets/messageBlack.png")}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image
-                source={require("../assets/VersusIconBlack.png")}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <Line color={"#C1C1C1"} h={2} />
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingLeft: 28,
-            paddingRight: 28,
-            paddingBottom: 20,
-            paddingTop: 20,
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              source={require("../assets/Avatar.png")}
-              style={styles.icon}
-            />
-            <Text
-              style={{
-                marginLeft: 8,
-                fontSize: 16,
-                fontWeight: 500,
-                color: "#1F1F1F",
-                alignSelf: "center",
-              }}
-            >
-              친구1
-            </Text>
-          </View>
-          <View style={{ flexDirection: "row", gap: 16 }}>
-            <TouchableOpacity>
-              <Image
-                source={require("../assets/messageBlack.png")}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image
-                source={require("../assets/VersusIconBlack.png")}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <Line color={"#C1C1C1"} h={2} />
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingLeft: 28,
-            paddingRight: 28,
-            paddingBottom: 20,
-            paddingTop: 20,
-          }}
-        >
-          <View style={{ flexDirection: "row" }}>
-            <Image
-              source={require("../assets/Avatar.png")}
-              style={styles.icon}
-            />
-            <Text
-              style={{
-                marginLeft: 8,
-                fontSize: 16,
-                fontWeight: 500,
-                color: "#1F1F1F",
-                alignSelf: "center",
-              }}
-            >
-              친구1
-            </Text>
-          </View>
-          <View style={{ flexDirection: "row", gap: 16 }}>
-            <TouchableOpacity>
-              <Image
-                source={require("../assets/messageBlack.png")}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image
-                source={require("../assets/VersusIconBlack.png")}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
       </ScrollView>
       <MatchMsg isVisible={isModalVisible} toggleModal={toggleModal} />
       <RefuseMsg
