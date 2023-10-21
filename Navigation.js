@@ -35,11 +35,11 @@ function StackScreen() {
         header: (props) => <Top {...props} />,
       }}
     >
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Splash"
         component={Splash}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Stack.Screen
         name="Login"
         component={Login}
