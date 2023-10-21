@@ -13,10 +13,13 @@ const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from
 
 const Kakao = () => {
   console.log("페이지 진입");
+  const [code, setCode] = useState("");
   const navigation = useNavigation();
 
-  const kakao_url =
-    "https://kauth.kakao.com/oauth/authorize?client_id=7ff971db2010c97a3e191dd319ec45cd&redirect_uri=http://43.201.176.22:8080/auth/kakao/callback&response_type=code";
+  // const kakao_url =
+  //   "https://kauth.kakao.com/oauth/authorize?client_id=7ff971db2010c97a3e191dd319ec45cd&redirect_uri=http://43.201.176.22:8080/auth/kakao/callback&response_type=code";
+
+  const kakao_url = `https://kauth.kakao.com/oauth/authorize?client_id=7ff971db2010c97a3e191dd319ec45cd&redirect_uri=http://43.201.176.22:8080/auth/kakao/callback&response_type=${code}`;
 
   const fetchData = async () => {
     console.log("get 실행");
@@ -26,6 +29,7 @@ const Kakao = () => {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
+      console.log("실행중입니다............");
       console.log(response.data);
       if (response) {
         if (response.data.data) {
@@ -61,6 +65,7 @@ const Kakao = () => {
     if (condition != -1) {
       var authorize_code = data.substring(condition + exp.length);
       console.log("코드:::", authorize_code);
+      setCode(authorize_code);
     }
   }
 
