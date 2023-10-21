@@ -6,7 +6,8 @@ const Login = () => {
   const navigation = useNavigation();
 
   const handleKakaoLogin = () => {
-    navigation.navigate("Kakao", { screen: "Kakao" });
+    // navigation.navigate("Kakao", { screen: "Kakao" });
+    navigation.navigate("Kakao");
   };
 
   return (
