@@ -15,7 +15,7 @@ import InputMax from "../../components/Input/inputMax";
 
 const Post = () => {
   const [request, setRequest] = ImagePicker.useMediaLibraryPermissions();
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]); // 이미지 배열로 상태 관리
 
   const uploadImage = async () => {
     // 권한 확인
@@ -40,18 +40,17 @@ const Post = () => {
     }
     // 이미지 업로드 결과 및 이미지 경로 업데이트
     console.log(result);
-    setImage(result.assets[0].uri);
-    console.log(image);
-    // console.log(result.assets);
-    // console.log("이미지 URI:", result.assets[0].uri);
+    setImages([...images, result.assets[0].uri]); // 이미지 배열에 추가
   };
 
   // post api
-  const fileName = image.split("/").pop();
-  const match = /\.(\w+)$/.exec(fileName ?? "");
-  const type = match ? `image/${match[1]}` : `image`;
   const formData = new FormData();
-  formData.append("image", { uri: image, name: fileName, type });
+  images.forEach((image, index) => {
+    const fileName = image.split("/").pop();
+    const match = /\.(\w+)$/.exec(fileName ?? "");
+    const type = match ? `image/${match[1]}` : `image`;
+    formData.append(`image${index}`, { uri: image, name: fileName, type });
+  });
 
   return (
     <>
@@ -93,26 +92,21 @@ const Post = () => {
             미디어 첨부
           </Text>
           <View style={styles.media}>
-            <Pressable onPress={uploadImage}>
+            {images.map((image, index) => (
               <Image
-                source={
-                  image ? { uri: image } : require("../../assets/photo.png")
-                }
+                key={index}
+                source={{ uri: image }}
                 style={{ width: 70, height: 70 }}
               />
-            </Pressable>
-            <Image
-              source={require("../../assets/photo.png")}
-              style={{ width: 70, height: 70 }}
-            />
-            <Image
-              source={require("../../assets/photo.png")}
-              style={{ width: 70, height: 70 }}
-            />
-            <Image
-              source={require("../../assets/photo.png")}
-              style={{ width: 70, height: 70 }}
-            />
+            ))}
+            {images.length < 4 && (
+              <Pressable onPress={uploadImage}>
+                <Image
+                  source={require("../../assets/photo.png")}
+                  style={{ width: 70, height: 70 }}
+                />
+              </Pressable>
+            )}
           </View>
           <Text
             style={{
