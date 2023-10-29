@@ -52,15 +52,25 @@ const Tip = () => {
           </View>
         </View>
         <Line color={"#C1C1C1"} h={2} />
-        <View style={styles.box}>
-          <Text style={styles.title}>절약 꿀팁 게시판입니다</Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.description}>하루1</Text>
-            <Text style={styles.description}>20 시간 전</Text>
-            <Text style={styles.description}>조회 1,411</Text>
-            <Text style={styles.description}>댓글 22</Text>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Modify", {
+              screen: "Modify",
+            })
+          }
+          activeOpacity={0.6}
+        >
+          <View style={styles.box}>
+            <Text style={styles.title}>절약 꿀팁 게시판입니다</Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.description}>하루1</Text>
+              <Text style={styles.description}>20 시간 전</Text>
+              <Text style={styles.description}>조회 1,411</Text>
+              <Text style={styles.description}>댓글 22</Text>
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
+
         <Line color={"#C1C1C1"} h={2} />
         <View style={styles.box}>
           <Text style={styles.title}>test</Text>
