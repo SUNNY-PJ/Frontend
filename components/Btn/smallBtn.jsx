@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
-const SmallBtn = ({ onClick, title, color }) => {
+const SmallBtn = ({ onClick, title, color, border }) => {
   return (
     <>
       <TouchableOpacity onPress={onClick}>
@@ -10,7 +10,7 @@ const SmallBtn = ({ onClick, title, color }) => {
             borderWidth: 1,
             borderColor: "#1F1F1F",
             backgroundColor: color ? color : "#FFC891",
-            borderRadius: 8,
+            borderRadius: border ? border : 6,
           }}
         >
           <Text
