@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   input: {
     width: "100%",
     minHeight: 180,
+    maxHeight: 250,
     paddingVertical: 14,
     paddingHorizontal: 11,
     paddingTop: 15,
