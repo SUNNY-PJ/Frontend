@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { View, Image, Text, StyleSheet } from "react-native";
+import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Line from "../../components/Line";
+import { useNavigation } from "@react-navigation/native";
 
 const Tip = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -33,10 +36,19 @@ const Tip = () => {
               source={require("../../assets/search.png")}
               style={styles.icon}
             />
-            <Image
-              source={require("../../assets/write.png")}
-              style={styles.icon}
-            />
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() =>
+                navigation.navigate("Post", {
+                  screen: "Post",
+                })
+              }
+            >
+              <Image
+                source={require("../../assets/write.png")}
+                style={styles.icon}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <Line color={"#C1C1C1"} h={2} />
