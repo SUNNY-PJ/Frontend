@@ -54,8 +54,8 @@ const Tip = () => {
         <Line color={"#C1C1C1"} h={2} />
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate("Modify", {
-              screen: "Modify",
+            navigation.navigate("Detail", {
+              screen: "Detail",
             })
           }
           activeOpacity={0.6}
