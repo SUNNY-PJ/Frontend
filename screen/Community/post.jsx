@@ -8,14 +8,31 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import Input from "../../components/Input/input";
 import InputMax from "../../components/Input/inputMax";
+import SmallBtn from "../../components/Btn/smallBtn";
+import Line from "../../components/Line";
 
 const Post = () => {
+  const navigation = useNavigation();
+
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  const handleTitleChange = (text) => {
+    setTitle(text);
+  };
+
+  const handleContentChange = (text) => {
+    setContent(text);
+  };
+
   const [request, setRequest] = ImagePicker.useMediaLibraryPermissions();
-  const [images, setImages] = useState([]); // 이미지 배열로 상태 관리
+  const [images, setImages] = useState([]);
 
   const uploadImage = async () => {
     // 권한 확인
@@ -60,22 +77,83 @@ const Post = () => {
     formData.append(`image${index}`, { uri: image, name: fileName, type });
   });
 
+  const handlePost = () => {
+    console.log("등록 버튼 클릭");
+  };
+
   return (
     <>
       <View style={styles.container}>
         <View style={styles.contentContainer}>
+          <View
+            style={{
+              marginTop: 12,
+              marginBottom: 20,
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("Community", {
+                  screen: "Community",
+                })
+              }
+            >
+              <Image
+                source={require("../../assets/close.png")}
+                style={{
+                  width: 16,
+                  height: 16,
+                }}
+              />
+            </TouchableOpacity>
+            <SmallBtn title={"등록"} onClick={handlePost} />
+          </View>
+          {/* 카테고리 선택 */}
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginBottom: 5,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: 700,
+                borderColor: "#1F1F1F",
+              }}
+            >
+              카테고리 선택
+            </Text>
+            <Image
+              source={require("../../assets/categoryArrow.png")}
+              style={{
+                width: 24,
+                height: 24,
+              }}
+            />
+          </View>
+          <Line color={"#C1C1C1"} h={1} />
+          {/* 카테고리 선택 */}
           <Text
             style={{
               fontSize: 16,
               fontWeight: 500,
               color: "#1F1F1F",
               marginBottom: 8,
-              marginTop: 10,
+              marginTop: 16,
+              paddingLeft: 12,
             }}
           >
             제목
           </Text>
-          <Input placeholder={"제목을 입력하세요"} />
+          <Input
+            placeholder={"제목을 입력하세요"}
+            inputValue={title}
+            handleInputChange={handleTitleChange}
+          />
           <Text
             style={{
               fontSize: 16,
@@ -83,11 +161,16 @@ const Post = () => {
               color: "#1F1F1F",
               marginBottom: 8,
               marginTop: 10,
+              paddingLeft: 12,
             }}
           >
             내용
           </Text>
-          <InputMax placeholder={"내용을 입력하세요"} />
+          <InputMax
+            placeholder={"내용을 입력하세요"}
+            inputValue={content}
+            handleInputChange={handleContentChange}
+          />
           <Text
             style={{
               fontSize: 16,
@@ -165,8 +248,8 @@ const styles = StyleSheet.create({
     minHeight: "100%",
   },
   contentContainer: {
-    paddingLeft: 16,
-    paddingRight: 24,
+    paddingLeft: 20,
+    paddingRight: 21,
   },
   media: {
     flexDirection: "row",
