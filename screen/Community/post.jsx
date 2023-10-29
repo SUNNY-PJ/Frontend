@@ -43,6 +43,14 @@ const Post = () => {
     setImages([...images, result.assets[0].uri]); // 이미지 배열에 추가
   };
 
+  // 첨부한 이미지 삭제
+  const removeImage = (index) => {
+    // 이미지 배열에서 선택한 이미지를 제거
+    const updatedImages = [...images];
+    updatedImages.splice(index, 1);
+    setImages(updatedImages);
+  };
+
   // post api
   const formData = new FormData();
   images.forEach((image, index) => {
@@ -93,11 +101,37 @@ const Post = () => {
           </Text>
           <View style={styles.media}>
             {images.map((image, index) => (
-              <Image
-                key={index}
-                source={{ uri: image }}
-                style={{ width: 70, height: 70 }}
-              />
+              <View key={index} style={{ position: "relative" }}>
+                <Image
+                  source={{ uri: image }}
+                  style={{
+                    width: 70,
+                    height: 70,
+                    borderColor: "#C1C1C1",
+                    borderRadius: 8,
+                    borderWidth: 1.5,
+                  }}
+                />
+                <Pressable
+                  onPress={() => removeImage(index)}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                  }}
+                >
+                  <Image
+                    source={require("../../assets/deletePhoto.png")}
+                    style={{
+                      width: 18,
+                      height: 18,
+                      position: "absolute",
+                      top: -6,
+                      right: -6,
+                    }}
+                  />
+                </Pressable>
+              </View>
             ))}
             {images.length < 4 && (
               <Pressable onPress={uploadImage}>
