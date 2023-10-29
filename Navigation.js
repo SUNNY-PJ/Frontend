@@ -24,6 +24,7 @@ import MyScrap from "./screen/MyPage/myScrap";
 import MyWrite from "./screen/MyPage/myWrite";
 import MyComment from "./screen/MyPage/myComment";
 import FriendProfile from "./screen/Friends/friendProfile";
+import Post from "./screen/Community/post";
 
 const Stack = createStackNavigator();
 
@@ -73,6 +74,7 @@ function StackScreen() {
         name="FriendProfile"
         component={FriendProfile}
       />
+      <Stack.Screen name="Post" component={Post} />
     </Stack.Navigator>
   );
 }
