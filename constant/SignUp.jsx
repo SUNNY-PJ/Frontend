@@ -7,6 +7,8 @@ import {
   Image,
   Alert,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import { proxyUrl } from "./common";
 import { useNavigation } from "@react-navigation/native";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
@@ -33,24 +35,25 @@ const SignUp = () => {
   const handleNavigate = () => {
     navigation.navigate("Note", { screen: "Note" });
   };
-
   const postData = async () => {
     const inputURL = "/auth/nickname";
     const cleanedURL = inputURL.replace(/[\u200B]/g, "");
 
     const url = proxyUrl + cleanedURL;
     const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
     console.log("별명을 등록합니다.");
     try {
-      const bodyData = {
+      const params = {
         name: name,
       };
 
-      const response = await axios.post(url, bodyData, {
+      const response = await axios.post(url, null, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
+        params,
       });
       console.log("url:::::::", url);
       console.log(response);
