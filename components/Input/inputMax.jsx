@@ -21,13 +21,13 @@ const InputMax = ({ placeholder, inputValue, handleInputChange }) => {
         style={[
           styles.input,
           {
-            borderColor: inputValue
-              ? "#1F1F1F"
-              : isInputFocused
+            borderColor: isInputFocused
               ? "#FFA851"
+              : inputValue
+              ? "#1F1F1F"
               : "#C1C1C1",
-            borderBottomWidth: inputValue ? "3px" : "1.5px",
-            borderRightWidth: inputValue ? "3px" : "1.5px",
+            borderBottomWidth: isInputFocused ? 1.5 : inputValue ? 3 : 1.5,
+            borderRightWidth: isInputFocused ? 1.5 : inputValue ? 3 : 1.5,
           },
         ]}
         onFocus={handleFocus}
