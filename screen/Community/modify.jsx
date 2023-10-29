@@ -20,6 +20,17 @@ import Line from "../../components/Line";
 const Modify = () => {
   const navigation = useNavigation();
 
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  const handleTitleChange = (text) => {
+    setTitle(text);
+  };
+
+  const handleContentChange = (text) => {
+    setContent(text);
+  };
+
   const [request, setRequest] = ImagePicker.useMediaLibraryPermissions();
   const [images, setImages] = useState([]);
 
@@ -143,7 +154,11 @@ const Modify = () => {
           >
             제목
           </Text>
-          <Input placeholder={"제목을 입력하세요"} />
+          <Input
+            placeholder={"제목을 입력하세요"}
+            inputValue={title}
+            handleInputChange={handleTitleChange}
+          />
           <Text
             style={{
               fontSize: 16,
@@ -156,7 +171,11 @@ const Modify = () => {
           >
             내용
           </Text>
-          <InputMax placeholder={"내용을 입력하세요"} />
+          <InputMax
+            placeholder={"내용을 입력하세요"}
+            inputValue={content}
+            handleInputChange={handleContentChange}
+          />
           <Text
             style={{
               fontSize: 16,
