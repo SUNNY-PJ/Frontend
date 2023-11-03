@@ -27,6 +27,7 @@ import FriendProfile from "./screen/Friends/friendProfile";
 import Post from "./screen/Community/post";
 import Modify from "./screen/Community/modify";
 import Detail from "./screen/Community/detail";
+import Goal from "./constant/goal";
 
 const Stack = createStackNavigator();
 
@@ -79,6 +80,7 @@ function StackScreen() {
       <Stack.Screen name="Post" component={Post} />
       <Stack.Screen name="Modify" component={Modify} />
       <Stack.Screen name="Detail" component={Detail} />
+      <Stack.Screen name="Goal" component={Goal} />
     </Stack.Navigator>
   );
 }
