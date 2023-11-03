@@ -1,18 +1,39 @@
-import React, { useState } from "react";
-import {
-  View,
-  Image,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Image, Text, StyleSheet } from "react-native";
+import { proxyUrl } from "../../constant/common";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 
 const MyScrap = () => {
   const navigation = useNavigation();
+  const inputURL = "/scrap";
+  const url = proxyUrl + inputURL;
+
+  const fetchData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
+    console.log("get 실행");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      console.log(response);
+      console.log("데이터:", response.data);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    console.log("실행된건가");
+  }, []);
 
   return (
     <View style={styles.container}>
