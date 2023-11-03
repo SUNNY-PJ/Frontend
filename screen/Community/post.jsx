@@ -5,11 +5,11 @@ import {
   StyleSheet,
   Image,
   Pressable,
-  KeyboardAvoidingView,
-  Platform,
-  Keyboard,
   TouchableOpacity,
 } from "react-native";
+import { proxyUrl } from "../../constant/common";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import Input from "../../components/Input/input";
@@ -19,6 +19,10 @@ import Line from "../../components/Line";
 
 const Post = () => {
   const navigation = useNavigation();
+  const inputURL = "/community";
+  const cleanedURL = inputURL.replace(/[\u200B]/g, "");
+
+  const url = proxyUrl + cleanedURL;
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -77,8 +81,43 @@ const Post = () => {
     formData.append(`image${index}`, { uri: image, name: fileName, type });
   });
 
+  console.log(formData);
+
+  const postData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log("test~~~");
+    try {
+      const bodyData = {
+        title: title,
+        contents: content,
+        type: "test입니다.",
+      };
+
+      const response = await axios.post(url, bodyData, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+        data: formData,
+      });
+      console.log("url:::::::", url);
+      console.log(response);
+      console.log("데이터:", response.data);
+
+      navigation.navigate("Community", { screen: "Community" });
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 메세지:", error.message);
+      } else {
+        console.error("에러:", error);
+      }
+    }
+  };
+
   const handlePost = () => {
     console.log("등록 버튼 클릭");
+    postData();
   };
 
   return (
