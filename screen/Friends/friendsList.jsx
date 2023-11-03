@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,9 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import { proxyUrl } from "../../constant/common";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import RefuseMsg from "../../components/Modal/refuseMsg";
 import WinnerModal from "../../components/Modal/winnerModal";
@@ -20,6 +23,10 @@ import NoticeModal from "../../components/Modal/noticeModal";
 
 function FriendsList() {
   const navigation = useNavigation();
+  const inputURL = "/api/v1/friends";
+  const cleanedURL = inputURL.replace(/[\u200B]/g, "");
+
+  const url = proxyUrl + inputURL;
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [isOpenRefuseMessage, setIsOpenRefuseMessage] = useState(false);
@@ -61,6 +68,30 @@ function FriendsList() {
   const openNoticeModal = () => {
     setIsOpenNoticeModal(!isOpenNoticeModal);
   };
+
+  const fetchData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
+    console.log("get 실행");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log("데이터:", response.data);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    console.log("실행된건가");
+  }, []);
 
   return (
     <View
