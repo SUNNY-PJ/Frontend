@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
-import Input from "../../components/Input/input";
-import LargeBtn from "../../components/Btn/largeBtn";
-import LargeBtnDisable from "../../components/Btn/largeBtnDisable";
 import { useNavigation } from "@react-navigation/native";
 import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
