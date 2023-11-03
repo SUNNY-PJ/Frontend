@@ -15,7 +15,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import DatePicker from "../components/DatePicker/datePicker";
 import { proxyUrl } from "./common";
 import LargeBtn from "../components/Btn/largeBtn";
-import Bottom from "../components/Bottom";
 
 function Note({ navigation }) {
   const inputURL = "/consumption";
