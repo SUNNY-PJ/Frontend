@@ -47,8 +47,8 @@ const Detail = () => {
         >
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate("MyPage", {
-                screen: "MyPage",
+              navigation.navigate("Community", {
+                screen: "Community",
               })
             }
           >
