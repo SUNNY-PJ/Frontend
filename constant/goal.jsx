@@ -171,7 +171,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     marginTop: 25,
-    marginBottom: 40,
     paddingLeft: 28,
     paddingRight: 27,
   },
@@ -189,29 +188,8 @@ const styles = StyleSheet.create({
     marginTop: 32,
     paddingLeft: 10,
   },
-  labelContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  noticeContainer: {
-    flexDirection: "row",
-    alignSelf: "flex-end",
-    top: 17,
-  },
-  noticeIcon: {
-    width: 16,
-    height: 16,
-    marginLeft: 8,
-    marginBottom: 9,
-    marginRight: 2,
-  },
-  noticeText: {
-    fontSize: 12,
-    fontWeight: "400",
-    color: "#5C5C5C",
-  },
   buttonContainer: {
-    marginTop: 40,
+    marginTop: 125,
   },
 });
 
