@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import * as Notifications from "expo-notifications";
+import Login from "../screen/Login";
 
 const Top = ({ navigation }) => {
   const [progress, setProgress] = useState(50);
@@ -30,7 +31,7 @@ const Top = ({ navigation }) => {
             NN%
           </Text>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate("Goal")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
           <Image
             source={require("../assets/setting.png")}
             style={styles.icon}
