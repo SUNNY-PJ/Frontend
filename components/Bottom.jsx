@@ -22,7 +22,20 @@ const Bottom = () => {
       ? require("../assets/profileClick.png")
       : require("../assets/profile.png");
 
-  <Image source={imageSource} />;
+  const friendsImageSource =
+    selectedIcon === "FriendsList"
+      ? require("../assets/friendsClick.png")
+      : require("../assets/friends.png");
+
+  const messageImageSource =
+    selectedIcon === "Message"
+      ? require("../assets/messageClick.png")
+      : require("../assets/message.png");
+
+  const communityImageSource =
+    selectedIcon === "Community"
+      ? require("../assets/communityClick.png")
+      : require("../assets/community.png");
 
   const toggleIcons = (iconName) => {
     if (selectedIcon !== iconName) {
@@ -80,36 +93,38 @@ const Bottom = () => {
       >
         <TouchableOpacity
           activeOpacity={1}
-          style={[
-            styles.menuItem,
-            selectedIcon === "Note" && styles.selectedIconContainer,
-          ]}
+          style={[styles.menuItem]}
           onPress={() => {
-            toggleIcons("Note");
+            toggleIcons("Community");
             navigation.navigate("Note");
           }}
         >
-          <Image
-            source={require("../assets/community.png")}
-            style={styles.icon}
-          />
+          <View
+            style={[
+              styles.iconBg,
+              selectedIcon === "Community" && styles.selectedIconContainer,
+            ]}
+          >
+            <Image style={styles.icon} source={communityImageSource} />
+          </View>
           <Text style={styles.menuText}>커뮤니티</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={1}
-          style={[
-            styles.menuItem,
-            selectedIcon === "ApiTest" && styles.selectedIconContainer,
-          ]}
+          style={[styles.menuItem]}
           onPress={() => {
-            toggleIcons("ApiTest");
+            toggleIcons("Message");
             navigation.navigate("ApiTest");
           }}
         >
-          <Image
-            source={require("../assets/message.png")}
-            style={styles.icon}
-          />
+          <View
+            style={[
+              styles.iconBg,
+              selectedIcon === "Message" && styles.selectedIconContainer,
+            ]}
+          >
+            <Image style={styles.icon} source={messageImageSource} />
+          </View>
           <Text style={styles.menuText}>대화</Text>
         </TouchableOpacity>
         {/* 중앙 아이콘 */}
@@ -125,19 +140,20 @@ const Bottom = () => {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={1}
-          style={[
-            styles.menuItem,
-            selectedIcon === "FriendsList" && styles.selectedIconContainer,
-          ]}
+          style={[styles.menuItem]}
           onPress={() => {
             toggleIcons("FriendsList");
             navigation.navigate("FriendsList");
           }}
         >
-          <Image
-            source={require("../assets/friends.png")}
-            style={styles.icon}
-          />
+          <View
+            style={[
+              styles.iconBg,
+              selectedIcon === "FriendsList" && styles.selectedIconContainer,
+            ]}
+          >
+            <Image style={styles.icon} source={friendsImageSource} />
+          </View>
           <Text style={styles.menuText}>친구</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -148,10 +164,14 @@ const Bottom = () => {
             navigation.navigate("MyPage");
           }}
         >
-          <Image
-            style={[styles.icon, selectedIcon === "MyPage" && styles.iconClick]}
-            source={imageSource}
-          />
+          <View
+            style={[
+              styles.iconBg,
+              selectedIcon === "MyPage" && styles.selectedIconContainer,
+            ]}
+          >
+            <Image style={styles.icon} source={imageSource} />
+          </View>
           <Text style={styles.menuText}>마이페이지</Text>
         </TouchableOpacity>
       </ImageBackground>
@@ -182,15 +202,15 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#1F1F1F",
     textAlign: "center",
-    marginTop: 10,
+    marginTop: 4,
   },
   icon: {
     height: 24,
     width: 24,
   },
   selectedIconContainer: {
-    backgroundColor: "#6ADCA3",
-    // padding: 6,
+    backgroundColor: "#5C5C5C",
+    padding: 6,
     borderRadius: 8,
   },
   bottomContainer: {
@@ -203,6 +223,12 @@ const styles = StyleSheet.create({
   iconClick: {
     width: 36,
     height: 36,
+  },
+  iconBg: {
+    width: 36,
+    height: 36,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
