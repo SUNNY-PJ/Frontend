@@ -7,14 +7,14 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import Splash from "./screen/splash";
 import FriendsList from "./screen/Friends/friendsList";
 import Note from "./constant/note";
-import Statistics from "./constant/statistics";
+import Statistics from "./screen/Statistic/statistics";
 import Top from "./components/Top";
 import Bottom from "./components/Bottom";
 import Login from "./screen/Login";
 import SignUp from "./constant/SignUp";
 import Kakao from "./constant/kakao";
-import Spending from "./constant/spending";
-import History from "./constant/history";
+import Spending from "./screen/Statistic/spending";
+import History from "./screen/Statistic/history";
 import ApiTest from "./constant/apiTest";
 import Community from "./screen/Community/community";
 import MyPage from "./screen/MyPage/myPage";
