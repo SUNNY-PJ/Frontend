@@ -51,8 +51,10 @@ const CalendarComponent = () => {
 
 const styles = StyleSheet.create({
   calendar: {
-    borderBottomWidth: 4,
-    borderBottomColor: "#C1C1C1",
+    borderRadius: 40,
+    borderWidth: 4,
+    borderColor: "#E9E9E9",
+    paddingBottom: 30,
   },
 });
 
