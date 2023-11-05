@@ -64,11 +64,12 @@ const Bottom = () => {
           alignSelf: "center",
         }}
       >
+        {/* 중앙 아이콘 navigate 경로 */}
         {iconVisible && (
           <View style={{ flexDirection: "row", gap: 40 }}>
             <TouchableOpacity
               activeOpacity={1}
-              onPress={() => navigation.navigate("Login")}
+              onPress={() => navigation.navigate("Spending")}
             >
               <Image
                 source={require("../assets/lefrBtn.png")}
