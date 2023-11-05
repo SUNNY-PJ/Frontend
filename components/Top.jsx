@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import * as Notifications from "expo-notifications";
-import Login from "../screen/Login";
 
 const Top = ({ navigation }) => {
   const [progress, setProgress] = useState(50);
@@ -10,27 +9,29 @@ const Top = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.progressContainer}>
         <Text style={styles.text}>D - {progress}%</Text>
-        <View style={styles.progressBar}>
-          <View
-            style={[
-              styles.progressFill,
-              {
-                width: `${progress}%`,
-              },
-            ]}
-          />
-          <Text
-            style={{
-              marginLeft: -20,
-              fontSize: 16,
-              fontWeight: 900,
-              color: "#1F1F1F",
-              transform: [{ translateY: 0 }, { translateX: 90 }],
-            }}
-          >
-            NN%
-          </Text>
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate("Goal")}>
+          <View style={styles.progressBar}>
+            <View
+              style={[
+                styles.progressFill,
+                {
+                  width: `${progress}%`,
+                },
+              ]}
+            />
+            <Text
+              style={{
+                marginLeft: -20,
+                fontSize: 16,
+                fontWeight: 900,
+                color: "#1F1F1F",
+                transform: [{ translateY: 0 }, { translateX: 90 }],
+              }}
+            >
+              NN%
+            </Text>
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Login")}>
           <Image
             source={require("../assets/setting.png")}
