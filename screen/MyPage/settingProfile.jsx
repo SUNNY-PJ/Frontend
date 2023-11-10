@@ -8,12 +8,15 @@ import {
   StyleSheet,
   Animated,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { proxyUrl } from "../../constant/common";
 import Input from "../../components/Input/input";
 import LargeBtn from "../../components/Btn/largeBtn";
 import LargeBtnDisable from "../../components/Btn/largeBtnDisable";
 import { useNavigation } from "@react-navigation/native";
 
-const SettingProfile = ({ navigate }) => {
+const SettingProfile = () => {
   const navigation = useNavigation();
 
   const [name, setName] = useState("");
@@ -23,8 +26,41 @@ const SettingProfile = ({ navigate }) => {
     setName(text);
   };
 
-  const handlePostApiTestStart = () => {
-    alert("등록");
+  const postData = async () => {
+    const inputURL = "/auth/nickname";
+    const cleanedURL = inputURL.replace(/[\u200B]/g, "");
+
+    const url = proxyUrl + cleanedURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const params = {
+        name: name,
+      };
+
+      const response = await axios.post(url, null, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+        params,
+      });
+      console.log("url:::::::", url);
+      console.log(response);
+      console.log("데이터:", response.data);
+      alert("닉네임을 변경했습니다.");
+      navigation.navigate("MyPage", { screen: "MyPage" });
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 메세지:", error.message);
+      } else {
+        console.error("에러:", error);
+      }
+    }
+  };
+
+  const handlePostApiStart = () => {
+    postData();
   };
 
   useEffect(() => {
@@ -85,7 +121,7 @@ const SettingProfile = ({ navigate }) => {
         />
         <View style={{ marginTop: 323 }}>
           {isAllFieldsFilled ? (
-            <LargeBtn text={"저장하기"} onClick={handlePostApiTestStart} />
+            <LargeBtn text={"저장하기"} onClick={handlePostApiStart} />
           ) : (
             <LargeBtnDisable text={"저장하기"} />
           )}
