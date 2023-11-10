@@ -32,9 +32,6 @@ const SignUp = () => {
     setName(text);
   };
 
-  const handleNavigate = () => {
-    navigation.navigate("Note", { screen: "Note" });
-  };
   const postData = async () => {
     const inputURL = "/auth/nickname";
     const cleanedURL = inputURL.replace(/[\u200B]/g, "");
