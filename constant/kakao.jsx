@@ -12,14 +12,15 @@ const REDIRECT_URI = "http://192.168.50.45:19006";
 const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from webView')`;
 
 const Kakao = () => {
-  // console.log("페이지 진입");
+  console.log("페이지 진입");
   // const [code, setCode] = useState("");
+  // console.log(code);
   const navigation = useNavigation();
 
   const kakao_url =
     "https://kauth.kakao.com/oauth/authorize?client_id=7ff971db2010c97a3e191dd319ec45cd&redirect_uri=http://43.201.176.22:8080/auth/kakao/callback&response_type=code";
 
-  // // const kakao_url = `https://kauth.kakao.com/oauth/authorize?client_id=7ff971db2010c97a3e191dd319ec45cd&redirect_uri=http://43.201.176.22:8080/auth/kakao/callback&response_type=${code}`;
+  // const kakao_url = `https://kauth.kakao.com/oauth/authorize?client_id=7ff971db2010c97a3e191dd319ec45cd&redirect_uri=http://43.201.176.22:8080/auth/kakao/callback&response_type=${code}`;
 
   const fetchData = async () => {
     console.log("get 실행");
@@ -62,7 +63,9 @@ const Kakao = () => {
   };
 
   useEffect(() => {
+    // if (code) {
     fetchData();
+    // }
   }, []);
 
   function KakaoLoginWebView(data) {
