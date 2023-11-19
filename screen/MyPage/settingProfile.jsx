@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Image,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-} from "react-native";
+import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { proxyUrl } from "../../constant/common";
@@ -44,8 +36,6 @@ const SettingProfile = () => {
         },
         params,
       });
-      console.log("url:::::::", url);
-      console.log(response);
       console.log("데이터:", response.data);
       alert("닉네임을 변경했습니다.");
       navigation.navigate("MyPage", { screen: "MyPage" });
