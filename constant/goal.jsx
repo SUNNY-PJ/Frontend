@@ -23,6 +23,17 @@ function Goal({ navigation }) {
   const [selectedStartDate, setSelectedStartDate] = useState("");
   const [selectedEndDate, setSelectedEndDate] = useState("");
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isInputFocused, setInputFocused] = useState(false);
+
+  const handleFocus = () => {
+    setInputFocused(true);
+  };
+
+  const handleBlur = () => {
+    setInputFocused(false);
+  };
+
+  console.log("date::", date);
 
   const openModal = () => {
     setModalVisible(true);
@@ -35,6 +46,7 @@ function Goal({ navigation }) {
   const handleDateRangeSelect = (start, end) => {
     setSelectedStartDate(start);
     setSelectedEndDate(end);
+    setDate(`${start} - ${end}`);
     closeModal(); // 날짜 선택 후 모달 닫기
   };
 
@@ -120,7 +132,31 @@ function Goal({ navigation }) {
               handleInputChange={handleMoneyChange}
             />
             <Text style={styles.label}>언제 쓰셨나요?</Text>
-            <TouchableOpacity style={styles.calendar} onPress={openModal}>
+            <TouchableOpacity
+              style={[
+                styles.calendar,
+                {
+                  borderColor: isInputFocused
+                    ? "#FFA851"
+                    : selectedStartDate
+                    ? "#1F1F1F"
+                    : "#C1C1C1",
+                  borderBottomWidth: isInputFocused
+                    ? 1.5
+                    : selectedStartDate
+                    ? 3
+                    : 1.5,
+                  borderRightWidth: isInputFocused
+                    ? 1.5
+                    : selectedStartDate
+                    ? 3
+                    : 1.5,
+                },
+              ]}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              onPress={openModal}
+            >
               <Text>
                 {selectedStartDate} - {selectedEndDate}
               </Text>
