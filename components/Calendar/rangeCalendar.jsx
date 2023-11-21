@@ -66,7 +66,7 @@ const RangeCalendar = ({ onDateRangeSelect }) => {
         markingType={"period"}
         current={currentDate.toISOString().split("T")[0]}
       />
-      {/* <Button title="Apply" onPress={handleApply} /> */}
+      <Button title="Apply" onPress={handleApply} />
     </View>
   );
 };
