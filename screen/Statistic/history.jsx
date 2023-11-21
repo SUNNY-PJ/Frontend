@@ -9,8 +9,8 @@ const History = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        {/* <CalendarComponent /> */}
-        <RangeCalendar />
+        <CalendarComponent />
+        {/* <RangeCalendar /> */}
       </View>
     </View>
   );
