@@ -3,16 +3,23 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import { Calendar } from "react-native-calendars";
 
 const RangeCalendar = ({ onDateRangeSelect }) => {
-  const [selected, setSelected] = useState("");
   const [selectedStartDate, setSelectedStartDate] = useState("");
   const [selectedEndDate, setSelectedEndDate] = useState("");
   const currentDate = new Date();
 
   const handleDayPress = (day) => {
-    if (!selectedStartDate || day.dateString < selectedStartDate) {
+    if (!selectedStartDate || (selectedStartDate && selectedEndDate)) {
+      // If no start date is selected or both start and end dates are already selected,
+      // set the selected start date and clear the end date.
       setSelectedStartDate(day.dateString);
       setSelectedEndDate("");
+    } else if (day.dateString < selectedStartDate) {
+      // If a start date is already selected and the selected date is earlier than the current start date,
+      // update the start date.
+      setSelectedStartDate(day.dateString);
     } else if (!selectedEndDate || day.dateString > selectedEndDate) {
+      // If an end date is not selected or the selected date is later than the current end date,
+      // update the end date.
       setSelectedEndDate(day.dateString);
     }
   };
@@ -28,21 +35,25 @@ const RangeCalendar = ({ onDateRangeSelect }) => {
       <Calendar
         style={styles.calendar}
         theme={{
-          selectedDayBackgroundColor: "pink",
-          selectedDayTextColor: "white",
-          arrowColor: "pink",
-          dotColor: "pink",
+          arrowColor: "#000",
           todayTextColor: "purple",
+          todayDotColor: "purple",
         }}
-        // onDayPress={(day) => {
-        //   setSelected(day.dateString);
-        // }}
         onDayPress={handleDayPress}
         markedDates={{
-          [selectedStartDate]: { selected: true, selectedColor: "blue" },
+          [selectedStartDate]: {
+            selected: true,
+            color: "#B9F4D6",
+            textColor: "#000",
+            borderWidth: 1,
+            borderColor: "#000",
+          },
           [selectedEndDate]: {
             selected: true,
-            selectedColor: "deeppink",
+            color: "#B9F4D6",
+            textColor: "#000",
+            borderWidth: 1,
+            borderColor: "#000",
             customStyles: {
               container: {
                 borderWidth: 2,
@@ -51,38 +62,8 @@ const RangeCalendar = ({ onDateRangeSelect }) => {
               },
             },
           },
-          container: {
-            borderWidth: 2,
-            borderColor: "orange",
-            borderRadius: 8,
-          },
         }}
         markingType={"period"}
-        // markedDates={{
-        //   [selected]: {
-        //     selected: true,
-        //     disableTouchEvent: false,
-        //     // selectedDotColor: "black",
-        //   },
-        //   "2023-09-29": {
-        //     selected: true,
-        //     marked: true,
-        //     selectedColor: "deeppink",
-        //   },
-        //   "2023-10-03": { marked: true },
-        //   "2023-10-05": {
-        //     selected: true,
-        //     marked: true,
-        //     selectedColor: "deeppink",
-        //     customStyles: {
-        //       container: {
-        //         borderWidth: 2,
-        //         borderColor: "orange",
-        //         borderRadius: 8,
-        //       },
-        //     },
-        //   },
-        // }}
         current={currentDate.toISOString().split("T")[0]}
       />
       <Button title="Apply" onPress={handleApply} />
@@ -97,7 +78,7 @@ const styles = StyleSheet.create({
   },
   calendar: {
     borderRadius: 40,
-    borderWidth: 4,
+    borderWidth: 2,
     borderColor: "#E9E9E9",
     paddingBottom: 30,
   },
