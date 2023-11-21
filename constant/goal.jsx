@@ -3,60 +3,45 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
-  TouchableOpacity,
   ScrollView,
+  TouchableOpacity,
+  Modal,
 } from "react-native";
 import Input from "../components/Input/input";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
 import axios from "axios";
-import Notice from "../components/Modal/notice";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import DatePicker from "../components/DatePicker/datePicker";
-import { proxyUrl } from "./common";
+import DatePickerCalendar from "../components/Calendar/rangeCalendar";
 import LargeBtn from "../components/Btn/largeBtn";
 
 function Goal({ navigation }) {
-  const inputURL = "/save";
-  const url = proxyUrl + inputURL;
-
   const [isOpenNoticeMsg, setIsOpenNoticeMsg] = useState(false);
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
-
   const [date, setDate] = useState("");
   const [name, setName] = useState("");
   const [cost, setCost] = useState(0);
+  const [selectedStartDate, setSelectedStartDate] = useState("");
+  const [selectedEndDate, setSelectedEndDate] = useState("");
+  const [isModalVisible, setModalVisible] = useState(false);
 
-  console.log(date);
-  console.log(name);
-  console.log(cost);
+  const openModal = () => {
+    setModalVisible(true);
+  };
 
-  const handleDateChange = (text) => {
-    setDate(text);
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleDateRangeSelect = (start, end) => {
+    setSelectedStartDate(start);
+    setSelectedEndDate(end);
+    closeModal(); // 날짜 선택 후 모달 닫기
   };
 
   const handleNameChange = (text) => {
     setName(text);
   };
 
-  const openNoticeMsg = () => {
-    setIsOpenNoticeMsg(!isOpenNoticeMsg);
-  };
-
-  const closeNoticeMsg = () => {
-    setIsOpenNoticeMsg(false);
-  };
-
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
-
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-  // 콤마(,)를 제거하고 숫자 형태로 파싱
   const formattedMoney = (value) => {
     const parsedValue = parseFloat(value.replace(/,/g, ""));
 
@@ -68,7 +53,6 @@ function Goal({ navigation }) {
     }
   };
 
-  // cost 상태 변수 업데이트
   const handleMoneyChange = (text) => {
     const cleanedText = text.replace(/[^0-9,]/g, "");
     const formattedValue = formattedMoney(cleanedText);
@@ -85,15 +69,12 @@ function Goal({ navigation }) {
 
   const postData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
-    console.log("post 실행111");
     try {
       const bodyData = {
-        start_date: date,
-        end_date: date,
+        start_date: selectedStartDate,
+        end_date: selectedEndDate,
         cost: cost.replace(/,/g, ""),
-        // name: name,
       };
-      console.log(bodyData);
 
       const response = await axios.post(url, bodyData, {
         headers: {
@@ -101,18 +82,10 @@ function Goal({ navigation }) {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      console.log("url:::::::", url);
-      console.log(response);
-      console.log("데이터:", response.data);
 
       navigation.navigate("FriendsList", { screen: "FriendsList" });
     } catch (error) {
-      if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
-        console.error("서버 응답 메세지:", error.message);
-      } else {
-        console.error("에러:", error);
-      }
+      console.error("에러:", error);
     }
   };
 
@@ -122,7 +95,10 @@ function Goal({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={closeNoticeMsg} activeOpacity={1}>
+      <TouchableOpacity
+        onPress={() => setIsOpenNoticeMsg(false)}
+        activeOpacity={1}
+      >
         <ScrollView>
           <View style={styles.contentContainer}>
             <Text style={styles.headerText}>절약 목표 설정 </Text>
@@ -133,7 +109,9 @@ function Goal({ navigation }) {
               handleInputChange={handleNameChange}
             />
             <View>
-              {isOpenNoticeMsg && <Notice openNoticeMsg={openNoticeMsg} />}
+              {isOpenNoticeMsg && (
+                <Notice openNoticeMsg={() => setIsOpenNoticeMsg(true)} />
+              )}
             </View>
             <Text style={styles.label}>지출 목표 금액을 입력해주세요</Text>
             <Input
@@ -142,13 +120,11 @@ function Goal({ navigation }) {
               handleInputChange={handleMoneyChange}
             />
             <Text style={styles.label}>언제 쓰셨나요?</Text>
-            <TouchableOpacity onPress={showDatePicker}>
-              <DatePicker
-                showDatePicker={showDatePicker}
-                hideDatePicker={hideDatePicker}
-                isDatePickerVisible={isDatePickerVisible}
-                handleDateChange={handleDateChange}
-              />
+            <TouchableOpacity style={styles.calendar} onPress={openModal}>
+              <Text>
+                {selectedStartDate} - {selectedEndDate}
+              </Text>
+              {/* <DatePickerCalendar onDateRangeSelect={handleDateRangeSelect} /> */}
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
               {isAllFieldsFilled ? (
@@ -160,6 +136,24 @@ function Goal({ navigation }) {
           </View>
         </ScrollView>
       </TouchableOpacity>
+
+      {/* 모달 추가 */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            {/* <Text>날짜를 선택하세요.</Text> */}
+            <DatePickerCalendar onDateRangeSelect={handleDateRangeSelect} />
+            <TouchableOpacity onPress={closeModal}>
+              <Text style={styles.closeModalText}>닫기</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -190,6 +184,34 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 125,
+  },
+  calendar: {
+    width: "100%",
+    height: 48,
+    paddingVertical: 14,
+    paddingHorizontal: 11,
+    borderWidth: 1.5,
+    borderRadius: 8,
+    alignSelf: "center",
+    color: "black",
+    backgroundColor: "#fff",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5,
+  },
+  closeModalText: {
+    marginTop: 10,
+    textAlign: "center",
+    color: "#000",
   },
 });
 
