@@ -1,6 +1,8 @@
-import * as React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Notifications from "expo-notifications";
+import { Platform } from "react-native";
+
 import Navigation from "./Navigation";
 
 const Stack = createNativeStackNavigator();
@@ -24,64 +26,89 @@ async function schedulePushNotification(data) {
   });
 }
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.responseListener = React.createRef();
-    this.notificationListener = React.createRef();
-    this.state = {
-      pushToken: "",
-      notification: false,
-    };
-  }
+export default function App() {
+  const [pushToken, setPushToken] = useState("");
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
-  // 이벤트 등록
-  async componentDidMount() {
-    console.log("111111111");
-    if (Platform.OS === "android") {
-      console.log("222222");
+  useEffect(() => {
+    const registerForPushNotificationsAsync = async () => {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
 
-      await Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
-    }
-    const { granted } = await Notifications.getPermissionsAsync();
-    if (granted) {
-      console.log("33333");
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+
+      if (finalStatus !== "granted") {
+        alert("알림을 거부하였습니다. 앱에 대한 알림을 받을 수 없습니다.");
+        return;
+      }
 
       const { data } = await Notifications.getExpoPushTokenAsync();
-      this.setState({ pushToken: data });
-      console.log("디바이스 토큰:", data);
-    } else if (!granted) {
-      alert("알림이 거부 되었습니다.");
-    } else {
-      alert("알림이 지원 되지않습니다.");
-    }
-    Notifications.addNotificationReceivedListener((notification) => {
-      console.log("NOTIFICATION:", notification);
-    });
-    this.notificationListener.current =
+      console.log("Expo Push Token:", data);
+
+      const expoPushToken = "ExponentPushToken[iF6fw6Aa_jk0r6qeptgHmO]";
+
+      // 정규 표현식을 사용하여 토큰 값 추출
+      const tokenRegex = /\[([^\]]+)\]/;
+      const match = expoPushToken.match(tokenRegex);
+
+      // match 배열의 두 번째 요소에 토큰 값이 있음
+      // 이게 진짜 토큰임
+      const token = match && match[1];
+
+      console.log("푸시 토큰 값:", token);
+
+      return data;
+    };
+
+    const initPushNotifications = async () => {
+      if (Platform.OS === "android") {
+        await Notifications.setNotificationChannelAsync("default", {
+          name: "default",
+          importance: Notifications.AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: "#FF231F7C",
+        });
+      }
+
+      const pushToken = await registerForPushNotificationsAsync();
+      setPushToken(pushToken);
+
       Notifications.addNotificationReceivedListener((notification) => {
-        this.setState({ notification: notification });
+        console.log("NOTIFICATION:", notification);
       });
-    this.responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
-  }
 
-  // 이벤트 해제
-  componentWillUnmount() {
-    Notifications.removeNotificationSubscription(this.responseListener.current);
-    Notifications.removeNotificationSubscription(
-      this.notificationListener.current
-    );
-  }
+      notificationListener.current =
+        Notifications.addNotificationReceivedListener((notification) => {
+          setNotification(notification);
+        });
 
-  render() {
-    return <Navigation />;
-  }
+      responseListener.current =
+        Notifications.addNotificationResponseReceivedListener((response) => {
+          console.log(response);
+        });
+    };
+
+    initPushNotifications();
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+  // 알림 예약 함수 호출
+  const handleScheduleNotification = async () => {
+    const notificationData = "알림 내용을 여기에 입력하세요";
+    await schedulePushNotification(notificationData);
+  };
+
+  return <Navigation handleScheduleNotification={handleScheduleNotification} />;
 }
