@@ -17,9 +17,13 @@ import LoserModal from "../../components/Modal/loserModal";
 import MatchMsg from "../../components/Modal/matchMsg";
 import ErrorModal from "../../components/Modal/errorModal";
 import ConsentMsg from "../../components/Modal/consentMsg";
-import MatchSendMsg from "../../components/Modal/matchSendMsg";
+// import MatchSendMsg from "../../components/Modal/matchSendMsg";
 import Line from "../../components/Line";
 import NoticeModal from "../../components/Modal/noticeModal";
+import GoalMsg from "../../components/Modal/goal/goalMsg";
+import Goal30Msg from "../../components/Modal/goal/goal30Msg";
+import Goal60Msg from "../../components/Modal/goal/goal60Msg";
+import Goal80Msg from "../../components/Modal/goal/goal80Msg";
 
 function FriendsList() {
   const navigation = useNavigation();
@@ -33,9 +37,10 @@ function FriendsList() {
   const [isOpenConsentMessage, setIsOpenConsentMessage] = useState(false);
   const [isOpenWinnerModal, setIsOpenWinnerModal] = useState(false);
   const [isOpenLoserModal, setIsOpenLoserModal] = useState(false);
-  const [isMatchModal, setIsMatchModal] = useState(false);
+  // const [isMatchModal, setIsMatchModal] = useState(false);
   const [isOpenErrorModal, setIsOpenErrorModal] = useState(false);
   const [isOpenNoticeModal, setIsOpenNoticeModal] = useState(false);
+  const [isOpenGoalMessage, setIsOpenGoalMessage] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -57,8 +62,8 @@ function FriendsList() {
     setIsOpenLoserModal(!isOpenLoserModal);
   };
 
-  const matchModal = () => {
-    setIsMatchModal(!isMatchModal);
+  const goalModal = () => {
+    setIsOpenGoalMessage(!isOpenGoalMessage);
   };
 
   const openErrorModal = () => {
@@ -258,7 +263,7 @@ function FriendsList() {
               </Text>
             </View>
             <View style={{ flexDirection: "row", gap: 16 }}>
-              <TouchableOpacity activeOpacity={0.6} onPress={matchModal}>
+              <TouchableOpacity activeOpacity={0.6} onPress={goalModal}>
                 <Image
                   source={require("../../assets/messageBlack.png")}
                   style={styles.icon}
@@ -353,7 +358,15 @@ function FriendsList() {
         isOpenLoserModal={isOpenLoserModal}
         openLoserModal={openLoserModal}
       />
-      <MatchSendMsg isMatchModal={isMatchModal} matchModal={matchModal} />
+      {/* <MatchSendMsg isMatchModal={isMatchModal} matchModal={matchModal} /> */}
+      <GoalMsg
+        isOpenGoalMessage={isOpenGoalMessage}
+        openGoalMessage={goalModal}
+      />
+      {/* <Goal30Msg
+        isOpenGoalMessage={isOpenGoalMessage}
+        openGoalMessage={goalModal}
+      /> */}
       <ErrorModal
         isOpenErrorModal={isOpenErrorModal}
         openErrorModal={openErrorModal}
