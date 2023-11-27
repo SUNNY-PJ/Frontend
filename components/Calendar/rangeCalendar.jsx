@@ -52,13 +52,14 @@ const RangeCalendar = ({ onDateRangeSelect }) => {
             selected: true,
             color: "#B9F4D6",
             textColor: "#000",
+            borderRadius: 8,
             borderWidth: 1,
             borderColor: "#000",
             customStyles: {
               container: {
-                borderWidth: 2,
-                borderColor: "orange",
                 borderRadius: 8,
+                borderWidth: 1,
+                borderColor: "#000",
               },
             },
           },
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
   },
   calendar: {
     borderRadius: 40,
-    borderWidth: 2,
+    // borderWidth: 2,
     borderColor: "#E9E9E9",
     paddingBottom: 30,
   },
