@@ -10,7 +10,7 @@ import {
 import MiddleBtn from "../Btn/middleBtn";
 import MiddleBtnBlack from "../Btn/middleBtnBlack";
 
-const MatchMsg = ({ isVisible, toggleModal }) => {
+const FriendsMsg = ({ isVisible, toggleModal }) => {
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View
@@ -30,27 +30,21 @@ const MatchMsg = ({ isVisible, toggleModal }) => {
               />
             </TouchableOpacity>
           </View>
+          <Image
+            source={require("../../assets/friendsMsg.png")}
+            style={{
+              width: 120,
+              height: 120,
+              alignSelf: "center",
+              marginBottom: 24,
+            }}
+          />
           <Text style={styles.title}>
             @@님에게서
-            {"\n"}대결 신청이 왔어요!
+            {"\n"}친구 신청이 왔어요!
           </Text>
-          <View style={styles.textContainer}>
-            <View style={styles.textRow}>
-              <Text style={styles.textLabel}>도발 메세지</Text>
-              <Text style={styles.textValue}>도발 메세지</Text>
-            </View>
-            <View style={styles.textRow}>
-              <Text style={styles.textLabel}>대결 보상</Text>
-              <Text style={styles.textValue}>맘스터치 기프티콘</Text>
-            </View>
-            <View style={styles.textRow}>
-              <Text style={styles.textLabel}>대결 기간/보상</Text>
-              <Text style={styles.textValue}>7일</Text>
-              <Text style={styles.textValue}>150,000원</Text>
-            </View>
-          </View>
           <View style={styles.buttonContainer}>
-            <MiddleBtn text={"거절"} />
+            <MiddleBtn text={"거절 "} />
             <MiddleBtnBlack text={"승낙"} />
           </View>
         </View>
@@ -78,7 +72,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: "700",
-    marginBottom: 24,
     textAlign: "center",
     color: "#000",
   },
@@ -109,8 +102,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 15,
     marginTop: 40,
-    marginBottom: 39,
+    marginBottom: 34,
   },
 });
 
-export default MatchMsg;
+export default FriendsMsg;
