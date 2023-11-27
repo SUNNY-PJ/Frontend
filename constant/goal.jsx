@@ -131,7 +131,7 @@ function Goal({ navigation }) {
               inputValue={cost}
               handleInputChange={handleMoneyChange}
             />
-            <Text style={styles.label}>언제 쓰셨나요?</Text>
+            <Text style={styles.label}>절약 기간을 선택해주세요</Text>
             <TouchableOpacity
               style={[
                 styles.calendar,
