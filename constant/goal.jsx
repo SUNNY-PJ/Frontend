@@ -184,9 +184,9 @@ function Goal({ navigation }) {
           <View style={styles.modalContent}>
             {/* <Text>날짜를 선택하세요.</Text> */}
             <DatePickerCalendar onDateRangeSelect={handleDateRangeSelect} />
-            <TouchableOpacity onPress={closeModal}>
+            {/* <TouchableOpacity onPress={closeModal}>
               <Text style={styles.closeModalText}>닫기</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </Modal>
