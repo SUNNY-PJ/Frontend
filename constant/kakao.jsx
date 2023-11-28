@@ -40,11 +40,11 @@ const Kakao = () => {
           const refresh_token = response.data.data.refreshToken;
 
           console.log("accessToken:::::", access_token);
-          // await AsyncStorage.setItem("access_token", access_token);
-          // await AsyncStorage.setItem("refresh_token", refresh_token);
-          // const accessToken = await AsyncStorage.getItem("access_token");
-          // console.log("토큰저장:::", accessToken);
-          console.log("Token stored successfully:", returnValue);
+          await AsyncStorage.setItem("access_token", access_token);
+          await AsyncStorage.setItem("refresh_token", refresh_token);
+          const accessToken = await AsyncStorage.getItem("access_token");
+          console.log("토큰저장:::", accessToken);
+          // console.log("Token stored successfully:", returnValue);
           storeData(access_token);
           storeData(refresh_token);
           navigation.navigate("SignUp", { screen: "SignUp" });
