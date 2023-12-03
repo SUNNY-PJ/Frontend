@@ -78,6 +78,7 @@ export default function App() {
 
       const pushToken = await registerForPushNotificationsAsync();
       setPushToken(pushToken);
+      console.log(pushToken);
 
       Notifications.addNotificationReceivedListener((notification) => {
         console.log("NOTIFICATION:", notification);
