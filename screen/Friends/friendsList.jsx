@@ -24,6 +24,7 @@ import GoalMsg from "../../components/Modal/goal/goalMsg";
 import Goal30Msg from "../../components/Modal/goal/goal30Msg";
 import Goal60Msg from "../../components/Modal/goal/goal60Msg";
 import Goal80Msg from "../../components/Modal/goal/goal80Msg";
+import FriendsMsg from "../../components/Modal/friendsMsg";
 
 function FriendsList() {
   const navigation = useNavigation();
@@ -341,7 +342,8 @@ function FriendsList() {
         </View>
         <Line color={"#C1C1C1"} h={2} />
       </ScrollView>
-      <MatchMsg isVisible={isModalVisible} toggleModal={toggleModal} />
+      {/* <MatchMsg isVisible={isModalVisible} toggleModal={toggleModal} /> */}
+      <FriendsMsg isVisible={isModalVisible} toggleModal={toggleModal} />
       <RefuseMsg
         isOpenRefuseMessage={isOpenRefuseMessage}
         openRefuseMessage={openRefuseMessage}
