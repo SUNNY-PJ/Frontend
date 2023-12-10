@@ -45,8 +45,8 @@ const Kakao = () => {
           const accessToken = await AsyncStorage.getItem("access_token");
           console.log("토큰저장:::", accessToken);
           // console.log("Token stored successfully:", returnValue);
-          storeData(access_token);
-          storeData(refresh_token);
+          // storeData(access_token);
+          // storeData(refresh_token);
           navigation.navigate("SignUp", { screen: "SignUp" });
         }
         console.log("데이터:::::", response.data);
@@ -80,17 +80,17 @@ const Kakao = () => {
   }
 
   // 토큰 저장
-  const storeData = async (returnValue) => {
-    try {
-      await AsyncStorage.setItem("access_token", returnValue);
-      await AsyncStorage.setItem("refresh_token", returnValue);
-      const access_token = await AsyncStorage.getItem("access_token");
-      console.log("토큰저장:::", access_token);
-      console.log("Token stored successfully:", returnValue);
-    } catch (error) {
-      console.error("Error storing token:", error);
-    }
-  };
+  // const storeData = async (returnValue) => {
+  //   try {
+  //     await AsyncStorage.setItem("access_token", returnValue);
+  //     await AsyncStorage.setItem("refresh_token", returnValue);
+  //     const access_token = await AsyncStorage.getItem("access_token");
+  //     console.log("토큰저장:::", access_token);
+  //     console.log("Token stored successfully:", returnValue);
+  //   } catch (error) {
+  //     console.error("Error storing token:", error);
+  //   }
+  // };
 
   return (
     <View style={Styles.container}>
