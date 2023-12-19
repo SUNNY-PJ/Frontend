@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { proxyUrl } from "../../constant/common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -91,15 +90,16 @@ const Board = () => {
           </View>
         </View>
         <Line color={"#C1C1C1"} h={2} />
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Detail", {
-              screen: "Detail",
-            })
-          }
-          activeOpacity={0.6}
-        >
-          {data.map((item) => (
+        {data.map((item) => (
+          <TouchableOpacity
+            key={item.id}
+            onPress={() =>
+              navigation.navigate("Detail", {
+                screen: "Detail",
+              })
+            }
+            activeOpacity={0.6}
+          >
             <View>
               <View style={styles.box}>
                 <Text style={styles.title}>{item.title}</Text>
@@ -114,8 +114,8 @@ const Board = () => {
               </View>
               <Line color={"#C1C1C1"} h={2} />
             </View>
-          ))}
-        </TouchableOpacity>
+          </TouchableOpacity>
+        ))}
       </View>
     </View>
   );
