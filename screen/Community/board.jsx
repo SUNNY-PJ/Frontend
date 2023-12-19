@@ -1,17 +1,50 @@
-import React, { useState } from "react";
-import {
-  View,
-  Image,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { proxyUrl } from "../../constant/common";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 
 const Board = () => {
+  const navigation = useNavigation();
+  const [data, setData] = useState([]);
+
+  const inputURL = "/community";
+
+  const url = proxyUrl + inputURL;
+
+  const fetchData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
+    console.log("get 실행");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+        params: {
+          boardType: "자유",
+        },
+      });
+
+      console.log("데이터:", response.data.content);
+      const communityData = response.data.content;
+      console.log(communityData.map((item) => item.title));
+      setData(communityData);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    console.log("실행된건가");
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -42,33 +75,47 @@ const Board = () => {
               source={require("../../assets/search.png")}
               style={styles.icon}
             />
-            <Image
-              source={require("../../assets/write.png")}
-              style={styles.icon}
-            />
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() =>
+                navigation.navigate("Post", {
+                  screen: "Post",
+                })
+              }
+            >
+              <Image
+                source={require("../../assets/write.png")}
+                style={styles.icon}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <Line color={"#C1C1C1"} h={2} />
-        <View style={styles.box}>
-          <Text style={styles.title}>자유 게시판 게시판입니다</Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.description}>하루1</Text>
-            <Text style={styles.description}>20 시간 전</Text>
-            <Text style={styles.description}>조회 1,411</Text>
-            <Text style={styles.description}>댓글 22</Text>
-          </View>
-        </View>
-        <Line color={"#C1C1C1"} h={2} />
-        <View style={styles.box}>
-          <Text style={styles.title}>test</Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.description}>하루2</Text>
-            <Text style={styles.description}>1 시간 전</Text>
-            <Text style={styles.description}>조회 2</Text>
-            <Text style={styles.description}>댓글 0</Text>
-          </View>
-        </View>
-        <Line color={"#C1C1C1"} h={2} />
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("Detail", {
+              screen: "Detail",
+            })
+          }
+          activeOpacity={0.6}
+        >
+          {data.map((item) => (
+            <View>
+              <View style={styles.box}>
+                <Text style={styles.title}>{item.title}</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.description}>{item.writer}</Text>
+                  <Text style={styles.description}>20 시간 전</Text>
+                  <Text style={styles.description}>조회 {item.view_cnt}</Text>
+                  <Text style={styles.description}>
+                    댓글 {item.comment_cnt}
+                  </Text>
+                </View>
+              </View>
+              <Line color={"#C1C1C1"} h={2} />
+            </View>
+          ))}
+        </TouchableOpacity>
       </View>
     </View>
   );

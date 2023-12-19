@@ -1,10 +1,48 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Line from "../../components/Line";
+import { proxyUrl } from "../../constant/common";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
 const Tip = () => {
   const navigation = useNavigation();
+  const [data, setData] = useState([]);
+
+  const inputURL = "/community";
+
+  const url = proxyUrl + inputURL;
+
+  const fetchData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
+    console.log("get 실행");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+        params: {
+          boardType: "꿀팁",
+        },
+      });
+
+      console.log("데이터:", response.data.content);
+      const communityData = response.data.content;
+      console.log(communityData.map((item) => item.title));
+      setData(communityData);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    console.log("실행된건가");
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -60,28 +98,23 @@ const Tip = () => {
           }
           activeOpacity={0.6}
         >
-          <View style={styles.box}>
-            <Text style={styles.title}>절약 꿀팁 게시판입니다</Text>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.description}>하루1</Text>
-              <Text style={styles.description}>20 시간 전</Text>
-              <Text style={styles.description}>조회 1,411</Text>
-              <Text style={styles.description}>댓글 22</Text>
+          {data.map((item) => (
+            <View>
+              <View style={styles.box}>
+                <Text style={styles.title}>{item.title}</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.description}>{item.writer}</Text>
+                  <Text style={styles.description}>20 시간 전</Text>
+                  <Text style={styles.description}>조회 {item.view_cnt}</Text>
+                  <Text style={styles.description}>
+                    댓글 {item.comment_cnt}
+                  </Text>
+                </View>
+              </View>
+              <Line color={"#C1C1C1"} h={2} />
             </View>
-          </View>
+          ))}
         </TouchableOpacity>
-
-        <Line color={"#C1C1C1"} h={2} />
-        <View style={styles.box}>
-          <Text style={styles.title}>test</Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.description}>하루2</Text>
-            <Text style={styles.description}>1 시간 전</Text>
-            <Text style={styles.description}>조회 2</Text>
-            <Text style={styles.description}>댓글 0</Text>
-          </View>
-        </View>
-        <Line color={"#C1C1C1"} h={2} />
       </View>
     </View>
   );
