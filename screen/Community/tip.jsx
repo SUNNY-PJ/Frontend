@@ -1,6 +1,13 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import Line from "../../components/Line";
 import { proxyUrl } from "../../constant/common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -34,6 +41,7 @@ const Tip = () => {
       const communityData = response.data.content;
       console.log(communityData.map((item) => item.title));
       setData(communityData);
+      console.log(data);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -90,16 +98,24 @@ const Tip = () => {
           </View>
         </View>
         <Line color={"#C1C1C1"} h={2} />
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Detail", {
-              screen: "Detail",
-            })
-          }
-          activeOpacity={0.6}
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
         >
+          {/* <Line color={"#C1C1C1"} h={2} /> */}
           {data.map((item) => (
-            <View>
+            <TouchableOpacity
+              key={item.id}
+              onPress={() =>
+                navigation.navigate("Detail", {
+                  screen: "Detail",
+                  params: {
+                    itemId: item.id,
+                  },
+                })
+              }
+              activeOpacity={0.6}
+            >
               <View style={styles.box}>
                 <Text style={styles.title}>{item.title}</Text>
                 <View style={{ flexDirection: "row" }}>
@@ -112,9 +128,9 @@ const Tip = () => {
                 </View>
               </View>
               <Line color={"#C1C1C1"} h={2} />
-            </View>
+            </TouchableOpacity>
           ))}
-        </TouchableOpacity>
+        </ScrollView>
       </View>
     </View>
   );
@@ -125,6 +141,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "#FFFBF6",
     minHeight: "100%",
+    // flex: 1,
   },
   contentContainer: {
     marginBottom: 40,
