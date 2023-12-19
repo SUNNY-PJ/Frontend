@@ -1,11 +1,55 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { proxyUrl } from "../../constant/common";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 
 const Detail = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { itemId } = route.params.params;
+  const [data, setData] = useState([]);
+  console.log("아이디", itemId);
+
+  const inputURL = `/community/${itemId}`;
+  // const inputURL = "/community";
+
+  const url = proxyUrl + inputURL;
+  console.log(url);
+
+  const fetchData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
+    console.log("get 실행");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+        params: {
+          communityId: itemId,
+        },
+      });
+
+      console.log("데이터:", response.data);
+      const DetailData = response.data.data;
+      setData(DetailData);
+      console.log(data);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    console.log("실행된건가");
+  }, []);
 
   const [name, setName] = useState("");
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
