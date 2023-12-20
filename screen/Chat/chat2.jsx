@@ -27,15 +27,17 @@ const Chat2 = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={messages}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={item.fromMe ? styles.fromMe : styles.fromOthers}>
-            <Text style={styles.messageText}>{item.text}</Text>
-          </View>
-        )}
-      />
+      <View style={styles.contentContainer}>
+        <FlatList
+          data={messages}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <View style={item.fromMe ? styles.fromMe : styles.fromOthers}>
+              <Text style={styles.messageText}>{item.text}</Text>
+            </View>
+          )}
+        />
+      </View>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
@@ -53,9 +55,24 @@ const Chat2 = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: "column",
+    backgroundColor: "#FFFBF6",
+    minHeight: "60%",
+    justifyContent: "space-between",
+  },
+  contentContainer: {
+    marginBottom: 40,
     flex: 1,
-    padding: 16,
-    justifyContent: "flex-end",
+    paddingRight: 22,
+    paddingLeft: 22,
+  },
+  section: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingLeft: 16,
+    paddingRight: 24,
+    marginTop: 17,
+    marginBottom: 18,
   },
   fromMe: {
     alignSelf: "flex-end",
@@ -78,6 +95,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 8,
+    paddingBottom: 150,
   },
   input: {
     flex: 1,
