@@ -29,6 +29,7 @@ import Modify from "./screen/Community/modify";
 import Detail from "./screen/Community/detail";
 import Goal from "./constant/goal";
 import Chat from "./screen/Chat/chat";
+import Chat from "./screen/Chat/chat2";
 
 const Stack = createStackNavigator();
 
@@ -86,6 +87,11 @@ function StackScreen() {
         options={{ headerShown: false }}
         name="Chat"
         component={Chat}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="Chat2"
+        component={Chat2}
       />
     </Stack.Navigator>
   );
