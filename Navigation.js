@@ -29,7 +29,7 @@ import Modify from "./screen/Community/modify";
 import Detail from "./screen/Community/detail";
 import Goal from "./constant/goal";
 import Chat from "./screen/Chat/chat";
-import Chat from "./screen/Chat/chat2";
+import Chat2 from "./screen/Chat/chat2";
 
 const Stack = createStackNavigator();
 
