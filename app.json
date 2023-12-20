@@ -11,9 +11,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yeoniii20.sunny"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,13 +24,23 @@
         "backgroundColor": "#ffffff"
       },
       "versionCode": 25,
-      "permissions": ["CAMERA", "NOTIFICATIONS"],
+      "permissions": [
+        "CAMERA",
+        "NOTIFICATIONS"
+      ],
       "package": "com.sunny.inout_webview",
-      "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "config": {
+      "projectId": "sunny-f9515"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fea80869-cca6-406a-9685-52d7bdf93014"
+      }
     }
   }
 }
