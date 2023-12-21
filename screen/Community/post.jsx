@@ -20,9 +20,9 @@ import Line from "../../components/Line";
 const Post = () => {
   const navigation = useNavigation();
   const inputURL = "/community";
-  const cleanedURL = inputURL.replace(/[\u200B]/g, "");
+  // const cleanedURL = inputURL.replace(/[\u200B]/g, "");
 
-  const url = proxyUrl + cleanedURL;
+  const url = proxyUrl + inputURL;
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -61,7 +61,8 @@ const Post = () => {
     }
     // 이미지 업로드 결과 및 이미지 경로 업데이트
     console.log(result);
-    setImages([...images, result.assets[0].uri]); // 이미지 배열에 추가
+    setImages([...images, result.assets[0].uri]);
+    // setImages([...images, result.assets.map((asset) => asset.uri)]);
   };
 
   // 첨부한 이미지 삭제
@@ -74,32 +75,52 @@ const Post = () => {
 
   // post api
   const formData = new FormData();
+  formData.append("title", title);
+  formData.append("contents", content);
+  formData.append("type", "꿀팁");
+  // formData.append(
+  //   {
+  //     title: title,
+  //     contents: content,
+  //     type: "꿀팁",
+  //   }
+  // )
+
   images.forEach((image, index) => {
     const fileName = image.split("/").pop();
     const match = /\.(\w+)$/.exec(fileName ?? "");
     const type = match ? `image/${match[1]}` : `image`;
-    formData.append(`image${index}`, { uri: image, name: fileName, type });
+    // formData.append(`image${index}`, {
+    //   uri: image,
+    //   name: fileName,
+    //   type: type,
+    // });
+    formData.append("files", {
+      uri: image,
+      name: fileName,
+      type: type,
+    });
   });
 
   console.log(formData);
+  console.log(formData._parts);
 
   const postData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
-    console.log("test~~~");
-    try {
-      const bodyData = {
-        title: title,
-        contents: content,
-        type: "test입니다.",
-      };
 
-      const response = await axios.post(url, bodyData, {
+    try {
+      // const bodyData = {
+      //   title: title,
+      //   contents: content,
+      //   type: "꿀팁",
+      // };
+      const response = await axios.post(url, formData, {
         headers: {
-          "Content-Type": "application/json; charset=utf-8",
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${access_token}`,
         },
-        data: formData,
       });
+
       console.log("url:::::::", url);
       console.log(response);
       console.log("데이터:", response.data);
@@ -118,6 +139,8 @@ const Post = () => {
   const handlePost = () => {
     console.log("등록 버튼 클릭");
     postData();
+    console.log(formData);
+    console.log(formData._parts);
   };
 
   return (
