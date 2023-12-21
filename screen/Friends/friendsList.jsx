@@ -264,7 +264,13 @@ function FriendsList() {
               </Text>
             </View>
             <View style={{ flexDirection: "row", gap: 16 }}>
-              <TouchableOpacity activeOpacity={0.6} onPress={goalModal}>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() =>
+                  navigation.navigate("ChatStack", { screen: "Chat2" })
+                }
+                // onPress={goalModal}
+              >
                 <Image
                   source={require("../../assets/messageBlack.png")}
                   style={styles.icon}
