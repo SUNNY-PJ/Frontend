@@ -73,18 +73,25 @@ const Post = () => {
     setImages(updatedImages);
   };
 
+  const communityRequest = {
+    title: title,
+    contents: content,
+    type: "꿀팁",
+  };
+
   // post api
   const formData = new FormData();
-  formData.append("title", title);
-  formData.append("contents", content);
-  formData.append("type", "꿀팁");
+  // formData.append("title", title);
+  // formData.append("contents", content);
+  // formData.append("type", "꿀팁");
   // formData.append(
-  //   {
+  //   (communityRequest = {
   //     title: title,
   //     contents: content,
   //     type: "꿀팁",
-  //   }
-  // )
+  //   })
+  // );
+  formData.append("communityRequest", JSON.stringify(communityRequest));
 
   images.forEach((image, index) => {
     const fileName = image.split("/").pop();
