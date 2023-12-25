@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const MyScrap = () => {
   const navigation = useNavigation();
-  const inputURL = "/scrap";
+  const inputURL = "/mypage/myscrap";
   const url = proxyUrl + inputURL;
 
   const fetchData = async () => {
