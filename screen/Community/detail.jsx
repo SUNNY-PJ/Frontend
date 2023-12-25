@@ -13,6 +13,7 @@ const Detail = () => {
   const route = useRoute();
   const { itemId } = route.params.params;
   const [data, setData] = useState([]);
+
   console.log("아이디", itemId);
 
   const inputURL = `/community/${itemId}`;
@@ -37,9 +38,9 @@ const Detail = () => {
         },
       });
 
-      console.log("데이터:", response.data);
+      console.log("데이터:", response.data.data);
       const DetailData = response.data.data;
-      setData(DetailData);
+      setData([DetailData]);
       console.log(data);
     } catch (error) {
       console.error("에러:", error);
@@ -48,7 +49,6 @@ const Detail = () => {
 
   useEffect(() => {
     fetchData();
-    console.log("실행된건가");
   }, []);
 
   const [name, setName] = useState("");
@@ -135,88 +135,101 @@ const Detail = () => {
           </View>
         </View>
       </View>
-      <View style={styles.contentContainer}>
-        <Text
-          style={{
-            fontSize: 20,
-            color: "#1F1F1F",
-            fontWeight: 500,
-            marginBottom: 9,
-            padding: 4,
-            marginBottom: 28,
-          }}
-        >
-          여기는 제목
-        </Text>
-        <View
-          style={{
-            flexDirection: "row",
-            gap: 8,
-            marginBottom: 28,
-          }}
-        >
-          <Image
-            source={require("../../assets/myPage_profile.png")}
-            style={{ width: 40, height: 40 }}
-          />
-          <View style={{ gap: 4 }}>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 7 }}
-            >
-              <Text style={{ fontSize: 16, fontWeight: 700, color: "#1F1F1F" }}>
-                민지
-              </Text>
-              <SmallBtn title={"대화하기"} border={4} onClick={handleChat} />
-            </View>
-            <View style={{ flexDirection: "row", gap: 8 }}>
-              <Text style={{ fontSize: 10, fontWeight: 500, color: "#1F1F1F" }}>
-                조회 1,000
-              </Text>
-              <Text style={{ fontSize: 10, fontWeight: 500, color: "#1F1F1F" }}>
-                30분 전
-              </Text>
-              <Text style={{ fontSize: 10, fontWeight: 500, color: "#1F1F1F" }}>
-                댓글 22
-              </Text>
+      {data.map((item) => (
+        <View style={styles.contentContainer} key={item.id}>
+          <Text
+            style={{
+              fontSize: 20,
+              color: "#1F1F1F",
+              fontWeight: 500,
+              marginBottom: 9,
+              padding: 4,
+              marginBottom: 28,
+            }}
+          >
+            {item.title}
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              gap: 8,
+              marginBottom: 28,
+            }}
+          >
+            <Image
+              source={require("../../assets/myPage_profile.png")}
+              style={{ width: 40, height: 40 }}
+            />
+            <View style={{ gap: 4 }}>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 7 }}
+              >
+                <Text
+                  style={{ fontSize: 16, fontWeight: 700, color: "#1F1F1F" }}
+                >
+                  {item.writer}
+                </Text>
+                <SmallBtn title={"대화하기"} border={4} onClick={handleChat} />
+              </View>
+              <View style={{ flexDirection: "row", gap: 8 }}>
+                <Text
+                  style={{ fontSize: 10, fontWeight: 500, color: "#1F1F1F" }}
+                >
+                  조회 {item.viewCount}
+                </Text>
+                <Text
+                  style={{ fontSize: 10, fontWeight: 500, color: "#1F1F1F" }}
+                >
+                  {item.createdAt}
+                </Text>
+                <Text
+                  style={{ fontSize: 10, fontWeight: 500, color: "#1F1F1F" }}
+                >
+                  댓글
+                </Text>
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      ))}
       <Line color={"#E8E9E8"} h={2} />
-      <View style={styles.contentContainer}>
-        <View style={{ marginTop: 24, marginBottom: 70 }}>
-          <Text>여기가 내용이다ㅏㅏㅏㅏㅏ</Text>
-          <Text>여기가ㅏㅏㅏㅏ내용ㅇ</Text>
+      {data.map((item) => (
+        <View>
+          <View style={styles.contentContainer}>
+            <View style={{ marginTop: 24, marginBottom: 70 }}>
+              <Text>{item.contents}</Text>
+            </View>
+          </View>
+          <Line color={"#E8E9E8"} h={2} />
+          <View style={styles.contentContainer}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 5,
+                marginTop: 20,
+              }}
+            >
+              <Image
+                source={require("../../assets/chatIcon.png")}
+                style={{
+                  width: 24,
+                  height: 24,
+                }}
+              />
+              <Text>22</Text>
+              <Image
+                source={require("../../assets/arrowLeft.png")}
+                style={{
+                  width: 18,
+                  height: 18,
+                  right: 4,
+                }}
+              />
+            </View>
+          </View>
         </View>
-      </View>
-      <Line color={"#E8E9E8"} h={2} />
-      <View style={styles.contentContainer}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 5,
-            marginTop: 20,
-          }}
-        >
-          <Image
-            source={require("../../assets/chatIcon.png")}
-            style={{
-              width: 24,
-              height: 24,
-            }}
-          />
-          <Text>22</Text>
-          <Image
-            source={require("../../assets/arrowLeft.png")}
-            style={{
-              width: 18,
-              height: 18,
-              right: 4,
-            }}
-          />
-        </View>
-      </View>
+      ))}
     </View>
   );
 };
