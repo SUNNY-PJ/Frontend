@@ -105,7 +105,7 @@ const Board = () => {
                 <Text style={styles.title}>{item.title}</Text>
                 <View style={{ flexDirection: "row" }}>
                   <Text style={styles.description}>{item.writer}</Text>
-                  <Text style={styles.description}>20 시간 전</Text>
+                  <Text style={styles.description}>{item.createdAt}</Text>
                   <Text style={styles.description}>조회 {item.view_cnt}</Text>
                   <Text style={styles.description}>
                     댓글 {item.comment_cnt}
