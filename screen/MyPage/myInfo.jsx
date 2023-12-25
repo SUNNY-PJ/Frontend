@@ -1,13 +1,5 @@
-import React, { useState } from "react";
-import {
-  View,
-  Image,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import MyScrap from "./myScrap";
