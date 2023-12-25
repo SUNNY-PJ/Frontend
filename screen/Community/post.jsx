@@ -128,8 +128,8 @@ const Post = () => {
         },
       });
 
-      console.log("url:::::::", url);
-      console.log(response);
+      // console.log("url:::::::", url);
+      // console.log(response);
       console.log("데이터:", response.data);
 
       navigation.navigate("Community", { screen: "Community" });
@@ -146,8 +146,8 @@ const Post = () => {
   const handlePost = () => {
     console.log("등록 버튼 클릭");
     postData();
-    console.log(formData);
-    console.log(formData._parts);
+    // console.log(formData);
+    // console.log(formData._parts);
   };
 
   return (
