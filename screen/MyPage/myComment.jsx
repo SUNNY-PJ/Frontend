@@ -1,18 +1,44 @@
-import React, { useState } from "react";
-import {
-  View,
-  Image,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { proxyUrl } from "../../constant/common";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 
 const MyComment = () => {
   const navigation = useNavigation();
+  const inputURL = "/mypage/mycomment";
+  const url = proxyUrl + inputURL;
+
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log("get 실행");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log("데이터:", response.data);
+
+      const myWriteData = response.data.data;
+      console.log(myWriteData.map((item) => item.id));
+      setData(myWriteData);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    console.log("실행된건가");
+  }, []);
 
   return (
     <View style={styles.container}>
