@@ -1,51 +1,70 @@
-import React, { useState } from "react";
-import {
-  View,
-  Image,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { proxyUrl } from "../../constant/common";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 
 const MyWrite = () => {
   const navigation = useNavigation();
+  const inputURL = "/mypage";
+  const url = proxyUrl + inputURL;
+
+  const [data, setData] = useState([]);
+
+  const fetchData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log("get 실행");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log("데이터:", response.data);
+
+      const myWriteData = response.data.data;
+      console.log(myWriteData.map((item) => item.id));
+      setData(myWriteData);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    console.log("실행된건가");
+  }, []);
 
   return (
     <View style={styles.container}>
-      <View style={styles.box}>
-        <Text style={styles.title}>내가 스크랩함</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.description}>짱구</Text>
-          <Text style={styles.description}>20 시간 전</Text>
-          <Text style={styles.description}>조회 1,411</Text>
-          <Text style={styles.description}>댓글 22</Text>
-        </View>
-      </View>
-      <Line color={"#C1C1C1"} h={1} />
-      <View style={styles.box}>
-        <Text style={styles.title}> 게시글 제목목목목</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.description}>뿡뿡이</Text>
-          <Text style={styles.description}>2023.11.17</Text>
-          <Text style={styles.description}>조회 1,411</Text>
-          <Text style={styles.description}>댓글 22</Text>
-        </View>
-      </View>
-      <Line color={"#C1C1C1"} h={1} />
-      <View style={styles.box}>
-        <Text style={styles.title}>작성글임</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.description}>알라리알라숑</Text>
-          <Text style={styles.description}>2023.09.09</Text>
-          <Text style={styles.description}>조회 0</Text>
-          <Text style={styles.description}>댓글 2</Text>
-        </View>
-      </View>
-      <Line color={"#C1C1C1"} h={1} />
+      {data.map((item) => (
+        // mypage/{id} 이런 api가 필요..
+        <TouchableOpacity
+          key={item.id}
+          onPress={() =>
+            navigation.navigate("Detail", {
+              screen: "Detail",
+            })
+          }
+          activeOpacity={0.6}
+        >
+          <View style={styles.box}>
+            <Text style={styles.title}>{item.title}</Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.description}>{item.writer}</Text>
+              <Text style={styles.description}>{item.createdAt}</Text>
+              <Text style={styles.description}>조회 {item.view_cnt}</Text>
+              <Text style={styles.description}>댓글 {item.comment_cnt}</Text>
+            </View>
+          </View>
+          <Line color={"#C1C1C1"} h={1} />
+        </TouchableOpacity>
+      ))}
     </View>
   );
 };
