@@ -33,15 +33,15 @@ const Detail = () => {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
-        params: {
-          communityId: itemId,
-        },
+        // params: {
+        //   communityId: itemId,
+        // },
       });
 
-      console.log("데이터:", response.data.data);
+      console.log("데이터:", response.data);
       const DetailData = response.data.data;
       setData([DetailData]);
-      console.log(data);
+      console.log("우이이이이이", data);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -185,7 +185,7 @@ const Detail = () => {
                 <Text
                   style={{ fontSize: 10, fontWeight: 500, color: "#1F1F1F" }}
                 >
-                  댓글
+                  댓글 {item.comment_cnt}
                 </Text>
               </View>
             </View>
@@ -217,7 +217,7 @@ const Detail = () => {
                   height: 24,
                 }}
               />
-              <Text>22</Text>
+              <Text>{item.comment_cnt}</Text>
               <Image
                 source={require("../../assets/arrowLeft.png")}
                 style={{
