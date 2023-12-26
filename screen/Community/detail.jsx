@@ -13,6 +13,7 @@ const Detail = () => {
   const route = useRoute();
   const { itemId } = route.params.params;
   const [data, setData] = useState([]);
+  const [commentData, setCommentData] = useState([]);
 
   console.log("아이디", itemId);
 
@@ -40,6 +41,8 @@ const Detail = () => {
 
       console.log("데이터:", response.data);
       const DetailData = response.data.data;
+      const DetailCommentData = [DetailData].map((item) => item.commentList);
+      console.log("댓글이다ㅏㅏ", DetailCommentData);
       setData([DetailData]);
       console.log("우이이이이이", data);
     } catch (error) {
