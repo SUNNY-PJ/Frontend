@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const ApiTest = () => {
   const proxyUrl = "http://43.201.176.22:8080";
   const getUrl = "/api/v1/friends";
-  const postUrl = "/api/v1/compettion";
+  const postUrl = "/alarm";
 
   const cleanedURL = postUrl.replace(/[\u200B]/g, "");
 
@@ -38,12 +38,9 @@ const ApiTest = () => {
     console.log("post 실행");
     try {
       const bodyData = {
-        compensation: "string",
-        end_date: "2023-10-05",
-        friends_id: 0,
-        message: "string",
-        price: 0,
-        start_date: "2023-10-05",
+        body: "하이하이하이",
+        friendsId: 1,
+        title: "누구쇼",
       };
 
       console.log(bodyData);
