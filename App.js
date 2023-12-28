@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 
@@ -50,8 +51,11 @@ export default function App() {
 
       const { data } = await Notifications.getExpoPushTokenAsync();
       console.log("Expo Push Token:", data);
+      await AsyncStorage.setItem("device_token", data);
+      const device_token = await AsyncStorage.getItem("device_token");
+      console.log("이게 디바이스 토큰이지이이이", device_token);
 
-      const expoPushToken = "ExponentPushToken[iF6fw6Aa_jk0r6qeptgHmO]";
+      const expoPushToken = `${data}`;
 
       // 정규 표현식을 사용하여 토큰 값 추출
       const tokenRegex = /\[([^\]]+)\]/;
