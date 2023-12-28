@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { proxyUrl } from "../constant/common";
 import axios from "axios";
 
 const REST_API_KEY = "56e15a4c7aaa857397437034b58c0016";
@@ -12,9 +13,9 @@ const REDIRECT_URI = "http://192.168.50.45:19006";
 const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from webView')`;
 
 const Kakao = () => {
-  console.log("페이지 진입");
-  // const [code, setCode] = useState("");
-  // console.log(code);
+  const inputURL = "/alarm/token";
+  const url = proxyUrl + inputURL;
+  const [token, setToken] = useState(false);
   const navigation = useNavigation();
 
   const kakao_url =
@@ -38,19 +39,17 @@ const Kakao = () => {
         if (response.data.data) {
           const access_token = response.data.data.accessToken;
           const refresh_token = response.data.data.refreshToken;
-
+          setToken(true);
           console.log("accessToken:::::", access_token);
           await AsyncStorage.setItem("access_token", access_token);
           await AsyncStorage.setItem("refresh_token", refresh_token);
           const accessToken = await AsyncStorage.getItem("access_token");
           console.log("토큰저장:::", accessToken);
-          // console.log("Token stored successfully:", returnValue);
           // storeData(access_token);
           // storeData(refresh_token);
           navigation.navigate("SignUp", { screen: "SignUp" });
         }
         console.log("데이터:::::", response.data);
-        // 임시 경로
       }
     } catch (error) {
       console.log("errorMessage:::", error.message);
@@ -62,9 +61,36 @@ const Kakao = () => {
     }
   };
 
+  const postData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    const device_token = await AsyncStorage.getItem("device_token");
+    console.log("이거 넘기는 어세스 토큰", access_token);
+    console.log("이거 넘기는 디바이스 토큰", device_token);
+    try {
+      const bodyData = {
+        targetToken: device_token,
+      };
+
+      const response = await axios.post(url, bodyData, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log(response.data);
+      console.log("디바이스 토큰 전송 성공함", bodyData);
+
+      navigation.navigate("FriendsList", { screen: "FriendsList" });
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
   useEffect(() => {
-    // if (code) {
     fetchData();
+    // if (token) {
+    postData();
     // }
   }, []);
 
