@@ -201,6 +201,19 @@ const Detail = () => {
           <View style={styles.contentContainer}>
             <View style={{ marginTop: 24, marginBottom: 70 }}>
               <Text>{item.contents}</Text>
+              {item.photoList.map((photo, index) => (
+                <Image
+                  key={index}
+                  source={{ uri: photo }}
+                  style={{
+                    width: 300,
+                    height: 200,
+                    // paddingLeft: "20",
+                    // paddingRight: "20",
+                    marginTop: 14,
+                  }}
+                />
+              ))}
             </View>
           </View>
           <Line color={"#E8E9E8"} h={2} />
