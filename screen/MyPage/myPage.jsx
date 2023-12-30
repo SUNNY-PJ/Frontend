@@ -1,20 +1,76 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Image,
   Text,
-  ImageBackground,
   TouchableOpacity,
   StyleSheet,
-  Animated,
+  Alert,
 } from "react-native";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { proxyUrl } from "../../constant/common";
 
 const MyPage = () => {
   const navigation = useNavigation();
   const handleTabClick = (tab) => {
     navigation.navigate("MyInfo", { activeTab: tab });
+  };
+
+  const postData = async () => {
+    const lououtUrl = "http://43.201.176.22:8080/mypage/auth/kakao/logout";
+    const inputURL = "/mypage/auth/kakao/logout";
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const params = {
+        client_id: "7ff971db2010c97a3e191dd319ec45cd",
+        logout_redirect_uri: lououtUrl,
+      };
+
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+        params,
+      });
+      console.log("url:::::::", url);
+      console.log(response);
+      console.log("데이터:", response.data);
+      alert("로그아웃 되었습니다.");
+
+      navigation.navigate("Login", { screen: "Login" });
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 메세지:", error.message);
+      } else {
+        console.error("에러:", error);
+      }
+    }
+  };
+
+  const handleLogoutClick = () => {
+    Alert.alert(
+      "로그아웃",
+      "로그아웃 하시겠습니까?",
+      [
+        {
+          text: "취소",
+          style: "cancel",
+        },
+        {
+          text: "확인",
+          onPress: () => {
+            postData();
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
@@ -121,7 +177,9 @@ const MyPage = () => {
         >
           회원
         </Text>
-        <Text style={styles.description}>로그아웃</Text>
+        <TouchableOpacity activeOpacity={0.6} onPress={handleLogoutClick}>
+          <Text style={styles.description}>로그아웃</Text>
+        </TouchableOpacity>
         <Line color={"#C1C1C1"} h={1} />
         <Text style={styles.description}>회원 탈퇴</Text>
         <Line color={"#C1C1C1"} h={4} />
