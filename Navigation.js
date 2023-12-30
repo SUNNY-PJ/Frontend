@@ -4,9 +4,9 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import StackScreen from "./StackScreen";
-import HiddenBottomScreen from "./HiddenBottomScreen";
-import Top from "./components/Top";
+import MainScreen from "./MainScreen";
+import ChatScreen from "./ChatScreen";
+import KakaoScreen from "./KakaoScreen";
 
 const Stack = createStackNavigator();
 
@@ -15,13 +15,18 @@ function Navigation() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Main"
-          component={StackScreen}
+          name="KakaoScreen"
+          component={KakaoScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="ChatStack"
-          component={HiddenBottomScreen}
+          name="MainScreen"
+          component={MainScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ChatScreen"
+          component={ChatScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

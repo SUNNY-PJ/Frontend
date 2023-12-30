@@ -7,7 +7,7 @@ import Bottom from "./components/Bottom";
 
 const Stack = createStackNavigator();
 
-function HiddenBottomScreen() {
+function ChatScreen() {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -20,4 +20,4 @@ function HiddenBottomScreen() {
   );
 }
 
-export default HiddenBottomScreen;
+export default ChatScreen;

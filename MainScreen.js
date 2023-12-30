@@ -30,7 +30,7 @@ import Chat2 from "./screen/Chat/chat2";
 
 const Stack = createStackNavigator();
 
-function StackScreen() {
+function MainScreen() {
   return (
     // <Stack.Navigator initialRouteName="Splash">
     <>
@@ -44,11 +44,11 @@ function StackScreen() {
           component={Splash}
           options={{ headerShown: false }}
         /> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name="Login"
           component={Login}
           options={{ headerShown: false }}
-        />
+        /> */}
         <Stack.Screen
           name="Kakao"
           component={Kakao}
@@ -101,4 +101,4 @@ function StackScreen() {
     </>
   );
 }
-export default StackScreen;
+export default MainScreen;
