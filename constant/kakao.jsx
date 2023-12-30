@@ -31,10 +31,6 @@ const Kakao = () => {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-      console.log("실행중입니다............");
-      console.log(kakao_url);
-      console.log(response);
-      console.log(response.data);
       if (response) {
         if (response.data.data) {
           const access_token = response.data.data.accessToken;
@@ -43,12 +39,8 @@ const Kakao = () => {
           console.log("accessToken:::::", access_token);
           await AsyncStorage.setItem("access_token", access_token);
           await AsyncStorage.setItem("refresh_token", refresh_token);
-          const accessToken = await AsyncStorage.getItem("access_token");
-          console.log("토큰저장:::", accessToken);
-          // storeData(access_token);
-          // storeData(refresh_token);
-          navigation.navigate("SignUp", { screen: "SignUp" });
         }
+        navigation.navigate("MainScreen", { screen: "SignUp" });
         console.log("데이터:::::", response.data);
       }
     } catch (error) {
@@ -61,11 +53,10 @@ const Kakao = () => {
     }
   };
 
+  // 토큰 전송 api
   const postData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     const device_token = await AsyncStorage.getItem("device_token");
-    console.log("이거 넘기는 어세스 토큰", access_token);
-    console.log("이거 넘기는 디바이스 토큰", device_token);
     try {
       const bodyData = {
         targetToken: device_token,
@@ -79,7 +70,6 @@ const Kakao = () => {
       });
 
       console.log(response.data);
-      console.log("디바이스 토큰 전송 성공함", bodyData);
 
       navigation.navigate("FriendsList", { screen: "FriendsList" });
     } catch (error) {

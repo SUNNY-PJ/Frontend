@@ -42,7 +42,7 @@ const MyPage = () => {
       console.log("데이터:", response.data);
       alert("로그아웃 되었습니다.");
 
-      navigation.navigate("Login", { screen: "Login" });
+      navigation.navigate("KakaoScreen", { screen: "Login" });
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
