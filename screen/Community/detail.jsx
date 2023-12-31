@@ -7,26 +7,26 @@ import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
+import Comment from "./comment";
 
 const Detail = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { itemId } = route.params.params;
-  const [data, setData] = useState([]);
-  const [commentData, setCommentData] = useState([]);
-
-  console.log("아이디", itemId);
-
   const inputURL = `/community/${itemId}`;
-  // const inputURL = "/community";
-
   const url = proxyUrl + inputURL;
-  console.log(url);
+
+  const [data, setData] = useState([]);
+  const [isCommentModal, setIsCommentModal] = useState(false);
+  const commentModal = () => {
+    console.log("댓글 볼래");
+    setIsCommentModal(!isCommentModal);
+  };
+  console.log("댓글임요", isCommentModal);
 
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     console.log(access_token);
-    console.log("get 실행");
 
     try {
       const response = await axios.get(url, {
@@ -42,9 +42,7 @@ const Detail = () => {
       console.log("데이터:", response.data);
       const DetailData = response.data.data;
       const DetailCommentData = [DetailData].map((item) => item.commentList);
-      console.log("댓글이다ㅏㅏ", DetailCommentData);
       setData([DetailData]);
-      console.log("우이이이이이", data);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -54,28 +52,9 @@ const Detail = () => {
     fetchData();
   }, []);
 
-  const [name, setName] = useState("");
-  const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
-
-  const handleNameChange = (text) => {
-    setName(text);
-  };
-
-  const handlePostApiTestStart = () => {
-    alert("등록");
-  };
-
   const handleChat = () => {
     console.log("대화하기 버튼 클릭");
   };
-
-  useEffect(() => {
-    if (name) {
-      setIsAllFieldsFilled(true);
-    } else {
-      setIsAllFieldsFilled(false);
-    }
-  }, [name]);
 
   return (
     <View style={styles.container}>
@@ -218,34 +197,37 @@ const Detail = () => {
           </View>
           <Line color={"#E8E9E8"} h={2} />
           <View style={styles.contentContainer}>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 5,
-                marginTop: 20,
-              }}
-            >
-              <Image
-                source={require("../../assets/chatIcon.png")}
+            <TouchableOpacity activeOpacity={0.6} onPress={commentModal}>
+              <View
                 style={{
-                  width: 24,
-                  height: 24,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 5,
+                  marginTop: 20,
                 }}
-              />
-              <Text>{item.comment_cnt}</Text>
-              <Image
-                source={require("../../assets/arrowLeft.png")}
-                style={{
-                  width: 18,
-                  height: 18,
-                  right: 4,
-                }}
-              />
-            </View>
+              >
+                <Image
+                  source={require("../../assets/chatIcon.png")}
+                  style={{
+                    width: 24,
+                    height: 24,
+                  }}
+                />
+                <Text>{item.comment_cnt}</Text>
+                <Image
+                  source={require("../../assets/arrowLeft.png")}
+                  style={{
+                    width: 18,
+                    height: 18,
+                    right: 4,
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       ))}
+      <Comment isCommentModal={isCommentModal} commentModal={commentModal} />
     </View>
   );
 };
