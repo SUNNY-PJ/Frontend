@@ -31,18 +31,18 @@ const Kakao = () => {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-      if (response) {
-        if (response.data.data) {
-          const access_token = response.data.data.accessToken;
-          const refresh_token = response.data.data.refreshToken;
-          setToken(true);
-          console.log("accessToken:::::", access_token);
-          await AsyncStorage.setItem("access_token", access_token);
-          await AsyncStorage.setItem("refresh_token", refresh_token);
-        }
-        navigation.navigate("MainScreen", { screen: "SignUp" });
-        console.log("데이터:::::", response.data);
-      }
+      // if (response) {
+      // if (response.data.data) {
+      const access_token = response.data.data.accessToken;
+      const refresh_token = response.data.data.refreshToken;
+      setToken(true);
+      console.log("accessToken:::::", access_token);
+      await AsyncStorage.setItem("access_token", access_token);
+      await AsyncStorage.setItem("refresh_token", refresh_token);
+      // }
+      navigation.navigate("MainScreen", { screen: "SignUp" });
+      console.log("데이터:::::", response.data);
+      // }
     } catch (error) {
       console.log("errorMessage:::", error.message);
       if (error.response) {
