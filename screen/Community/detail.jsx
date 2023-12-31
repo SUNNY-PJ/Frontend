@@ -176,7 +176,7 @@ const Detail = () => {
       ))}
       <Line color={"#E8E9E8"} h={2} />
       {data.map((item) => (
-        <View>
+        <View key={item.id}>
           <View style={styles.contentContainer}>
             <View style={{ marginTop: 24, marginBottom: 70 }}>
               <Text>{item.contents}</Text>
