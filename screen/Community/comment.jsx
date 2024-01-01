@@ -34,12 +34,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     console.log(comment);
   };
 
-  const handleButtonClick = () => {
-    alert("등록");
-    setComment("");
-    console.log(comment);
-  };
-
   const handleSecretClick = () => {
     setSecret(!secret);
     console.log(secret);
@@ -66,13 +60,37 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       setCommentData(ResCommentData);
       const ChildrenCommentData = commentData.map((item) => item.children);
       setChildrenCommentData(ChildrenCommentData);
-      console.log(
-        "dddd",
-        commentData.map((item) => item.children)
-      );
     } catch (error) {
       console.error("에러:", error);
     }
+  };
+
+  const postData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
+
+    bodyData = {
+      content: comment,
+    };
+
+    try {
+      const response = await axios.post(url, bodyData, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log("데이터:", response.data);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  const handlePostComment = () => {
+    postData();
+    setComment("");
+    console.log(comment);
   };
 
   useEffect(() => {
@@ -199,7 +217,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
               // onFocus={handleFocus}
               // onBlur={handleBlur}
             />
-            <TouchableOpacity style={styles.button} onPress={handleButtonClick}>
+            <TouchableOpacity style={styles.button} onPress={handlePostComment}>
               <Text style={[styles.buttonText, {}]}>등록</Text>
             </TouchableOpacity>
           </View>
