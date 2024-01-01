@@ -15,7 +15,6 @@ const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from
 const Kakao = () => {
   const inputURL = "/alarm/token";
   const url = proxyUrl + inputURL;
-  const [token, setToken] = useState(false);
   const navigation = useNavigation();
 
   const kakao_url =
@@ -34,8 +33,8 @@ const Kakao = () => {
       // if (response) {
       // if (response.data.data) {
       const access_token = response.data.data.accessToken;
+      console.log(access_token);
       const refresh_token = response.data.data.refreshToken;
-      setToken(true);
       console.log("accessToken:::::", access_token);
       await AsyncStorage.setItem("access_token", access_token);
       await AsyncStorage.setItem("refresh_token", refresh_token);
@@ -71,7 +70,7 @@ const Kakao = () => {
 
       console.log(response.data);
 
-      navigation.navigate("FriendsList", { screen: "FriendsList" });
+      navigation.navigate("MainScreen", { screen: "FriendsList" });
     } catch (error) {
       console.error("에러:", error);
     }
