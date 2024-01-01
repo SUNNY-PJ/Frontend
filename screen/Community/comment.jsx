@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { proxyUrl } from "../../constant/common";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import {
   View,
   Text,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  Keyboard,
   Image,
   TextInput,
   TouchableOpacity,
@@ -13,9 +15,13 @@ import {
 import Line from "../../components/Line";
 import Modal from "react-native-modal";
 
-const Comment = ({ isCommentModal, commentModal }) => {
+const Comment = ({ isCommentModal, commentModal, communityId }) => {
+  const inputURL = `/comment/${communityId}`;
+  const url = proxyUrl + inputURL;
   const [comment, setComment] = useState("");
+  const [commentData, setCommentData] = useState([]);
   const [secret, setSecret] = useState(false);
+  console.log(communityId);
 
   const imageSource = secret
     ? require("../../assets/secretComment_checkBoxTrue.png")
@@ -36,6 +42,35 @@ const Comment = ({ isCommentModal, commentModal }) => {
     setSecret(!secret);
     console.log(secret);
   };
+
+  const fetchData = async () => {
+    console.log("댓글 실행됨");
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+        // params: {
+        //   communityId: communityId,
+        // },
+      });
+
+      console.log("데이터:", response.data);
+      const ResCommentData = response.data.data;
+      setCommentData(ResCommentData);
+      console.log("dddd", commentData);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <Modal
@@ -60,87 +95,66 @@ const Comment = ({ isCommentModal, commentModal }) => {
             marginBottom: 37,
           }}
         />
-        <View style={styles.modalContent}>
-          <Line color={"#E8E9E8"} h={2} />
-          <View style={styles.commentSection}>
-            <View style={{ flexDirection: "row", gap: 8 }}>
-              <Image
-                source={require("../../assets/myPage_profile.png")}
-                style={{ width: 32, height: 32 }}
-              />
-              <Text style={[styles.comment, { alignSelf: "center" }]}>
-                닉네임
+        {commentData.map((item) => (
+          <View style={styles.modalContent}>
+            <Line color={"#E8E9E8"} h={2} />
+            <View style={styles.commentSection}>
+              <View style={{ flexDirection: "row", gap: 8 }}>
+                <Image
+                  source={require("../../assets/myPage_profile.png")}
+                  style={{ width: 32, height: 32 }}
+                />
+                <Text style={[styles.comment, { alignSelf: "center" }]}>
+                  {item.writer}
+                </Text>
+              </View>
+              <Text style={[styles.comment, { paddingLeft: 40 }]}>
+                {item.content}
               </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 8,
+                  paddingLeft: 40,
+                  marginTop: 4,
+                  marginBottom: 21,
+                }}
+              >
+                <Text style={styles.subComment}>{item.createdDate}</Text>
+                <Text style={styles.subComment}>답글 쓰기</Text>
+              </View>
             </View>
-            <Text style={[styles.comment, { paddingLeft: 40 }]}>
-              댓글 내용임니다아ㅏ아ㅏㅏ아
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                gap: 8,
-                paddingLeft: 40,
-                marginTop: 4,
-                marginBottom: 21,
-              }}
+            <Line color={"#E8E9E8"} h={2} />
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={handleSecretClick}
+              style={styles.secretCommentSection}
             >
-              <Text style={styles.subComment}>2023.09.08 04:05</Text>
-              <Text style={styles.subComment}>답글 쓰기</Text>
-            </View>
-            <Line color={"#E8E9E8"} h={1} />
-            <View style={{ flexDirection: "row", gap: 8, marginTop: 9 }}>
+              <Text style={styles.secretComment}>비밀 댓글</Text>
               <Image
-                source={require("../../assets/myPage_profile.png")}
-                style={{ width: 32, height: 32 }}
+                source={imageSource}
+                style={{ width: 8, height: 8, alignSelf: "center" }}
               />
-              <Text style={[styles.comment, { alignSelf: "center" }]}>
-                닉네임
-              </Text>
-            </View>
-
-            <Text style={[styles.comment, { paddingLeft: 40 }]}>
-              댓글 내용임니다아ㅏ아ㅏㅏ아
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                gap: 8,
-                paddingLeft: 40,
-                marginTop: 4,
-                marginBottom: 21,
-              }}
-            >
-              <Text style={styles.subComment}>2023.09.08 04:05</Text>
-              <Text style={styles.subComment}>답글 쓰기</Text>
-            </View>
-          </View>
-          <Line color={"#E8E9E8"} h={2} />
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={handleSecretClick}
-            style={styles.secretCommentSection}
-          >
-            <Text style={styles.secretComment}>비밀 댓글</Text>
-            <Image
-              source={imageSource}
-              style={{ width: 8, height: 8, alignSelf: "center" }}
-            />
-          </TouchableOpacity>
-          <View style={styles.keyboard}>
-            <TextInput
-              placeholder={"댓글을 남겨보세요"}
-              placeholderTextColor="#5C5C5C"
-              value={comment}
-              onChangeText={handleCommentChange}
-              style={styles.input}
-              // onFocus={handleFocus}
-              // onBlur={handleBlur}
-            />
-            <TouchableOpacity style={styles.button} onPress={handleButtonClick}>
-              <Text style={[styles.buttonText, {}]}>등록</Text>
             </TouchableOpacity>
+            <View style={styles.keyboard}>
+              <TextInput
+                placeholder={"댓글을 남겨보세요"}
+                placeholderTextColor="#5C5C5C"
+                value={comment}
+                onChangeText={handleCommentChange}
+                style={styles.input}
+                // onFocus={handleFocus}
+                // onBlur={handleBlur}
+              />
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleButtonClick}
+              >
+                <Text style={[styles.buttonText, {}]}>등록</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        ))}
       </KeyboardAvoidingView>
     </Modal>
   );

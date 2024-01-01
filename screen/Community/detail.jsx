@@ -227,7 +227,11 @@ const Detail = () => {
           </View>
         </View>
       ))}
-      <Comment isCommentModal={isCommentModal} commentModal={commentModal} />
+      <Comment
+        isCommentModal={isCommentModal}
+        commentModal={commentModal}
+        communityId={itemId}
+      />
     </View>
   );
 };
