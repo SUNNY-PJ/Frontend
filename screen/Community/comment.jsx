@@ -22,8 +22,9 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const [commentData, setCommentData] = useState([]);
   const [childrenCommentData, setChildrenCommentData] = useState([]);
   const [secret, setSecret] = useState(false);
+  const [parentId, setParentId] = useState("");
+
   console.log(communityId);
-  console.log("childrenCommentData:::::::::", childrenCommentData);
 
   const imageSource = secret
     ? require("../../assets/secretComment_checkBoxTrue.png")
@@ -37,6 +38,12 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const handleSecretClick = () => {
     setSecret(!secret);
     console.log(secret);
+  };
+
+  const handleReCommentClick = (parentId, parentIdWriter) => {
+    setComment(`@${parentIdWriter} `);
+    setParentId(parentId);
+    console.log("대댓글", comment);
   };
 
   const fetchData = async () => {
@@ -69,8 +76,12 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     const access_token = await AsyncStorage.getItem("access_token");
     console.log(access_token);
 
+    // const isReply = comment.startsWith("@");
+
     bodyData = {
       content: comment,
+      // parent_id: isReply ? comment.split(" ")[0].substring(1) : null,
+      parent_id: parentId ? parentId : null,
     };
 
     try {
@@ -146,7 +157,12 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                 }}
               >
                 <Text style={styles.subComment}>{item.createdDate}</Text>
-                <Text style={styles.subComment}>답글 쓰기</Text>
+                <Text
+                  style={styles.subComment}
+                  onPress={() => handleReCommentClick(item.id, item.writer)}
+                >
+                  답글 쓰기
+                </Text>
               </View>
               <Line color={"#E8E9E8"} h={1} />
               {/* 대댓글 ui */}
@@ -185,7 +201,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                         <Text style={styles.subComment}>
                           {childItem.createdDate}
                         </Text>
-                        {/* <Text style={styles.subComment}>답글 쓰기</Text> */}
                       </View>
                       <Line color={"#E8E9E8"} h={1} />
                     </View>
@@ -214,8 +229,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
               value={comment}
               onChangeText={handleCommentChange}
               style={styles.input}
-              // onFocus={handleFocus}
-              // onBlur={handleBlur}
             />
             <TouchableOpacity style={styles.button} onPress={handlePostComment}>
               <Text style={[styles.buttonText, {}]}>등록</Text>
@@ -268,8 +281,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFA851",
     borderWidth: 1,
     color: "#000",
-    // width: 40,
-    // height: 27,
   },
   buttonText: {
     paddingLeft: 10,
