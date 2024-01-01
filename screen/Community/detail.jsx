@@ -8,6 +8,7 @@ import { useRoute } from "@react-navigation/native";
 import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 import Comment from "./comment";
+import OptionModal from "../../components/Modal/community/optionModal";
 
 const Detail = () => {
   const navigation = useNavigation();
@@ -19,10 +20,13 @@ const Detail = () => {
   const [data, setData] = useState([]);
   const [isCommentModal, setIsCommentModal] = useState(false);
   const commentModal = () => {
-    console.log("댓글 볼래");
     setIsCommentModal(!isCommentModal);
   };
-  console.log("댓글임요", isCommentModal);
+  const [isOpenOptionModal, setIsOpenOptionModal] = useState(false);
+  const openOptionModal = () => {
+    setIsOpenOptionModal(!isOpenOptionModal);
+    console.log("메뉴 클릭", isOpenOptionModal);
+  };
 
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
@@ -54,6 +58,15 @@ const Detail = () => {
 
   const handleChat = () => {
     console.log("대화하기 버튼 클릭");
+  };
+
+  const handleMenuClick = () => {
+    console.log("메뉴 클릭");
+    openOptionModal();
+  };
+
+  const handleDeletePost = () => {
+    console.log("게시글을 삭제합니다.");
   };
 
   return (
@@ -106,14 +119,20 @@ const Detail = () => {
                 height: 24,
               }}
             />
-            <Image
-              source={require("../../assets/menu.png")}
+            <TouchableOpacity
+              onPress={handleMenuClick}
               style={{
-                width: 20,
-                height: 4,
                 alignSelf: "center",
               }}
-            />
+            >
+              <Image
+                source={require("../../assets/menu.png")}
+                style={{
+                  width: 20,
+                  height: 4,
+                }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -231,6 +250,11 @@ const Detail = () => {
         isCommentModal={isCommentModal}
         commentModal={commentModal}
         communityId={itemId}
+      />
+      <OptionModal
+        isOpenOptionModal={isOpenOptionModal}
+        openOptionModal={openOptionModal}
+        onDeletePress={handleDeletePost}
       />
     </View>
   );

@@ -47,7 +47,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   };
 
   const fetchData = async () => {
-    console.log("댓글 실행됨");
     const access_token = await AsyncStorage.getItem("access_token");
     console.log(access_token);
 
