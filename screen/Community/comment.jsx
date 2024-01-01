@@ -15,6 +15,11 @@ import Modal from "react-native-modal";
 
 const Comment = ({ isCommentModal, commentModal }) => {
   const [comment, setComment] = useState("");
+  const [secret, setSecret] = useState(false);
+
+  const imageSource = secret
+    ? require("../../assets/secretComment_checkBoxTrue.png")
+    : require("../../assets/secretComment_checkBox.png");
 
   const handleCommentChange = (text) => {
     setComment(text);
@@ -25,6 +30,11 @@ const Comment = ({ isCommentModal, commentModal }) => {
     alert("등록");
     setComment("");
     console.log(comment);
+  };
+
+  const handleSecretClick = () => {
+    setSecret(!secret);
+    console.log(secret);
   };
 
   return (
@@ -62,7 +72,6 @@ const Comment = ({ isCommentModal, commentModal }) => {
                 닉네임
               </Text>
             </View>
-
             <Text style={[styles.comment, { paddingLeft: 40 }]}>
               댓글 내용임니다아ㅏ아ㅏㅏ아
             </Text>
@@ -104,9 +113,19 @@ const Comment = ({ isCommentModal, commentModal }) => {
               <Text style={styles.subComment}>2023.09.08 04:05</Text>
               <Text style={styles.subComment}>답글 쓰기</Text>
             </View>
-            <Line color={"#E8E9E8"} h={1} />
           </View>
           <Line color={"#E8E9E8"} h={2} />
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={handleSecretClick}
+            style={styles.secretCommentSection}
+          >
+            <Text style={styles.secretComment}>비밀 댓글</Text>
+            <Image
+              source={imageSource}
+              style={{ width: 8, height: 8, alignSelf: "center" }}
+            />
+          </TouchableOpacity>
           <View style={styles.keyboard}>
             <TextInput
               placeholder={"댓글을 남겨보세요"}
@@ -118,7 +137,7 @@ const Comment = ({ isCommentModal, commentModal }) => {
               // onBlur={handleBlur}
             />
             <TouchableOpacity style={styles.button} onPress={handleButtonClick}>
-              <Text style={[styles.buttonText, {}]}>버튼</Text>
+              <Text style={[styles.buttonText, {}]}>등록</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -176,9 +195,18 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingTop: 6,
     paddingBottom: 6,
+    fontSize: 12,
+    fontWeight: 700,
+    color: "#1F1F1F",
   },
   comment: { fontSize: 15, fontWeight: 500, color: "#1F1F1F" },
   subComment: { fontSize: 10, fontWeight: 500, color: "#C1C1C1" },
+  secretCommentSection: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: 3,
+  },
+  secretComment: { color: "#5C5C5C", fontSize: 10, fontWeight: 700 },
 });
 
 export default Comment;
