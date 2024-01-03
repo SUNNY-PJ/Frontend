@@ -2,7 +2,14 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { proxyUrl } from "../../constant/common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import SmallBtn from "../../components/Btn/smallBtn";
@@ -45,7 +52,7 @@ const Detail = () => {
 
       console.log("데이터:", response.data);
       const DetailData = response.data.data;
-      const DetailCommentData = [DetailData].map((item) => item.commentList);
+      // const DetailCommentData = [DetailData].map((item) => item.commentList);
       setData([DetailData]);
     } catch (error) {
       console.error("에러:", error);
@@ -55,6 +62,28 @@ const Detail = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const deleteData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.delete(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log("데이터:", response);
+      console.log("삭제되었습니다");
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  const putData = async () => {
+    console.log("수정 눌렀냐");
+  };
 
   const handleChat = () => {
     console.log("대화하기 버튼 클릭");
@@ -66,7 +95,47 @@ const Detail = () => {
   };
 
   const handleDeletePost = () => {
-    console.log("게시글을 삭제합니다.");
+    Alert.alert(
+      "게시물 삭제",
+      "삭제하시겠습니까?",
+      [
+        {
+          text: "취소",
+          onPress: () => console.log("삭제를 취소했습니다."),
+          style: "cancel",
+        },
+        {
+          text: "확인",
+          onPress: () => {
+            deleteData();
+            console.log("게시글을 삭제합니다.");
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const handlePutPost = () => {
+    Alert.alert(
+      "게시물 수정",
+      "수정하시겠습니까?",
+      [
+        {
+          text: "취소",
+          onPress: () => console.log("수정을 취소했습니다."),
+          style: "cancel",
+        },
+        {
+          text: "확인",
+          onPress: () => {
+            putData();
+            console.log("게시글을 수정합니다.");
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
@@ -255,6 +324,7 @@ const Detail = () => {
         isOpenOptionModal={isOpenOptionModal}
         openOptionModal={openOptionModal}
         onDeletePress={handleDeletePost}
+        onPutPress={handlePutPost}
       />
     </View>
   );

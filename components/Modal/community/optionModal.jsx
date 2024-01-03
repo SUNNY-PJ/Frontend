@@ -9,9 +9,19 @@ import {
 } from "react-native";
 import Line from "../../Line";
 
-const OptionModal = ({ isOpenOptionModal, openOptionModal, onDeletePress }) => {
+const OptionModal = ({
+  isOpenOptionModal,
+  openOptionModal,
+  onDeletePress,
+  onPutPress,
+}) => {
   const handleDeletePress = () => {
     onDeletePress();
+    openOptionModal();
+  };
+
+  const handlePutPress = () => {
+    onPutPress();
     openOptionModal();
   };
 
@@ -26,7 +36,7 @@ const OptionModal = ({ isOpenOptionModal, openOptionModal, onDeletePress }) => {
         </TouchableOpacity>
         <Line color={"#C1C1C1"} h={1} />
         <View style={styles.modalContent}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handlePutPress}>
             <Text style={styles.text}>게시글 수정</Text>
           </TouchableOpacity>
           <Line color={"#C1C1C1"} h={1} />
