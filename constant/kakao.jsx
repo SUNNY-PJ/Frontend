@@ -34,9 +34,8 @@ const Kakao = () => {
       });
 
       const access_token = response.data.data.accessToken;
-      console.log(access_token);
       const refresh_token = response.data.data.refreshToken;
-      console.log("accessToken:::::", access_token);
+      console.log(access_token);
       await AsyncStorage.setItem("access_token", access_token);
       await AsyncStorage.setItem("refresh_token", refresh_token);
 
@@ -83,7 +82,6 @@ const Kakao = () => {
     if (condition != -1) {
       var authorize_code = data.substring(condition + exp.length);
       console.log("코드:::", authorize_code);
-      // setCode(authorize_code);
     }
   }
 
