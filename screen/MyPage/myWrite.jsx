@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const MyWrite = () => {
   const navigation = useNavigation();
-  const inputURL = "/mypage";
+  const inputURL = "/mypage/mycommunity";
   const url = proxyUrl + inputURL;
 
   const [data, setData] = useState([]);
