@@ -100,7 +100,7 @@ const SettingProfile = () => {
       console.log(formData);
 
       console.log("데이터:", response.data);
-      alert("닉네임을 변경했습니다.");
+      alert("프로필을 변경했습니다.");
       navigation.navigate("MyPage", { screen: "MyPage" });
     } catch (error) {
       if (error.response) {
