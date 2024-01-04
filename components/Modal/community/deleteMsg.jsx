@@ -10,30 +10,29 @@ import {
 import MiddleBtn from "../../Btn/middleBtn";
 import MiddleBtnBlack from "../../Btn/middleBtnBlack";
 
-const DeleteMsg = ({ isVisible, toggleModal }) => {
+const DeleteMsg = ({ isVisible, toggleModal, onDelete, onCancel }) => {
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View
         style={{
           justifyContent: "center",
           alignItems: "center",
-          // backgroundColor: "rgba(0, 0, 0, 0.5)",
           height: "100%",
         }}
       >
         <View style={styles.container}>
           <View style={styles.closeButtonContainer}>
-            <TouchableOpacity onPress={toggleModal}>
+            <TouchableOpacity onPress={onCancel}>
               <Image
-                source={require("../../assets/close.png")}
+                source={require("../../../assets/close.png")}
                 style={{ width: 16, height: 16 }}
               />
             </TouchableOpacity>
           </View>
           <Text style={styles.title}>게시글을 삭제 하시겠습니까?</Text>
           <View style={styles.buttonContainer}>
-            <MiddleBtn text={"삭제하기"} />
-            <MiddleBtnBlack text={"취소하기"} />
+            <MiddleBtn text={"삭제하기"} onClick={onDelete} />
+            <MiddleBtnBlack text={"취소하기"} onClick={onCancel} />
           </View>
         </View>
       </View>

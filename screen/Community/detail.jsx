@@ -16,6 +16,7 @@ import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 import Comment from "./comment";
 import OptionModal from "../../components/Modal/community/optionModal";
+import DeleteMsg from "../../components/Modal/community/deleteMsg";
 
 const Detail = () => {
   const navigation = useNavigation();
@@ -25,6 +26,7 @@ const Detail = () => {
   const url = proxyUrl + inputURL;
 
   const [data, setData] = useState([]);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [isCommentModal, setIsCommentModal] = useState(false);
   const commentModal = () => {
     setIsCommentModal(!isCommentModal);
@@ -94,26 +96,19 @@ const Detail = () => {
     openOptionModal();
   };
 
+  const handleDeleteConfirm = () => {
+    deleteData();
+    setDeleteModalVisible(false);
+    console.log("게시글을 삭제합니다.");
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteModalVisible(false);
+    console.log("삭제를 취소했습니다.");
+  };
+
   const handleDeletePost = () => {
-    Alert.alert(
-      "게시물 삭제",
-      "삭제하시겠습니까?",
-      [
-        {
-          text: "취소",
-          onPress: () => console.log("삭제를 취소했습니다."),
-          style: "cancel",
-        },
-        {
-          text: "확인",
-          onPress: () => {
-            deleteData();
-            console.log("게시글을 삭제합니다.");
-          },
-        },
-      ],
-      { cancelable: false }
-    );
+    setDeleteModalVisible(true);
   };
 
   const handlePutPost = () => {
@@ -325,6 +320,12 @@ const Detail = () => {
         openOptionModal={openOptionModal}
         onDeletePress={handleDeletePost}
         onPutPress={handlePutPost}
+      />
+      <DeleteMsg
+        isVisible={deleteModalVisible}
+        toggleModal={() => setDeleteModalVisible(!deleteModalVisible)}
+        onDelete={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
       />
     </View>
   );
