@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Image,
@@ -18,7 +18,35 @@ const MyPage = () => {
   const handleTabClick = (tab) => {
     navigation.navigate("MyInfo", { activeTab: tab });
   };
+  const [profile, setProfile] = useState([]);
 
+  // 프로필 정보
+  const fetchData = async () => {
+    const inputURL = `/mypage`;
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log("프로필 정보:::", response.data);
+      const profileData = response.data.data;
+      setProfile([profileData]);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // 로그아웃
   const postData = async () => {
     const lououtUrl = "http://43.201.176.22:8080/mypage/auth/kakao/logout";
     const inputURL = "/mypage/auth/kakao/logout";
@@ -37,8 +65,6 @@ const MyPage = () => {
         },
         params,
       });
-      console.log("url:::::::", url);
-      console.log(response);
       console.log("데이터:", response.data);
       alert("로그아웃 되었습니다.");
 
@@ -76,39 +102,43 @@ const MyPage = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: 24,
-            marginBottom: 16,
-            paddingLeft: 20,
-            gap: 24,
-          }}
-        >
-          <Image
-            source={require("../../assets/myPage_profile.png")}
-            style={{ width: 56, height: 56 }}
-          />
-          <View style={{ gap: 8 }}>
-            <Text style={styles.name}>사용자12</Text>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() =>
-                navigation.navigate("SettingProfile", {
-                  screen: "SettingProfile",
-                })
-              }
-            >
-              <View style={{ flexDirection: "row" }}>
-                <Text style={styles.setting}>프로필 설정</Text>
-                <Image
-                  source={require("../../assets/myPage_setting.png")}
-                  style={{ width: 16, height: 16, padding: 2, top: 2 }}
-                />
-              </View>
-            </TouchableOpacity>
+        {profile.map((item) => (
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 24,
+              marginBottom: 16,
+              paddingLeft: 20,
+              gap: 24,
+            }}
+            key={item.id}
+          >
+            <Image
+              // source={require("../../assets/myPage_profile.png")}
+              source={{ uri: item.profile }}
+              style={{ width: 56, height: 56 }}
+            />
+            <View style={{ gap: 8 }}>
+              <Text style={styles.name}>{item.name}</Text>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() =>
+                  navigation.navigate("SettingProfile", {
+                    screen: "SettingProfile",
+                  })
+                }
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.setting}>프로필 설정</Text>
+                  <Image
+                    source={require("../../assets/myPage_setting.png")}
+                    style={{ width: 16, height: 16, padding: 2, top: 2 }}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        ))}
         <Line color={"#C1C1C1"} h={4} />
         <Text
           style={{
