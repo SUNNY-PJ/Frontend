@@ -78,6 +78,7 @@ const Detail = () => {
 
       console.log("데이터:", response);
       console.log("삭제되었습니다");
+      alert("게시글이 삭제되었습니다.");
     } catch (error) {
       console.error("에러:", error);
     }
@@ -100,6 +101,7 @@ const Detail = () => {
     deleteData();
     setDeleteModalVisible(false);
     console.log("게시글을 삭제합니다.");
+    navigation.navigate("MainScreen", { screen: "Community" });
   };
 
   const handleDeleteCancel = () => {
