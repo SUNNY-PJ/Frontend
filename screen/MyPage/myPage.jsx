@@ -116,7 +116,7 @@ const MyPage = () => {
             <Image
               // source={require("../../assets/myPage_profile.png")}
               source={{ uri: item.profile }}
-              style={{ width: 56, height: 56 }}
+              style={{ width: 56, height: 56, borderRadius: 50 }}
             />
             <View style={{ gap: 8 }}>
               <Text style={styles.name}>{item.name}</Text>
