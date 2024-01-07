@@ -43,8 +43,17 @@ const MyPage = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    // 화면이 focus될 때마다 fetchData 호출
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchData();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   // 로그아웃
   const postData = async () => {
