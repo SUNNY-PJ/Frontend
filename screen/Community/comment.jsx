@@ -81,6 +81,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       content: comment,
       // parent_id: isReply ? comment.split(" ")[0].substring(1) : null,
       parent_id: parentId ? parentId : null,
+      is_privated: secret,
     };
 
     try {
