@@ -20,10 +20,14 @@ const SettingProfile = () => {
   const navigation = useNavigation();
 
   const [name, setName] = useState("");
+  const [profileImageChanged, setProfileImageChanged] = useState(false);
+  const [profileNicknameChanged, setProfileNicknameChanged] = useState(false);
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [profile, setProfile] = useState([]);
   const handleNameChange = (text) => {
     setName(text);
+    setProfileNicknameChanged(true);
   };
 
   const [request, setRequest] = ImagePicker.useMediaLibraryPermissions();
@@ -47,6 +51,7 @@ const SettingProfile = () => {
       aspect: [1, 1],
     });
     // 이미지 업로드 취소한 경우
+
     if (result.cancelled) {
       return null;
     }
@@ -54,6 +59,7 @@ const SettingProfile = () => {
     console.log(result);
     setImages([result.assets[0].uri]);
     setSelectedImage(result.assets[0].uri);
+    setProfileImageChanged(true);
   };
 
   // 첨부한 이미지 삭제
@@ -83,10 +89,7 @@ const SettingProfile = () => {
     });
   });
 
-  console.log(formData);
-  console.log(formData._parts);
-
-  const postData = async () => {
+  const postImageData = async () => {
     const inputURL = "/mypage/profile";
     const url = proxyUrl + inputURL;
     const access_token = await AsyncStorage.getItem("access_token");
@@ -110,17 +113,79 @@ const SettingProfile = () => {
     }
   };
 
+  const postNicknameData = async () => {
+    const inputURL = "/auth/nickname";
+    const cleanedURL = inputURL.replace(/[\u200B]/g, "");
+
+    const url = proxyUrl + cleanedURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
+    console.log("별명을 등록합니다.");
+    try {
+      const params = {
+        name: name,
+      };
+
+      const response = await axios.post(url, null, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+        params,
+      });
+      console.log("데이터:", response.data);
+
+      navigation.navigate("MyPage", { screen: "MyPage" });
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+      } else {
+        console.error("에러:", error);
+      }
+    }
+  };
+
   const handlePostApiStart = () => {
-    postData();
+    if (profileImageChanged) {
+      postImageData();
+    } else if (profileNicknameChanged) {
+      postNicknameData();
+    }
+  };
+
+  const fetchData = async () => {
+    const inputURL = `/mypage`;
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log("프로필 정보:::", response.data);
+      const profileData = response.data.data;
+      setProfile([profileData]);
+    } catch (error) {
+      console.error("에러:", error);
+    }
   };
 
   useEffect(() => {
-    if (name) {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (profileImageChanged || profileNicknameChanged) {
       setIsAllFieldsFilled(true);
     } else {
       setIsAllFieldsFilled(false);
     }
-  }, [name]);
+  }, [profileImageChanged, profileNicknameChanged]);
 
   return (
     <View style={styles.container}>
@@ -149,55 +214,61 @@ const SettingProfile = () => {
       >
         프로필 설정
       </Text>
-      <Pressable onPress={uploadImage}>
-        {selectedImage ? ( // 수정
-          <Image
-            source={{ uri: selectedImage }}
-            style={{
-              width: 56,
-              height: 56,
-              alignSelf: "center",
-              marginBottom: 28,
-              borderRadius: 50, // 추가
-            }}
-          />
-        ) : (
-          <Image
-            source={require("../../assets/myPage_profile.png")}
-            style={{
-              width: 56,
-              height: 56,
-              alignSelf: "center",
-              marginBottom: 28,
-            }}
-          />
-        )}
-      </Pressable>
-      <View style={styles.contentContainer}>
-        <Text
-          style={{
-            paddingLeft: 12,
-            fontSize: 16,
-            color: "#1F1F1F",
-            fontWeight: 500,
-            marginBottom: 16,
-          }}
-        >
-          닉네임
-        </Text>
-        <Input
-          placeholder={"별명"}
-          inputValue={name}
-          handleInputChange={handleNameChange}
-        />
-        <View style={{ marginTop: 323 }}>
-          {isAllFieldsFilled ? (
-            <LargeBtn text={"저장하기"} onClick={handlePostApiStart} />
+      {profile.map((item) => (
+        <Pressable onPress={uploadImage}>
+          {selectedImage ? (
+            <Image
+              source={{ uri: selectedImage }}
+              style={{
+                width: 56,
+                height: 56,
+                alignSelf: "center",
+                marginBottom: 28,
+                borderRadius: 50,
+              }}
+            />
           ) : (
-            <LargeBtnDisable text={"저장하기"} />
+            <Image
+              source={{ uri: item.profile }}
+              // source={require("../../assets/myPage_profile.png")}
+              style={{
+                width: 56,
+                height: 56,
+                alignSelf: "center",
+                marginBottom: 28,
+                borderRadius: 50,
+              }}
+            />
           )}
+        </Pressable>
+      ))}
+      {profile.map((item) => (
+        <View style={styles.contentContainer}>
+          <Text
+            style={{
+              paddingLeft: 12,
+              fontSize: 16,
+              color: "#1F1F1F",
+              fontWeight: 500,
+              marginBottom: 16,
+            }}
+          >
+            닉네임
+          </Text>
+          <Input
+            placeholder={item.name}
+            inputValue={name}
+            handleInputChange={handleNameChange}
+          />
+          <View style={{ marginTop: 323 }}>
+            {isAllFieldsFilled ? (
+              <LargeBtn text={"저장하기"} onClick={handlePostApiStart} />
+            ) : (
+              <LargeBtnDisable text={"저장하기"} />
+            )}
+          </View>
         </View>
-      </View>
+      ))}
     </View>
   );
 };
