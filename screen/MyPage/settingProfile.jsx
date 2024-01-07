@@ -52,8 +52,8 @@ const SettingProfile = () => {
     }
     // 이미지 업로드 결과 및 이미지 경로 업데이트
     console.log(result);
-    setImages([...images, result.assets[0].uri]);
-    setSelectedImage(result.assets[0].uri); // 추가
+    setImages([result.assets[0].uri]);
+    setSelectedImage(result.assets[0].uri);
   };
 
   // 첨부한 이미지 삭제
@@ -97,7 +97,6 @@ const SettingProfile = () => {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      console.log(formData);
 
       console.log("데이터:", response.data);
       alert("프로필을 변경했습니다.");
