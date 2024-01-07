@@ -230,8 +230,15 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
               onChangeText={handleCommentChange}
               style={styles.input}
             />
-            <TouchableOpacity style={styles.button} onPress={handlePostComment}>
-              <Text style={[styles.buttonText, {}]}>등록</Text>
+            <TouchableOpacity
+              style={[
+                styles.button,
+                { backgroundColor: comment ? "#FFA851" : "#FFFBF6" },
+              ]}
+              onPress={handlePostComment}
+              disabled={!comment}
+            >
+              <Text style={styles.buttonText}>등록</Text>
             </TouchableOpacity>
           </View>
         </View>
