@@ -29,7 +29,7 @@ const DeleteMsg = ({ isVisible, toggleModal, onDelete, onCancel }) => {
               />
             </TouchableOpacity>
           </View>
-          <Text style={styles.title}>게시글을 삭제 하시겠습니까?</Text>
+          <Text style={styles.title}>게시글을 삭제할까요?</Text>
           <View style={styles.buttonContainer}>
             <MiddleBtn text={"삭제하기"} onClick={onDelete} />
             <MiddleBtnBlack text={"취소하기"} onClick={onCancel} />
