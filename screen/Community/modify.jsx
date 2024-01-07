@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { proxyUrl } from "../../constant/common";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import {
   View,
   Text,
   StyleSheet,
   Image,
   Pressable,
-  KeyboardAvoidingView,
-  Platform,
-  Keyboard,
   TouchableOpacity,
 } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import Input from "../../components/Input/input";
@@ -19,9 +20,14 @@ import Line from "../../components/Line";
 
 const Modify = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { itemId } = route.params.params;
+  const inputURL = `/community/${itemId}`;
+  const url = proxyUrl + inputURL;
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [data, setData] = useState([]);
 
   const handleTitleChange = (text) => {
     setTitle(text);
@@ -68,179 +74,246 @@ const Modify = () => {
     setImages(updatedImages);
   };
 
+  const communityRequest = {
+    title: title,
+    contents: content,
+    type: "꿀팁",
+  };
+
   // post api
   const formData = new FormData();
+  formData.append("communityRequest", JSON.stringify(communityRequest));
+
   images.forEach((image, index) => {
     const fileName = image.split("/").pop();
     const match = /\.(\w+)$/.exec(fileName ?? "");
     const type = match ? `image/${match[1]}` : `image`;
-    formData.append(`image${index}`, { uri: image, name: fileName, type });
+    formData.append("files", {
+      uri: image,
+      name: fileName,
+      type: type,
+    });
   });
 
-  const handlePost = () => {
-    console.log("등록 버튼 클릭");
+  const postData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.put(url, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log("데이터:", response.data);
+      fetchData();
+      navigation.navigate("Community", { screen: "Community" });
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 메세지:", error.message);
+      } else {
+        console.error("에러:", error);
+      }
+    }
   };
+
+  const handlePost = () => {
+    console.log("수정 버튼 클릭");
+    postData();
+  };
+
+  const fetchData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+        // params: {
+        //   communityId: itemId,
+        // },
+      });
+
+      console.log("데이터:", response.data);
+      const DetailData = response.data.data;
+      setData([DetailData]);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.contentContainer}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: 700,
-              color: "#1F1F1F",
-              alignSelf: "center",
-              marginTop: 17,
-            }}
-          >
-            글 수정
-          </Text>
-          <View
-            style={{
-              marginTop: 8,
-              marginBottom: 20,
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
-            <SmallBtn
-              title={"취소"}
-              color={"#E8E9E8"}
-              onClick={() =>
-                navigation.navigate("Community", {
-                  screen: "Community",
-                })
-              }
-            />
-            <SmallBtn title={"등록"} onClick={handlePost} />
-          </View>
-          {/* 카테고리 선택 */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginBottom: 5,
-            }}
-          >
+        {data.map((item) => (
+          <View style={styles.contentContainer}>
             <Text
               style={{
-                fontSize: 15,
+                fontSize: 20,
                 fontWeight: 700,
-                borderColor: "#1F1F1F",
+                color: "#1F1F1F",
+                alignSelf: "center",
+                marginTop: 17,
               }}
             >
-              카테고리 선택
+              글 수정
             </Text>
-            <Image
-              source={require("../../assets/categoryArrow.png")}
+            <View
               style={{
-                width: 24,
-                height: 24,
+                marginTop: 8,
+                marginBottom: 20,
+                flexDirection: "row",
+                justifyContent: "space-between",
               }}
+            >
+              <SmallBtn
+                title={"취소"}
+                color={"#E8E9E8"}
+                onClick={() =>
+                  navigation.navigate("Community", {
+                    screen: "Community",
+                  })
+                }
+              />
+              <SmallBtn title={"등록"} onClick={handlePost} />
+            </View>
+            {/* 카테고리 선택 */}
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginBottom: 5,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: 700,
+                  borderColor: "#1F1F1F",
+                }}
+              >
+                카테고리 선택
+              </Text>
+              <Image
+                source={require("../../assets/categoryArrow.png")}
+                style={{
+                  width: 24,
+                  height: 24,
+                }}
+              />
+            </View>
+            <Line color={"#C1C1C1"} h={1} />
+            {/* 카테고리 선택 */}
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 500,
+                color: "#1F1F1F",
+                marginBottom: 8,
+                marginTop: 16,
+                paddingLeft: 12,
+              }}
+            >
+              제목
+            </Text>
+            <Input
+              placeholder={item.content}
+              inputValue={title}
+              handleInputChange={handleTitleChange}
             />
-          </View>
-          <Line color={"#C1C1C1"} h={1} />
-          {/* 카테고리 선택 */}
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: 500,
-              color: "#1F1F1F",
-              marginBottom: 8,
-              marginTop: 16,
-              paddingLeft: 12,
-            }}
-          >
-            제목
-          </Text>
-          <Input
-            placeholder={"제목을 입력하세요"}
-            inputValue={title}
-            handleInputChange={handleTitleChange}
-          />
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: 500,
-              color: "#1F1F1F",
-              marginBottom: 8,
-              marginTop: 10,
-              paddingLeft: 12,
-            }}
-          >
-            내용
-          </Text>
-          <InputMax
-            placeholder={"내용을 입력하세요"}
-            inputValue={content}
-            handleInputChange={handleContentChange}
-          />
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: 500,
-              color: "#1F1F1F",
-              marginBottom: 8,
-              marginTop: 10,
-            }}
-          >
-            미디어 첨부
-          </Text>
-          <View style={styles.media}>
-            {images.map((image, index) => (
-              <View key={index} style={{ position: "relative" }}>
-                <Image
-                  source={{ uri: image }}
-                  style={{
-                    width: 70,
-                    height: 70,
-                    borderColor: "#C1C1C1",
-                    borderRadius: 8,
-                    borderWidth: 1.5,
-                  }}
-                />
-                <Pressable
-                  onPress={() => removeImage(index)}
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-                  }}
-                >
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 500,
+                color: "#1F1F1F",
+                marginBottom: 8,
+                marginTop: 10,
+                paddingLeft: 12,
+              }}
+            >
+              내용
+            </Text>
+            <InputMax
+              placeholder={item.contents}
+              placeholderTextColor="#000"
+              inputValue={content}
+              handleInputChange={handleContentChange}
+            />
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 500,
+                color: "#1F1F1F",
+                marginBottom: 8,
+                marginTop: 10,
+              }}
+            >
+              미디어 첨부
+            </Text>
+            <View style={styles.media}>
+              {images.map((image, index) => (
+                <View key={index} style={{ position: "relative" }}>
                   <Image
-                    source={require("../../assets/deletePhoto.png")}
+                    source={{ uri: image }}
                     style={{
-                      width: 18,
-                      height: 18,
-                      position: "absolute",
-                      top: -6,
-                      right: -6,
+                      width: 70,
+                      height: 70,
+                      borderColor: "#C1C1C1",
+                      borderRadius: 8,
+                      borderWidth: 1.5,
                     }}
                   />
+                  <Pressable
+                    onPress={() => removeImage(index)}
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      right: 0,
+                    }}
+                  >
+                    <Image
+                      source={require("../../assets/deletePhoto.png")}
+                      style={{
+                        width: 18,
+                        height: 18,
+                        position: "absolute",
+                        top: -6,
+                        right: -6,
+                      }}
+                    />
+                  </Pressable>
+                </View>
+              ))}
+              {images.length < View && (
+                <Pressable onPress={uploadImage}>
+                  <Image
+                    source={require("../../assets/photo.png")}
+                    style={{ width: 70, height: 70 }}
+                  />
                 </Pressable>
-              </View>
-            ))}
-            {images.length < 4 && (
-              <Pressable onPress={uploadImage}>
-                <Image
-                  source={require("../../assets/photo.png")}
-                  style={{ width: 70, height: 70 }}
-                />
-              </Pressable>
-            )}
+              )}
+            </View>
+            <Text
+              style={{
+                fontSize: 10,
+                fontWeight: 500,
+                color: "#5C5C5C",
+                marginTop: 8,
+              }}
+            >
+              미디어는 최대 4장까지 첨부가 가능합니다.
+            </Text>
           </View>
-          {/* <Text
-            style={{
-              fontSize: 10,
-              fontWeight: 500,
-              color: "#5C5C5C",
-              marginTop: 8,
-            }}
-          >
-            미디어는 최대 4장까지 첨부가 가능합니다.
-          </Text> */}
-        </View>
+        ))}
       </View>
     </>
   );

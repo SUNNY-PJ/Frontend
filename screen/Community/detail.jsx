@@ -85,6 +85,12 @@ const Detail = () => {
   };
 
   const putData = async () => {
+    navigation.navigate("Modify", {
+      screen: "Modify",
+      params: {
+        itemId: itemId,
+      },
+    });
     console.log("수정 눌렀냐");
   };
 
