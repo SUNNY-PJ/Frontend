@@ -11,6 +11,7 @@ import { proxyUrl } from "../../constant/common";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { useCommunity } from "../../context/communityContext";
 import * as ImagePicker from "expo-image-picker";
 import Input from "../../components/Input/input";
 import InputMax from "../../components/Input/inputMax";
@@ -18,6 +19,7 @@ import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 
 const Post = () => {
+  const { fetchData } = useCommunity();
   const navigation = useNavigation();
   const inputURL = "/community";
   // const cleanedURL = inputURL.replace(/[\u200B]/g, "");
@@ -109,12 +111,16 @@ const Post = () => {
     });
   });
 
-  console.log(formData);
-  console.log(formData._parts);
-
   const postData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
-
+    // 유효성 검사
+    if (title.trim() === "") {
+      alert("제목을 입력해주세요.");
+      return;
+    } else if (content.trim() === "") {
+      alert("내용을 입력해주세요.");
+      return;
+    }
     try {
       // const bodyData = {
       //   title: title,
@@ -128,10 +134,8 @@ const Post = () => {
         },
       });
 
-      // console.log("url:::::::", url);
-      // console.log(response);
       console.log("데이터:", response.data);
-
+      fetchData();
       navigation.navigate("Community", { screen: "Community" });
     } catch (error) {
       if (error.response) {
@@ -146,6 +150,7 @@ const Post = () => {
   const handlePost = () => {
     console.log("등록 버튼 클릭");
     postData();
+
     // console.log(formData);
     // console.log(formData._parts);
   };

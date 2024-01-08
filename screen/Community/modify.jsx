@@ -73,7 +73,14 @@ const Modify = () => {
 
   const postData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
-
+    // 유효성 검사
+    if (title.trim() === "") {
+      alert("제목을 입력해주세요.");
+      return;
+    } else if (content.trim() === "") {
+      alert("내용을 입력해주세요.");
+      return;
+    }
     try {
       const response = await axios.get(url, {
         headers: {
