@@ -1,83 +1,106 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Bar from "../../components/Bar";
+import axios from "axios";
+import { proxyUrl } from "../../constant/common";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Statistics = () => {
+  const [data, setData] = useState([]);
+  const fetchData = async () => {
+    const inputURL = "/consumption/spendTypeStatistics";
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log("데이터:", response.data.data);
+      setData(response.data.data);
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+      } else {
+        console.error("에러:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const imageData = [
+    {
+      category: "식생활",
+      image: require("../../assets/food.png"),
+    },
+    {
+      category: null,
+      image: require("../../assets/home.png"),
+    },
+    {
+      category: "기타",
+      image: require("../../assets/etc.png"),
+    },
+    {
+      category: "의류",
+      image: require("../../assets/shirt.png"),
+    },
+  ];
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <View style={styles.contentSection}>
-          <View style={styles.section}>
-            <Image
-              source={require("../../assets/shirt.png")}
-              style={styles.image}
-            />
-
-            <Text style={styles.text}>의류</Text>
+        {data.map((item, index) => (
+          <View key={index}>
+            <View style={styles.contentSection}>
+              <View style={styles.section}>
+                <Image
+                  source={
+                    imageData.find(
+                      (imageItem) => imageItem.category === item.category
+                    )?.image || require("../../assets/shirt.png")
+                  }
+                  style={styles.image}
+                />
+                <Text style={styles.text}>{item.category}</Text>
+              </View>
+              <Bar text={item.totalMoney} progress={item.percentage} />
+            </View>
+            <View style={styles.bar} />
           </View>
-          <Bar text={"74,900"} />
-        </View>
-        <View style={styles.bar} />
-        <View style={styles.contentSection}>
-          <View style={styles.section}>
-            <Image
-              source={require("../../assets/food.png")}
-              style={styles.image}
-            />
-            <Text style={styles.text}>식생활</Text>
-          </View>
-          <Bar text={"5,000"} />
-        </View>
-        <View style={styles.bar} />
-        <View style={styles.contentSection}>
-          <View style={styles.section}>
-            <Image
-              source={require("../../assets/home.png")}
-              style={styles.image}
-            />
-            <Text style={styles.text}>주거</Text>
-          </View>
-          <Bar text={"10,000"} />
-        </View>
-        <View style={styles.bar} />
-        <View style={styles.contentSection}>
-          <View style={styles.section}>
-            <Image
-              source={require("../../assets/etc.png")}
-              style={styles.image}
-            />
-            <Text style={styles.text}>기타</Text>
-          </View>
-          <Bar text={"200,000"} />
-        </View>
+        ))}
+      </View>
+      <View style={styles.bottomSection}>
+        <View style={styles.bottomBar} />
         <View
-          style={{ width: "100%", height: 4, backgroundColor: "#C1C1C1" }}
-        />
-        <View style={styles.bottomSection}>
-          <View style={styles.bottomBar} />
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              width: "100%",
-            }}
-          >
-            <Text style={styles.bottomText}>컨버스 운동화</Text>
-            <Text style={styles.bottomPriceText}>89,000원</Text>
-          </View>
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <Text style={styles.bottomText}>컨버스 운동화</Text>
+          <Text style={styles.bottomPriceText}>89,000원</Text>
         </View>
-        <View style={styles.bottomSection}>
-          <View style={styles.bottomBar} />
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              width: "100%",
-            }}
-          >
-            <Text style={styles.bottomText}>미스치프 카고 바지</Text>
-            <Text style={styles.bottomPriceText}>139,000원</Text>
-          </View>
+      </View>
+      <View style={styles.bottomSection}>
+        <View style={styles.bottomBar} />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <Text style={styles.bottomText}>미스치프 카고 바지</Text>
+          <Text style={styles.bottomPriceText}>139,000원</Text>
         </View>
       </View>
     </View>

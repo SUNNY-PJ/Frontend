@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
-const Bar = ({ text, path }) => {
-  const [progress, setProgress] = useState(50);
-
+const Bar = ({ text, path, progress }) => {
+  // const [progress, setProgress] = useState(50);
+  console.log("퍼센트", progress);
   const progressWidth = (progress / 100) * 335;
 
   return (
