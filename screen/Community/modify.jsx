@@ -41,8 +41,6 @@ const Modify = () => {
   const [images, setImages] = useState([]);
 
   const uploadImage = async () => {
-    // 권한 확인
-    // 권한 없으면 물어보고 승인하지 않으면 return
     console.log("click");
     if (!request?.granted) {
       const permission = await setRequest();
@@ -63,59 +61,66 @@ const Modify = () => {
     }
     // 이미지 업로드 결과 및 이미지 경로 업데이트
     console.log(result);
-    setImages([...images, result.assets[0].uri]); // 이미지 배열에 추가
+    setImages([...images, result.assets[0].uri]);
   };
 
   // 첨부한 이미지 삭제
   const removeImage = (index) => {
-    // 이미지 배열에서 선택한 이미지를 제거
     const updatedImages = [...images];
     updatedImages.splice(index, 1);
     setImages(updatedImages);
   };
 
-  const communityRequest = {
-    title: title,
-    contents: content,
-    type: "꿀팁",
-  };
-
-  // post api
-  const formData = new FormData();
-  formData.append("communityRequest", JSON.stringify(communityRequest));
-
-  images.forEach((image, index) => {
-    const fileName = image.split("/").pop();
-    const match = /\.(\w+)$/.exec(fileName ?? "");
-    const type = match ? `image/${match[1]}` : `image`;
-    formData.append("files", {
-      uri: image,
-      name: fileName,
-      type: type,
-    });
-  });
-
   const postData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
 
     try {
-      const response = await axios.put(url, formData, {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      const originalData = response.data.data;
+
+      const modifiedTitle = title !== "" ? title : originalData.title;
+      const modifiedContents = content !== "" ? content : originalData.contents;
+
+      const communityRequest = {
+        title: modifiedTitle,
+        contents: modifiedContents,
+        type: "꿀팁",
+      };
+
+      const formData = new FormData();
+      formData.append("communityRequest", JSON.stringify(communityRequest));
+
+      images.forEach((image, index) => {
+        if (image) {
+          const fileName = image.split("/").pop();
+          const match = /\.(\w+)$/.exec(fileName ?? "");
+          const type = match ? `image/${match[1]}` : `image`;
+          formData.append("files", {
+            uri: image,
+            name: fileName,
+            type: type,
+          });
+        }
+      });
+
+      const postResponse = await axios.put(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${access_token}`,
         },
       });
 
-      console.log("데이터:", response.data);
+      console.log("데이터:123123", postResponse.data);
       fetchData();
       navigation.navigate("Community", { screen: "Community" });
     } catch (error) {
-      if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
-        console.error("서버 응답 메세지:", error.message);
-      } else {
-        console.error("에러:", error);
-      }
+      console.error(error);
     }
   };
 
@@ -134,14 +139,20 @@ const Modify = () => {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
-        // params: {
-        //   communityId: itemId,
-        // },
       });
 
       console.log("데이터:", response.data);
       const DetailData = response.data.data;
       setData([DetailData]);
+      console.log("5555", DetailData.title);
+      // photoList가 존재하는지 확인하고 images 업데이트
+      if (DetailData.photoList && DetailData.photoList.length > 0) {
+        const initialImages = DetailData.photoList;
+        setImages(initialImages);
+        console.log("사진이 있습니다.", initialImages);
+      } else {
+        console.log("사진이 없습니다.");
+      }
     } catch (error) {
       console.error("에러:", error);
     }
@@ -155,7 +166,7 @@ const Modify = () => {
     <>
       <View style={styles.container}>
         {data.map((item) => (
-          <View style={styles.contentContainer}>
+          <View style={styles.contentContainer} key={item.MediaTypeOptions}>
             <Text
               style={{
                 fontSize: 20,
@@ -226,8 +237,8 @@ const Modify = () => {
               제목
             </Text>
             <Input
-              placeholder={item.content}
-              inputValue={title}
+              placeholder="제목을 입력하세요"
+              inputValue={title || item.title}
               handleInputChange={handleTitleChange}
             />
             <Text
@@ -243,11 +254,12 @@ const Modify = () => {
               내용
             </Text>
             <InputMax
-              placeholder={item.contents}
+              placeholder="내용을 입력하세요"
               placeholderTextColor="#000"
-              inputValue={content}
+              inputValue={content || item.contents}
               handleInputChange={handleContentChange}
             />
+
             <Text
               style={{
                 fontSize: 16,
@@ -293,7 +305,7 @@ const Modify = () => {
                   </Pressable>
                 </View>
               ))}
-              {images.length < View && (
+              {images.length < 4 && (
                 <Pressable onPress={uploadImage}>
                   <Image
                     source={require("../../assets/photo.png")}
