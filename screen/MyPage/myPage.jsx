@@ -56,7 +56,7 @@ const MyPage = () => {
   // }, []);
 
   // 로그아웃
-  const postData = async () => {
+  const logoutData = async () => {
     const lououtUrl = "http://43.201.176.22:8080/mypage/auth/kakao/logout";
     const inputURL = "/mypage/auth/kakao/logout";
     const url = proxyUrl + inputURL;
@@ -88,6 +88,31 @@ const MyPage = () => {
     }
   };
 
+  const leaveData = async () => {
+    const inputURL = "/mypage/auth/leave";
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      console.log("데이터:", response.data);
+      alert("탈퇴 되었습니다.");
+
+      navigation.navigate("KakaoScreen", { screen: "Login" });
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 메세지:", error.message);
+      } else {
+        console.error("에러:", error);
+      }
+    }
+  };
+
   const handleLogoutClick = () => {
     Alert.alert(
       "로그아웃",
@@ -100,7 +125,27 @@ const MyPage = () => {
         {
           text: "확인",
           onPress: () => {
-            postData();
+            logoutData();
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const handleLeaveClick = () => {
+    Alert.alert(
+      "회원 탈퇴",
+      "회원 탈퇴 하시겠습니까?",
+      [
+        {
+          text: "취소",
+          style: "cancel",
+        },
+        {
+          text: "확인",
+          onPress: () => {
+            leaveData();
           },
         },
       ],
@@ -220,7 +265,9 @@ const MyPage = () => {
           <Text style={styles.description}>로그아웃</Text>
         </TouchableOpacity>
         <Line color={"#C1C1C1"} h={1} />
-        <Text style={styles.description}>회원 탈퇴</Text>
+        <TouchableOpacity activeOpacity={0.6} onPress={handleLeaveClick}>
+          <Text style={styles.description}>회원 탈퇴</Text>
+        </TouchableOpacity>
         <Line color={"#C1C1C1"} h={4} />
       </View>
       <View
