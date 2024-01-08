@@ -15,8 +15,8 @@ const History = () => {
         <CalendarComponent onDataFetched={onDataFetched} />
         {/* <RangeCalendar /> */}
       </View>
-      {data.map((item) => (
-        <View style={styles.bottomSection} key={item.name}>
+      {data.map((item, index) => (
+        <View style={styles.bottomSection} key={item.index}>
           <View style={styles.bottomBar} />
           <View
             style={{
