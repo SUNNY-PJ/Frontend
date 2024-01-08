@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   contentSection: {
     flexDirection: "row",
-    paddingLeft: 28,
+    paddingLeft: 20,
     paddingRight: 85,
     gap: 16,
     marginBottom: 24,
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   bottomSection: {
     flexDirection: "row",
-    paddingLeft: 28,
+    paddingLeft: 20,
     paddingRight: 20,
     marginBottom: 16,
     marginTop: 16,

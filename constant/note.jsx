@@ -31,11 +31,6 @@ function Note({ navigation }) {
   const [name, setName] = useState("");
   const [money, setMoney] = useState("");
 
-  console.log(date);
-  console.log(name);
-  console.log(money);
-  console.log(place);
-
   const handleRadioClick = (value) => {
     setPlace(value);
   };
@@ -99,8 +94,9 @@ function Note({ navigation }) {
         date_field: date,
         money: money.replace(/,/g, ""),
         name: name,
-        place: place,
+        category: place,
       };
+      console.log(bodyData);
 
       const response = await axios.post(url, bodyData, {
         headers: {
@@ -108,9 +104,9 @@ function Note({ navigation }) {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      console.log("url:::::::", url);
-      console.log(response);
-      console.log("데이터:", response.data);
+      console.log(response.data.data);
+
+      console.log("데이터::::", response.data.msg);
 
       navigation.navigate("FriendsList", { screen: "FriendsList" });
     } catch (error) {
