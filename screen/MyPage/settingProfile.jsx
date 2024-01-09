@@ -102,7 +102,6 @@ const SettingProfile = () => {
       });
 
       console.log("데이터:", response.data);
-      alert("프로필을 변경했습니다.");
       navigation.navigate("MyPage", { screen: "MyPage" });
     } catch (error) {
       if (error.response) {
@@ -133,6 +132,7 @@ const SettingProfile = () => {
         },
         params,
       });
+
       console.log("데이터:", response.data);
 
       navigation.navigate("MyPage", { screen: "MyPage" });
@@ -146,10 +146,16 @@ const SettingProfile = () => {
   };
 
   const handlePostApiStart = () => {
-    if (profileImageChanged) {
+    if (profileImageChanged && profileNicknameChanged) {
       postImageData();
+      postNicknameData();
+      alert("프로필을 변경했습니다.");
+    } else if (profileImageChanged) {
+      postImageData();
+      alert("프로필 사진을 변경했습니다.");
     } else if (profileNicknameChanged) {
       postNicknameData();
+      alert("닉네임을 변경했습니다.");
     }
   };
 
