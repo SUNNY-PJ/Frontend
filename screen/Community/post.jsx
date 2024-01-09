@@ -120,7 +120,11 @@ const Post = () => {
     } else if (content.trim() === "") {
       alert("내용을 입력해주세요.");
       return;
+    } else if (title.length > 35) {
+      alert("제목은 35자 이하로 입력해주세요.");
+      return;
     }
+
     try {
       // const bodyData = {
       //   title: title,
@@ -140,7 +144,6 @@ const Post = () => {
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
-        console.error("서버 응답 메세지:", error.message);
       } else {
         console.error("에러:", error);
       }
@@ -150,9 +153,6 @@ const Post = () => {
   const handlePost = () => {
     console.log("등록 버튼 클릭");
     postData();
-
-    // console.log(formData);
-    // console.log(formData._parts);
   };
 
   return (

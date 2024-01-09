@@ -80,7 +80,11 @@ const Modify = () => {
     } else if (content.trim() === "") {
       alert("내용을 입력해주세요.");
       return;
+    } else if (title.length > 35) {
+      alert("제목은 35자 이하로 입력해주세요.");
+      return;
     }
+
     try {
       const response = await axios.get(url, {
         headers: {
