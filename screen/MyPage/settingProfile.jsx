@@ -134,13 +134,11 @@ const SettingProfile = () => {
       });
 
       console.log("데이터:", response.data);
-
       navigation.navigate("MyPage", { screen: "MyPage" });
     } catch (error) {
-      if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
-      } else {
-        console.error("에러:", error);
+      console.error("서버 응답 오류:", error.response.data);
+      if (error.response.data.status === 403) {
+        alert("이미 사용중인 닉네임입니다.");
       }
     }
   };
