@@ -4,40 +4,43 @@ import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { proxyUrl } from "../../constant/common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { useCommunity } from "../../context/communityContext";
 import Line from "../../components/Line";
 
 const Board = () => {
   const navigation = useNavigation();
-  const [data, setData] = useState([]);
+  const { data, fetchData } = useCommunity();
 
-  const inputURL = "/community";
+  // const [data, setData] = useState([]);
 
-  const url = proxyUrl + inputURL;
+  // const inputURL = "/community";
 
-  const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
-    console.log("get 실행");
+  // const url = proxyUrl + inputURL;
 
-    try {
-      const response = await axios.get(url, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
-        },
-        params: {
-          boardType: "자유",
-        },
-      });
+  // const fetchData = async () => {
+  //   const access_token = await AsyncStorage.getItem("access_token");
+  //   console.log(access_token);
+  //   console.log("get 실행");
 
-      console.log("데이터:", response.data.content);
-      const communityData = response.data.content;
-      console.log(communityData.map((item) => item.title));
-      setData(communityData);
-    } catch (error) {
-      console.error("에러:", error);
-    }
-  };
+  //   try {
+  //     const response = await axios.get(url, {
+  //       headers: {
+  //         "Content-Type": "application/json; charset=utf-8",
+  //         Authorization: `Bearer ${access_token}`,
+  //       },
+  //       params: {
+  //         boardType: "자유",
+  //       },
+  //     });
+
+  //     console.log("데이터:", response.data.content);
+  //     const communityData = response.data.content;
+  //     console.log(communityData.map((item) => item.title));
+  //     setData(communityData);
+  //   } catch (error) {
+  //     console.error("에러:", error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchData();

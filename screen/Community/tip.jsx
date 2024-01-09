@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import { useCommunity } from "../../context/communityContext";
 import Line from "../../components/Line";
 import { proxyUrl } from "../../constant/common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -15,41 +16,10 @@ import { useNavigation } from "@react-navigation/native";
 
 const Tip = () => {
   const navigation = useNavigation();
-  const [data, setData] = useState([]);
-
-  const inputURL = "/community";
-
-  const url = proxyUrl + inputURL;
-
-  const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
-    console.log("get 실행");
-
-    try {
-      const response = await axios.get(url, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
-        },
-        params: {
-          boardType: "꿀팁",
-        },
-      });
-
-      console.log("데이터:", response.data.content);
-      const communityData = response.data.content;
-      console.log(communityData.map((item) => item.title));
-      setData(communityData);
-      console.log(data);
-    } catch (error) {
-      console.error("에러:", error);
-    }
-  };
+  const { data, fetchData } = useCommunity();
 
   useEffect(() => {
     fetchData();
-    console.log("실행된건가");
   }, []);
 
   return (

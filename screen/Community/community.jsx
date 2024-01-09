@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { proxyUrl } from "../../constant/common";
+import { useCommunity } from "../../context/communityContext";
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Board from "./board";
 import Tip from "./tip";
 
 const Community = () => {
+  const navigation = useNavigation();
+  const { board, tip, setBoard, setTip } = useCommunity();
   const inputURL = "/community";
-  const cleanedURL = inputURL.replace(/[\u200B]/g, "");
 
   const url = proxyUrl + inputURL;
-
-  const [board, setBoard] = useState(false);
-  const [tip, setTip] = useState(true);
 
   const historyClick = () => {
     setBoard(true);
@@ -52,9 +52,11 @@ const Community = () => {
   };
 
   useEffect(() => {
-    fetchData();
-    console.log("실행된건가");
-  }, []);
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchData();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
