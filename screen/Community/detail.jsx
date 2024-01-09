@@ -230,8 +230,8 @@ const Detail = () => {
             }}
           >
             <Image
-              source={require("../../assets/myPage_profile.png")}
-              style={{ width: 40, height: 40 }}
+              source={{ uri: item.profileImg }}
+              style={{ width: 40, height: 40, borderRadius: 50 }}
             />
             <View style={{ gap: 4 }}>
               <View
