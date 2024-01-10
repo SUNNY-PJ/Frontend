@@ -17,6 +17,7 @@ import Input from "../../components/Input/input";
 import InputMax from "../../components/Input/inputMax";
 import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
+import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
 
 const Post = () => {
   const { fetchData } = useCommunity();
@@ -28,6 +29,8 @@ const Post = () => {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [category, setCategory] = useState("");
+  const [open, setOpen] = useState(false);
 
   const handleTitleChange = (text) => {
     setTitle(text);
@@ -35,6 +38,12 @@ const Post = () => {
 
   const handleContentChange = (text) => {
     setContent(text);
+  };
+
+  const handleCategoryClick = () => {
+    setOpen(!open);
+    console.log(open);
+    console.log("카테고리 클릭");
   };
 
   const [request, setRequest] = ImagePicker.useMediaLibraryPermissions();
@@ -185,30 +194,32 @@ const Post = () => {
             <SmallBtn title={"등록"} onClick={handlePost} />
           </View>
           {/* 카테고리 선택 */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginBottom: 5,
-            }}
-          >
-            <Text
+          <TouchableOpacity onPress={handleCategoryClick}>
+            <View
               style={{
-                fontSize: 15,
-                fontWeight: 700,
-                borderColor: "#1F1F1F",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginBottom: 5,
               }}
             >
-              카테고리 선택
-            </Text>
-            <Image
-              source={require("../../assets/categoryArrow.png")}
-              style={{
-                width: 24,
-                height: 24,
-              }}
-            />
-          </View>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: 700,
+                  borderColor: "#1F1F1F",
+                }}
+              >
+                카테고리 선택
+              </Text>
+              <Image
+                source={require("../../assets/categoryArrow.png")}
+                style={{
+                  width: 24,
+                  height: 24,
+                }}
+              />
+            </View>
+          </TouchableOpacity>
           <Line color={"#C1C1C1"} h={1} />
           {/* 카테고리 선택 */}
           <Text
@@ -310,6 +321,12 @@ const Post = () => {
             미디어는 최대 4장까지 첨부가 가능합니다.
           </Text>
         </View>
+        {open && (
+          <BottomSheetScreen
+            modalVisible={open}
+            modalDisable={handleCategoryClick}
+          />
+        )}
       </View>
     </>
   );
