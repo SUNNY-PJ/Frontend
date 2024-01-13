@@ -18,12 +18,14 @@ import InputMax from "../../components/Input/inputMax";
 import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
+import COMMUNITY_CATEGORY from "../../data/communityData";
 
 const Post = () => {
   const { fetchData } = useCommunity();
   const navigation = useNavigation();
   const inputURL = "/community";
   // const cleanedURL = inputURL.replace(/[\u200B]/g, "");
+  const COMMUNITY_CATEGORY = [{ title: "절약 꿀팁" }, { title: "자유 게시판" }];
 
   const url = proxyUrl + inputURL;
 
@@ -334,6 +336,8 @@ const Post = () => {
         </View>
         {open && (
           <BottomSheetScreen
+            title={"카테고리"}
+            data={COMMUNITY_CATEGORY}
             modalVisible={open}
             modalDisable={handleCategoryClick}
             onCategorySelect={handleCategorySelect}
