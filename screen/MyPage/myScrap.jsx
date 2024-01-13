@@ -10,6 +10,7 @@ const MyScrap = () => {
   const navigation = useNavigation();
   const inputURL = "/mypage/myscrap";
   const url = proxyUrl + inputURL;
+  const [data, setData] = useState([]);
 
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
@@ -23,8 +24,10 @@ const MyScrap = () => {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      console.log(response);
-      console.log("데이터:", response.data);
+      const myScrapData = response.data.data;
+      console.log(myScrapData);
+      // console.log(myWriteData.map((item) => item.id));
+      setData(myScrapData);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -37,54 +40,26 @@ const MyScrap = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.box}>
+      {data.map((item) => (
         <View>
-          <Text style={styles.title}>스크랩했다고</Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.description}>아하하하하하</Text>
-            <Text style={styles.description}>2023.09.09</Text>
-            <Text style={styles.description}>조회 1,411</Text>
-            <Text style={styles.description}>댓글 22</Text>
+          <View style={styles.box} key={item.id}>
+            <View>
+              <Text style={styles.title}>{item.title}</Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.description}>{item.title}</Text>
+                <Text style={styles.description}>{item.createdAt}</Text>
+                <Text style={styles.description}>조회 {item.viewCount}</Text>
+                <Text style={styles.description}>댓글 {item.comment_cnt}</Text>
+              </View>
+            </View>
+            <Image
+              source={require("../../assets/myPage_scrap_active.png")}
+              style={styles.icon}
+            />
           </View>
+          <Line color={"#C1C1C1"} h={1} />
         </View>
-        <Image
-          source={require("../../assets/myPage_scrap_active.png")}
-          style={styles.icon}
-        />
-      </View>
-      <Line color={"#C1C1C1"} h={1} />
-      <View style={styles.box}>
-        <View>
-          <Text style={styles.title}>스크랩 test test</Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.description}>아하하하하하</Text>
-            <Text style={styles.description}>2023.10.03</Text>
-            <Text style={styles.description}>조회 12</Text>
-            <Text style={styles.description}>댓글 22</Text>
-          </View>
-        </View>
-        <Image
-          source={require("../../assets/myPage_scrap_active.png")}
-          style={styles.icon}
-        />
-      </View>
-      <Line color={"#C1C1C1"} h={1} />
-      <View style={styles.box}>
-        <View>
-          <Text style={styles.title}>test</Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.description}>test</Text>
-            <Text style={styles.description}>2022.12.09</Text>
-            <Text style={styles.description}>조회 411</Text>
-            <Text style={styles.description}>댓글 102</Text>
-          </View>
-        </View>
-        <Image
-          source={require("../../assets/myPage_scrap_active.png")}
-          style={styles.icon}
-        />
-      </View>
-      <Line color={"#C1C1C1"} h={1} />
+      ))}
     </View>
   );
 };

@@ -29,19 +29,27 @@ const Detail = () => {
   const [data, setData] = useState([]);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [isCommentModal, setIsCommentModal] = useState(false);
+  const [isOpenOptionModal, setIsOpenOptionModal] = useState(false);
+  const [isOpenProfile, setIsOpenProfile] = useState(false);
+  const [isScrap, setIsScrap] = useState(false);
+
   const commentModal = () => {
     setIsCommentModal(!isCommentModal);
   };
-  const [isOpenOptionModal, setIsOpenOptionModal] = useState(false);
-  const [isOpenProfile, setIsOpenProfile] = useState(false);
-
   const openProfile = () => {
     setIsOpenProfile(!isOpenProfile);
   };
-
   const openOptionModal = () => {
     setIsOpenOptionModal(!isOpenOptionModal);
-    console.log("메뉴 클릭", isOpenOptionModal);
+  };
+  const handleScrapClick = () => {
+    setIsScrap(!isScrap);
+    console.log("스크랩했니", isScrap);
+    if (isScrap) {
+      deleteScrapData();
+    } else {
+      postScrapData();
+    }
   };
 
   const fetchData = async () => {
@@ -54,14 +62,10 @@ const Detail = () => {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
-        // params: {
-        //   communityId: itemId,
-        // },
       });
 
       console.log("데이터:", response.data);
       const DetailData = response.data.data;
-      // const DetailCommentData = [DetailData].map((item) => item.commentList);
       setData([DetailData]);
     } catch (error) {
       console.error("에러:", error);
@@ -72,6 +76,7 @@ const Detail = () => {
     fetchData();
   }, []);
 
+  // 게시글 삭제
   const deleteData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
 
@@ -82,10 +87,51 @@ const Detail = () => {
           Authorization: `Bearer ${access_token}`,
         },
       });
-
-      console.log("데이터:", response);
-      console.log("삭제되었습니다");
       alert("게시글이 삭제되었습니다.");
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  // 스크랩 삭제
+  const deleteScrapData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    const inputURL = `/scrap/${itemId}`;
+    const url = proxyUrl + inputURL;
+
+    try {
+      const response = await axios.delete(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      console.log(response.data);
+      console.log("스크랩 삭제");
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  // 스크랩 등록
+  const postScrapData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    const inputURL = `/scrap/${itemId}`;
+    const url = proxyUrl + inputURL;
+
+    try {
+      const response = await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      );
+      console.log(response.data);
+      console.log("스크랩 등록");
     } catch (error) {
       console.error("에러:", error);
     }
@@ -155,71 +201,80 @@ const Detail = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginTop: 17,
-            marginBottom: 26,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate("Community", {
-                screen: "Community",
-              })
-            }
-          >
-            <Image
-              source={require("../../assets/prevBtn.png")}
-              style={{
-                width: 24,
-                height: 24,
-              }}
-            />
-          </TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 16,
-              color: "#1F1F1F",
-              fontWeight: "700",
-            }}
-          >
-            절약 꿀팁
-          </Text>
+      {data.map((item) => (
+        <View style={styles.contentContainer}>
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "flex-end",
-              gap: 12,
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: 17,
+              marginBottom: 26,
             }}
           >
-            <Image
-              source={require("../../assets/scrapActive.png")}
-              style={{
-                width: 24,
-                height: 24,
-              }}
-            />
             <TouchableOpacity
-              onPress={handleMenuClick}
-              style={{
-                alignSelf: "center",
-              }}
+              onPress={() =>
+                navigation.navigate("Community", {
+                  screen: "Community",
+                })
+              }
             >
               <Image
-                source={require("../../assets/menu.png")}
+                source={require("../../assets/prevBtn.png")}
                 style={{
-                  width: 20,
-                  height: 4,
+                  width: 24,
+                  height: 24,
                 }}
               />
             </TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 16,
+                color: "#1F1F1F",
+                fontWeight: "700",
+              }}
+            >
+              {item.type}
+            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                gap: 12,
+              }}
+            >
+              <TouchableOpacity onPress={handleScrapClick}>
+                <Image
+                  source={
+                    isScrap
+                      ? require("../../assets/scrapActive.png")
+                      : require("../../assets/scrapInactive.png")
+                  }
+                  style={{
+                    width: 24,
+                    height: 24,
+                  }}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={handleMenuClick}
+                style={{
+                  alignSelf: "center",
+                }}
+              >
+                <Image
+                  source={require("../../assets/menu.png")}
+                  style={{
+                    width: 20,
+                    height: 4,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
+      ))}
       {data.map((item) => (
         <View style={styles.contentContainer} key={item.id}>
           <Text
