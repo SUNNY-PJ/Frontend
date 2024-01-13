@@ -1,126 +1,160 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { proxyUrl } from "../../constant/common";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   View,
   Image,
   Text,
-  ImageBackground,
   TouchableOpacity,
   StyleSheet,
-  Animated,
-  Button,
+  Modal,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
-import MyComment from "../MyPage/myComment";
+import FriendWrite from "./friendWrite";
+import FriendComment from "./friendComment";
 
-const FriendProfile = () => {
-  const navigation = useNavigation();
+const FriendProfile = ({ openProfile, isOpenProfile, communityId }) => {
+  // const activeTabVal = route.params?.activeTab || "scrap";
   const route = useRoute();
-  const activeTabVal = route.params?.activeTab || "scrap";
-
-  const [activeTab, setActiveTab] = useState(activeTabVal);
+  const inputURL = `/profile/${communityId}`;
+  const url = proxyUrl + inputURL;
+  // const [activeTab, setActiveTab] = useState(activeTabVal);
+  const [comment, setComment] = useState(false);
+  const [write, setWrite] = useState(true);
+  const [data, setData] = useState([]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
 
-  const [board, setBoard] = useState(false);
-  const [tip, setTip] = useState(true);
-
-  const historyClick = () => {
-    setBoard(true);
-    setTip(false);
+  const commentClick = () => {
+    setComment(true);
+    setWrite(false);
   };
 
-  const tipClick = () => {
-    setTip(true);
-    setBoard(false);
+  const writeClick = () => {
+    setWrite(true);
+    setComment(false);
   };
+
+  const fetchData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+        // params: {
+        //   communityId: itemId,
+        // },
+      });
+
+      console.log("데이터1111:", response.data);
+      const ProfileData = response.data.data;
+      // const DetailCommentData = [DetailData].map((item) => item.commentList);
+      setData([ProfileData]);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleProfileClick = () => {};
 
   return (
-    <View style={styles.container}>
-      <View style={{ paddingLeft: 24, marginTop: 64 }}>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("MyPage", {
-              screen: "MyPage",
-            })
-          }
-        >
-          <Image
-            source={require("../../assets/close.png")}
-            style={{ width: 14, height: 14 }}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.contentContainer}>
-        <View style={{ alignSelf: "center", gap: 5 }}>
-          <Image
-            source={require("../../assets/friend_profile.png")}
-            style={{ width: 92, height: 92 }}
-          />
-          <Text style={styles.name}>민지</Text>
+    <Modal animationType="slide" transparent={true} visible={isOpenProfile}>
+      <View style={styles.container}>
+        <View style={{ paddingLeft: 24, marginTop: 64 }}>
+          <TouchableOpacity onPress={openProfile}>
+            <Image
+              source={require("../../assets/close.png")}
+              style={{ width: 14, height: 14 }}
+            />
+          </TouchableOpacity>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            gap: 60,
-            alignSelf: "center",
-            marginTop: 27,
-          }}
-        >
-          <TouchableOpacity style={styles.button}>
-            <Text
+        {data.map((item) => (
+          <View style={styles.contentContainer} key={item.id}>
+            <View style={{ alignSelf: "center", gap: 5 }}>
+              <Image
+                // source={require("../../assets/friend_profile.png")}
+                source={{ uri: item.profile }}
+                style={{ width: 92, height: 92, borderRadius: 50 }}
+              />
+              <Text style={styles.name}>{item.name}</Text>
+            </View>
+            <View
               style={{
-                color: "#000 ",
-                fontSize: 15,
-                fontWeight: 700,
+                flexDirection: "row",
+                gap: 60,
                 alignSelf: "center",
+                marginTop: 27,
               }}
             >
-              대화하기
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text
+              <TouchableOpacity style={styles.button}>
+                <Text
+                  style={{
+                    color: "#000 ",
+                    fontSize: 15,
+                    fontWeight: 700,
+                    alignSelf: "center",
+                  }}
+                >
+                  대화하기
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button}>
+                <Text
+                  style={{
+                    color: "#000 ",
+                    fontSize: 15,
+                    fontWeight: 700,
+                    alignSelf: "center",
+                  }}
+                >
+                  친구맺기
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View
               style={{
-                color: "#000 ",
-                fontSize: 15,
-                fontWeight: 700,
-                alignSelf: "center",
+                flexDirection: "row",
+                justifyContent: "space-around",
+                marginTop: 40,
+                marginBottom: 6,
               }}
             >
-              친구맺기
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-around",
-            marginTop: 40,
-            marginBottom: 18,
-          }}
-        >
-          <TouchableOpacity onPress={tipClick} activeOpacity={0.6}>
-            <Text style={[styles.tabText, tip && styles.activeTabText]}>
-              작성한 글
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={historyClick} activeOpacity={0.6}>
-            <Text style={[styles.tabText, board && styles.activeTabText]}>
-              댓글단 글
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.tabBar}>
-          <View style={[styles.tabBarLine, tip && styles.activeTabBarLine]} />
-          <View style={[styles.tabBarLine, board && styles.activeTabBarLine]} />
-        </View>
-        {tip && <MyComment />}
-        {board && <MyComment />}
+              <TouchableOpacity onPress={writeClick} activeOpacity={0.6}>
+                <Text style={[styles.tabText, write && styles.activeTabText]}>
+                  작성한 글
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={commentClick} activeOpacity={0.6}>
+                <Text style={[styles.tabText, comment && styles.activeTabText]}>
+                  댓글단 글
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.tabBar}>
+              <View
+                style={[styles.tabBarLine, write && styles.activeTabBarLine]}
+              />
+              <View
+                style={[styles.tabBarLine, comment && styles.activeTabBarLine]}
+              />
+            </View>
+            {write && <FriendWrite communityId={communityId} />}
+            {comment && <FriendComment communityId={communityId} />}
+          </View>
+        ))}
       </View>
-    </View>
+    </Modal>
   );
 };
 

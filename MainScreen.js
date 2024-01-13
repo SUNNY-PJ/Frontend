@@ -27,6 +27,8 @@ import Detail from "./screen/Community/detail";
 import Goal from "./constant/goal";
 import Chat from "./screen/Chat/chat";
 import Chat2 from "./screen/Chat/chat2";
+import FriendWrite from "./screen/Friends/friendWrite";
+import FriendComment from "./screen/Friends/friendComment";
 
 const Stack = createStackNavigator();
 
@@ -81,6 +83,9 @@ function MainScreen() {
         <Stack.Screen name="Modify" component={Modify} />
         <Stack.Screen name="Detail" component={Detail} />
         <Stack.Screen name="Goal" component={Goal} />
+        <Stack.Screen name="FriendWrite" component={FriendWrite} />
+        <Stack.Screen name="FriendComment" component={FriendComment} />
+
         {/* <Stack.Screen
           name="Chat2"
           component={Chat2}

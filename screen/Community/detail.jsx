@@ -17,6 +17,7 @@ import Line from "../../components/Line";
 import Comment from "./comment";
 import OptionModal from "../../components/Modal/community/optionModal";
 import DeleteMsg from "../../components/Modal/community/deleteMsg";
+import FriendProfile from "../Friends/friendProfile";
 
 const Detail = () => {
   const navigation = useNavigation();
@@ -32,6 +33,12 @@ const Detail = () => {
     setIsCommentModal(!isCommentModal);
   };
   const [isOpenOptionModal, setIsOpenOptionModal] = useState(false);
+  const [isOpenProfile, setIsOpenProfile] = useState(false);
+
+  const openProfile = () => {
+    setIsOpenProfile(!isOpenProfile);
+  };
+
   const openOptionModal = () => {
     setIsOpenOptionModal(!isOpenOptionModal);
     console.log("메뉴 클릭", isOpenOptionModal);
@@ -101,6 +108,11 @@ const Detail = () => {
   const handleMenuClick = () => {
     console.log("메뉴 클릭");
     openOptionModal();
+  };
+
+  const handleProfileClick = () => {
+    openProfile();
+    console.log("프로필 클릭릭");
   };
 
   const handleDeleteConfirm = () => {
@@ -237,11 +249,16 @@ const Detail = () => {
               <View
                 style={{ flexDirection: "row", alignItems: "center", gap: 7 }}
               >
-                <Text
-                  style={{ fontSize: 16, fontWeight: 700, color: "#1F1F1F" }}
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={handleProfileClick}
                 >
-                  {item.writer}
-                </Text>
+                  <Text
+                    style={{ fontSize: 16, fontWeight: 700, color: "#1F1F1F" }}
+                  >
+                    {item.writer}
+                  </Text>
+                </TouchableOpacity>
                 <SmallBtn title={"대화하기"} border={4} onClick={handleChat} />
               </View>
               <View style={{ flexDirection: "row", gap: 8 }}>
@@ -334,6 +351,11 @@ const Detail = () => {
         toggleModal={() => setDeleteModalVisible(!deleteModalVisible)}
         onDelete={handleDeleteConfirm}
         onCancel={handleDeleteCancel}
+      />
+      <FriendProfile
+        isOpenProfile={isOpenProfile}
+        openProfile={openProfile}
+        communityId={itemId}
       />
     </View>
   );
