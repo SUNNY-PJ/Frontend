@@ -10,19 +10,21 @@ import Tip from "./tip";
 
 const Community = () => {
   const navigation = useNavigation();
-  const { board, tip, setBoard, setTip } = useCommunity();
+  const { board, tip, setBoard, setTip, setCategory } = useCommunity();
   const inputURL = "/community";
 
   const url = proxyUrl + inputURL;
 
-  const historyClick = () => {
+  const boardClick = () => {
     setBoard(true);
     setTip(false);
+    setCategory("자유");
   };
 
   const tipClick = () => {
     setTip(true);
     setBoard(false);
+    setCategory("꿀팁");
   };
 
   const fetchData = async () => {
@@ -74,9 +76,9 @@ const Community = () => {
               절약 꿀팁
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={historyClick} activeOpacity={0.6}>
+          <TouchableOpacity onPress={boardClick} activeOpacity={0.6}>
             <Text style={[styles.tabText, board && styles.activeTabText]}>
-              자유게시판
+              자유 게시판
             </Text>
           </TouchableOpacity>
         </View>

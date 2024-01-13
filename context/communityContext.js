@@ -9,6 +9,7 @@ export const CommunityProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [board, setBoard] = useState(false);
   const [tip, setTip] = useState(true);
+  const [category, setCategory] = useState("꿀팁");
 
   const inputURL = "/community";
   const url = proxyUrl + inputURL;
@@ -22,13 +23,13 @@ export const CommunityProvider = ({ children }) => {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
-        // params: {
-        //   page: 1,
-        //   size: 10,
-        //   sort: "",
-        //   sortType: "최신순",
-        //   boardType: "꿀팁"
-        // },
+        params: {
+          //   page: 1,
+          //   size: 10,
+          //   sort: "",
+          //   sortType: "최신순",
+          boardType: category,
+        },
       });
 
       console.log("데이터:", response.data);
@@ -52,6 +53,8 @@ export const CommunityProvider = ({ children }) => {
         tip,
         setTip,
         fetchData,
+        category,
+        setCategory,
       }}
     >
       {children}
