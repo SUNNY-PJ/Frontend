@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,14 +18,16 @@ const Kakao = () => {
   const kakao_url =
     "https://kauth.kakao.com/oauth/authorize?client_id=7ff971db2010c97a3e191dd319ec45cd&redirect_uri=http://43.201.176.22:8080/auth/kakao/callback&response_type=code";
 
-  // fetchData, postData를 순서대로 호출하는 함수
+  const [kakaoLoginCompleted, setKakaoLoginCompleted] = useState(false);
+  const [tokenStoreCompleted, setTokenStoreCompleted] = useState(false);
+
   const handleWebViewMessage = (data) => {
     KakaoLoginWebView(data);
-    fetchData();
-    postData();
+    setKakaoLoginCompleted(true);
   };
 
   const fetchData = async () => {
+    console.log("카카오 fetch 실행");
     try {
       const response = await axios.get(kakao_url, {
         headers: {
@@ -42,17 +44,20 @@ const Kakao = () => {
       navigation.navigate("MainScreen", { screen: "SignUp" });
       console.log("데이터:::::", response.data);
     } catch (error) {
-      console.log("errorMessage:::", error.message);
+      console.log("errorMessage:::", error);
       if (error.response) {
         console.error("서버 응답 오류:", error.response);
       } else {
         console.error("에러:", error);
       }
     }
+    setTokenStoreCompleted(true);
   };
 
   // 디바이스 토큰 api
   const postData = async () => {
+    console.log("카카오 post 실행");
+
     const access_token = await AsyncStorage.getItem("access_token");
     const device_token = await AsyncStorage.getItem("device_token");
     try {
@@ -74,6 +79,15 @@ const Kakao = () => {
       console.error("에러:", error);
     }
   };
+
+  useEffect(() => {
+    if (kakaoLoginCompleted) {
+      fetchData();
+      if (tokenStoreCompleted) {
+        postData();
+      }
+    }
+  }, [kakaoLoginCompleted, tokenStoreCompleted]);
 
   function KakaoLoginWebView(data) {
     console.log("카카오 로그인 시도:::");
