@@ -5,46 +5,27 @@ import { proxyUrl } from "../../constant/common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { useCommunity } from "../../context/communityContext";
+import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
 import Line from "../../components/Line";
 
 const Board = () => {
   const navigation = useNavigation();
-  const { data, fetchData } = useCommunity();
+  const { data, fetchData, setBoardSort, boardSort } = useCommunity();
+  const [open, setOpen] = useState(false);
 
-  // const [data, setData] = useState([]);
+  const COMMUNITY_SORT = [{ title: "최신순" }, { title: "조회순" }];
 
-  // const inputURL = "/community";
+  const handleSortClick = () => {
+    setOpen(!open);
+    console.log("정렬하시게씀까");
+  };
 
-  // const url = proxyUrl + inputURL;
-
-  // const fetchData = async () => {
-  //   const access_token = await AsyncStorage.getItem("access_token");
-  //   console.log(access_token);
-  //   console.log("get 실행");
-
-  //   try {
-  //     const response = await axios.get(url, {
-  //       headers: {
-  //         "Content-Type": "application/json; charset=utf-8",
-  //         Authorization: `Bearer ${access_token}`,
-  //       },
-  //       params: {
-  //         boardType: "자유",
-  //       },
-  //     });
-
-  //     console.log("데이터:", response.data.content);
-  //     const communityData = response.data.content;
-  //     console.log(communityData.map((item) => item.title));
-  //     setData(communityData);
-  //   } catch (error) {
-  //     console.error("에러:", error);
-  //   }
-  // };
+  const handleCategorySelect = (data) => {
+    setBoardSort(data);
+  };
 
   useEffect(() => {
     fetchData();
-    console.log("실행된건가");
   }, []);
 
   return (
@@ -64,7 +45,7 @@ const Board = () => {
                 alignSelf: "center",
               }}
             >
-              최신순
+              {boardSort}
             </Text>
           </View>
           <View
@@ -120,6 +101,15 @@ const Board = () => {
           </TouchableOpacity>
         ))}
       </View>
+      {open && (
+        <BottomSheetScreen
+          title={"정렬기준"}
+          data={COMMUNITY_SORT}
+          modalVisible={open}
+          modalDisable={handleSortClick}
+          onCategorySelect={handleCategorySelect}
+        />
+      )}
     </View>
   );
 };

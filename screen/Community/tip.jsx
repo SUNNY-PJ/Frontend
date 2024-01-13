@@ -12,11 +12,28 @@ import { useCommunity } from "../../context/communityContext";
 import Line from "../../components/Line";
 import { proxyUrl } from "../../constant/common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
 import { useNavigation } from "@react-navigation/native";
 
 const Tip = () => {
   const navigation = useNavigation();
-  const { data, fetchData } = useCommunity();
+  const { data, fetchData, setTipSort, tipSort } = useCommunity();
+  // const [selectedSort, setSelectedSort] = useState("최신순");
+  const [open, setOpen] = useState(false);
+
+  const COMMUNITY_SORT = [{ title: "최신순" }, { title: "조회순" }];
+
+  // console.log("글글글", sort);
+
+  const handleSortClick = () => {
+    setOpen(!open);
+    console.log("정렬하시게씀까");
+  };
+
+  const handleCategorySelect = (data) => {
+    // setSelectedSort(data);
+    setTipSort(data);
+  };
 
   useEffect(() => {
     fetchData();
@@ -26,22 +43,24 @@ const Tip = () => {
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <View style={styles.section}>
-          <View style={{ flexDirection: "row", gap: 3 }}>
-            <Image
-              source={require("../../assets/sort.png")}
-              style={styles.icon}
-            />
-            <Text
-              style={{
-                color: "#262626",
-                fontSize: 15,
-                fontWeight: 500,
-                alignSelf: "center",
-              }}
-            >
-              최신순
-            </Text>
-          </View>
+          <TouchableOpacity activeOpacity={0.6} onPress={handleSortClick}>
+            <View style={{ flexDirection: "row", gap: 3 }}>
+              <Image
+                source={require("../../assets/sort.png")}
+                style={styles.icon}
+              />
+              <Text
+                style={{
+                  color: "#262626",
+                  fontSize: 15,
+                  fontWeight: 500,
+                  alignSelf: "center",
+                }}
+              >
+                {tipSort}
+              </Text>
+            </View>
+          </TouchableOpacity>
           <View
             style={{
               flexDirection: "row",
@@ -102,6 +121,15 @@ const Tip = () => {
           ))}
         </ScrollView>
       </View>
+      {open && (
+        <BottomSheetScreen
+          title={"정렬기준"}
+          data={COMMUNITY_SORT}
+          modalVisible={open}
+          modalDisable={handleSortClick}
+          onCategorySelect={handleCategorySelect}
+        />
+      )}
     </View>
   );
 };

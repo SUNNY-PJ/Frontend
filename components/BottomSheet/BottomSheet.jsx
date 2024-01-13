@@ -10,7 +10,6 @@ import {
   PanResponder,
   TouchableOpacity,
 } from "react-native";
-import { COMMUNITY_CATEGORY } from "../../data/communityData";
 
 const BottomSheet = ({
   modalVisible,
@@ -38,8 +37,6 @@ const BottomSheet = ({
     duration: 300,
     useNativeDriver: true,
   });
-
-  console.log(data);
 
   const panResponders = useRef(
     PanResponder.create({
@@ -105,9 +102,7 @@ const BottomSheet = ({
                 onPress={() => handleCategoryClick(item.title)}
                 key={item.index}
               >
-                <Text style={styles.text} key={item.index}>
-                  {item.title}
-                </Text>
+                <Text style={styles.text}>{item.title}</Text>
               </TouchableOpacity>
             ))}
         </Animated.View>

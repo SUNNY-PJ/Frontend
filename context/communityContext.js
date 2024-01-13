@@ -21,20 +21,20 @@ export const CommunityProvider = ({ children }) => {
     const access_token = await AsyncStorage.getItem("access_token");
 
     try {
+      const paramsData = {
+        //   page: 1,
+        //   size: 10,
+        sort: sort,
+        boardType: category,
+      };
       const response = await axios.get(url, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
-        params: {
-          //   page: 1,
-          //   size: 10,
-          sort: sort,
-          boardType: category,
-        },
+        params: paramsData,
       });
-
-      console.log("데이터:", response.data);
+      console.log("데이터:111", response.data);
       setData(response.data.content);
     } catch (error) {
       console.error("에러:", error);
@@ -48,8 +48,9 @@ export const CommunityProvider = ({ children }) => {
     } else if (category === "꿀팁") {
       setSort(tipSort);
     }
-    console.log("게시판 정렬", sort);
-  }, [category]);
+  }, [sort, boardSort, tipSort]);
+
+  console.log("???", sort);
 
   return (
     <CommunityContext.Provider
@@ -63,6 +64,8 @@ export const CommunityProvider = ({ children }) => {
         fetchData,
         category,
         setCategory,
+        sort,
+        setSort,
         boardSort,
         setBoardSort,
         tipSort,
