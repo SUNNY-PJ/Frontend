@@ -48,7 +48,7 @@ const FriendWrite = ({ communityId }) => {
             <Text style={styles.title}>{item.title}</Text>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.description}>{item.writer}</Text>
-              <Text style={styles.description}>2023.11.17 17:19</Text>
+              <Text style={styles.description}>{item.createdAt}</Text>
             </View>
           </View>
           <Line color={"#C1C1C1"} h={1} />
