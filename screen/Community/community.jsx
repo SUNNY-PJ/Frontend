@@ -67,8 +67,8 @@ const Community = () => {
           style={{
             flexDirection: "row",
             justifyContent: "space-around",
-            marginTop: 25,
-            marginBottom: 18,
+            marginTop: 15,
+            marginBottom: 6,
           }}
         >
           <TouchableOpacity onPress={tipClick} activeOpacity={0.6}>
