@@ -10,6 +10,9 @@ export const CommunityProvider = ({ children }) => {
   const [board, setBoard] = useState(false);
   const [tip, setTip] = useState(true);
   const [category, setCategory] = useState("꿀팁");
+  const [sort, setSort] = useState("최신순");
+  const [tipSort, setTipSort] = useState("최신순");
+  const [boardSort, setBoardSort] = useState("최신순");
 
   const inputURL = "/community";
   const url = proxyUrl + inputURL;
@@ -26,8 +29,7 @@ export const CommunityProvider = ({ children }) => {
         params: {
           //   page: 1,
           //   size: 10,
-          //   sort: "",
-          //   sortType: "최신순",
+          sort: sort,
           boardType: category,
         },
       });
@@ -41,7 +43,13 @@ export const CommunityProvider = ({ children }) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+    if (category === "자유") {
+      setSort(boardSort);
+    } else if (category === "꿀팁") {
+      setSort(tipSort);
+    }
+    console.log("게시판 정렬", sort);
+  }, [category]);
 
   return (
     <CommunityContext.Provider
@@ -55,6 +63,10 @@ export const CommunityProvider = ({ children }) => {
         fetchData,
         category,
         setCategory,
+        boardSort,
+        setBoardSort,
+        tipSort,
+        setTipSort,
       }}
     >
       {children}
