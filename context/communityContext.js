@@ -50,8 +50,6 @@ export const CommunityProvider = ({ children }) => {
     }
   }, [sort, boardSort, tipSort]);
 
-  console.log("???", sort);
-
   return (
     <CommunityContext.Provider
       value={{

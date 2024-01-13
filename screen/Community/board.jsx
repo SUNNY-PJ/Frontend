@@ -80,6 +80,9 @@ const Board = () => {
             onPress={() =>
               navigation.navigate("Detail", {
                 screen: "Detail",
+                params: {
+                  itemId: item.id,
+                },
               })
             }
             activeOpacity={0.6}
