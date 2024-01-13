@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -10,9 +10,11 @@ import {
   PanResponder,
   TouchableOpacity,
 } from "react-native";
+import { COMMUNITY_CATEGORY } from "../../data/bottomData";
 
-const BottomSheet = (props) => {
-  const { modalVisible, modalDisable } = props;
+const BottomSheet = ({ modalVisible, modalDisable, onCategorySelect }) => {
+  const [category, setCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const screenHeight = Dimensions.get("screen").height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
   const translateY = panY.interpolate({
@@ -50,10 +52,10 @@ const BottomSheet = (props) => {
   ).current;
 
   useEffect(() => {
-    if (props.modalVisible) {
+    if (modalVisible) {
       resetBottomSheet.start();
     }
-  }, [props.modalVisible]);
+  }, [modalVisible]);
 
   const closeModal = () => {
     closeBottomSheet.start(() => {
@@ -61,8 +63,13 @@ const BottomSheet = (props) => {
     });
   };
 
-  const handleCategoryClick = () => {
-    console.log("카테고리 클릭");
+  const handleCategoryClick = (selectedCategory) => {
+    setSelectedCategory(selectedCategory);
+    console.log("카테고리 클릭:", selectedCategory);
+
+    // 선택된 카테고리를 부모 컴포넌트로 전달
+    onCategorySelect(selectedCategory);
+    modalDisable();
   };
 
   return (
@@ -84,12 +91,16 @@ const BottomSheet = (props) => {
           {...panResponders.panHandlers}
         >
           <Text style={styles.title}>카테고리</Text>
-          <TouchableOpacity onPress={handleCategoryClick}>
-            <Text style={styles.text}>절약 꿀팁</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleCategoryClick}>
-            <Text style={styles.text}>자유 게시판</Text>
-          </TouchableOpacity>
+          {COMMUNITY_CATEGORY.map((item, index) => (
+            <TouchableOpacity
+              onPress={() => handleCategoryClick(item.category)}
+              key={item.index}
+            >
+              <Text style={styles.text} key={item.index}>
+                {item.category}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </Animated.View>
       </View>
     </Modal>

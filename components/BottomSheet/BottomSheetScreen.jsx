@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { View, StyleSheet, Button } from "react-native";
 import BottomSheet from "./BottomSheet";
 
-const BottomSheetScreen = ({ modalVisible, modalDisable }) => {
+const BottomSheetScreen = ({
+  modalVisible,
+  modalDisable,
+  onCategorySelect,
+}) => {
   //   const [modalVisible, setModalVisible] = useState(false);
   //   const pressButton = () => {
   //     setModalVisible(true);
@@ -11,7 +15,11 @@ const BottomSheetScreen = ({ modalVisible, modalDisable }) => {
   return (
     <View style={styles.rootContainer}>
       {/* <Button title={"Open BottomSheet!"} onPress={pressButton} /> */}
-      <BottomSheet modalVisible={modalVisible} modalDisable={modalDisable} />
+      <BottomSheet
+        modalVisible={modalVisible}
+        modalDisable={modalDisable}
+        onCategorySelect={onCategorySelect}
+      />
     </View>
   );
 };

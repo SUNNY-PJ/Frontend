@@ -30,6 +30,7 @@ const Post = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [open, setOpen] = useState(false);
 
   const handleTitleChange = (text) => {
@@ -44,6 +45,16 @@ const Post = () => {
     setOpen(!open);
     console.log(open);
     console.log("카테고리 클릭");
+  };
+
+  const handleCategorySelect = (data) => {
+    setSelectedCategory(data);
+    console.log("111", data);
+    if (data === "절약 꿀팁") {
+      setCategory("꿀팁");
+    } else if (data === "자유 게시판") {
+      setCategory("자유");
+    }
   };
 
   const [request, setRequest] = ImagePicker.useMediaLibraryPermissions();
@@ -87,7 +98,7 @@ const Post = () => {
   const communityRequest = {
     title: title,
     contents: content,
-    type: "꿀팁",
+    type: category,
   };
 
   // post api
@@ -209,7 +220,7 @@ const Post = () => {
                   borderColor: "#1F1F1F",
                 }}
               >
-                카테고리 선택
+                {selectedCategory ? selectedCategory : "카테고리 선택"}
               </Text>
               <Image
                 source={require("../../assets/categoryArrow.png")}
@@ -325,6 +336,7 @@ const Post = () => {
           <BottomSheetScreen
             modalVisible={open}
             modalDisable={handleCategoryClick}
+            onCategorySelect={handleCategorySelect}
           />
         )}
       </View>
