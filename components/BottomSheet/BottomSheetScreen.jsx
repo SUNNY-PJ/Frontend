@@ -6,6 +6,8 @@ const BottomSheetScreen = ({
   modalVisible,
   modalDisable,
   onCategorySelect,
+  title,
+  data,
 }) => {
   //   const [modalVisible, setModalVisible] = useState(false);
   //   const pressButton = () => {
@@ -19,6 +21,8 @@ const BottomSheetScreen = ({
         modalVisible={modalVisible}
         modalDisable={modalDisable}
         onCategorySelect={onCategorySelect}
+        title={title}
+        data={data}
       />
     </View>
   );

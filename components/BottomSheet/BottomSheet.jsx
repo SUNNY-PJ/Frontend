@@ -10,10 +10,15 @@ import {
   PanResponder,
   TouchableOpacity,
 } from "react-native";
-import { COMMUNITY_CATEGORY } from "../../data/bottomData";
+import { COMMUNITY_CATEGORY } from "../../data/communityData";
 
-const BottomSheet = ({ modalVisible, modalDisable, onCategorySelect }) => {
-  const [category, setCategory] = useState("");
+const BottomSheet = ({
+  modalVisible,
+  modalDisable,
+  onCategorySelect,
+  title,
+  data,
+}) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const screenHeight = Dimensions.get("screen").height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
@@ -33,6 +38,8 @@ const BottomSheet = ({ modalVisible, modalDisable, onCategorySelect }) => {
     duration: 300,
     useNativeDriver: true,
   });
+
+  console.log(data);
 
   const panResponders = useRef(
     PanResponder.create({
@@ -90,17 +97,19 @@ const BottomSheet = ({ modalVisible, modalDisable, onCategorySelect }) => {
           }}
           {...panResponders.panHandlers}
         >
-          <Text style={styles.title}>카테고리</Text>
-          {COMMUNITY_CATEGORY.map((item, index) => (
-            <TouchableOpacity
-              onPress={() => handleCategoryClick(item.category)}
-              key={item.index}
-            >
-              <Text style={styles.text} key={item.index}>
-                {item.category}
-              </Text>
-            </TouchableOpacity>
-          ))}
+          <Text style={styles.title}>{title}</Text>
+          {data &&
+            data.length > 0 &&
+            data.map((item, index) => (
+              <TouchableOpacity
+                onPress={() => handleCategoryClick(item.title)}
+                key={item.index}
+              >
+                <Text style={styles.text} key={item.index}>
+                  {item.title}
+                </Text>
+              </TouchableOpacity>
+            ))}
         </Animated.View>
       </View>
     </Modal>
