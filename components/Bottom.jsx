@@ -97,7 +97,7 @@ const Bottom = () => {
           style={[styles.menuItem]}
           onPress={() => {
             toggleIcons("Community");
-            navigation.navigate("Note");
+            navigation.navigate("Community");
           }}
         >
           <View
@@ -115,7 +115,7 @@ const Bottom = () => {
           style={[styles.menuItem]}
           onPress={() => {
             toggleIcons("Message");
-            navigation.navigate("ApiTest");
+            navigation.navigate("ChatList");
           }}
         >
           <View
