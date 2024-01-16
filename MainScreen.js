@@ -30,6 +30,7 @@ import Chat2 from "./screen/Chat/chat2";
 import FriendWrite from "./screen/Friends/friendWrite";
 import FriendComment from "./screen/Friends/friendComment";
 import ChatList from "./screen/Chat/chatList";
+import Winner from "./screen/Battle/winner";
 
 const Stack = createStackNavigator();
 
@@ -87,6 +88,7 @@ function MainScreen() {
         <Stack.Screen name="FriendWrite" component={FriendWrite} />
         <Stack.Screen name="FriendComment" component={FriendComment} />
         <Stack.Screen name="ChatList" component={ChatList} />
+        <Stack.Screen name="Winner" component={Winner} />
         {/* <Stack.Screen
           name="Chat2"
           component={Chat2}
