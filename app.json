@@ -11,9 +11,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
+    "notification": {
+      "icon": "./assets/app_icon.png"
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.yeoniii20.sunny"
@@ -24,10 +25,7 @@
         "backgroundColor": "#ffffff"
       },
       "versionCode": 25,
-      "permissions": [
-        "CAMERA",
-        "NOTIFICATIONS"
-      ],
+      "permissions": ["CAMERA", "NOTIFICATIONS"],
       "package": "com.sunny.inout_webview",
       "googleServicesFile": "./google-services.json"
     },
