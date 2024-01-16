@@ -187,7 +187,7 @@ const Modify = () => {
                 marginTop: 17,
               }}
             >
-              글 수정
+              게시글 수정
             </Text>
             <View
               style={{
