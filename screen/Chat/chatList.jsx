@@ -14,6 +14,13 @@ import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 
 const ChatList = () => {
+  // const truncateText = (text) => {
+  //   const maxLength = 20;
+  //   return text.length > maxLength
+  //     ? text.substring(0, maxLength) + "..."
+  //     : text;
+  // };
+
   return (
     <View
       style={{
@@ -43,16 +50,7 @@ const ChatList = () => {
 
         <Line color={"#C1C1C1"} h={1} />
         <ScrollView>
-          <View
-            style={{
-              flexDirection: "row",
-              paddingTop: 14,
-              paddingBottom: 17,
-              justifyContent: "space-between",
-              paddingLeft: 28,
-              paddingRight: 28,
-            }}
-          >
+          <View style={styles.chatSection}>
             <View style={{ flexDirection: "row", gap: 13 }}>
               <Image
                 source={require("../../assets/Avatar.png")}
@@ -76,7 +74,7 @@ const ChatList = () => {
                     color: "#1F1F1F",
                   }}
                 >
-                  뭐하고 있니
+                  "뭐하고 있니"
                 </Text>
               </View>
             </View>
@@ -91,32 +89,39 @@ const ChatList = () => {
             </Text>
           </View>
           <Line color={"#C1C1C1"} h={1} />
-          <View
-            style={{
-              flexDirection: "row",
-              paddingTop: 14,
-              paddingBottom: 17,
-              justifyContent: "space-between",
-              paddingLeft: 28,
-              paddingRight: 28,
-            }}
-          >
+          <View style={styles.chatSection}>
             <View style={{ flexDirection: "row", gap: 13 }}>
               <Image
                 source={require("../../assets/Avatar.png")}
                 style={styles.icon}
               />
               <View>
-                <Text
+                <View
                   style={{
-                    fontSize: 20,
-                    fontWeight: 700,
-                    color: "#1F1F1F",
-                    marginBottom: 8,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
                   }}
                 >
-                  수연
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 700,
+                      color: "#1F1F1F",
+                      marginBottom: 8,
+                    }}
+                  >
+                    수연
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 500,
+                      color: "#1F1F1F",
+                    }}
+                  >
+                    07:09
+                  </Text>
+                </View>
                 <Text
                   style={{
                     fontSize: 15,
@@ -124,11 +129,11 @@ const ChatList = () => {
                     color: "#1F1F1F",
                   }}
                 >
-                  어쩌라고 무러하ㅏ로오오오오오 오아우우오오오아아ㅁ아러망러
+                  어쩌라고 무러하ㅏ로오오오오오 오아우우오오오아아ㅁ아러망러"
                 </Text>
               </View>
             </View>
-            <Text
+            {/* <Text
               style={{
                 fontSize: 10,
                 fontWeight: 500,
@@ -136,7 +141,7 @@ const ChatList = () => {
               }}
             >
               07:09
-            </Text>
+            </Text> */}
           </View>
           <Line color={"#C1C1C1"} h={1} />
         </ScrollView>
@@ -146,6 +151,14 @@ const ChatList = () => {
 };
 
 const styles = StyleSheet.create({
+  chatSection: {
+    flexDirection: "row",
+    paddingTop: 14,
+    paddingBottom: 17,
+    justifyContent: "space-between",
+    paddingLeft: 13,
+    paddingRight: 19,
+  },
   icon: {
     width: 48,
     height: 48,
