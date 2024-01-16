@@ -16,8 +16,10 @@ import { useNavigation } from "@react-navigation/native";
 const FriendsComponent = ({ status }) => {
   const navigation = useNavigation();
   const inputURL = "/api/v1/friends";
-
   const url = proxyUrl + inputURL;
+
+  const [approveData, setApproveData] = useState();
+  const [waitData, setWaitData] = useState();
 
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
@@ -29,12 +31,9 @@ const FriendsComponent = ({ status }) => {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
-        params: {
-          friendStatus: status,
-        },
       });
-
-      console.log("데이터:", response.data);
+      const Data = response.data.data;
+      console.log("친구 데이터:::", Data);
     } catch (error) {
       console.error("에러:", error);
     }

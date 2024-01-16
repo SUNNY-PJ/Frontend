@@ -72,7 +72,7 @@ function FriendsList() {
         ) : (
           <Line color={"#1F1F1F"} h={2} />
         )}
-        {isFriendsComponentVisible1 && <FriendsComponent status={""} />}
+        {/* {isFriendsComponentVisible1 && <FriendsComponent status={""} />} */}
         {/* 친구 신청 목록 */}
         <TouchableOpacity onPress={toggleFriendsComponent2} activeOpacity={1}>
           <View style={{ ...styles.titleSection, paddingTop: 24 }}>
@@ -94,7 +94,7 @@ function FriendsList() {
         ) : (
           <Line color={"#1F1F1F"} h={2} />
         )}
-        {isFriendsComponentVisible2 && <FriendsComponent status={"WAIT"} />}
+        {/* {isFriendsComponentVisible2 && <FriendsComponent status={"WAIT"} />} */}
 
         {/* 친구 목록 */}
         <TouchableOpacity onPress={toggleFriendsComponent3} activeOpacity={1}>
@@ -117,7 +117,7 @@ function FriendsList() {
         ) : (
           <Line color={"#1F1F1F"} h={2} />
         )}
-        {isFriendsComponentVisible3 && <FriendsComponent status={"APPROVE"} />}
+        {/* {isFriendsComponentVisible3 && <FriendsComponent status={"APPROVE"} />} */}
       </View>
     </View>
   );
