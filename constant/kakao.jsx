@@ -34,15 +34,15 @@ const Kakao = () => {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
+      console.log("데이터:::::", response.headers.authorization);
 
-      const access_token = response.data.data.accessToken;
-      const refresh_token = response.data.data.refreshToken;
+      const access_token = response.headers.authorization;
+      // const refresh_token = response.data.data.refreshToken;
       console.log(access_token);
       await AsyncStorage.setItem("access_token", access_token);
-      await AsyncStorage.setItem("refresh_token", refresh_token);
+      // await AsyncStorage.setItem("refresh_token", refresh_token);
 
       navigation.navigate("MainScreen", { screen: "SignUp" });
-      console.log("데이터:::::", response.data);
     } catch (error) {
       console.log("errorMessage:::", error);
       if (error.response) {
