@@ -23,6 +23,8 @@ const FriendProfile = ({ openProfile, isOpenProfile, communityId }) => {
   const [comment, setComment] = useState(false);
   const [write, setWrite] = useState(true);
   const [data, setData] = useState([]);
+  const [status, setStatus] = useState();
+  const [friendId, setFriendId] = useState(0);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -48,25 +50,106 @@ const FriendProfile = ({ openProfile, isOpenProfile, communityId }) => {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
-        // params: {
-        //   communityId: itemId,
-        // },
       });
 
       console.log("데이터1111:", response.data);
       const ProfileData = response.data.data;
-      // const DetailCommentData = [DetailData].map((item) => item.commentList);
+      const ProfileId = [ProfileData].map((item) => item.id);
+      setFriendId(ProfileId);
       setData([ProfileData]);
     } catch (error) {
       console.error("에러:", error);
     }
   };
 
+  const confirmData = async () => {
+    const inputURL = `/api/v1/friends/${friendId}`;
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log("데이터:??", response.data.data);
+      const isFriend = response?.data?.data?.isFriend;
+      setStatus(isFriend);
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+      } else {
+        console.error("에러:", error);
+      }
+    }
+  };
+
   useEffect(() => {
     fetchData();
-  }, []);
+    if (friendId) {
+      confirmData();
+    }
+  }, [status]);
 
-  const handleProfileClick = () => {};
+  // 친구 신청
+  const postData = async () => {
+    const inputURL = `/api/v1/friends/${friendId}`;
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      );
+
+      console.log("친구신청>>>>", response.data.data);
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+      } else {
+        console.error("에러:", error);
+      }
+    }
+  };
+
+  const handleFriend = () => {
+    if (status) {
+      console.log("친구를 끊어볼까");
+      deleteFriendData();
+    } else if (!status) {
+      console.log("친구를 맺어볼까");
+      postData();
+    }
+  };
+
+  // 친구 끊기
+  const deleteFriendData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    const inputURL = `/api/v1/friends/${friendId}`;
+    const url = proxyUrl + inputURL;
+
+    try {
+      const response = await axios.delete(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
 
   return (
     <Modal animationType="slide" transparent={true} visible={isOpenProfile}>
@@ -109,7 +192,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, communityId }) => {
                   대화하기
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button}>
+              <TouchableOpacity style={styles.button} onPress={handleFriend}>
                 <Text
                   style={{
                     color: "#000 ",
@@ -118,7 +201,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, communityId }) => {
                     alignSelf: "center",
                   }}
                 >
-                  친구맺기
+                  {status ? "친구끊기" : "친구맺기"}
                 </Text>
               </TouchableOpacity>
             </View>

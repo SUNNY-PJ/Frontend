@@ -13,7 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 
-const FriendsComponent = () => {
+const FriendsComponent = ({ status }) => {
   const navigation = useNavigation();
   const inputURL = "/api/v1/friends";
 
@@ -30,7 +30,7 @@ const FriendsComponent = () => {
           Authorization: `Bearer ${access_token}`,
         },
         params: {
-          friendStatus: "APPROVE",
+          friendStatus: status,
         },
       });
 
@@ -43,7 +43,7 @@ const FriendsComponent = () => {
   useEffect(() => {
     fetchData();
     console.log("친구 목록");
-  }, []);
+  }, [status]);
 
   return (
     <ScrollView>
