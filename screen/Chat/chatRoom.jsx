@@ -11,8 +11,11 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const ChatRoom = () => {
+  const navigation = useNavigation();
+
   const [messages, setMessages] = useState([
     { id: 1, text: "오늘 저녁에 시간 어때요?", time: "18:52", isMine: false },
     {
@@ -42,6 +45,10 @@ const ChatRoom = () => {
   useEffect(() => {
     scrollViewRef.current?.scrollToEnd({ animated: true });
   }, [messages]);
+
+  const handleChatList = () => {
+    navigation.navigate("MainScreen", { screen: "ChatList" });
+  };
 
   return (
     <KeyboardAvoidingView
@@ -90,9 +97,36 @@ const ChatRoom = () => {
                 Today
               </Text>
             </View>
-            <Text style={{ fontSize: 12, fontWeight: 700, color: "#5C5C5C" }}>
-              "친구가 아닌 사용자입니다. 친구를 맺을까요?"
-            </Text>
+            <View
+              style={{
+                flexDirection: "row",
+
+                alignItems: "center", // 모든 아이템을 세로 방향으로 가운데 정렬
+                justifyContent: "space-between", // 양 끝에 아이템을 분산 배치
+              }}
+            >
+              <TouchableOpacity onPress={handleChatList}>
+                <Image
+                  source={require("../../assets/prevBtn.png")}
+                  style={{ width: 24, height: 24, bottom: 11 }}
+                />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  flex: 1, // 가운데 텍스트가 남은 공간을 채움
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color: "#5C5C5C",
+                  textAlign: "center", // 텍스트를 중앙 정렬
+                }}
+              >
+                "친구가 아닌 사용자입니다. 친구를 맺을까요?"
+              </Text>
+              <Image
+                source={require("../../assets/infoCircle.png")}
+                style={{ width: 24, height: 24, bottom: 11 }}
+              />
+            </View>
           </View>
           <View style={{ flexDirection: "row", gap: 4 }}>
             <Image
