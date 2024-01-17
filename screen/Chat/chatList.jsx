@@ -14,12 +14,19 @@ import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 
 const ChatList = () => {
+  const navigation = useNavigation();
+
   // const truncateText = (text) => {
   //   const maxLength = 20;
   //   return text.length > maxLength
   //     ? text.substring(0, maxLength) + "..."
   //     : text;
   // };
+
+  const handleChatRoomClick = () => {
+    console.log("채팅방으로 이동합니다...");
+    navigation.navigate("ChatScreen", { screen: "ChatRoom" });
+  };
 
   return (
     <View
@@ -47,10 +54,12 @@ const ChatList = () => {
         >
           채팅 목록
         </Text>
-
         <Line color={"#C1C1C1"} h={1} />
         <ScrollView>
-          <View style={styles.chatSection}>
+          <TouchableOpacity
+            style={styles.chatSection}
+            onPress={handleChatRoomClick}
+          >
             <View style={{ flexDirection: "row", gap: 13 }}>
               <Image
                 source={require("../../assets/Avatar.png")}
@@ -87,7 +96,7 @@ const ChatList = () => {
             >
               07:09
             </Text>
-          </View>
+          </TouchableOpacity>
           <Line color={"#C1C1C1"} h={1} />
           <View style={styles.chatSection}>
             <View style={{ flexDirection: "row", gap: 13 }}>
