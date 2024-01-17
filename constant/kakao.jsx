@@ -36,7 +36,8 @@ const Kakao = () => {
       });
       console.log("데이터:::::", response.headers.authorization);
 
-      const access_token = response.headers.authorization;
+      // const access_token = response.headers.authorization;
+      const access_token = response.data.data.accessToken;
       // const refresh_token = response.data.data.refreshToken;
       console.log(access_token);
       await AsyncStorage.setItem("access_token", access_token);
