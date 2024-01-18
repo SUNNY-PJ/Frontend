@@ -10,6 +10,7 @@ import {
 import * as Notifications from "expo-notifications";
 
 const Top = ({ navigation }) => {
+  const [day, setDay] = useState(10);
   const [progress, setProgress] = useState(30);
   const progressAnim = useRef(new Animated.Value(0)).current; // 초기 값 0으로 설정
 
@@ -31,7 +32,7 @@ const Top = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.progressContainer}>
-        <Text style={styles.text}>D - {progress}%</Text>
+        <Text style={styles.text}>D - {day}</Text>
         <TouchableOpacity onPress={() => navigation.navigate("Goal")}>
           <View style={styles.progressBar}>
             <Animated.View
