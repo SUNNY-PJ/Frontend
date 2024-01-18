@@ -20,7 +20,6 @@ import ImageActionSheet from "../../components/BottomSheet/ImageActionSheet";
 const SettingProfile = () => {
   const navigation = useNavigation();
   const [isActionSheetVisible, setActionSheetVisible] = useState(false);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [name, setName] = useState("");
   const [profileImageChanged, setProfileImageChanged] = useState(false);
   const [profileNicknameChanged, setProfileNicknameChanged] = useState(false);
@@ -76,7 +75,6 @@ const SettingProfile = () => {
   };
 
   const handleImagePress = (index) => {
-    setSelectedImageIndex(index);
     setActionSheetVisible(true);
   };
 
