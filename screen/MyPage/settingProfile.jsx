@@ -15,10 +15,12 @@ import LargeBtn from "../../components/Btn/largeBtn";
 import LargeBtnDisable from "../../components/Btn/largeBtnDisable";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
+import ImageActionSheet from "../../components/BottomSheet/ImageActionSheet";
 
 const SettingProfile = () => {
   const navigation = useNavigation();
-
+  const [isActionSheetVisible, setActionSheetVisible] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
   const [name, setName] = useState("");
   const [profileImageChanged, setProfileImageChanged] = useState(false);
   const [profileNicknameChanged, setProfileNicknameChanged] = useState(false);
@@ -32,6 +34,9 @@ const SettingProfile = () => {
 
   const [request, setRequest] = ImagePicker.useMediaLibraryPermissions();
   const [images, setImages] = useState([]);
+  // const [serverImageURL, setServerImageURL] = useState(
+  //   "https://sunny-pj.s3.ap-northeast-2.amazonaws.com/Profile+Image.png"
+  // );
 
   const uploadImage = async () => {
     // 권한 확인
@@ -55,8 +60,8 @@ const SettingProfile = () => {
     if (result.cancelled) {
       return null;
     }
-    // 이미지 업로드 결과 및 이미지 경로 업데이트
     console.log(result);
+    // 이미지 업로드 결과 및 이미지 경로 업데이트
     setImages([result.assets[0].uri]);
     setSelectedImage(result.assets[0].uri);
     setProfileImageChanged(true);
@@ -70,29 +75,56 @@ const SettingProfile = () => {
     setImages(updatedImages);
   };
 
+  const handleImagePress = (index) => {
+    setSelectedImageIndex(index);
+    setActionSheetVisible(true);
+  };
+
+  const handleRemoveImage = () => {
+    setSelectedImage(null);
+    setProfileImageChanged(true);
+    setActionSheetVisible(false);
+  };
+
+  const handleSelectImage = () => {
+    setActionSheetVisible(false);
+    uploadImage();
+  };
+
   const profileRequest = {
     nickname: name,
   };
-
-  const formData = new FormData();
-
-  formData.append("profileRequest", JSON.stringify(profileRequest));
-
-  images.forEach((image, index) => {
-    const fileName = image.split("/").pop();
-    const match = /\.(\w+)$/.exec(fileName ?? "");
-    const type = match ? `image/${match[1]}` : `image`;
-    formData.append("profile", {
-      uri: image,
-      name: fileName,
-      type: type,
-    });
-  });
 
   const postImageData = async () => {
     const inputURL = "/mypage/profile";
     const url = proxyUrl + inputURL;
     const access_token = await AsyncStorage.getItem("access_token");
+
+    // FormData 객체 생성
+    const formData = new FormData();
+    formData.append("profileRequest", JSON.stringify({ nickname: name }));
+
+    // 선택된 이미지가 있는 경우에만 서버로 전송합니다.
+    if (selectedImage) {
+      const fileName = selectedImage.split("/").pop();
+      const match = /\.(\w+)$/.exec(fileName);
+      const type = match ? `image/${match[1]}` : `image`;
+      formData.append("profile", {
+        uri: selectedImage,
+        name: fileName,
+        type: type,
+      });
+    } else {
+      // 선택된 이미지가 없는 경우(이미지를 삭제한 경우), 기본 이미지 URL을 전송합니다.
+      formData.append(
+        "profile",
+        JSON.stringify({
+          imageUrl:
+            "https://sunny-pj.s3.ap-northeast-2.amazonaws.com/Profile+Image.png",
+        })
+      );
+    }
+
     try {
       const response = await axios.post(url, formData, {
         headers: {
@@ -104,11 +136,7 @@ const SettingProfile = () => {
       console.log("데이터:", response.data);
       navigation.navigate("MyPage", { screen: "MyPage" });
     } catch (error) {
-      if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
-      } else {
-        console.error("에러:", error);
-      }
+      // 에러 핸들링 로직
     }
   };
 
@@ -218,31 +246,20 @@ const SettingProfile = () => {
       >
         프로필 설정
       </Text>
-      {profile.map((item) => (
-        <Pressable onPress={uploadImage}>
+      {profile.map((item, index) => (
+        <Pressable onPress={() => handleImagePress(index)}>
           {selectedImage ? (
             <Image
               source={{ uri: selectedImage }}
-              style={{
-                width: 56,
-                height: 56,
-                alignSelf: "center",
-                marginBottom: 28,
-                borderRadius: 50,
-              }}
+              style={styles.profileImage}
+            />
+          ) : profileImageChanged ? (
+            <Image
+              source={require("../../assets/myPage_profile.png")}
+              style={styles.profileImage}
             />
           ) : (
-            <Image
-              source={{ uri: item.profile }}
-              // source={require("../../assets/myPage_profile.png")}
-              style={{
-                width: 56,
-                height: 56,
-                alignSelf: "center",
-                marginBottom: 28,
-                borderRadius: 50,
-              }}
-            />
+            <Image source={{ uri: item.profile }} style={styles.profileImage} />
           )}
         </Pressable>
       ))}
@@ -273,6 +290,12 @@ const SettingProfile = () => {
           </View>
         </View>
       ))}
+      <ImageActionSheet
+        isVisible={isActionSheetVisible}
+        onClose={() => setActionSheetVisible(false)}
+        onRemove={handleRemoveImage}
+        onSelect={handleSelectImage}
+      />
     </View>
   );
 };
@@ -314,6 +337,13 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingTop: 16,
     marginBottom: 8,
+  },
+  profileImage: {
+    width: 80,
+    height: 80,
+    alignSelf: "center",
+    marginBottom: 28,
+    borderRadius: 50,
   },
 });
 
