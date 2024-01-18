@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Line from "../../components/Line";
 
 const ChatRoom = () => {
   const navigation = useNavigation();
@@ -20,9 +21,21 @@ const ChatRoom = () => {
     { id: 1, text: "오늘 저녁에 시간 어때요?", time: "18:52", isMine: false },
     {
       id: 2,
-      text: "영화 보고 싶은데 같이 볼래요?",
+      text: "안돼 이놈아",
       time: "18:55",
       isMine: true,
+    },
+    {
+      id: 2,
+      text: "푸하항",
+      time: "18:57",
+      isMine: true,
+    },
+    {
+      id: 1,
+      text: "때리깡 쾈그냥 아아아아아아앙 자고 싶다아ㅏㄹ아랑라아아ㅏㅇ 아아아아아 피곤해",
+      time: "22:57",
+      isMine: false,
     },
   ]);
   const [currentMessage, setCurrentMessage] = useState("");
@@ -100,9 +113,8 @@ const ChatRoom = () => {
             <View
               style={{
                 flexDirection: "row",
-
-                alignItems: "center", // 모든 아이템을 세로 방향으로 가운데 정렬
-                justifyContent: "space-between", // 양 끝에 아이템을 분산 배치
+                alignItems: "center",
+                justifyContent: "space-between",
               }}
             >
               <TouchableOpacity onPress={handleChatList}>
@@ -113,11 +125,11 @@ const ChatRoom = () => {
               </TouchableOpacity>
               <Text
                 style={{
-                  flex: 1, // 가운데 텍스트가 남은 공간을 채움
+                  flex: 1,
                   fontSize: 12,
                   fontWeight: 700,
                   color: "#5C5C5C",
-                  textAlign: "center", // 텍스트를 중앙 정렬
+                  textAlign: "center",
                 }}
               >
                 "친구가 아닌 사용자입니다. 친구를 맺을까요?"
@@ -128,53 +140,66 @@ const ChatRoom = () => {
               />
             </View>
           </View>
-          <View style={{ flexDirection: "row", gap: 4 }}>
-            <Image
-              source={require("../../assets/Avatar.png")}
-              style={{ width: 40, height: 40 }}
-            />
-            <Text
-              style={{
-                fontSize: 10,
-                fontWeight: 700,
-                color: "#1F1F1F",
-                paddingTop: 3,
-              }}
-            >
-              민지
-            </Text>
-          </View>
+
           {messages.map((message, index) => (
-            <View
-              key={index}
-              style={{
-                flexDirection: "row",
-                justifyContent: message.isMine ? "flex-end" : "flex-start",
-                // marginVertical: 5,
-              }}
-            >
-              {message.isMine && (
-                <Text style={[styles.time, { marginRight: 8 }]}>
-                  {message.time}
-                </Text>
+            <View>
+              {!message.isMine && (
+                <View style={{ flexDirection: "row", gap: 4 }}>
+                  <Image
+                    source={require("../../assets/Avatar.png")}
+                    style={{ width: 40, height: 40 }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 700,
+                      color: "#1F1F1F",
+                      paddingTop: 3,
+                    }}
+                  >
+                    민지
+                  </Text>
+                </View>
               )}
               <View
-                style={[
-                  message.isMine ? styles.message : styles.friendMessage,
-                  { marginBottom: 25 },
-                ]}
+                key={index}
+                style={{
+                  flexDirection: "row",
+                  justifyContent: message.isMine ? "flex-end" : "flex-start",
+                  // marginVertical: 5,
+                }}
               >
-                <Text>{message.text}</Text>
+                {message.isMine && (
+                  <Text style={[styles.time, { marginRight: 8 }]}>
+                    {message.time}
+                  </Text>
+                )}
+                <View
+                  style={[
+                    message.isMine ? styles.message : styles.friendMessage,
+                    { marginBottom: 25 },
+                  ]}
+                >
+                  <Text>{message.text}</Text>
+                </View>
+                {!message.isMine && (
+                  <Text style={[styles.time, { marginLeft: 8, bottom: 25 }]}>
+                    {message.time}
+                  </Text>
+                )}
               </View>
-              {!message.isMine && (
-                <Text style={[styles.time, { marginLeft: 8, bottom: 25 }]}>
-                  {message.time}
-                </Text>
-              )}
             </View>
           ))}
         </ScrollView>
-        <View style={{ paddingLeft: 22, paddingRight: 22 }}>
+        <Line h={1} color={"#C1C1C1"} />
+        <View
+          style={{
+            paddingLeft: 22,
+            paddingRight: 22,
+            paddingTop: 20,
+            backgroundColor: "#fff",
+          }}
+        >
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
@@ -197,7 +222,7 @@ const ChatRoom = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // 전체 화면을 사용하도록 flex 설정
+    flex: 1,
     justifyContent: "space-between",
     backgroundColor: "#FFFBF6",
     // paddingTop: 68,
@@ -217,7 +242,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flex: -1,
     alignSelf: "flex-end",
-    maxWidth: "80%",
+    maxWidth: "60%",
   },
   friendMessage: {
     marginVertical: 5,
@@ -229,7 +254,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#E8E9E8",
     flex: -1, // 내용물에 따라 크기 조정
     alignSelf: "flex-start", // 메시지를 왼쪽 정렬
-    maxWidth: "80%",
+    maxWidth: "60%",
     marginLeft: 49,
     bottom: 25,
   },
@@ -240,6 +265,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderRadius: 8,
     marginBottom: 19,
+    backgroundColor: "#fff",
   },
   input: {
     flex: 1,
