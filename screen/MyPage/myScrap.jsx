@@ -25,7 +25,6 @@ const MyScrap = () => {
         },
       });
       const myScrapData = response.data;
-      console.log(myScrapData);
       // console.log(myWriteData.map((item) => item.id));
       setData(myScrapData);
     } catch (error) {

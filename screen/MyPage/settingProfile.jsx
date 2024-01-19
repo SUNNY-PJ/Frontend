@@ -132,7 +132,6 @@ const SettingProfile = () => {
         },
       });
 
-      console.log("데이터:", response.data);
       navigation.navigate("MyPage", { screen: "MyPage" });
     } catch (error) {
       // 에러 핸들링 로직
@@ -160,7 +159,6 @@ const SettingProfile = () => {
         params,
       });
 
-      console.log("데이터:", response.data);
       navigation.navigate("MyPage", { screen: "MyPage" });
     } catch (error) {
       console.error("서버 응답 오류:", error.response.data);

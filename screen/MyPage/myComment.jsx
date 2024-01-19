@@ -25,8 +25,6 @@ const MyComment = () => {
         },
       });
 
-      console.log("데이터:", response.data);
-
       const myWriteData = response.data;
       console.log(myWriteData.map((item) => item.id));
       setData(myWriteData);
