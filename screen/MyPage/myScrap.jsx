@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const MyScrap = () => {
   const navigation = useNavigation();
-  const inputURL = "/mypage/myscrap";
+  const inputURL = "/users/scrap";
   const url = proxyUrl + inputURL;
   const [data, setData] = useState([]);
 
@@ -24,7 +24,7 @@ const MyScrap = () => {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      const myScrapData = response.data.data;
+      const myScrapData = response.data;
       console.log(myScrapData);
       // console.log(myWriteData.map((item) => item.id));
       setData(myScrapData);
@@ -49,7 +49,7 @@ const MyScrap = () => {
                 <Text style={styles.description}>{item.title}</Text>
                 <Text style={styles.description}>{item.createdAt}</Text>
                 <Text style={styles.description}>조회 {item.viewCount}</Text>
-                <Text style={styles.description}>댓글 {item.comment_cnt}</Text>
+                <Text style={styles.description}>댓글 {item.comment}</Text>
               </View>
             </View>
             <Image

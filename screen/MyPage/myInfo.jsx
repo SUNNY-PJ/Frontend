@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
+import { TabView, SceneMap } from "react-native-tab-view";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -12,16 +20,58 @@ import MyComment from "./myComment";
 const MyInfo = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const inputURL = `/mypage`;
+  const inputURL = `/users`;
   const url = proxyUrl + inputURL;
   const activeTabVal = route.params?.activeTab || "scrap";
-
+  const initialLayout = { width: Dimensions.get("window").width };
   const [activeTab, setActiveTab] = useState(activeTabVal);
   const [profile, setProfile] = useState([]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    switch (tab) {
+      case "scrap":
+        setIndex(0);
+        break;
+      case "write":
+        setIndex(1);
+        break;
+      case "comment":
+        setIndex(2);
+        break;
+      default:
+        setIndex(0);
+    }
   };
+
+  useEffect(() => {
+    switch (index) {
+      case 0:
+        setActiveTab("scrap");
+        break;
+      case 1:
+        setActiveTab("write");
+        break;
+      case 2:
+        setActiveTab("comment");
+        break;
+      default:
+        setActiveTab("scrap");
+    }
+  }, [index]);
+
+  const [index, setIndex] = useState(0);
+  const [routes] = useState([
+    { key: "scrap", title: "스크랩" },
+    { key: "write", title: "작성글" },
+    { key: "comment", title: "작성 댓글" },
+  ]);
+
+  const renderScene = SceneMap({
+    scrap: MyScrap,
+    write: MyWrite,
+    comment: MyComment,
+  });
 
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
@@ -36,7 +86,7 @@ const MyInfo = () => {
       });
 
       console.log("프로필 정보:::", response.data);
-      const profileData = response.data.data;
+      const profileData = response.data;
       setProfile([profileData]);
     } catch (error) {
       console.error("에러:", error);
@@ -64,7 +114,7 @@ const MyInfo = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.contentContainer}>
-        {profile.map((item) => (
+        {profile.map((item, index) => (
           <View
             style={{
               flexDirection: "row",
@@ -100,6 +150,12 @@ const MyInfo = () => {
             </View>
           </View>
         ))}
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={initialLayout}
+        />
         <View
           style={{
             flexDirection: "row",

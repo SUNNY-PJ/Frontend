@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const MyWrite = () => {
   const navigation = useNavigation();
-  const inputURL = "/mypage/mycommunity";
+  const inputURL = "/users/community";
   const url = proxyUrl + inputURL;
 
   const [data, setData] = useState([]);
@@ -27,7 +27,7 @@ const MyWrite = () => {
 
       console.log("데이터:", response.data);
 
-      const myWriteData = response.data.data;
+      const myWriteData = response.data;
       console.log(myWriteData.map((item) => item.id));
       setData(myWriteData);
     } catch (error) {

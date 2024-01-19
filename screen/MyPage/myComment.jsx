@@ -8,7 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const MyComment = () => {
   const navigation = useNavigation();
-  const inputURL = "/mypage/mycomment";
+  const inputURL = "/users/comment";
   const url = proxyUrl + inputURL;
 
   const [data, setData] = useState([]);
@@ -27,7 +27,7 @@ const MyComment = () => {
 
       console.log("데이터:", response.data);
 
-      const myWriteData = response.data.data;
+      const myWriteData = response.data;
       console.log(myWriteData.map((item) => item.id));
       setData(myWriteData);
     } catch (error) {

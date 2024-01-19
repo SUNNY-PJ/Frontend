@@ -94,7 +94,7 @@ const SettingProfile = () => {
   };
 
   const postImageData = async () => {
-    const inputURL = "/mypage/profile";
+    const inputURL = "/users/profile";
     const url = proxyUrl + inputURL;
     const access_token = await AsyncStorage.getItem("access_token");
 

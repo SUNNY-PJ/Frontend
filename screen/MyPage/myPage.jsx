@@ -22,7 +22,7 @@ const MyPage = () => {
 
   // 프로필 정보
   const fetchData = async () => {
-    const inputURL = `/mypage`;
+    const inputURL = `/users`;
     const url = proxyUrl + inputURL;
     const access_token = await AsyncStorage.getItem("access_token");
 
@@ -34,8 +34,8 @@ const MyPage = () => {
         },
       });
 
-      console.log("프로필 정보:::", response.data);
-      const profileData = response.data.data;
+      console.log("프로필 정보:::", response);
+      const profileData = response.data;
       setProfile([profileData]);
     } catch (error) {
       console.error("에러:", error);
@@ -58,7 +58,7 @@ const MyPage = () => {
   // 로그아웃
   const logoutData = async () => {
     const lououtUrl = "http://43.201.176.22:8080/mypage/auth/kakao/logout";
-    const inputURL = "/mypage/auth/kakao/logout";
+    const inputURL = "/users/auth/kakao/logout";
     const url = proxyUrl + inputURL;
     const access_token = await AsyncStorage.getItem("access_token");
     try {
@@ -89,7 +89,7 @@ const MyPage = () => {
   };
 
   const leaveData = async () => {
-    const inputURL = "/mypage/auth/leave";
+    const inputURL = "/users/auth/leave";
     const url = proxyUrl + inputURL;
     const access_token = await AsyncStorage.getItem("access_token");
     try {
