@@ -38,15 +38,19 @@ const SettingProfile = () => {
   // );
 
   const uploadImage = async () => {
-    // 권한 확인
-    // 권한 없으면 물어보고 승인하지 않으면 return
     console.log("click");
-    if (!request?.granted) {
-      const permission = await setRequest();
+
+    let permission = request;
+    if (!permission?.granted) {
+      // 권한 요청
+      permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (!permission.granted) {
-        return null;
+        // 사용자가 권한을 거부한 경우
+        alert("갤러리 접근 권한이 필요합니다.");
+        return;
       }
     }
+
     // 이미지 업로드 기능
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -54,11 +58,12 @@ const SettingProfile = () => {
       quality: 1,
       aspect: [1, 1],
     });
-    // 이미지 업로드 취소한 경우
 
+    // 이미지 업로드 취소한 경우
     if (result.cancelled) {
-      return null;
+      return;
     }
+
     console.log(result);
     // 이미지 업로드 결과 및 이미지 경로 업데이트
     setImages([result.assets[0].uri]);
@@ -85,12 +90,8 @@ const SettingProfile = () => {
   };
 
   const handleSelectImage = () => {
-    setActionSheetVisible(false);
     uploadImage();
-  };
-
-  const profileRequest = {
-    nickname: name,
+    setActionSheetVisible(true);
   };
 
   const postImageData = async () => {
@@ -184,7 +185,7 @@ const SettingProfile = () => {
   };
 
   const fetchData = async () => {
-    const inputURL = `/mypage`;
+    const inputURL = `/users`;
     const url = proxyUrl + inputURL;
     const access_token = await AsyncStorage.getItem("access_token");
     console.log(access_token);
@@ -198,7 +199,7 @@ const SettingProfile = () => {
       });
 
       console.log("프로필 정보:::", response.data);
-      const profileData = response.data.data;
+      const profileData = response.data;
       setProfile([profileData]);
     } catch (error) {
       console.error("에러:", error);
