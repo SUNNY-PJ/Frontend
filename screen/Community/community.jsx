@@ -11,51 +11,25 @@ import Tip from "./tip";
 const Community = () => {
   const navigation = useNavigation();
   const { board, tip, setBoard, setTip, setCategory } = useCommunity();
-  const inputURL = "/community";
+  const inputURL = "/community/board";
 
   const url = proxyUrl + inputURL;
 
   const boardClick = () => {
     setBoard(true);
     setTip(false);
-    setCategory("자유");
+    setCategory("FREE");
   };
 
   const tipClick = () => {
     setTip(true);
     setBoard(false);
-    setCategory("꿀팁");
-  };
-
-  const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
-    console.log("get 실행");
-
-    try {
-      const response = await axios.get(url, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
-        },
-        // params: {
-        //   page: 1,
-        //   size: 10,
-        //   sort: "",
-        //   sortType: "최신순",
-        //   boardType: "꿀팁"
-        // },
-      });
-
-      console.log("데이터:", response.data);
-    } catch (error) {
-      console.error("에러:", error);
-    }
+    setCategory("TIP");
   };
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      fetchData();
+      // fetchData();
     });
     return unsubscribe;
   }, [navigation]);

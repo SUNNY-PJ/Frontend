@@ -330,7 +330,7 @@ const Detail = () => {
                 <Text
                   style={{ fontSize: 10, fontWeight: 500, color: "#1F1F1F" }}
                 >
-                  댓글 {item.comment_cnt}
+                  댓글 {item.commentCnt}
                 </Text>
               </View>
             </View>
@@ -376,7 +376,7 @@ const Detail = () => {
                     height: 24,
                   }}
                 />
-                <Text>{item.comment_cnt}</Text>
+                <Text>{item.commentCnt}</Text>
                 <Image
                   source={require("../../assets/arrowLeft.png")}
                   style={{

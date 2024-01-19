@@ -101,7 +101,7 @@ const Modify = () => {
       const communityRequest = {
         title: modifiedTitle,
         contents: modifiedContents,
-        type: "꿀팁",
+        type: "TIP",
       };
 
       const formData = new FormData();

@@ -18,10 +18,13 @@ import { useNavigation } from "@react-navigation/native";
 const Tip = () => {
   const navigation = useNavigation();
   const { data, fetchData, setTipSort, tipSort } = useCommunity();
-  // const [selectedSort, setSelectedSort] = useState("최신순");
+  // const [selectedSort, setSelectedSort] = useState("LATEST");
   const [open, setOpen] = useState(false);
 
-  const COMMUNITY_SORT = [{ title: "최신순" }, { title: "조회순" }];
+  const COMMUNITY_SORT = [
+    { title: "최신순", data: "LATEST" },
+    { title: "조회순", data: "VIEW" },
+  ];
 
   // console.log("글글글", sort);
 
@@ -33,6 +36,7 @@ const Tip = () => {
   const handleCategorySelect = (data) => {
     // setSelectedSort(data);
     setTipSort(data);
+    console.log("여기가 팁이야", data);
   };
 
   useEffect(() => {
@@ -57,7 +61,7 @@ const Tip = () => {
                   alignSelf: "center",
                 }}
               >
-                {tipSort}
+                {tipSort === "LATEST" ? "최신순" : "조회순"}
               </Text>
             </View>
           </TouchableOpacity>
@@ -92,33 +96,37 @@ const Tip = () => {
           keyboardDismissMode="on-drag"
         >
           {/* <Line color={"#C1C1C1"} h={2} /> */}
-          {data.map((item) => (
-            <TouchableOpacity
-              key={item.id}
-              onPress={() =>
-                navigation.navigate("Detail", {
-                  screen: "Detail",
-                  params: {
-                    itemId: item.id,
-                  },
-                })
-              }
-              activeOpacity={0.6}
-            >
-              <View style={styles.box}>
-                <Text style={styles.title}>{item.title}</Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={styles.description}>{item.writer}</Text>
-                  <Text style={styles.description}>{item.createdAt}</Text>
-                  <Text style={styles.description}>조회 {item.view_cnt}</Text>
-                  <Text style={styles.description}>
-                    댓글 {item.comment_cnt}
-                  </Text>
+          {data &&
+            data.map((item, index) => (
+              // {data.map((item) => (
+              <TouchableOpacity
+                key={item.id}
+                onPress={() =>
+                  navigation.navigate("Detail", {
+                    screen: "Detail",
+                    params: {
+                      itemId: item.id,
+                    },
+                  })
+                }
+                activeOpacity={0.6}
+              >
+                <View style={styles.box}>
+                  <Text style={styles.title}>{item.title}</Text>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={styles.description}>{item.writer}</Text>
+                    <Text style={styles.description}>{item.createdAt}</Text>
+                    <Text style={styles.description}>
+                      조회 {item.viewCount}
+                    </Text>
+                    <Text style={styles.description}>
+                      댓글 {item.commentCount}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-              <Line color={"#C1C1C1"} h={2} />
-            </TouchableOpacity>
-          ))}
+                <Line color={"#C1C1C1"} h={2} />
+              </TouchableOpacity>
+            ))}
         </ScrollView>
       </View>
       {open && (

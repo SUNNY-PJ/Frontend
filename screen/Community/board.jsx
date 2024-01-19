@@ -13,7 +13,10 @@ const Board = () => {
   const { data, fetchData, setBoardSort, boardSort } = useCommunity();
   const [open, setOpen] = useState(false);
 
-  const COMMUNITY_SORT = [{ title: "최신순" }, { title: "조회순" }];
+  const COMMUNITY_SORT = [
+    { title: "최신순", data: "LATEST" },
+    { title: "조회순", data: "VIEW" },
+  ];
 
   const handleSortClick = () => {
     setOpen(!open);
@@ -32,22 +35,24 @@ const Board = () => {
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <View style={styles.section}>
-          <View style={{ flexDirection: "row", gap: 3 }}>
-            <Image
-              source={require("../../assets/sort.png")}
-              style={styles.icon}
-            />
-            <Text
-              style={{
-                color: "#262626",
-                fontSize: 15,
-                fontWeight: 500,
-                alignSelf: "center",
-              }}
-            >
-              {boardSort}
-            </Text>
-          </View>
+          <TouchableOpacity activeOpacity={0.6} onPress={handleSortClick}>
+            <View style={{ flexDirection: "row", gap: 3 }}>
+              <Image
+                source={require("../../assets/sort.png")}
+                style={styles.icon}
+              />
+              <Text
+                style={{
+                  color: "#262626",
+                  fontSize: 15,
+                  fontWeight: 500,
+                  alignSelf: "center",
+                }}
+              >
+                {boardSort === "LATEST" ? "최신순" : "조회순"}
+              </Text>
+            </View>
+          </TouchableOpacity>
           <View
             style={{
               flexDirection: "row",
@@ -74,35 +79,38 @@ const Board = () => {
           </View>
         </View>
         <Line color={"#C1C1C1"} h={2} />
-        {data.map((item) => (
-          <TouchableOpacity
-            key={item.id}
-            onPress={() =>
-              navigation.navigate("Detail", {
-                screen: "Detail",
-                params: {
-                  itemId: item.id,
-                },
-              })
-            }
-            activeOpacity={0.6}
-          >
-            <View>
-              <View style={styles.box}>
-                <Text style={styles.title}>{item.title}</Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={styles.description}>{item.writer}</Text>
-                  <Text style={styles.description}>{item.createdAt}</Text>
-                  <Text style={styles.description}>조회 {item.view_cnt}</Text>
-                  <Text style={styles.description}>
-                    댓글 {item.comment_cnt}
-                  </Text>
+        {data &&
+          data.map((item, index) => (
+            <TouchableOpacity
+              key={item.id}
+              onPress={() =>
+                navigation.navigate("Detail", {
+                  screen: "Detail",
+                  params: {
+                    itemId: item.id,
+                  },
+                })
+              }
+              activeOpacity={0.6}
+            >
+              <View>
+                <View style={styles.box}>
+                  <Text style={styles.title}>{item.title}</Text>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={styles.description}>{item.writer}</Text>
+                    <Text style={styles.description}>{item.createdAt}</Text>
+                    <Text style={styles.description}>
+                      조회 {item.viewCount}
+                    </Text>
+                    <Text style={styles.description}>
+                      댓글 {item.commentCount}
+                    </Text>
+                  </View>
                 </View>
+                <Line color={"#C1C1C1"} h={2} />
               </View>
-              <Line color={"#C1C1C1"} h={2} />
-            </View>
-          </TouchableOpacity>
-        ))}
+            </TouchableOpacity>
+          ))}
       </View>
       {open && (
         <BottomSheetScreen

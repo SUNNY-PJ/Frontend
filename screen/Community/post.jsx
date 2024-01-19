@@ -25,7 +25,10 @@ const Post = () => {
   const navigation = useNavigation();
   const inputURL = "/community";
   // const cleanedURL = inputURL.replace(/[\u200B]/g, "");
-  const COMMUNITY_CATEGORY = [{ title: "절약 꿀팁" }, { title: "자유 게시판" }];
+  const COMMUNITY_CATEGORY = [
+    { title: "절약 꿀팁", data: "절약 꿀팁" },
+    { title: "자유 게시판", data: "자유 게시판" },
+  ];
 
   const url = proxyUrl + inputURL;
 
@@ -51,11 +54,10 @@ const Post = () => {
 
   const handleCategorySelect = (data) => {
     setSelectedCategory(data);
-    console.log("111", data);
     if (data === "절약 꿀팁") {
-      setCategory("꿀팁");
+      setCategory("절약 꿀팁");
     } else if (data === "자유 게시판") {
-      setCategory("자유");
+      setCategory("자유 게시판");
     }
   };
 

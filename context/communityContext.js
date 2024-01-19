@@ -9,12 +9,12 @@ export const CommunityProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [board, setBoard] = useState(false);
   const [tip, setTip] = useState(true);
-  const [category, setCategory] = useState("꿀팁");
-  const [sort, setSort] = useState("최신순");
-  const [tipSort, setTipSort] = useState("최신순");
-  const [boardSort, setBoardSort] = useState("최신순");
+  const [category, setCategory] = useState("TIP");
+  const [sort, setSort] = useState("LATEST");
+  const [tipSort, setTipSort] = useState("LATEST");
+  const [boardSort, setBoardSort] = useState("LATEST");
 
-  const inputURL = "/community";
+  const inputURL = "/community/board";
   const url = proxyUrl + inputURL;
 
   const fetchData = async () => {
@@ -24,7 +24,8 @@ export const CommunityProvider = ({ children }) => {
       const paramsData = {
         //   page: 1,
         //   size: 10,
-        sort: sort,
+        sortType: sort,
+        pageSize: 20,
         boardType: category,
       };
       const response = await axios.get(url, {
@@ -34,21 +35,26 @@ export const CommunityProvider = ({ children }) => {
         },
         params: paramsData,
       });
-      console.log("데이터:111", response.data);
-      setData(response.data.content);
+      console.log("데이터:111", response.data.data);
+      console.log("데이터:222", paramsData);
+
+      setData(response.data.data);
     } catch (error) {
       console.error("에러:", error);
     }
   };
 
   useEffect(() => {
-    fetchData();
-    if (category === "자유") {
+    if (category === "FREE") {
       setSort(boardSort);
-    } else if (category === "꿀팁") {
+    } else if (category === "TIP") {
       setSort(tipSort);
     }
-  }, [sort, boardSort, tipSort]);
+  }, [boardSort, tipSort]);
+
+  useEffect(() => {
+    fetchData();
+  }, [sort, category]);
 
   return (
     <CommunityContext.Provider
