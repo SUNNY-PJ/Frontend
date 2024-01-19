@@ -9,6 +9,7 @@ import {
   Dimensions,
   PanResponder,
   TouchableOpacity,
+  Image,
 } from "react-native";
 
 const BottomSheet = ({
@@ -94,15 +95,29 @@ const BottomSheet = ({
           }}
           {...panResponders.panHandlers}
         >
-          <Text style={styles.title}>{title}</Text>
+          <View style={styles.header}>
+            <Text style={styles.title}>{title}</Text>
+            <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
+              {/* <Text style={styles.closeButtonText}>X</Text> */}
+              <Image
+                source={require("../../assets/close.png")}
+                style={{
+                  width: 16,
+                  height: 16,
+                }}
+              />
+            </TouchableOpacity>
+          </View>
           {data &&
             data.length > 0 &&
             data.map((item, index) => (
               <TouchableOpacity
-                onPress={() => handleCategoryClick(item.title)}
+                onPress={() => handleCategoryClick(item.data)}
                 key={item.index}
+                style={styles.item}
               >
                 <Text style={styles.text}>{item.title}</Text>
+                {index < data.length - 1 && <View style={styles.divider} />}
               </TouchableOpacity>
             ))}
         </Animated.View>
@@ -137,6 +152,34 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 700,
     color: "#1F1F1F",
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    width: "100%",
+  },
+  closeButton: {
+    padding: 16, // 충분한 터치 영역을 제공합니다.
+  },
+  closeButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  item: {
+    width: "100%", // 항목들이 전체 너비를 차지하도록 설정합니다.
+    paddingVertical: 12, // 터치 영역을 높입니다.
+    paddingHorizontal: 16, // 여백을 추가합니다.
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  divider: {
+    height: 1,
+    backgroundColor: "#E0E0E0",
+    width: "100%", // 구분선이 전체 너비를 차지하도록 설정합니다.
+    marginTop: 12,
   },
 });
 
