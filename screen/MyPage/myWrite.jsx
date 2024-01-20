@@ -56,8 +56,8 @@ const MyWrite = () => {
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.description}>{item.writer}</Text>
               <Text style={styles.description}>{item.createdAt}</Text>
-              <Text style={styles.description}>조회 {item.view_cnt}</Text>
-              <Text style={styles.description}>댓글 {item.comment_cnt}</Text>
+              <Text style={styles.description}>조회 {item.viewCount}</Text>
+              <Text style={styles.description}>댓글 {item.commentCount}</Text>
             </View>
           </View>
           <Line color={"#C1C1C1"} h={1} />

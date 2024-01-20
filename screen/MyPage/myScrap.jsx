@@ -12,6 +12,17 @@ const MyScrap = () => {
   const url = proxyUrl + inputURL;
   const [data, setData] = useState([]);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+    const hours = ("0" + date.getHours()).slice(-2);
+    const minutes = ("0" + date.getMinutes()).slice(-2);
+
+    return `${year}.${month}.${day} ${hours}:${minutes}`;
+  };
+
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     console.log(access_token);
@@ -45,9 +56,11 @@ const MyScrap = () => {
             <View>
               <Text style={styles.title}>{item.title}</Text>
               <View style={{ flexDirection: "row" }}>
-                <Text style={styles.description}>{item.title}</Text>
-                <Text style={styles.description}>{item.createdAt}</Text>
-                <Text style={styles.description}>조회 {item.viewCount}</Text>
+                <Text style={styles.description}>{item.writer}</Text>
+                <Text style={styles.description}>
+                  {formatDate(item.createDate)}
+                </Text>
+                <Text style={styles.description}>조회 {item.view}</Text>
                 <Text style={styles.description}>댓글 {item.comment}</Text>
               </View>
             </View>
