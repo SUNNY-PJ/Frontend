@@ -132,7 +132,8 @@ const Bottom = () => {
         <TouchableOpacity
           activeOpacity={1}
           style={styles.menuItem}
-          onPress={handleMainIcon}
+          // onPress={handleMainIcon}
+          onPress={() => navigation.navigate("Spending")}
         >
           <Image
             source={require("../assets/bottomIcon.png")}
