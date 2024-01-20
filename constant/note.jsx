@@ -88,7 +88,6 @@ function Note({ navigation }) {
 
   const postData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
-    console.log("post 실행111");
     try {
       const bodyData = {
         date_field: date,
@@ -108,7 +107,10 @@ function Note({ navigation }) {
 
       console.log("데이터::::", response.data.msg);
 
-      navigation.navigate("FriendsList", { screen: "FriendsList" });
+      navigation.navigate("MainScreen", { screen: "Statistics" });
+      setMoney("");
+      setDate("");
+      setMoney("");
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
