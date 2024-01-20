@@ -1,11 +1,20 @@
 import { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
 import Bar from "../../components/Bar";
 import axios from "axios";
 import { proxyUrl } from "../../constant/common";
+import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Statistics = () => {
+  const navigation = useNavigation();
   const [data, setData] = useState([]);
   const fetchData = async () => {
     const inputURL = "/consumption/spendTypeStatistics";
@@ -35,13 +44,45 @@ const Statistics = () => {
     fetchData();
   }, []);
 
+  const translateY = new Animated.Value(0);
+
+  useEffect(() => {
+    let animation = Animated.loop(
+      Animated.sequence([
+        // 위로 10픽셀 이동
+        Animated.timing(translateY, {
+          toValue: -10,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+        // 원래 위치로 이동
+        Animated.timing(translateY, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+      ])
+    );
+
+    animation.start();
+
+    // 3번만 실행 (시간 계산...)
+    setTimeout(() => {
+      animation.stop();
+    }, 3240);
+
+    return () => {
+      animation.stop();
+    };
+  }, [data]);
+
   const imageData = [
     {
       category: "식생활",
       image: require("../../assets/food.png"),
     },
     {
-      category: null,
+      category: "주거",
       image: require("../../assets/home.png"),
     },
     {
@@ -103,6 +144,16 @@ const Statistics = () => {
           <Text style={styles.bottomPriceText}>139,000원</Text>
         </View>
       </View>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={styles.addItem}
+        onPress={() => navigation.navigate("Note")}
+      >
+        <Animated.Image
+          source={require("../../assets/add.png")}
+          style={{ width: 52, height: 52, transform: [{ translateY }] }}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -172,6 +223,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 500,
     alignSelf: "center",
+  },
+  // addIcon: {
+  //   width: 52,
+  //   height: 52,
+  //   transform: [{ translateY }],
+  // },
+  addItem: {
+    // position: "absolute",
+    // right: 20,
+    alignItems: "flex-end",
+    bottom: 10,
+    right: 21,
   },
 });
 
