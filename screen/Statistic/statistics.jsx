@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Animated,
+  ScrollView,
 } from "react-native";
 import Bar from "../../components/Bar";
 import axios from "axios";
@@ -16,6 +17,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Statistics = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
+  const formatNumberWithCommas = (number) => {
+    return new Intl.NumberFormat().format(number);
+  };
+
+  // 전체 데이터
   const fetchData = async () => {
     const inputURL = "/consumption/spendTypeStatistics";
     const url = proxyUrl + inputURL;
@@ -31,6 +38,36 @@ const Statistics = () => {
 
       console.log("데이터:", response.data.data);
       setData(response.data.data);
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+      } else {
+        console.error("에러:", error);
+      }
+    }
+  };
+
+  // 카테고리에 따라 API 호출
+  const fetchCategoryData = async (categoryParam) => {
+    const inputURL = "/consumption/category";
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+        params: {
+          spendType: categoryParam,
+        },
+      });
+
+      const CategoryDataValue = response.data.data;
+      console.log("카테고리 데이터:", CategoryDataValue);
+      setCategoryData(CategoryDataValue);
+      // 추가적인 데이터 처리 로직
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
@@ -95,55 +132,68 @@ const Statistics = () => {
     },
   ];
 
+  const categoryParams = {
+    의류: "CLOTHING",
+    식생활: "FOOD",
+    주거: "SHELTER",
+    기타: "OTHERS",
+  };
+
+  const handleCategoryClick = (category) => {
+    const categoryParam = categoryParams[category];
+    if (categoryParam) {
+      fetchCategoryData(categoryParam);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        {data.map((item, index) => (
-          <View key={index}>
-            <View style={styles.contentSection}>
-              <View style={styles.section}>
-                <Image
-                  source={
-                    imageData.find(
-                      (imageItem) => imageItem.category === item.category
-                    )?.image || require("../../assets/shirt.png")
-                  }
-                  style={styles.image}
-                />
-                <Text style={styles.text}>{item.category}</Text>
+        {Array.isArray(data) &&
+          data.map((item, index) => (
+            // {data.map((item, index) => (
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={() => handleCategoryClick(item.category)}
+              key={index}
+            >
+              <View style={styles.contentSection}>
+                <View style={styles.section}>
+                  <Image
+                    source={
+                      imageData.find(
+                        (imageItem) => imageItem.category === item.category
+                      )?.image || require("../../assets/shirt.png")
+                    }
+                    style={styles.image}
+                  />
+                  <Text style={styles.text}>{item.category}</Text>
+                </View>
+                <Bar text={item.totalMoney} progress={item.percentage} />
               </View>
-              <Bar text={item.totalMoney} progress={item.percentage} />
+              <View style={styles.bar} />
+            </TouchableOpacity>
+          ))}
+      </View>
+      <ScrollView style={styles.categoryDataContainer}>
+        {categoryData.map((item) => (
+          <View style={styles.bottomSection} key={item.id}>
+            <View style={styles.bottomBar} />
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <Text style={styles.bottomText}>{item.name}</Text>
+              <Text style={styles.bottomPriceText}>
+                {formatNumberWithCommas(item.money)}원
+              </Text>
             </View>
-            <View style={styles.bar} />
           </View>
         ))}
-      </View>
-      <View style={styles.bottomSection}>
-        <View style={styles.bottomBar} />
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
-          <Text style={styles.bottomText}>컨버스 운동화</Text>
-          <Text style={styles.bottomPriceText}>89,000원</Text>
-        </View>
-      </View>
-      <View style={styles.bottomSection}>
-        <View style={styles.bottomBar} />
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
-          <Text style={styles.bottomText}>미스치프 카고 바지</Text>
-          <Text style={styles.bottomPriceText}>139,000원</Text>
-        </View>
-      </View>
+      </ScrollView>
       <TouchableOpacity
         activeOpacity={1}
         style={styles.addItem}
@@ -165,7 +215,11 @@ const styles = StyleSheet.create({
     minHeight: "100%",
   },
   contentContainer: {
-    // marginBottom: 40,
+    flex: 1,
+  },
+  categoryDataContainer: {
+    // flex: 2,
+    // bottom: 370,
   },
   image: {
     width: 32,
@@ -230,11 +284,11 @@ const styles = StyleSheet.create({
   //   transform: [{ translateY }],
   // },
   addItem: {
-    // position: "absolute",
-    // right: 20,
+    position: "absolute",
     alignItems: "flex-end",
-    bottom: 10,
+    bottom: 370,
     right: 21,
+    zIndex: 10,
   },
 });
 
