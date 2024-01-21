@@ -35,8 +35,8 @@ function Note({ navigation }) {
     setPlace(value);
   };
 
-  const handleDateChange = (text) => {
-    setDate(text);
+  const handleDateChange = (formattedDate) => {
+    setDate(formattedDate); // 상태 업데이트
   };
 
   const handleNameChange = (text) => {
@@ -95,7 +95,6 @@ function Note({ navigation }) {
         name: name,
         category: place,
       };
-      console.log(bodyData);
 
       const response = await axios.post(url, bodyData, {
         headers: {
@@ -103,14 +102,15 @@ function Note({ navigation }) {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      console.log(response.data.data);
 
-      console.log("데이터::::", response.data.msg);
-
-      navigation.navigate("MainScreen", { screen: "Statistics" });
-      setMoney("");
-      setDate("");
-      setMoney("");
+      // 성공 시 메시지 표시 및 데이터 초기화
+      if (response.status === 200) {
+        alert("지출 등록에 성공하였습니다.");
+        setMoney("");
+        setDate("");
+        setName("");
+        navigation.navigate("MainScreen", { screen: "Statistics" }); // 필요에 따라 네비게이션 이동
+      }
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);

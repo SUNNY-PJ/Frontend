@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, View, StyleSheet, Text } from "react-native";
+import { Button, View, StyleSheet, Text, Alert } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
 
@@ -24,16 +24,25 @@ const DatePicker = ({
   };
 
   const handleConfirm = (date) => {
-    // 날짜 포맷
-    // const formattedDate = moment(date).format("YYYY-MM-DD");
-    // setSelectedDate(formattedDate);
-    // hideDatePicker();
-    // // 선택한 날짜를 부모 컴포넌트로 전달
-    // handleDateChange(formattedDate);
-    setSelectedDate(date);
-    hideDatePicker();
-    handleDateChange(date);
+    const currentDate = new Date();
+    const selectedDate = new Date(date);
+
+    if (selectedDate > currentDate) {
+      // 현재 날짜 이후의 날짜를 선택한 경우
+      Alert.alert(
+        "잘못된 날짜 선택",
+        "지출 일자가 올바르지 않습니다.\n 다시 선택해주세요."
+      );
+      hideDatePicker();
+    } else {
+      // 올바른 날짜를 선택한 경우
+      const formattedDate = moment(selectedDate).format("YYYY.MM.DD");
+      setSelectedDate(formattedDate);
+      hideDatePicker();
+      handleDateChange(formattedDate);
+    }
   };
+
   //   console.log(resetDate);
   //   useEffect(() => {
   //     if (resetDate === false) {
@@ -61,7 +70,8 @@ const DatePicker = ({
         onBlur={handleBlur}
       >
         {selectedDate ? (
-          <Text>{`${moment(selectedDate).format("YYYY-MM-DD")}`}</Text>
+          // <Text>{`${moment(selectedDate).format("YYYY.MM.DD")}`}</Text>
+          <Text>{selectedDate}</Text>
         ) : (
           <Text style={{ color: "#C1C1C1" }}>지출 일자</Text>
         )}
