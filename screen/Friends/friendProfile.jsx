@@ -17,7 +17,7 @@ import FriendComment from "./friendComment";
 const FriendProfile = ({ openProfile, isOpenProfile, communityId }) => {
   // const activeTabVal = route.params?.activeTab || "scrap";
   const route = useRoute();
-  const inputURL = `/profile/${communityId}`;
+  const inputURL = `/users/${communityId}`;
   const url = proxyUrl + inputURL;
   // const [activeTab, setActiveTab] = useState(activeTabVal);
   const [comment, setComment] = useState(false);
