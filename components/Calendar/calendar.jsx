@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, Button, Platform } from "react-native";
-import { Calendar } from "react-native-calendars";
+import { Calendar, LocaleConfig } from "react-native-calendars";
 import axios from "axios";
 import { proxyUrl } from "../../constant/common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -8,10 +8,63 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const CalendarComponent = ({ onDataFetched }) => {
   const [selected, setSelected] = useState("");
   const currentDate = new Date();
+  const [selectedDate, setSelectedDate] = useState(
+    currentDate.toISOString().split("T")[0]
+  );
+
   const formatDate = (dateString) => {
     const [year, month, day] = dateString.split("-");
     return `${year}.${month}.${day}`;
   };
+
+  console.log("1212", selected);
+  console.log("3434", selectedDate);
+
+  // 한국어 설정
+  LocaleConfig.locales["kr"] = {
+    monthNames: [
+      "1월",
+      "2월",
+      "3월",
+      "4월",
+      "5월",
+      "6월",
+      "7월",
+      "8월",
+      "9월",
+      "10월",
+      "11월",
+      "12월",
+    ],
+    monthNamesShort: [
+      "1월.",
+      "2월.",
+      "3월.",
+      "4월.",
+      "5월.",
+      "6월.",
+      "7월.",
+      "8월.",
+      "9월.",
+      "10월.",
+      "11월.",
+      "12월.",
+    ],
+    dayNames: [
+      "일요일",
+      "월요일",
+      "화요일",
+      "수요일",
+      "목요일",
+      "금요일",
+      "토요일",
+    ],
+    dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
+    today: "오늘",
+  };
+
+  // 기본 언어를 한국어로 설정
+  LocaleConfig.defaultLocale = "kr";
 
   const fetchData = async (selectedDate) => {
     const inputURL = "/consumption/date";
@@ -47,12 +100,43 @@ const CalendarComponent = ({ onDataFetched }) => {
   return (
     <Calendar
       style={styles.calendar}
+      renderHeader={(date) => {
+        // date는 현재 달력이 보여주는 월의 첫 날을 나타내는 Date 객체입니다.
+        const headerDate = new Date(date);
+        const year = headerDate.getFullYear() + "년";
+        const month = headerDate.getMonth() + 1 + "월";
+
+        return (
+          <View style={styles.headerContainer}>
+            <Text style={styles.headerText}>
+              {year} {month}
+            </Text>
+            {/* 여기에 필요한 경우 왼쪽/오른쪽 화살표 버튼 등을 추가할 수 있습니다. */}
+          </View>
+        );
+      }}
       theme={{
-        selectedDayBackgroundColor: "pink",
-        selectedDayTextColor: "white",
-        arrowColor: "pink",
-        dotColor: "pink",
-        todayTextColor: "purple",
+        backgroundColor: "#ffffff",
+        calendarBackground: "#ffffff",
+        textSectionTitleColor: "#b6c1cd",
+        textSectionTitleDisabledColor: "#d9e1e8",
+        selectedDayBackgroundColor: "#B9F4D6",
+        selectedDayTextColor: "#ffffff",
+        todayTextColor: "#B9F4D6",
+        dayTextColor: "#2d4150",
+        textDisabledColor: "#d9e1e8",
+        dotColor: "#B9F4D6",
+        selectedDotColor: "#ffffff",
+        arrowColor: "#B9F4D6",
+        disabledArrowColor: "#d9e1e8",
+        monthTextColor: "black",
+        indicatorColor: "#B9F4D6",
+        textDayFontWeight: "300",
+        textMonthFontWeight: "bold",
+        textDayHeaderFontWeight: "300",
+        textDayFontSize: 16,
+        textMonthFontSize: 22,
+        textDayHeaderFontSize: 16,
       }}
       onDayPress={(day) => {
         const formattedDate = formatDate(day.dateString);
@@ -60,30 +144,31 @@ const CalendarComponent = ({ onDataFetched }) => {
         setSelected(formattedDate);
         // fetchData(day.dateString);
         fetchData(formattedDate);
+        setSelectedDate(day.dateString);
       }}
       markedDates={{
-        [selected]: {
+        [selectedDate]: {
           selected: true,
+          selectedColor: "#B9F4D6",
+          selectedTextColor: "black",
+          selectedDayBackgroundColor: "#B9F4D6",
+          selectedDayTextColor: "black",
+          selectedDotColor: "black",
           disableTouchEvent: false,
-        },
-        "2023-09-29": {
-          selected: true,
           marked: true,
-          selectedColor: "deeppink",
         },
-        "2023-10-03": { marked: true },
-        "2023-10-05": {
-          selected: true,
-          marked: true,
-          selectedColor: "deeppink",
-          customStyles: {
-            container: {
-              borderWidth: 2,
-              borderColor: "orange",
-              borderRadius: 8,
-            },
-          },
-        },
+        // "2024-01-05": {
+        //   selected: true,
+        //   marked: true,
+        //   selectedColor: "deeppink",
+        //   customStyles: {
+        //     container: {
+        //       borderWidth: 2,
+        //       borderColor: "orange",
+        //       borderRadius: 8,
+        //     },
+        //   },
+        // },
       }}
       current={currentDate.toISOString().split("T")[0]}
     />
@@ -91,6 +176,20 @@ const CalendarComponent = ({ onDataFetched }) => {
 };
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    // 헤더 컨테이너 스타일
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 10,
+    // ...기타 스타일
+  },
+  headerText: {
+    // 헤더 텍스트 스타일
+    fontSize: 16,
+    fontWeight: "bold",
+    // ...기타 스타일
+  },
   calendar: {
     borderWidth: 4,
     borderColor: "#E9E9E9",
