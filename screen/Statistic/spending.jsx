@@ -6,6 +6,7 @@ import History from "./history";
 const Spending = () => {
   const [history, setHistory] = useState(false);
   const [statistics, setStatistics] = useState(true);
+  const [currentDate, setCurrentDate] = useState(new Date());
 
   const historyClick = () => {
     setHistory(true);
@@ -17,9 +18,54 @@ const Spending = () => {
     setHistory(false);
   };
 
+  const previousMonth = () => {
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
+    );
+  };
+
+  const nextMonth = () => {
+    setCurrentDate(
+      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
+    );
+  };
+
+  const formatDate = (date) => {
+    return `${date.getFullYear()}년 ${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}월`;
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
+        {!history && (
+          <View
+            style={{
+              flexDirection: "row",
+              gap: 8,
+              marginBottom: 8,
+              marginTop: 16,
+              justifyContent: "center",
+            }}
+          >
+            <TouchableOpacity onPress={previousMonth}>
+              <Image
+                source={require("../../assets/arrowLeft.png")}
+                style={[styles.vectorImage, { transform: [{ scaleX: -1 }] }]}
+              />
+            </TouchableOpacity>
+            <Text style={{ fontSize: 22, fontWeight: 700, color: "#1F1F1F" }}>
+              {formatDate(currentDate)}
+            </Text>
+            <TouchableOpacity onPress={nextMonth}>
+              <Image
+                source={require("../../assets/arrowLeft.png")}
+                style={styles.vectorImage}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
         <View
           style={{
             flexDirection: "row",
@@ -40,6 +86,7 @@ const Spending = () => {
             </Text>
           </TouchableOpacity>
         </View>
+
         <View style={styles.tabBar}>
           <View
             style={[styles.tabBarLine, statistics && styles.activeTabBarLine]}
@@ -89,6 +136,10 @@ const styles = StyleSheet.create({
     height: 32,
     alignSelf: "center",
     marginTop: 12,
+  },
+  vectorImage: {
+    width: 24,
+    height: 24,
   },
 });
 
