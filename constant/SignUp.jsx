@@ -45,11 +45,11 @@ const SignUp = () => {
         },
         params,
       });
-      console.log("url:::::::", url);
-      console.log(response);
-      console.log("데이터:", response.data);
 
-      navigation.navigate("Note", { screen: "Note" });
+      if (response.status === 200) {
+        alert("별명을 등록했습니다.");
+        navigation.navigate("MainScreen", { screen: "MyPage" });
+      }
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
