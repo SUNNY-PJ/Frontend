@@ -26,8 +26,6 @@ const Tip = () => {
     { title: "조회순", data: "VIEW" },
   ];
 
-  // console.log("글글글", sort);
-
   const handleSortClick = () => {
     setOpen(!open);
     console.log("정렬하시게씀까");
