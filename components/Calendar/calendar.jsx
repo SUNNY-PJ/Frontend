@@ -8,6 +8,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const CalendarComponent = ({ onDataFetched }) => {
   const [selected, setSelected] = useState("");
   const currentDate = new Date();
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split("-");
+    return `${year}.${month}.${day}`;
+  };
 
   const fetchData = async (selectedDate) => {
     const inputURL = "/consumption/date";
@@ -26,6 +30,7 @@ const CalendarComponent = ({ onDataFetched }) => {
         },
         params,
       });
+      console.log(params);
 
       console.log("데이터:", response.data.data);
       // onDataFetched 함수를 호출하여 데이터를 부모 컴포넌트로 전달
@@ -50,8 +55,11 @@ const CalendarComponent = ({ onDataFetched }) => {
         todayTextColor: "purple",
       }}
       onDayPress={(day) => {
-        setSelected(day.dateString);
-        fetchData(day.dateString);
+        const formattedDate = formatDate(day.dateString);
+        // setSelected(day.dateString);
+        setSelected(formattedDate);
+        // fetchData(day.dateString);
+        fetchData(formattedDate);
       }}
       markedDates={{
         [selected]: {
