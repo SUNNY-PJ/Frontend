@@ -67,6 +67,7 @@ const Detail = () => {
       console.log("데이터:", response.data);
       const DetailData = response.data.data;
       setData([DetailData]);
+      setIsScrap(DetailData.isScraped);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -246,6 +247,7 @@ const Detail = () => {
               <TouchableOpacity onPress={handleScrapClick}>
                 <Image
                   source={
+                    // item.isScraped
                     isScrap
                       ? require("../../assets/scrapActive.png")
                       : require("../../assets/scrapInactive.png")
