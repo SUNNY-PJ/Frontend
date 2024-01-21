@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
+import { formatDate } from "../../constant/formatData/format";
 
 const MyComment = () => {
   const navigation = useNavigation();
@@ -12,16 +13,6 @@ const MyComment = () => {
   const url = proxyUrl + inputURL;
 
   const [data, setData] = useState([]);
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const year = date.getFullYear();
-    const month = ("0" + (date.getMonth() + 1)).slice(-2);
-    const day = ("0" + date.getDate()).slice(-2);
-    const hours = ("0" + date.getHours()).slice(-2);
-    const minutes = ("0" + date.getMinutes()).slice(-2);
-
-    return `${year}.${month}.${day} ${hours}:${minutes}`;
-  };
 
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
