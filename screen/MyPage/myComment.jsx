@@ -12,6 +12,16 @@ const MyComment = () => {
   const url = proxyUrl + inputURL;
 
   const [data, setData] = useState([]);
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+    const hours = ("0" + date.getHours()).slice(-2);
+    const minutes = ("0" + date.getMinutes()).slice(-2);
+
+    return `${year}.${month}.${day} ${hours}:${minutes}`;
+  };
 
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
@@ -46,7 +56,9 @@ const MyComment = () => {
             <Text style={styles.title}>{item.content}</Text>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.description}>{item.writer}</Text>
-              <Text style={styles.description}>{item.createdDate}</Text>
+              <Text style={styles.description}>
+                {formatDate(item.createdDate)}
+              </Text>
             </View>
           </View>
           <Line color={"#C1C1C1"} h={1} />

@@ -60,8 +60,8 @@ const MyScrap = () => {
                 <Text style={styles.description}>
                   {formatDate(item.createDate)}
                 </Text>
-                <Text style={styles.description}>조회 {item.view}</Text>
-                <Text style={styles.description}>댓글 {item.comment}</Text>
+                <Text style={styles.description}>조회 {item.viewCnt}</Text>
+                <Text style={styles.description}>댓글 {item.commentCnt}</Text>
               </View>
             </View>
             <Image
