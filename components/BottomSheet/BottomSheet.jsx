@@ -113,7 +113,7 @@ const BottomSheet = ({
             data.map((item, index) => (
               <TouchableOpacity
                 onPress={() => handleCategoryClick(item.data)}
-                key={item.index}
+                key={index}
                 style={styles.item}
               >
                 <Text style={styles.text}>{item.title}</Text>
