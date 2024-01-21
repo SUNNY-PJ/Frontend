@@ -5,10 +5,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
+import { formatDate } from "../../constant/formatData/format";
 
-const FriendComment = ({ communityId }) => {
+const FriendComment = ({ userId }) => {
   const navigation = useNavigation();
-  const inputURL = `/profile/${communityId}/comment`;
+  const inputURL = `/users/comment`;
   const url = proxyUrl + inputURL;
 
   const [data, setData] = useState([]);
@@ -23,11 +24,14 @@ const FriendComment = ({ communityId }) => {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
+        params: {
+          userId: userId,
+        },
       });
 
       console.log("데이터:", response.data);
 
-      const myWriteData = response.data.data;
+      const myWriteData = response.data;
       console.log(myWriteData.map((item) => item.id));
       setData(myWriteData);
     } catch (error) {
@@ -48,7 +52,11 @@ const FriendComment = ({ communityId }) => {
             <Text style={styles.title}>{item.content}</Text>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.description}>{item.writer}</Text>
-              <Text style={styles.description}>{item.createdDate}</Text>
+              <Text style={styles.description}>
+                {formatDate(item.createdDate)}
+              </Text>
+              {/* <Text style={styles.description}>조회 {item.viewCnt}</Text>
+              <Text style={styles.description}>댓글 {item.commentCnt}</Text> */}
             </View>
           </View>
           <Line color={"#C1C1C1"} h={1} />

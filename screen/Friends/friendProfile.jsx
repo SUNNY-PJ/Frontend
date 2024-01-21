@@ -14,10 +14,10 @@ import { useRoute } from "@react-navigation/native";
 import FriendWrite from "./friendWrite";
 import FriendComment from "./friendComment";
 
-const FriendProfile = ({ openProfile, isOpenProfile, communityId }) => {
+const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   // const activeTabVal = route.params?.activeTab || "scrap";
   const route = useRoute();
-  const inputURL = `/users/${communityId}`;
+  const inputURL = `/users`;
   const url = proxyUrl + inputURL;
   // const [activeTab, setActiveTab] = useState(activeTabVal);
   const [comment, setComment] = useState(false);
@@ -50,10 +50,13 @@ const FriendProfile = ({ openProfile, isOpenProfile, communityId }) => {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
+        params: {
+          userId: userId,
+        },
       });
 
       console.log("데이터1111:", response.data);
-      const ProfileData = response.data.data;
+      const ProfileData = response.data;
       const ProfileId = [ProfileData].map((item) => item.id);
       setFriendId(ProfileId);
       setData([ProfileData]);
@@ -232,8 +235,8 @@ const FriendProfile = ({ openProfile, isOpenProfile, communityId }) => {
                 style={[styles.tabBarLine, comment && styles.activeTabBarLine]}
               />
             </View>
-            {write && <FriendWrite communityId={communityId} />}
-            {comment && <FriendComment communityId={communityId} />}
+            {write && <FriendWrite userId={userId} />}
+            {comment && <FriendComment userId={userId} />}
           </View>
         ))}
       </View>

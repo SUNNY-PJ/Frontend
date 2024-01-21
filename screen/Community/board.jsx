@@ -88,6 +88,7 @@ const Board = () => {
                   screen: "Detail",
                   params: {
                     itemId: item.id,
+                    userId: item.userId,
                   },
                 })
               }

@@ -23,6 +23,7 @@ const Detail = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { itemId } = route.params.params;
+  const { userId } = route.params.params;
   const inputURL = `/community/${itemId}`;
   const url = proxyUrl + inputURL;
 
@@ -412,7 +413,7 @@ const Detail = () => {
       <FriendProfile
         isOpenProfile={isOpenProfile}
         openProfile={openProfile}
-        communityId={itemId}
+        userId={userId}
       />
     </View>
   );
