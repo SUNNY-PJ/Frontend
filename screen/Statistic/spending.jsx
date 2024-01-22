@@ -36,6 +36,12 @@ const Spending = () => {
       .padStart(2, "0")}월`;
   };
 
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth() + 1;
+
+  // console.log(year);
+  // console.log(month);
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -95,7 +101,7 @@ const Spending = () => {
             style={[styles.tabBarLine, history && styles.activeTabBarLine]}
           />
         </View>
-        {statistics && <Statistics />}
+        {statistics && <Statistics year={year} month={month} />}
         {history && <History />}
       </View>
     </View>

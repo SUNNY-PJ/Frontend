@@ -14,7 +14,7 @@ import { proxyUrl } from "../../constant/common";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Statistics = () => {
+const Statistics = ({ year, month }) => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
@@ -34,9 +34,15 @@ const Statistics = () => {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
+        params: {
+          year: year,
+          month: month,
+        },
       });
 
-      console.log("데이터:", response.data.data);
+      console.log(data);
+
+      console.log("데이터:", response.data);
       setData(response.data.data);
     } catch (error) {
       if (error.response) {
@@ -61,6 +67,8 @@ const Statistics = () => {
         },
         params: {
           spendType: categoryParam,
+          year: year,
+          month: month,
         },
       });
 
@@ -79,7 +87,8 @@ const Statistics = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+    fetchCategoryData();
+  }, [year, month]);
 
   const translateY = new Animated.Value(0);
 
@@ -176,23 +185,24 @@ const Statistics = () => {
           ))}
       </View>
       <ScrollView style={styles.categoryDataContainer}>
-        {categoryData.map((item) => (
-          <View style={styles.bottomSection} key={item.id}>
-            <View style={styles.bottomBar} />
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                width: "100%",
-              }}
-            >
-              <Text style={styles.bottomText}>{item.name}</Text>
-              <Text style={styles.bottomPriceText}>
-                {formatNumberWithCommas(item.money)}원
-              </Text>
+        {Array.isArray(categoryData) &&
+          categoryData.map((item, index) => (
+            <View style={styles.bottomSection} key={item.id}>
+              <View style={styles.bottomBar} />
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                <Text style={styles.bottomText}>{item.name}</Text>
+                <Text style={styles.bottomPriceText}>
+                  {formatNumberWithCommas(item.money)}원
+                </Text>
+              </View>
             </View>
-          </View>
-        ))}
+          ))}
       </ScrollView>
       <TouchableOpacity
         activeOpacity={1}
@@ -215,7 +225,7 @@ const styles = StyleSheet.create({
     minHeight: "100%",
   },
   contentContainer: {
-    flex: 1,
+    // flex: 1,
   },
   categoryDataContainer: {
     // flex: 2,
