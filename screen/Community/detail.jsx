@@ -352,9 +352,10 @@ const Detail = () => {
                   source={{ uri: photo }}
                   style={{
                     width: 300,
-                    height: 200,
+                    height: 300,
                     // paddingLeft: "20",
                     // paddingRight: "20",
+                    resizeMode: "contain",
                     marginTop: 14,
                   }}
                 />
