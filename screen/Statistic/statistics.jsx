@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Animated,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import Bar from "../../components/Bar";
 import axios from "axios";
@@ -16,6 +17,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Statistics = ({ year, month }) => {
   const navigation = useNavigation();
+  const windowHeight = Dimensions.get("window").height;
+
   const [data, setData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
   const formatNumberWithCommas = (number) => {
@@ -86,6 +89,7 @@ const Statistics = ({ year, month }) => {
   };
 
   useEffect(() => {
+    setSelectedCategory(null);
     fetchData();
     fetchCategoryData();
   }, [year, month]);
@@ -148,7 +152,10 @@ const Statistics = ({ year, month }) => {
     기타: "OTHERS",
   };
 
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
   const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
     const categoryParam = categoryParams[category];
     if (categoryParam) {
       fetchCategoryData(categoryParam);
@@ -165,6 +172,11 @@ const Statistics = ({ year, month }) => {
               activeOpacity={1}
               onPress={() => handleCategoryClick(item.category)}
               key={index}
+              style={[
+                selectedCategory === item.category
+                  ? styles.selectedCategory
+                  : null,
+              ]}
             >
               <View style={styles.contentSection}>
                 <View style={styles.section}>
@@ -184,26 +196,36 @@ const Statistics = ({ year, month }) => {
             </TouchableOpacity>
           ))}
       </View>
-      <ScrollView style={styles.categoryDataContainer}>
-        {Array.isArray(categoryData) &&
-          categoryData.map((item, index) => (
-            <View style={styles.bottomSection} key={item.id}>
-              <View style={styles.bottomBar} />
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  width: "100%",
-                }}
-              >
-                <Text style={styles.bottomText}>{item.name}</Text>
-                <Text style={styles.bottomPriceText}>
-                  {formatNumberWithCommas(item.money)}원
-                </Text>
+      <View style={styles.bottomSection}>
+        <ScrollView
+          style={{ height: windowHeight - 476 - 250, flex: 1 }}
+          // style={{ height: 50, flex: 1 }}
+          // contentContainerStyle={{ paddingBottom: 20 }}
+        >
+          {Array.isArray(categoryData) &&
+            categoryData.map((item, index) => (
+              <View styel={{}} key={item.id}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    marginBottom: 25,
+                  }}
+                >
+                  <View style={{ flexDirection: "row" }}>
+                    <View style={styles.bottomBar} />
+                    <Text style={styles.bottomText}>{item.name}</Text>
+                  </View>
+                  <Text style={styles.bottomPriceText}>
+                    {formatNumberWithCommas(item.money)}원
+                  </Text>
+                </View>
               </View>
-            </View>
-          ))}
-      </ScrollView>
+            ))}
+        </ScrollView>
+      </View>
+
       <TouchableOpacity
         activeOpacity={1}
         style={styles.addItem}
@@ -251,6 +273,9 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     marginTop: 12,
   },
+  selectedCategory: {
+    backgroundColor: "#FFEFDF",
+  },
   bar: {
     width: "100%",
     height: 1.5,
@@ -265,7 +290,7 @@ const styles = StyleSheet.create({
   bottomSection: {
     flexDirection: "row",
     paddingLeft: 20,
-    paddingRight: 20,
+    // paddingRight: 20,
     marginBottom: 16,
     marginTop: 16,
   },
@@ -287,6 +312,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 500,
     alignSelf: "center",
+    paddingRight: 20,
   },
   // addIcon: {
   //   width: 52,
