@@ -73,17 +73,6 @@ const Modify = () => {
 
   const postData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
-    // 유효성 검사
-    if (title.trim() === "") {
-      alert("제목을 입력해주세요.");
-      return;
-    } else if (content.trim() === "") {
-      alert("내용을 입력해주세요.");
-      return;
-    } else if (title.length > 35) {
-      alert("제목은 35자 이하로 입력해주세요.");
-      return;
-    }
 
     try {
       const response = await axios.get(url, {
@@ -101,8 +90,20 @@ const Modify = () => {
       const communityRequest = {
         title: modifiedTitle,
         contents: modifiedContents,
-        type: "TIP",
+        type: "절약 꿀팁",
       };
+
+      // 유효성 검사
+      if (modifiedTitle.trim() === "") {
+        alert("제목을 입력해주세요.");
+        return;
+      } else if (modifiedContents.trim() === "") {
+        alert("내용을 입력해주세요.");
+        return;
+      } else if (modifiedTitle.length > 35) {
+        alert("제목은 35자 이하로 입력해주세요.");
+        return;
+      }
 
       const formData = new FormData();
       formData.append("communityRequest", JSON.stringify(communityRequest));
@@ -128,8 +129,11 @@ const Modify = () => {
       });
 
       console.log("데이터:123123", postResponse.data);
-      fetchData();
-      navigation.navigate("Community", { screen: "Community" });
+      if (response.status === 200) {
+        alert("게시글을 수정하였습니다.");
+        fetchData();
+        navigation.navigate("Community", { screen: "Community" });
+      }
     } catch (error) {
       console.error(error);
     }
