@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  ScrollView,
+  Dimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
@@ -26,6 +28,8 @@ const Detail = () => {
   const { userId } = route.params.params;
   const inputURL = `/community/${itemId}`;
   const url = proxyUrl + inputURL;
+  // 화면의 전체 높이
+  const windowHeight = Dimensions.get("window").height;
 
   const [data, setData] = useState([]);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
@@ -343,55 +347,57 @@ const Detail = () => {
       <Line color={"#E8E9E8"} h={2} />
       {data.map((item) => (
         <View key={item.id}>
-          <View style={styles.contentContainer}>
-            <View style={{ marginTop: 24, marginBottom: 70 }}>
-              <Text>{item.contents}</Text>
-              {item.photoList.map((photo, index) => (
-                <Image
-                  key={index}
-                  source={{ uri: photo }}
-                  style={{
-                    width: 300,
-                    height: 300,
-                    // paddingLeft: "20",
-                    // paddingRight: "20",
-                    resizeMode: "contain",
-                    marginTop: 14,
-                  }}
-                />
-              ))}
-            </View>
-          </View>
-          <Line color={"#E8E9E8"} h={2} />
-          <View style={styles.contentContainer}>
-            <TouchableOpacity activeOpacity={0.6} onPress={commentModal}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 5,
-                  marginTop: 20,
-                }}
-              >
-                <Image
-                  source={require("../../assets/chatIcon.png")}
-                  style={{
-                    width: 24,
-                    height: 24,
-                  }}
-                />
-                <Text>{item.commentCnt}</Text>
-                <Image
-                  source={require("../../assets/arrowLeft.png")}
-                  style={{
-                    width: 18,
-                    height: 18,
-                    right: 4,
-                  }}
-                />
+          <ScrollView style={{ height: windowHeight - 259 - 180 }}>
+            <View style={styles.contentContainer}>
+              <View style={{ marginTop: 24, marginBottom: 70 }}>
+                <Text>{item.contents}</Text>
+                {item.photoList.map((photo, index) => (
+                  <Image
+                    key={index}
+                    source={{ uri: photo }}
+                    style={{
+                      width: 300,
+                      height: 300,
+                      // paddingLeft: "20",
+                      // paddingRight: "20",
+                      resizeMode: "contain",
+                      marginTop: 14,
+                    }}
+                  />
+                ))}
               </View>
-            </TouchableOpacity>
-          </View>
+            </View>
+            <Line color={"#E8E9E8"} h={2} />
+            <View style={styles.contentContainer}>
+              <TouchableOpacity activeOpacity={0.6} onPress={commentModal}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 5,
+                    marginTop: 20,
+                  }}
+                >
+                  <Image
+                    source={require("../../assets/chatIcon.png")}
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                  />
+                  <Text>{item.commentCnt}</Text>
+                  <Image
+                    source={require("../../assets/arrowLeft.png")}
+                    style={{
+                      width: 18,
+                      height: 18,
+                      right: 4,
+                    }}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
         </View>
       ))}
       <Comment
@@ -428,8 +434,11 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingLeft: 20,
-    paddingRight: 21,
+    paddingRight: 0,
   },
+  // scrollViewContainer: {
+  //   height: windowHeight - 259 - 135,
+  // },
   section: {
     flexDirection: "row",
     justifyContent: "space-between",
