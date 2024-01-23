@@ -163,8 +163,11 @@ const Post = () => {
       });
 
       console.log("데이터:", response.data);
-      fetchData();
-      navigation.navigate("Community", { screen: "Community" });
+      if (response.status === 200) {
+        alert("게시글을 등록하였습니다.");
+        fetchData();
+        navigation.navigate("Community", { screen: "Community" });
+      }
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);

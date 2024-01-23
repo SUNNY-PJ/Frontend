@@ -105,7 +105,7 @@ function Note({ navigation }) {
 
       // 성공 시 메시지 표시 및 데이터 초기화
       if (response.status === 200) {
-        alert("지출 등록에 성공하였습니다.");
+        alert("지출을 등록하였습니다.");
         setMoney("");
         setDate("");
         setName("");
