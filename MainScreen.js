@@ -31,6 +31,7 @@ import FriendWrite from "./screen/Friends/friendWrite";
 import FriendComment from "./screen/Friends/friendComment";
 import ChatList from "./screen/Chat/chatList";
 import Winner from "./screen/Battle/winner";
+import Search from "./screen/Community/search";
 // import ChatRoom from "./screen/Chat/chatRoom";
 
 const Stack = createStackNavigator();
@@ -89,23 +90,13 @@ function MainScreen() {
         <Stack.Screen name="FriendWrite" component={FriendWrite} />
         <Stack.Screen name="FriendComment" component={FriendComment} />
         <Stack.Screen name="ChatList" component={ChatList} />
-        {/* <Stack.Screen name="ChatRoom" component={ChatRoom} /> */}
-        {/* <Stack.Screen name="Winner" component={Winner} /> */}
-        {/* <Stack.Screen
-          name="Chat2"
-          component={Chat2}
-          options={{ headerShown: false }}
-        /> */}
-        {/* <Stack.Screen
-          options={{ headerShown: false }}
-          name="Chat"
-          component={Chat}
-        />
         <Stack.Screen
           options={{ headerShown: false }}
-          name="Chat2"
-          component={Chat2}
-        /> */}
+          name="Search"
+          component={Search}
+        />
+        {/* <Stack.Screen name="ChatRoom" component={ChatRoom} /> */}
+        {/* <Stack.Screen name="Winner" component={Winner} /> */}
       </Stack.Navigator>
       <Bottom />
     </>

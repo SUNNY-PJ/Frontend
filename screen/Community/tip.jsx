@@ -41,6 +41,12 @@ const Tip = () => {
     fetchData();
   }, []);
 
+  // 검색
+  const handleSearch = () => {
+    console.log("게시글을 검색합니다.");
+    navigation.navigate("MainScreen", { screen: "Search" });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -69,10 +75,12 @@ const Tip = () => {
               gap: 22,
             }}
           >
-            <Image
-              source={require("../../assets/search.png")}
-              style={styles.icon}
-            />
+            <TouchableOpacity activeOpacity={0.6} onPress={handleSearch}>
+              <Image
+                source={require("../../assets/search.png")}
+                style={styles.icon}
+              />
+            </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() =>
