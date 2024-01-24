@@ -27,6 +27,7 @@
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "^1.6.0",
     "firebase": "^10.6.0",
+    "lottie-react-native": "5.1.6",
     "react": "18.2.0",
     "react-calendar": "^4.6.1",
     "react-dom": "18.2.0",

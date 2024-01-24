@@ -12,14 +12,13 @@ import {
 import Line from "../../Line";
 import LottieView from "lottie-react-native";
 
-const WinModal = ({ isOpenProfile, openProfile }) => {
+const LoseModal = ({ isOpenProfile, openProfile }) => {
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
   const animation = useRef(null);
-  useEffect(() => {
-    // You can control the ref programmatically, rather than using autoPlay
-    // animation.current?.play();
-  }, []);
+
+  useEffect(() => {}, []);
+
   return (
     <View style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={isOpenProfile}>
@@ -61,16 +60,8 @@ const WinModal = ({ isOpenProfile, openProfile }) => {
           <Line h={2} color={"#1F1F1F"} />
           <View style={{ marginTop: 40 }}>
             <View style={styles.imageContainer}>
-              {/* <Image
-                source={require("../../../assets/winnerAnimation.gif")}
-                style={{
-                  width: windowWidth - 35,
-                  height: windowWidth - 80,
-                  position: "absolute",
-                }}
-              /> */}
               <Image
-                source={require("../../../assets/winIcon.png")}
+                source={require("../../../assets/loseIcon.png")}
                 style={{
                   width: 184,
                   height: 184,
@@ -88,16 +79,16 @@ const WinModal = ({ isOpenProfile, openProfile }) => {
                   height: windowWidth - 80,
                   position: "absolute",
                 }}
-                source={require("../../../data/battle_win.json")}
+                source={require("../../../data/battle_lose.json")}
               />
             </View>
             <Text style={[styles.text, { marginTop: 24 }]}>
-              @@님이 대결에서 이겼어요!
+              @@님이 대결에서 졌어요
               {"\n"}친구에게 메시지를 보내보세요
             </Text>
             <View
               style={{
-                backgroundColor: "#FFA851",
+                backgroundColor: "#5C5C5C",
                 borderRadius: 8,
                 paddingTop: 15,
                 paddingBottom: 15,
@@ -174,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WinModal;
+export default LoseModal;
