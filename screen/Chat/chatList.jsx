@@ -16,12 +16,12 @@ import { useNavigation } from "@react-navigation/native";
 const ChatList = () => {
   const navigation = useNavigation();
 
-  // const truncateText = (text) => {
-  //   const maxLength = 20;
-  //   return text.length > maxLength
-  //     ? text.substring(0, maxLength) + "..."
-  //     : text;
-  // };
+  const truncateText = (text) => {
+    const maxLength = 20;
+    return text.length > maxLength
+      ? text.substring(0, maxLength) + "..."
+      : text;
+  };
 
   const handleChatRoomClick = () => {
     console.log("채팅방으로 이동합니다...");
@@ -83,7 +83,7 @@ const ChatList = () => {
                     color: "#1F1F1F",
                   }}
                 >
-                  "뭐하고 있니"
+                  {truncateText("뭐하고 있니")}
                 </Text>
               </View>
             </View>
@@ -121,7 +121,7 @@ const ChatList = () => {
                   >
                     수연
                   </Text>
-                  <Text
+                  {/* <Text
                     style={{
                       fontSize: 10,
                       fontWeight: 500,
@@ -129,7 +129,7 @@ const ChatList = () => {
                     }}
                   >
                     07:09
-                  </Text>
+                  </Text> */}
                 </View>
                 <Text
                   style={{
@@ -138,11 +138,13 @@ const ChatList = () => {
                     color: "#1F1F1F",
                   }}
                 >
-                  어쩌라고 무러하ㅏ로오오오오오 오아우우오오오아아ㅁ아러망러"
+                  {truncateText(
+                    "어쩌라고 무러하ㅏ로오오오오오 오아우우오오오아아ㅁ아러망러"
+                  )}
                 </Text>
               </View>
             </View>
-            {/* <Text
+            <Text
               style={{
                 fontSize: 10,
                 fontWeight: 500,
@@ -150,7 +152,7 @@ const ChatList = () => {
               }}
             >
               07:09
-            </Text> */}
+            </Text>
           </View>
           <Line color={"#C1C1C1"} h={1} />
         </ScrollView>
