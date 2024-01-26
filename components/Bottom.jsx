@@ -9,6 +9,7 @@ import {
   Animated,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { windowWidth } from "../data/window";
 
 // const Bottom = ({ navigation }) => {
 const Bottom = () => {
@@ -90,7 +91,7 @@ const Bottom = () => {
       </View>
       <ImageBackground
         source={require("../assets/bottom.png")}
-        style={styles.container}
+        style={[styles.container, { width: windowWidth }]}
       >
         <TouchableOpacity
           activeOpacity={1}
@@ -191,7 +192,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#FFFBF6",
     height: 110,
-    width: "100%",
   },
   menuItem: {
     // flex: 1,
