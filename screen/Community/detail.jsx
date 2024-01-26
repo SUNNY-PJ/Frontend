@@ -216,6 +216,7 @@ const Detail = () => {
               alignItems: "center",
               marginTop: 17,
               marginBottom: 26,
+              paddingRight: 20,
             }}
           >
             <TouchableOpacity
