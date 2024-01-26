@@ -63,7 +63,7 @@ const Top = ({ navigation }) => {
           />
         </TouchableOpacity>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             Notifications.scheduleNotificationAsync({
               content: {
@@ -75,7 +75,8 @@ const Top = ({ navigation }) => {
               },
             });
           }}
-        >
+        > */}
+        <TouchableOpacity onPress={() => navigation.navigate("Alarm")}>
           <Image
             source={require("../assets/notification.png")}
             style={styles.icon}
