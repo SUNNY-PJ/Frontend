@@ -12,6 +12,8 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { proxyUrl } from "../../constant/common";
+import WinModal from "../../components/Modal/battle/win";
+import LoseModal from "../../components/Modal/battle/lose";
 
 const MyPage = () => {
   const navigation = useNavigation();
@@ -19,6 +21,16 @@ const MyPage = () => {
     navigation.navigate("MyInfo", { activeTab: tab });
   };
   const [profile, setProfile] = useState([]);
+  const [isOpenProfile, setIsOpenProfile] = useState(false);
+
+  const openProfile = () => {
+    setIsOpenProfile(!isOpenProfile);
+  };
+
+  const handleWinModalClick = () => {
+    openProfile();
+    console.log("닫기 버튼 클릭");
+  };
 
   // 프로필 정보
   const fetchData = async () => {
@@ -247,7 +259,9 @@ const MyPage = () => {
         >
           알림
         </Text>
-        <Text style={styles.description}>알림 설정</Text>
+        <TouchableOpacity activeOpacity={0.6} onPress={handleWinModalClick}>
+          <Text style={styles.description}>알림 설정</Text>
+        </TouchableOpacity>
         <Line color={"#C1C1C1"} h={4} />
         <Text
           style={{
@@ -287,6 +301,7 @@ const MyPage = () => {
           style={{ width: 56, height: 84 }}
         />
       </View>
+      <LoseModal isOpenProfile={isOpenProfile} openProfile={openProfile} />
     </View>
   );
 };
