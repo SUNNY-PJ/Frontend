@@ -1,45 +1,78 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import React, { useEffect, useRef } from "react";
+import { Animated, View, StyleSheet, Dimensions } from "react-native";
 
-const Splash = () => {
-  const navigation = useNavigation();
+const Splash = ({ onAnimationEnd }) => {
+  const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
+
+  const translateY = useRef(new Animated.Value(300)).current;
+  const translateYSecondImage = useRef(new Animated.Value(300)).current; // 두 번째 이미지를 위한 애니메이션 값
+
+  useEffect(() => {
+    // 첫 번째 이미지 애니메이션
+    Animated.timing(translateY, {
+      toValue: 0,
+      duration: 1500, // 지속 시간을 1500ms로 줄임
+      useNativeDriver: true,
+    }).start(() => {
+      // 두 번째 이미지 애니메이션 시작
+      Animated.timing(translateYSecondImage, {
+        toValue: 0,
+        duration: 1500,
+        useNativeDriver: true,
+      }).start(onAnimationEnd); // 두 번째 이미지 애니메이션이 끝나면 onAnimationEnd 호출
+    });
+  }, [translateY, translateYSecondImage, onAnimationEnd]);
 
   return (
-    <View style={Styles.container}>
-      <Text style={Styles.HomeText}>스플래시 화면</Text>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("SignUp", { screen: "SignUp" })}
-        style={Styles.NextBottom}
+    <View style={styles.container}>
+      <View
+        style={
+          {
+            // paddingTop: windowHeight * 0.35,
+            // paddingRight: 120,
+            // paddingLeft: 120,
+          }
+        }
       >
-        <Text style={Styles.BottomText}>로그인 화면으로</Text>
-      </TouchableOpacity>
+        <Animated.Image
+          source={require("../assets/splash.png")}
+          style={{
+            transform: [{ translateY }],
+            // height: windowHeight * 0.65,
+            width: 300,
+          }}
+        />
+
+        <Animated.Image
+          source={require("../assets/splashText.png")} // 두 번째 이미지 경로
+          style={[
+            styles.secondImage,
+            {
+              // height: 500,
+              // width: windowWidth * 0.33,
+              transform: [{ translateY: translateYSecondImage }],
+            },
+          ]}
+        />
+      </View>
     </View>
   );
 };
 
-export default Splash;
-
-const Styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#fff",
   },
-  HomeText: {
-    fontSize: 30,
-    textAlign: "center",
-  },
-  NextBottom: {
-    backgroundColor: "purple",
-    padding: 10,
-    marginTop: "20%",
-    width: "50%",
-    alignSelf: "center",
-    borderRadius: 10,
-  },
-  BottomText: {
-    fontSize: 15,
-    color: "white",
-    textAlign: "center",
+  secondImage: {
+    position: "absolute",
+    width: 80,
+    height: 244,
+    resizeMode: "contain",
   },
 });
+
+export default Splash;
