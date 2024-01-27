@@ -96,6 +96,7 @@ const ChatList = () => {
         <ScrollView style={{ height: windowHeight - 125 - 88 }}>
           <Swipeable renderRightActions={renderRightActions}>
             <TouchableOpacity
+              activeOpacity={1}
               style={styles.chatSection}
               onPress={handleChatRoomClick}
             >
