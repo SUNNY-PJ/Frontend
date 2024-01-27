@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
   StyleSheet,
   Animated,
+  Dimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { windowWidth } from "../data/window";
 
 // const Bottom = ({ navigation }) => {
 const Bottom = () => {
+  const windowWidth = Dimensions.get("window").width;
   const navigation = useNavigation();
   const [iconVisible, setIconVisible] = useState(false);
 
