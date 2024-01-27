@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { proxyUrl } from "../../constant/common";
 import axios from "axios";
@@ -16,6 +17,7 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 
 const ChatList = () => {
   const navigation = useNavigation();
+  const windowHeight = Dimensions.get("window").height;
 
   const truncateText = (text) => {
     const maxLength = 20;
@@ -28,6 +30,31 @@ const ChatList = () => {
     console.log("채팅방으로 이동합니다...");
     navigation.navigate("ChatScreen", { screen: "ChatRoom" });
   };
+
+  // 채팅방 리스트
+  const fetchData = async () => {
+    const inputURL = `/chat/room`;
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      const chatListData = response.data.data;
+      console.log("채팅방 목록:::", chatListData);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const renderRightActions = () => {
     return (
@@ -66,7 +93,7 @@ const ChatList = () => {
           채팅 목록
         </Text>
         <Line color={"#C1C1C1"} h={1} />
-        <ScrollView>
+        <ScrollView style={{ height: windowHeight - 125 - 88 }}>
           <Swipeable renderRightActions={renderRightActions}>
             <TouchableOpacity
               style={styles.chatSection}
@@ -230,6 +257,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingLeft: 13,
     paddingRight: 19,
+    backgroundColor: "#fff",
   },
   icon: {
     width: 48,
