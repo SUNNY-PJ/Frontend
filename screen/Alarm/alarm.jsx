@@ -8,11 +8,41 @@ import {
   Dimensions,
   Button,
 } from "react-native";
+import axios from "axios";
+import { proxyUrl } from "../../constant/common";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
 
 const Alarm = () => {
   const navigation = useNavigation();
+
+  const fetchData = async () => {
+    const inputURL = "/alarm/list";
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log("알림 데이터:", response.data.data);
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+      } else {
+        console.error("에러:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <View style={styles.container}>
