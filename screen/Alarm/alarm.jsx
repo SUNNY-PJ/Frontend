@@ -7,6 +7,7 @@ import {
   Image,
   Dimensions,
   Button,
+  ScrollView,
 } from "react-native";
 import axios from "axios";
 import { proxyUrl } from "../../constant/common";
@@ -16,6 +17,7 @@ import Line from "../../components/Line";
 
 const Alarm = () => {
   const navigation = useNavigation();
+  const windowHeight = Dimensions.get("window").height;
 
   const fetchData = async () => {
     const inputURL = "/alarm/list";
@@ -71,81 +73,83 @@ const Alarm = () => {
       >
         알림
       </Text>
-      <View style={{ backgroundColor: "#fff" }}>
-        <Text style={styles.dayText}>오늘</Text>
-      </View>
-      <View style={{ backgroundColor: "#fff" }}>
-        <View style={styles.section}>
-          <Image
-            source={require("../../assets/myPage_profile.png")}
-            style={{ width: 60, height: 60 }}
-          />
-          <View>
-            <Text style={styles.titleText}>새로운 댓글이 달렸어요</Text>
-            <Text style={styles.contentText}>댓글 내용입니다아아ㅏㅏ</Text>
-            <View style={styles.bottomSection}>
-              <Text style={styles.nameText}>닉네임</Text>
-              <Text style={styles.dateText}>2023.09.10</Text>
+      <ScrollView style={{ height: windowHeight - 125 - 88 }}>
+        <View style={{ backgroundColor: "#fff" }}>
+          <Text style={styles.dayText}>오늘</Text>
+        </View>
+        <View style={{ backgroundColor: "#fff" }}>
+          <View style={styles.section}>
+            <Image
+              source={require("../../assets/myPage_profile.png")}
+              style={{ width: 60, height: 60 }}
+            />
+            <View>
+              <Text style={styles.titleText}>새로운 댓글이 달렸어요</Text>
+              <Text style={styles.contentText}>댓글 내용입니다아아ㅏㅏ</Text>
+              <View style={styles.bottomSection}>
+                <Text style={styles.nameText}>닉네임</Text>
+                <Text style={styles.dateText}>2023.09.10</Text>
+              </View>
             </View>
           </View>
+          <Line h={1} color={"#C1C1C1"} />
         </View>
-        <Line h={1} color={"#C1C1C1"} />
-      </View>
-      <View style={{ backgroundColor: "#fff" }}>
-        <View style={styles.section}>
-          <Image
-            source={require("../../assets/myPage_profile.png")}
-            style={{ width: 60, height: 60 }}
-          />
-          <View>
-            <Text style={styles.titleText}>새로운 댓글이 달렸어요</Text>
-            <Text style={styles.contentText}>댓글 내용입니다아아ㅏㅏ</Text>
-            <View style={styles.bottomSection}>
-              <Text style={styles.nameText}>닉네임</Text>
-              <Text style={styles.dateText}>2023.09.10</Text>
+        <View style={{ backgroundColor: "#fff" }}>
+          <View style={styles.section}>
+            <Image
+              source={require("../../assets/myPage_profile.png")}
+              style={{ width: 60, height: 60 }}
+            />
+            <View>
+              <Text style={styles.titleText}>새로운 댓글이 달렸어요</Text>
+              <Text style={styles.contentText}>댓글 내용입니다아아ㅏㅏ</Text>
+              <View style={styles.bottomSection}>
+                <Text style={styles.nameText}>닉네임</Text>
+                <Text style={styles.dateText}>2023.09.10</Text>
+              </View>
             </View>
           </View>
+          <Line h={1} color={"#C1C1C1"} />
         </View>
-        <Line h={1} color={"#C1C1C1"} />
-      </View>
-      <Line h={2} color={"#C1C1C1"} />
-      <View style={{ backgroundColor: "#fff" }}>
-        <Text style={styles.dayText}>지난 30일</Text>
-      </View>
-      <View style={{ backgroundColor: "#fff" }}>
-        <View style={styles.section}>
-          <Image
-            source={require("../../assets/myPage_profile.png")}
-            style={{ width: 60, height: 60 }}
-          />
-          <View>
-            <Text style={styles.titleText}>새로운 댓글이 달렸어요</Text>
-            <Text style={styles.contentText}>댓글 내용입니다아아ㅏㅏ</Text>
-            <View style={styles.bottomSection}>
-              <Text style={styles.nameText}>닉네임</Text>
-              <Text style={styles.dateText}>2023.09.10</Text>
+        <Line h={2} color={"#C1C1C1"} />
+        <View style={{ backgroundColor: "#fff" }}>
+          <Text style={styles.dayText}>지난 30일</Text>
+        </View>
+        <View style={{ backgroundColor: "#fff" }}>
+          <View style={styles.section}>
+            <Image
+              source={require("../../assets/myPage_profile.png")}
+              style={{ width: 60, height: 60 }}
+            />
+            <View>
+              <Text style={styles.titleText}>새로운 댓글이 달렸어요</Text>
+              <Text style={styles.contentText}>댓글 내용입니다아아ㅏㅏ</Text>
+              <View style={styles.bottomSection}>
+                <Text style={styles.nameText}>닉네임</Text>
+                <Text style={styles.dateText}>2023.09.10</Text>
+              </View>
             </View>
           </View>
+          <Line h={1} color={"#C1C1C1"} />
         </View>
-        <Line h={1} color={"#C1C1C1"} />
-      </View>
-      <View style={{ backgroundColor: "#fff" }}>
-        <View style={styles.section}>
-          <Image
-            source={require("../../assets/myPage_profile.png")}
-            style={{ width: 60, height: 60 }}
-          />
-          <View>
-            <Text style={styles.titleText}>새로운 댓글이 달렸어요</Text>
-            <Text style={styles.contentText}>댓글 내용입니다아아ㅏㅏ</Text>
-            <View style={styles.bottomSection}>
-              <Text style={styles.nameText}>닉네임</Text>
-              <Text style={styles.dateText}>2023.09.10</Text>
+        <View style={{ backgroundColor: "#fff" }}>
+          <View style={styles.section}>
+            <Image
+              source={require("../../assets/myPage_profile.png")}
+              style={{ width: 60, height: 60 }}
+            />
+            <View>
+              <Text style={styles.titleText}>새로운 댓글이 달렸어요</Text>
+              <Text style={styles.contentText}>댓글 내용입니다아아ㅏㅏ</Text>
+              <View style={styles.bottomSection}>
+                <Text style={styles.nameText}>닉네임</Text>
+                <Text style={styles.dateText}>2023.09.10</Text>
+              </View>
             </View>
           </View>
+          <Line h={1} color={"#C1C1C1"} />
         </View>
-        <Line h={1} color={"#C1C1C1"} />
-      </View>
+      </ScrollView>
     </View>
   );
 };

@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  ScrollView,
+  Dimensions,
 } from "react-native";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
@@ -16,6 +18,7 @@ import WinModal from "../../components/Modal/battle/win";
 import LoseModal from "../../components/Modal/battle/lose";
 
 const MyPage = () => {
+  const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();
   const handleTabClick = (tab) => {
     navigation.navigate("MyInfo", { activeTab: tab });
@@ -167,58 +170,59 @@ const MyPage = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        {profile.map((item) => (
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: 24,
-              marginBottom: 16,
-              paddingLeft: 20,
-              gap: 24,
-            }}
-            key={item.id}
-          >
-            <Image
-              // source={require("../../assets/myPage_profile.png")}
-              source={{ uri: item.profile }}
-              style={{ width: 56, height: 56, borderRadius: 50 }}
-            />
-            <View style={{ gap: 8 }}>
-              <Text style={styles.name}>{item.name}</Text>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={() =>
-                  navigation.navigate("SettingProfile", {
-                    screen: "SettingProfile",
-                  })
-                }
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={styles.setting}>프로필 설정</Text>
-                  <Image
-                    source={require("../../assets/myPage_setting.png")}
-                    style={{ width: 16, height: 16, padding: 2, top: 2 }}
-                  />
-                </View>
-              </TouchableOpacity>
+      <ScrollView style={{ height: windowHeight - 125 - 88 }}>
+        <View style={styles.contentContainer}>
+          {profile.map((item) => (
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: 24,
+                marginBottom: 16,
+                paddingLeft: 20,
+                gap: 24,
+              }}
+              key={item.id}
+            >
+              <Image
+                // source={require("../../assets/myPage_profile.png")}
+                source={{ uri: item.profile }}
+                style={{ width: 56, height: 56, borderRadius: 50 }}
+              />
+              <View style={{ gap: 8 }}>
+                <Text style={styles.name}>{item.name}</Text>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={() =>
+                    navigation.navigate("SettingProfile", {
+                      screen: "SettingProfile",
+                    })
+                  }
+                >
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={styles.setting}>프로필 설정</Text>
+                    <Image
+                      source={require("../../assets/myPage_setting.png")}
+                      style={{ width: 16, height: 16, padding: 2, top: 2 }}
+                    />
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        ))}
-        <Line color={"#C1C1C1"} h={4} />
-        <Text
-          style={{
-            fontSize: 16,
-            color: "#1F1F1F",
-            fontWeight: 900,
-            paddingLeft: 20,
-            paddingTop: 16,
-            marginBottom: 8,
-          }}
-        >
-          커뮤니티
-        </Text>
-        {/* <TouchableOpacity
+          ))}
+          <Line color={"#C1C1C1"} h={4} />
+          <Text
+            style={{
+              fontSize: 16,
+              color: "#1F1F1F",
+              fontWeight: 900,
+              paddingLeft: 20,
+              paddingTop: 16,
+              marginBottom: 8,
+            }}
+          >
+            커뮤니티
+          </Text>
+          {/* <TouchableOpacity
           activeOpacity={0.6}
           onPress={() =>
             navigation.navigate("MyInfo", {
@@ -226,82 +230,83 @@ const MyPage = () => {
             })
           }
         > */}
-        <TouchableOpacity
-          activeOpacity={0.6}
-          onPress={() => handleTabClick("scrap")}
-        >
-          <Text style={styles.description}>스크랩</Text>
-        </TouchableOpacity>
-        <Line color={"#C1C1C1"} h={1} />
-        <TouchableOpacity
-          activeOpacity={0.6}
-          onPress={() => handleTabClick("write")}
-        >
-          <Text style={styles.description}>작성글</Text>
-        </TouchableOpacity>
-        <Line color={"#C1C1C1"} h={1} />
-        <TouchableOpacity
-          activeOpacity={0.6}
-          onPress={() => handleTabClick("comment")}
-        >
-          <Text style={styles.description}>작성 댓글</Text>
-        </TouchableOpacity>
-        <Line color={"#C1C1C1"} h={4} />
-        <Text
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={() => handleTabClick("scrap")}
+          >
+            <Text style={styles.description}>스크랩</Text>
+          </TouchableOpacity>
+          <Line color={"#C1C1C1"} h={1} />
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={() => handleTabClick("write")}
+          >
+            <Text style={styles.description}>작성글</Text>
+          </TouchableOpacity>
+          <Line color={"#C1C1C1"} h={1} />
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={() => handleTabClick("comment")}
+          >
+            <Text style={styles.description}>작성 댓글</Text>
+          </TouchableOpacity>
+          <Line color={"#C1C1C1"} h={4} />
+          <Text
+            style={{
+              fontSize: 16,
+              color: "#1F1F1F",
+              fontWeight: 900,
+              paddingLeft: 20,
+              paddingTop: 16,
+              marginBottom: 8,
+            }}
+          >
+            알림
+          </Text>
+          <TouchableOpacity activeOpacity={0.6} onPress={handleWinModalClick}>
+            <Text style={styles.description}>알림 설정</Text>
+          </TouchableOpacity>
+          <Line color={"#C1C1C1"} h={4} />
+          <Text
+            style={{
+              fontSize: 16,
+              color: "#1F1F1F",
+              fontWeight: 900,
+              paddingLeft: 20,
+              paddingTop: 16,
+              marginBottom: 8,
+            }}
+          >
+            회원
+          </Text>
+          <TouchableOpacity activeOpacity={0.6} onPress={handleLogoutClick}>
+            <Text style={styles.description}>로그아웃</Text>
+          </TouchableOpacity>
+          <Line color={"#C1C1C1"} h={1} />
+          <TouchableOpacity activeOpacity={0.6} onPress={handleLeaveClick}>
+            <Text style={styles.description}>회원 탈퇴</Text>
+          </TouchableOpacity>
+          <Line color={"#C1C1C1"} h={4} />
+        </View>
+        <View
           style={{
-            fontSize: 16,
-            color: "#1F1F1F",
-            fontWeight: 900,
-            paddingLeft: 20,
-            paddingTop: 16,
-            marginBottom: 8,
+            flexDirection: "row",
+            justifyContent: "center",
+            gap: 80,
+            marginTop: 16,
           }}
         >
-          알림
-        </Text>
-        <TouchableOpacity activeOpacity={0.6} onPress={handleWinModalClick}>
-          <Text style={styles.description}>알림 설정</Text>
-        </TouchableOpacity>
-        <Line color={"#C1C1C1"} h={4} />
-        <Text
-          style={{
-            fontSize: 16,
-            color: "#1F1F1F",
-            fontWeight: 900,
-            paddingLeft: 20,
-            paddingTop: 16,
-            marginBottom: 8,
-          }}
-        >
-          회원
-        </Text>
-        <TouchableOpacity activeOpacity={0.6} onPress={handleLogoutClick}>
-          <Text style={styles.description}>로그아웃</Text>
-        </TouchableOpacity>
-        <Line color={"#C1C1C1"} h={1} />
-        <TouchableOpacity activeOpacity={0.6} onPress={handleLeaveClick}>
-          <Text style={styles.description}>회원 탈퇴</Text>
-        </TouchableOpacity>
-        <Line color={"#C1C1C1"} h={4} />
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          gap: 80,
-          marginTop: 16,
-        }}
-      >
-        <Image
-          source={require("../../assets/myPage_notice.png")}
-          style={{ width: 56, height: 84 }}
-        />
-        <Image
-          source={require("../../assets/myPage_center.png")}
-          style={{ width: 56, height: 84 }}
-        />
-      </View>
-      <LoseModal isOpenProfile={isOpenProfile} openProfile={openProfile} />
+          <Image
+            source={require("../../assets/myPage_notice.png")}
+            style={{ width: 56, height: 84 }}
+          />
+          <Image
+            source={require("../../assets/myPage_center.png")}
+            style={{ width: 56, height: 84 }}
+          />
+        </View>
+        <LoseModal isOpenProfile={isOpenProfile} openProfile={openProfile} />
+      </ScrollView>
     </View>
   );
 };
