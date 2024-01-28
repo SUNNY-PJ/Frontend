@@ -80,6 +80,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     color: "#C1C1C1",
+    paddingTop: 16,
+    paddingBottom: 9,
   },
   activeTabText: {
     color: "#1F1F1F",
