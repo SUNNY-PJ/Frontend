@@ -21,7 +21,7 @@ const Login = () => {
       <Image
         source={require("../assets/SUNNY.png")}
         style={{
-          marginTop: 75,
+          marginTop: 119,
           alignSelf: "center",
           width: 120,
           height: 170,
