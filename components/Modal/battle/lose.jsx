@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     fontWeight: 700,
-    color: "#1F1F1F",
+    color: "#fff",
   },
   animationContainer: {
     backgroundColor: "#fff",
