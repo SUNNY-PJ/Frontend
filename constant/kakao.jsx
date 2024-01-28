@@ -34,7 +34,7 @@ const Kakao = () => {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-      console.log("데이터:::::", response.headers.authorization);
+      // console.log("데이터:::::", response.headers.authorization);
 
       // const access_token = response.headers.authorization;
       const access_token = response.data.data.accessToken;
