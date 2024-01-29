@@ -106,7 +106,8 @@ const SignUp = () => {
           fontSize: 12,
           fontWeight: 500,
           color: "#1F1F1F",
-          textAlign: "center",
+          textAlign: "left",
+          paddingLeft: 12,
           marginBottom: 278,
         }}
       >
