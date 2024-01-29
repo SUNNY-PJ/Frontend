@@ -11,11 +11,15 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  ScrollView,
+  Dimensions,
 } from "react-native";
 import Line from "../../components/Line";
 import Modal from "react-native-modal";
 
 const Comment = ({ isCommentModal, commentModal, communityId }) => {
+  const windowHeight = Dimensions.get("window").height;
+
   const inputURL = `/comment/${communityId}`;
   const url = proxyUrl + inputURL;
   const [comment, setComment] = useState("");
@@ -91,7 +95,10 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
           Authorization: `Bearer ${access_token}`,
         },
       });
-
+      if (response.status === 200) {
+        alert("댓글을 등록하였습니다.");
+        fetchData();
+      }
       console.log("데이터:", response.data);
     } catch (error) {
       console.error("에러:", error);
@@ -209,7 +216,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
               )}
             </View>
           ))}
-
           <Line color={"#E8E9E8"} h={2} />
           <TouchableOpacity
             activeOpacity={1}
