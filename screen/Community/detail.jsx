@@ -24,8 +24,8 @@ import FriendProfile from "../Friends/friendProfile";
 const Detail = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { itemId } = route.params.params;
   const { userId } = route.params.params;
+  const { itemId } = route.params.params;
   const inputURL = `/community/${itemId}`;
   const url = proxyUrl + inputURL;
   // 화면의 전체 높이

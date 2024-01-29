@@ -112,6 +112,7 @@ const Tip = () => {
                     screen: "Detail",
                     params: {
                       itemId: item.id,
+                      userId: item.userId,
                     },
                   })
                 }
