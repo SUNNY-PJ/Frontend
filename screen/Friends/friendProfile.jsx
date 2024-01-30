@@ -23,6 +23,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   const [comment, setComment] = useState(false);
   const [write, setWrite] = useState(true);
   const [data, setData] = useState([]);
+  const [isFriend, setIsFriend] = useState();
   const [status, setStatus] = useState();
   const [friendId, setFriendId] = useState(0);
 
@@ -65,6 +66,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
     }
   };
 
+  // 친구인지 아닌지 확인
   const confirmData = async () => {
     const inputURL = `/api/v1/friends/${friendId}`;
     const url = proxyUrl + inputURL;
@@ -79,8 +81,17 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
       });
 
       console.log("데이터:??", response.data.data);
-      const isFriend = response?.data?.data?.isFriend;
-      setStatus(isFriend);
+      const isFriendData = response.data.data.isFriend;
+      const statusData = response.data.data.status;
+      setIsFriend(isFriendData);
+      setStatus(statusData);
+      if (statusData === "WAIT") {
+        setStatus("대기중");
+      } else if (statusData === "APPROVE") {
+        setStatus("친구끊기");
+      } else if (statusData === null) {
+        setStatus("친구맺기");
+      }
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
@@ -92,10 +103,13 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
 
   useEffect(() => {
     fetchData();
+  }, [userId]);
+
+  useEffect(() => {
     if (friendId) {
       confirmData();
     }
-  }, [status]);
+  }, [friendId]);
 
   // 친구 신청
   const postData = async () => {
@@ -115,10 +129,16 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
         }
       );
 
+      if (response.status === 200) {
+        alert("친구 신청을 했습니다.");
+      }
       console.log("친구신청>>>>", response.data.data);
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
+        if (error.response.data.status === 400) {
+          alert("이미 친구 신청을 한 사용자입니다.");
+        }
       } else {
         console.error("에러:", error);
       }
@@ -126,10 +146,10 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   };
 
   const handleFriend = () => {
-    if (status) {
+    if (isFriend) {
       console.log("친구를 끊어볼까");
       deleteFriendData();
-    } else if (!status) {
+    } else if (!isFriend) {
       console.log("친구를 맺어볼까");
       postData();
     }
@@ -195,7 +215,16 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
                   대화하기
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={handleFriend}>
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  {
+                    backgroundColor:
+                      status === "대기중" ? "#F1F1F1" : "#FFC891",
+                  },
+                ]}
+                onPress={handleFriend}
+              >
                 <Text
                   style={{
                     color: "#000 ",
@@ -204,7 +233,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
                     alignSelf: "center",
                   }}
                 >
-                  {status ? "친구끊기" : "친구맺기"}
+                  {status}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -307,7 +336,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   button: {
-    backgroundColor: "#FFC891",
+    // backgroundColor: "#FFC891",
     paddingBottom: 6,
     paddingTop: 6,
     width: 89,
