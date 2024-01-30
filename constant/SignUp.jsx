@@ -5,7 +5,7 @@ import axios from "axios";
 import { proxyUrl } from "./common";
 import { useNavigation } from "@react-navigation/native";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
-import Input from "../components/Input/input";
+import InputNickName from "../components/Input/inputNickname";
 import LargeBtn from "../components/Btn/largeBtn";
 
 const SignUp = () => {
@@ -13,17 +13,19 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
 
-  useEffect(() => {
-    if (name) {
-      setIsAllFieldsFilled(true);
-    } else {
-      setIsAllFieldsFilled(false);
-    }
-  }, [name]);
+  const [isValidName, setIsValidName] = useState(false);
 
   const handleNameChange = (text) => {
     setName(text);
   };
+
+  const handleValidation = (isValid) => {
+    setIsValidName(isValid);
+  };
+
+  useEffect(() => {
+    setIsAllFieldsFilled(isValidName);
+  }, [isValidName]);
 
   const postData = async () => {
     const inputURL = "/auth/nickname";
@@ -95,10 +97,11 @@ const SignUp = () => {
       >
         써니에서 사용할 별명을 설정해주세요
       </Text>
-      <Input
+      <InputNickName
         placeholder={"별명"}
         inputValue={name}
         handleInputChange={handleNameChange}
+        onValidation={handleValidation}
       />
       <Text
         style={{

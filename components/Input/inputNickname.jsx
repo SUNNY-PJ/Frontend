@@ -1,8 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 
-const InputNickName = ({ placeholder, inputValue, handleInputChange }) => {
+const InputNickName = ({
+  placeholder,
+  inputValue,
+  handleInputChange,
+  onValidation,
+}) => {
   const [isInputFocused, setInputFocused] = useState(false);
+  const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    const valid = isValidInput(inputValue);
+    setIsValid(valid);
+    if (onValidation) {
+      onValidation(valid);
+    }
+  }, [inputValue, onValidation]);
+
+  const isValidInput = (value) => {
+    const emojiRegex = /(\p{Emoji_Presentation}|\p{Extended_Pictographic})/gu;
+    return value.length >= 2 && value.length <= 10 && !emojiRegex.test(value);
+  };
 
   const handleFocus = () => {
     setInputFocused(true);
@@ -10,6 +29,20 @@ const InputNickName = ({ placeholder, inputValue, handleInputChange }) => {
 
   const handleBlur = () => {
     setInputFocused(false);
+    setIsValid(isValidInput(inputValue));
+  };
+
+  const borderColor = () => {
+    if (inputValue && !isValid) {
+      return "#FF0000";
+    } else if (!isInputFocused && isValid && inputValue) {
+      return "#000000";
+    }
+    return isInputFocused ? "#FFA851" : "#C1C1C1";
+  };
+
+  const borderWidth = () => {
+    return !isInputFocused && isValid && inputValue ? 3 : 1.5;
   };
 
   return (
@@ -21,13 +54,9 @@ const InputNickName = ({ placeholder, inputValue, handleInputChange }) => {
         style={[
           styles.input,
           {
-            borderColor: isInputFocused
-              ? "#FFA851"
-              : inputValue
-              ? "#1F1F1F"
-              : "#C1C1C1",
-            borderBottomWidth: isInputFocused ? 1.5 : inputValue ? 3 : 1.5,
-            borderRightWidth: isInputFocused ? 1.5 : inputValue ? 3 : 1.5,
+            borderColor: borderColor(),
+            borderBottomWidth: borderWidth(),
+            borderRightWidth: borderWidth(),
           },
         ]}
         onFocus={handleFocus}
@@ -40,17 +69,16 @@ const InputNickName = ({ placeholder, inputValue, handleInputChange }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    // paddingLeft: 28,
   },
   input: {
     width: "100%",
     height: 48,
     paddingVertical: 14,
     paddingHorizontal: 11,
-    borderWidth: 1.5,
     borderRadius: 8,
     alignSelf: "center",
     backgroundColor: "#fff",
+    borderWidth: 1.5,
   },
 });
 
