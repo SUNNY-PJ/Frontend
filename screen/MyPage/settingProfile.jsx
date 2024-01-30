@@ -10,7 +10,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { proxyUrl } from "../../constant/common";
-import Input from "../../components/Input/input";
+import InputNickName from "../../components/Input/inputNickname";
 import LargeBtn from "../../components/Btn/largeBtn";
 import LargeBtnDisable from "../../components/Btn/largeBtnDisable";
 import * as ImagePicker from "expo-image-picker";
@@ -26,10 +26,23 @@ const SettingProfile = () => {
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [profile, setProfile] = useState([]);
+  const [isValidName, setIsValidName] = useState(false);
+
   const handleNameChange = (text) => {
     setName(text);
     setProfileNicknameChanged(true);
+    if (text === "") {
+      setProfileNicknameChanged(false);
+    }
   };
+
+  const handleValidation = (isValid) => {
+    setIsValidName(isValid);
+  };
+
+  useEffect(() => {
+    setIsAllFieldsFilled(isValidName);
+  }, [isValidName]);
 
   const [request, setRequest] = ImagePicker.useMediaLibraryPermissions();
   const [images, setImages] = useState([]);
@@ -209,12 +222,18 @@ const SettingProfile = () => {
   }, []);
 
   useEffect(() => {
-    if (profileImageChanged || profileNicknameChanged) {
-      setIsAllFieldsFilled(true);
+    if (profileImageChanged) {
+      if (profileNicknameChanged) {
+        setIsAllFieldsFilled(isValidName);
+      } else {
+        setIsAllFieldsFilled(true);
+      }
+    } else if (profileNicknameChanged) {
+      setIsAllFieldsFilled(isValidName);
     } else {
       setIsAllFieldsFilled(false);
     }
-  }, [profileImageChanged, profileNicknameChanged]);
+  }, [profileImageChanged, profileNicknameChanged, isValidName, name]);
 
   return (
     <View style={styles.container}>
@@ -273,10 +292,11 @@ const SettingProfile = () => {
           >
             닉네임
           </Text>
-          <Input
-            placeholder={item.name}
+          <InputNickName
+            placeholder={"별명"}
             inputValue={name}
             handleInputChange={handleNameChange}
+            onValidation={handleValidation}
           />
           <View style={{ marginTop: 323 }}>
             {isAllFieldsFilled ? (
