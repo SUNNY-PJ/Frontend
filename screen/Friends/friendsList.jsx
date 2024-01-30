@@ -11,11 +11,15 @@ import { proxyUrl } from "../../constant/common";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
+import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import FriendsComponent from "./friendsComponent";
 
 function FriendsList() {
   const navigation = useNavigation();
+  const route = useRoute();
+  const inputURL = `/api/v1/friends`;
+  const url = proxyUrl + inputURL;
 
   const [isFriendsComponentVisible1, setIsFriendsComponentVisible1] =
     useState(true);
@@ -33,6 +37,37 @@ function FriendsList() {
   const toggleFriendsComponent3 = () => {
     setIsFriendsComponentVisible3((prev) => !prev);
   };
+
+  const [approveData, setApproveData] = useState([]);
+  const [waitData, setWaitData] = useState([]);
+
+  const fetchData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      const Data = response.data.data;
+      const ApproveFriendsData = Data.approveList;
+      const WaitFriendsData = Data.waitList;
+      setApproveData(ApproveFriendsData);
+      setWaitData(WaitFriendsData);
+      console.log("친구 목록:::", Data.approveList);
+      console.log("친구 신청 목록:::", Data.waitList);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    console.log("친구 목록");
+  }, []);
 
   return (
     <View
@@ -61,7 +96,7 @@ function FriendsList() {
                 width: 24,
                 height: 24,
                 transform: [
-                  { rotate: isFriendsComponentVisible1 ? "0deg" : "180deg" },
+                  { rotate: isFriendsComponentVisible1 ? "180deg" : "0deg" },
                 ],
               }}
             />
@@ -72,7 +107,9 @@ function FriendsList() {
         ) : (
           <Line color={"#1F1F1F"} h={2} />
         )}
-        {/* {isFriendsComponentVisible1 && <FriendsComponent status={""} />} */}
+        {isFriendsComponentVisible1 && (
+          <FriendsComponent Data={[]} />
+        )}
         {/* 친구 신청 목록 */}
         <TouchableOpacity onPress={toggleFriendsComponent2} activeOpacity={1}>
           <View style={{ ...styles.titleSection, paddingTop: 24 }}>
@@ -83,7 +120,7 @@ function FriendsList() {
                 width: 24,
                 height: 24,
                 transform: [
-                  { rotate: isFriendsComponentVisible2 ? "0deg" : "180deg" },
+                  { rotate: isFriendsComponentVisible2 ? "180deg" : "0deg" },
                 ],
               }}
             />
@@ -94,7 +131,9 @@ function FriendsList() {
         ) : (
           <Line color={"#1F1F1F"} h={2} />
         )}
-        {/* {isFriendsComponentVisible2 && <FriendsComponent status={"WAIT"} />} */}
+        {isFriendsComponentVisible2 && (
+          <FriendsComponent Data={waitData}  />
+        )}
 
         {/* 친구 목록 */}
         <TouchableOpacity onPress={toggleFriendsComponent3} activeOpacity={1}>
@@ -106,7 +145,7 @@ function FriendsList() {
                 width: 24,
                 height: 24,
                 transform: [
-                  { rotate: isFriendsComponentVisible3 ? "0deg" : "180deg" },
+                  { rotate: isFriendsComponentVisible3 ? "180deg" : "0deg" },
                 ],
               }}
             />
@@ -117,7 +156,9 @@ function FriendsList() {
         ) : (
           <Line color={"#1F1F1F"} h={2} />
         )}
-        {/* {isFriendsComponentVisible3 && <FriendsComponent status={"APPROVE"} />} */}
+        {isFriendsComponentVisible3 && (
+          <FriendsComponent Data={approveData} />
+        )}
       </View>
     </View>
   );
