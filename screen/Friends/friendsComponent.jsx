@@ -75,7 +75,7 @@ const FriendsComponent = ({ Data }) => {
             <View style={{ flexDirection: "row", gap: 16 }}>
               <TouchableOpacity activeOpacity={0.6}>
                 <Image
-                  source={require("../../assets/messageBlack.png")}
+                  source={require("../../assets/plusIcon.png")}
                   style={styles.icon}
                 />
               </TouchableOpacity>
