@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import Line from "../../components/Line";
 import Modal from "react-native-modal";
+import CommentActionSheet from "../../components/BottomSheet/commentActionSheet";
 
 const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const windowHeight = Dimensions.get("window").height;
@@ -27,6 +28,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const [childrenCommentData, setChildrenCommentData] = useState([]);
   const [secret, setSecret] = useState(false);
   const [parentId, setParentId] = useState("");
+  const [isActionSheetVisible, setActionSheetVisible] = useState(false);
 
   console.log(communityId);
 
@@ -111,7 +113,25 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     console.log(comment);
   };
 
-  const handleMenuClick = () => {};
+  const handleMenuClick = () => {
+    setActionSheetVisible(true);
+  };
+
+  const handleRemoveClick = () => {
+    setActionSheetVisible(false);
+  };
+
+  const handleCommentClick = () => {
+    setActionSheetVisible(false);
+  };
+
+  const handleProfileClick = () => {
+    setActionSheetVisible(false);
+  };
+
+  const handleModifyClick = () => {
+    setActionSheetVisible(false);
+  };
 
   useEffect(() => {
     fetchData();
@@ -188,7 +208,10 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                   ) : null}
                 </View>
                 <View>
-                  <TouchableOpacity activeOpacity={0.6}>
+                  <TouchableOpacity
+                    activeOpacity={0.6}
+                    onPress={handleMenuClick}
+                  >
                     <Image
                       source={require("../../assets/commentDotMenu.png")}
                       style={{ width: 20, height: 4, top: 10 }}
@@ -247,7 +270,10 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                           </Text>
                         </View>
                         <View>
-                          <TouchableOpacity activeOpacity={0.6}>
+                          <TouchableOpacity
+                            activeOpacity={0.6}
+                            onPress={handleMenuClick}
+                          >
                             <Image
                               source={require("../../assets/commentDotMenu.png")}
                               style={{ width: 20, height: 4, top: 10 }}
@@ -311,6 +337,14 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
           </View>
         </View>
       </KeyboardAvoidingView>
+      <CommentActionSheet
+        isVisible={isActionSheetVisible}
+        onClose={() => setActionSheetVisible(false)}
+        onRemove={handleRemoveClick}
+        onComment={handleCommentClick}
+        onModify={handleModifyClick}
+        onProfile={handleProfileClick}
+      />
     </Modal>
   );
 };
