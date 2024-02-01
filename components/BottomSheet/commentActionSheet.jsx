@@ -2,7 +2,14 @@ import React from "react";
 import { View, Text, Modal, TouchableOpacity, StyleSheet } from "react-native";
 import Line from "../Line";
 
-const CommentActionSheet = ({ isVisible, onClose, onRemove, onSelect }) => {
+const CommentActionSheet = ({
+  isVisible,
+  onClose,
+  onRemove,
+  onComment,
+  onProfile,
+  onModify,
+}) => {
   return (
     <Modal
       animationType="none"
