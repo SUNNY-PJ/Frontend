@@ -24,6 +24,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const inputURL = `/comment/${communityId}`;
   const url = proxyUrl + inputURL;
   const [comment, setComment] = useState("");
+  const [commentId, setCommentId] = useState("");
   const [commentData, setCommentData] = useState([]);
   const [childrenCommentData, setChildrenCommentData] = useState([]);
   const [secret, setSecret] = useState(false);
@@ -52,6 +53,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     console.log("대댓글", comment);
   };
 
+  // 댓글 조회
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     console.log(access_token);
@@ -62,14 +64,11 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
-        // params: {
-        //   communityId: communityId,
-        // },
       });
 
-      console.log("데이터:", response.data);
       const ResCommentData = response.data.data;
       setCommentData(ResCommentData);
+      console.log("????", ResCommentData);
       const ChildrenCommentData = commentData.map((item) => item.children);
       setChildrenCommentData(ChildrenCommentData);
     } catch (error) {
@@ -77,6 +76,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     }
   };
 
+  // 댓글 등록
   const postData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     console.log(access_token);
@@ -107,17 +107,45 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     }
   };
 
+  // 댓글 삭제
+  // 댓글 삭제
+  const deleteData = async () => {
+    const inputURL = `/comment/${commentId}`;
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.delete(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      if (response.status === 200) {
+        alert("댓글을 삭제하였습니다.");
+        fetchData(); // 댓글 목록을 다시 불러옵니다.
+      }
+      console.log("데이터:", response.data);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
   const handlePostComment = () => {
     postData();
     setComment("");
     console.log(comment);
   };
 
-  const handleMenuClick = () => {
+  const handleMenuClick = (id) => {
+    console.log(id);
+    setCommentId(id);
     setActionSheetVisible(true);
   };
 
   const handleRemoveClick = () => {
+    console.log(commentId);
+    deleteData();
     setActionSheetVisible(false);
   };
 
@@ -135,7 +163,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [commentId]);
 
   return (
     <Modal
@@ -210,7 +238,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                 <View>
                   <TouchableOpacity
                     activeOpacity={0.6}
-                    onPress={handleMenuClick}
+                    onPress={() => handleMenuClick(item.id)}
                   >
                     <Image
                       source={require("../../assets/commentDotMenu.png")}
@@ -272,7 +300,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                         <View>
                           <TouchableOpacity
                             activeOpacity={0.6}
-                            onPress={handleMenuClick}
+                            onPress={() => handleMenuClick(item.id)}
                           >
                             <Image
                               source={require("../../assets/commentDotMenu.png")}
