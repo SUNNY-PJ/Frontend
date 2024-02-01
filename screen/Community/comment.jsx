@@ -111,6 +111,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     console.log(comment);
   };
 
+  const handleMenuClick = () => {};
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -142,37 +144,57 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
           <Line color={"#E8E9E8"} h={2} />
           {commentData.map((item) => (
             <View style={styles.commentSection} key={item.id}>
-              <View style={{ flexDirection: "row", gap: 8 }}>
-                <Image
-                  source={require("../../assets/myPage_profile.png")}
-                  style={{ width: 32, height: 32 }}
-                />
-                <Text style={[styles.comment, { alignSelf: "center" }]}>
-                  {item.writer}
-                </Text>
-                {item.author === true ? (
-                  <View
-                    style={{
-                      backgroundColor: "#6ADCA3",
-                      borderRadius: 12,
-                      alignSelf: "center",
-                    }}
-                  >
-                    <Text
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 8,
+                  }}
+                >
+                  <Image
+                    source={require("../../assets/myPage_profile.png")}
+                    style={{ width: 32, height: 32 }}
+                  />
+                  <Text style={[styles.comment, { alignSelf: "center" }]}>
+                    {item.writer}
+                  </Text>
+                  {item.author === true ? (
+                    <View
                       style={{
-                        color: "#1F1F1F",
-                        fontSize: 10,
-                        fontWeight: 500,
-                        paddingRight: 5,
-                        paddingLeft: 5,
-                        paddingTop: 4,
-                        paddingBottom: 4,
+                        backgroundColor: "#6ADCA3",
+                        borderRadius: 12,
+                        alignSelf: "center",
                       }}
                     >
-                      작성자
-                    </Text>
-                  </View>
-                ) : null}
+                      <Text
+                        style={{
+                          color: "#1F1F1F",
+                          fontSize: 10,
+                          fontWeight: 500,
+                          paddingRight: 5,
+                          paddingLeft: 5,
+                          paddingTop: 4,
+                          paddingBottom: 4,
+                        }}
+                      >
+                        작성자
+                      </Text>
+                    </View>
+                  ) : null}
+                </View>
+                <View>
+                  <TouchableOpacity activeOpacity={0.6}>
+                    <Image
+                      source={require("../../assets/commentDotMenu.png")}
+                      style={{ width: 20, height: 4, top: 10 }}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
               <Text style={[styles.comment, { paddingLeft: 40 }]}>
                 {item.content}
@@ -203,18 +225,35 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                       <View
                         style={{
                           flexDirection: "row",
-                          gap: 8,
                           paddingLeft: 40,
                           marginTop: 9,
+                          justifyContent: "space-between",
                         }}
                       >
-                        <Image
-                          source={require("../../assets/myPage_profile.png")}
-                          style={{ width: 32, height: 32 }}
-                        />
-                        <Text style={[styles.comment, { alignSelf: "center" }]}>
-                          {childItem.writer}
-                        </Text>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            gap: 8,
+                          }}
+                        >
+                          <Image
+                            source={require("../../assets/myPage_profile.png")}
+                            style={{ width: 32, height: 32 }}
+                          />
+                          <Text
+                            style={[styles.comment, { alignSelf: "center" }]}
+                          >
+                            {childItem.writer}
+                          </Text>
+                        </View>
+                        <View>
+                          <TouchableOpacity activeOpacity={0.6}>
+                            <Image
+                              source={require("../../assets/commentDotMenu.png")}
+                              style={{ width: 20, height: 4, top: 10 }}
+                            />
+                          </TouchableOpacity>
+                        </View>
                       </View>
                       <Text style={[styles.comment, { paddingLeft: 80 }]}>
                         {childItem.content}
