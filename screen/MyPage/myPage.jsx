@@ -16,6 +16,7 @@ import axios from "axios";
 import { proxyUrl } from "../../constant/common";
 import WinModal from "../../components/Modal/battle/win";
 import LoseModal from "../../components/Modal/battle/lose";
+import LeaveMsg from "../../components/Modal/myPage/leaveMsg";
 
 const MyPage = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -25,6 +26,16 @@ const MyPage = () => {
   };
   const [profile, setProfile] = useState([]);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleConfirm = () => {
+    leaveData();
+    setModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setModalVisible(false);
+  };
 
   const openProfile = () => {
     setIsOpenProfile(!isOpenProfile);
@@ -32,7 +43,6 @@ const MyPage = () => {
 
   const handleWinModalClick = () => {
     openProfile();
-    console.log("닫기 버튼 클릭");
   };
 
   // 프로필 정보
@@ -103,6 +113,7 @@ const MyPage = () => {
     }
   };
 
+  // 회원 탈퇴
   const leaveData = async () => {
     const inputURL = "/users/auth/leave";
     const url = proxyUrl + inputURL;
@@ -149,23 +160,24 @@ const MyPage = () => {
   };
 
   const handleLeaveClick = () => {
-    Alert.alert(
-      "회원 탈퇴",
-      "회원 탈퇴 하시겠습니까?",
-      [
-        {
-          text: "취소",
-          style: "cancel",
-        },
-        {
-          text: "확인",
-          onPress: () => {
-            leaveData();
-          },
-        },
-      ],
-      { cancelable: false }
-    );
+    setModalVisible(true);
+    // Alert.alert(
+    //   "회원 탈퇴",
+    //   "회원 탈퇴 하시겠습니까?",
+    //   [
+    //     {
+    //       text: "취소",
+    //       style: "cancel",
+    //     },
+    //     {
+    //       text: "확인",
+    //       onPress: () => {
+    //         leaveData();
+    //       },
+    //     },
+    //   ],
+    //   { cancelable: false }
+    // );
   };
 
   return (
@@ -305,8 +317,14 @@ const MyPage = () => {
             style={{ width: 56, height: 84 }}
           />
         </View>
-        <LoseModal isOpenProfile={isOpenProfile} openProfile={openProfile} />
       </ScrollView>
+      <LoseModal isOpenProfile={isOpenProfile} openProfile={openProfile} />
+      <LeaveMsg
+        isVisible={modalVisible}
+        toggleModal={() => setModalVisible(!modalVisible)}
+        onDelete={handleConfirm}
+        onCancel={handleCancel}
+      />
     </View>
   );
 };
