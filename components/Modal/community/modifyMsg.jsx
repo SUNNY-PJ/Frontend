@@ -10,7 +10,7 @@ import {
 import MiddleBtn from "../../Btn/middleBtn";
 import MiddleBtnBlack from "../../Btn/middleBtnBlack";
 
-const DeleteMsg = ({ isVisible, toggleModal, onDelete, onCancel }) => {
+const ModifyMsg = ({ isVisible, toggleModal, onDelete, onCancel }) => {
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View
@@ -29,7 +29,7 @@ const DeleteMsg = ({ isVisible, toggleModal, onDelete, onCancel }) => {
               />
             </TouchableOpacity>
           </View>
-          <Text style={styles.title}>게시글을 삭제할까요?</Text>
+          <Text style={styles.title}>게시글을 수정할까요?</Text>
           <View style={styles.buttonContainer}>
             <MiddleBtn text={"네"} onClick={onDelete} />
             <MiddleBtnBlack text={"아니오"} onClick={onCancel} />
@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DeleteMsg;
+export default ModifyMsg;

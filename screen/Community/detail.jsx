@@ -20,6 +20,7 @@ import Comment from "./comment";
 import OptionModal from "../../components/Modal/community/optionModal";
 import DeleteMsg from "../../components/Modal/community/deleteMsg";
 import FriendProfile from "../Friends/friendProfile";
+import ModifyMsg from "../../components/Modal/community/modifyMsg";
 
 const Detail = () => {
   const navigation = useNavigation();
@@ -33,6 +34,7 @@ const Detail = () => {
 
   const [data, setData] = useState([]);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [isCommentModal, setIsCommentModal] = useState(false);
   const [isOpenOptionModal, setIsOpenOptionModal] = useState(false);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
@@ -49,7 +51,6 @@ const Detail = () => {
   };
   const handleScrapClick = () => {
     setIsScrap(!isScrap);
-    console.log("스크랩했니", isScrap);
     if (isScrap) {
       deleteScrapData();
     } else {
@@ -150,7 +151,6 @@ const Detail = () => {
         itemId: itemId,
       },
     });
-    console.log("수정 눌렀냐");
   };
 
   const handleChat = () => {
@@ -158,25 +158,30 @@ const Detail = () => {
   };
 
   const handleMenuClick = () => {
-    console.log("메뉴 클릭");
     openOptionModal();
   };
 
   const handleProfileClick = () => {
     openProfile();
-    console.log("프로필 클릭릭");
   };
 
   const handleDeleteConfirm = () => {
     deleteData();
     setDeleteModalVisible(false);
-    console.log("게시글을 삭제합니다.");
     navigation.navigate("MainScreen", { screen: "Community" });
   };
 
   const handleDeleteCancel = () => {
     setDeleteModalVisible(false);
-    console.log("삭제를 취소했습니다.");
+  };
+
+  const handleModifyConfirm = () => {
+    putData();
+    setModifyModalVisible(false);
+  };
+
+  const handleModifyCancel = () => {
+    setModifyModalVisible(false);
   };
 
   const handleDeletePost = () => {
@@ -184,25 +189,26 @@ const Detail = () => {
   };
 
   const handlePutPost = () => {
-    Alert.alert(
-      "게시물 수정",
-      "수정하시겠습니까?",
-      [
-        {
-          text: "취소",
-          onPress: () => console.log("수정을 취소했습니다."),
-          style: "cancel",
-        },
-        {
-          text: "확인",
-          onPress: () => {
-            putData();
-            console.log("게시글을 수정합니다.");
-          },
-        },
-      ],
-      { cancelable: false }
-    );
+    setModifyModalVisible(true);
+    // Alert.alert(
+    //   "게시물 수정",
+    //   "수정하시겠습니까?",
+    //   [
+    //     {
+    //       text: "취소",
+    //       onPress: () => console.log("수정을 취소했습니다."),
+    //       style: "cancel",
+    //     },
+    //     {
+    //       text: "확인",
+    //       onPress: () => {
+    //         putData();
+    //         console.log("게시글을 수정합니다.");
+    //       },
+    //     },
+    //   ],
+    //   { cancelable: false }
+    // );
   };
 
   return (
@@ -417,6 +423,12 @@ const Detail = () => {
         toggleModal={() => setDeleteModalVisible(!deleteModalVisible)}
         onDelete={handleDeleteConfirm}
         onCancel={handleDeleteCancel}
+      />
+      <ModifyMsg
+        isVisible={modifyModalVisible}
+        toggleModal={() => setModifyModalVisible(!modifyModalVisible)}
+        onDelete={handleModifyConfirm}
+        onCancel={handleModifyCancel}
       />
       <FriendProfile
         isOpenProfile={isOpenProfile}
