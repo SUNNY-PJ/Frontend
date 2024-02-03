@@ -298,6 +298,19 @@ const SettingProfile = () => {
             handleInputChange={handleNameChange}
             onValidation={handleValidation}
           />
+          <Text
+            style={{
+              marginTop: 8,
+              fontSize: 12,
+              fontWeight: 500,
+              color: "#5C5C5C",
+              textAlign: "left",
+              paddingLeft: 12,
+              marginBottom: 278,
+            }}
+          >
+            * 2~10자 이내, 특수문자 및 숫자 사용 가능, 이모지 사용 불가
+          </Text>
           <View style={{ marginTop: 323 }}>
             {isAllFieldsFilled ? (
               <LargeBtn text={"저장하기"} onClick={handlePostApiStart} />

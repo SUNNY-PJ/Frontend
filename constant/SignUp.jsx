@@ -108,7 +108,7 @@ const SignUp = () => {
           marginTop: 8,
           fontSize: 12,
           fontWeight: 500,
-          color: "#1F1F1F",
+          color: "#5C5C5C",
           textAlign: "left",
           paddingLeft: 12,
           marginBottom: 278,
