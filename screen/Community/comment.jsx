@@ -296,6 +296,29 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                           >
                             {childItem.writer}
                           </Text>
+                          {childItem.author === true ? (
+                            <View
+                              style={{
+                                backgroundColor: "#6ADCA3",
+                                borderRadius: 12,
+                                alignSelf: "center",
+                              }}
+                            >
+                              <Text
+                                style={{
+                                  color: "#1F1F1F",
+                                  fontSize: 10,
+                                  fontWeight: 500,
+                                  paddingRight: 5,
+                                  paddingLeft: 5,
+                                  paddingTop: 4,
+                                  paddingBottom: 4,
+                                }}
+                              >
+                                작성자
+                              </Text>
+                            </View>
+                          ) : null}
                         </View>
                         <View>
                           <TouchableOpacity
