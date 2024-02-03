@@ -29,6 +29,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const [childrenCommentData, setChildrenCommentData] = useState([]);
   const [secret, setSecret] = useState(false);
   const [parentId, setParentId] = useState("");
+  const [parentWriter, setParentWriter] = useState("");
   const [isActionSheetVisible, setActionSheetVisible] = useState(false);
 
   console.log(communityId);
@@ -67,6 +68,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       });
 
       const ResCommentData = response.data.data;
+      console.log("????", response.data);
+
       setCommentData(ResCommentData);
       console.log("????", ResCommentData);
       const ChildrenCommentData = commentData.map((item) => item.children);
@@ -108,7 +111,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   };
 
   // 댓글 삭제
-  // 댓글 삭제
   const deleteData = async () => {
     const inputURL = `/comment/${commentId}`;
     const url = proxyUrl + inputURL;
@@ -137,9 +139,10 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     console.log(comment);
   };
 
-  const handleMenuClick = (id) => {
+  const handleMenuClick = (id, writer) => {
     console.log(id);
     setCommentId(id);
+    setParentWriter(writer);
     setActionSheetVisible(true);
   };
 
@@ -151,6 +154,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
   const handleCommentClick = () => {
     setActionSheetVisible(false);
+    setComment(`@${parentWriter} `);
+    setParentId(commentId);
   };
 
   const handleProfileClick = () => {
@@ -190,7 +195,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
         />
         <View style={styles.modalContent}>
           <Line color={"#E8E9E8"} h={2} />
-          {commentData.map((item) => (
+          {commentData?.map((item) => (
             <View style={styles.commentSection} key={item.id}>
               <View
                 style={{
@@ -238,7 +243,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                 <View>
                   <TouchableOpacity
                     activeOpacity={0.6}
-                    onPress={() => handleMenuClick(item.id)}
+                    onPress={() => handleMenuClick(item.id, item.writer)}
                   >
                     <Image
                       source={require("../../assets/commentDotMenu.png")}
@@ -323,7 +328,9 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                         <View>
                           <TouchableOpacity
                             activeOpacity={0.6}
-                            onPress={() => handleMenuClick(item.id)}
+                            onPress={() =>
+                              handleMenuClick(childItem.id, childItem.writer)
+                            }
                           >
                             <Image
                               source={require("../../assets/commentDotMenu.png")}
