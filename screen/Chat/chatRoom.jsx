@@ -11,47 +11,64 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import { proxyUrl } from "../../constant/common";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 
 const ChatRoom = () => {
   const navigation = useNavigation();
-
-  const [messages, setMessages] = useState([
-    { id: 1, text: "오늘 저녁에 시간 어때요?", time: "18:52", isMine: false },
-    {
-      id: 2,
-      text: "안돼 이놈아",
-      time: "18:55",
-      isMine: true,
-    },
-    {
-      id: 2,
-      text: "푸하항",
-      time: "18:57",
-      isMine: true,
-    },
-    {
-      id: 1,
-      text: "때리깡 쾈그냥 아아아아아아앙 자고 싶다아ㅏㄹ아랑라아아ㅏㅇ 아아아아아 피곤해",
-      time: "22:57",
-      isMine: false,
-    },
-  ]);
+  const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState("");
   const scrollViewRef = useRef();
+  const stompClient = useRef(null);
+
+  useEffect(() => {
+    const connectWebSocket = async () => {
+      const access_token = await AsyncStorage.getItem("access_token");
+      const sock = new SockJS("http://localhost:8080/stomp/chat");
+      stompClient.current = Stomp.over(sock);
+
+      stompClient.current.connect(
+        { Authorization: access_token },
+        function (frame) {
+          console.log("Connected: " + frame);
+          stompClient.current.subscribe(
+            "/topic/messages",
+            function (messageOutput) {
+              // 수신된 메시지 처리
+              console.log(JSON.parse(messageOutput.body));
+            }
+          );
+        }
+      );
+    };
+
+    connectWebSocket();
+
+    return () => {
+      if (stompClient.current) {
+        stompClient.current.disconnect();
+      }
+    };
+  }, []);
 
   const sendMessage = () => {
-    if (currentMessage.trim().length > 0) {
-      // 새 메시지 객체를 생성하여 배열에 추가합니다.
-      const newMessage = {
-        id: messages.length + 1, // 임시 ID 할당
-        text: currentMessage,
-        time: new Date().toLocaleTimeString().slice(0, 5), // 현재 시간
-        isMine: true, // 사용자가 보낸 메시지로 설정
+    if (stompClient.current && currentMessage) {
+      const chatMessage = {
+        chatRoomId: 0,
+        sendUserId: 69,
+        message: currentMessage,
       };
-      setMessages([...messages, newMessage]);
-      setCurrentMessage("");
+
+      stompClient.current.send(
+        "/pub/chat/message",
+        {},
+        JSON.stringify(chatMessage)
+      );
+      console.log("Sending message", chatMessage);
+      setCurrentMessage(""); // 메시지 전송 후 입력 필드 초기화
     }
   };
 
@@ -63,6 +80,31 @@ const ChatRoom = () => {
     navigation.navigate("MainScreen", { screen: "ChatList" });
   };
 
+  // 대화 내용
+  const fetchData = async () => {
+    const inputURL = `/chat/{chatRoomId}`;
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      const chatData = response.chatData;
+      console.log("대화 내용:::", chatData);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    // fetchData();
+  }, []);
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -70,20 +112,7 @@ const ChatRoom = () => {
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
     >
       <View style={styles.container}>
-        {/* <ScrollView style={styles.messagesContainer} ref={scrollViewRef}>
-          {messages.map((message, index) => (
-            <View key={index} style={styles.message}>
-              <Text>{message}</Text>
-            </View>
-          ))}
-        </ScrollView> */}
-        <ScrollView
-          style={[
-            styles.messagesContainer,
-            // hasFriendMessages && { paddingLeft: 69 },
-          ]}
-          ref={scrollViewRef}
-        >
+        <ScrollView style={[styles.messagesContainer]} ref={scrollViewRef}>
           <View
             style={{
               alignItems: "center",
