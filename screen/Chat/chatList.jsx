@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Dimensions,
+  Alert,
 } from "react-native";
 import { proxyUrl } from "../../constant/common";
 import axios from "axios";
@@ -16,8 +17,8 @@ import { useNavigation } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
 const ChatList = () => {
-  const navigation = useNavigation();
   const windowHeight = Dimensions.get("window").height;
+  const navigation = useNavigation();
 
   const truncateText = (text) => {
     const maxLength = 20;
@@ -27,7 +28,7 @@ const ChatList = () => {
   };
 
   const handleChatRoomClick = () => {
-    console.log("채팅방으로 이동합니다...");
+    console.log("채팅방으로 이동합니다...11");
     navigation.navigate("ChatScreen", { screen: "ChatRoom" });
   };
 
@@ -56,9 +57,49 @@ const ChatList = () => {
     fetchData();
   }, []);
 
-  const renderRightActions = () => {
+  // 채팅방 삭제
+  const deleteData = async (chatRoomId) => {
+    const inputURL = `/chat/${chatRoomId}`;
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.delete(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      const chatData = response.data;
+      console.log("채팅방 목록:::", chatData);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  const handleChatRoomDelete = (chatRoomId) => {
+    Alert.alert(
+      "채팅방 나가기",
+      "채팅방을 나가시겠습니까?\n대화 내용이 모두 삭제됩니다.",
+      [
+        {
+          text: "취소",
+          // onPress: () => console.log("수정을 취소했습니다."),
+          style: "cancel",
+        },
+        {
+          text: "확인",
+          onPress: () => deleteData(chatRoomId),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const renderRightActions = (chatRoomId) => {
     return (
-      <TouchableOpacity onPress={() => console.log("Delete action")}>
+      <TouchableOpacity onPress={() => handleChatRoomDelete(chatRoomId)}>
         <View style={styles.deleteBox}>
           <Text style={styles.deleteText}>나가기</Text>
         </View>
