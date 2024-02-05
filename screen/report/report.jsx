@@ -28,20 +28,23 @@ const Report = () => {
   };
 
   const postData = async () => {
-    const inputURL = "/";
+    const inputURL = "/users/report";
     const cleanedURL = inputURL.replace(/[\u200B]/g, "");
 
     const url = proxyUrl + cleanedURL;
     const access_token = await AsyncStorage.getItem("access_token");
     console.log(access_token);
     try {
-      const params = {};
-      const response = await axios.post(url, null, {
+      const bodyData = {
+        id: 0,
+        reason: comment,
+        status: "COMMENT",
+      };
+      const response = await axios.post(url, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
-        params,
       });
 
       if (response.status === 200) {
