@@ -114,7 +114,6 @@ const Detail = () => {
         },
       });
       console.log(response.data);
-      console.log("스크랩 삭제");
     } catch (error) {
       console.error("에러:", error);
     }
@@ -138,7 +137,6 @@ const Detail = () => {
         }
       );
       console.log(response.data);
-      console.log("스크랩 등록");
     } catch (error) {
       console.error("에러:", error);
     }
@@ -190,25 +188,6 @@ const Detail = () => {
 
   const handlePutPost = () => {
     setModifyModalVisible(true);
-    // Alert.alert(
-    //   "게시물 수정",
-    //   "수정하시겠습니까?",
-    //   [
-    //     {
-    //       text: "취소",
-    //       onPress: () => console.log("수정을 취소했습니다."),
-    //       style: "cancel",
-    //     },
-    //     {
-    //       text: "확인",
-    //       onPress: () => {
-    //         putData();
-    //         console.log("게시글을 수정합니다.");
-    //       },
-    //     },
-    //   ],
-    //   { cancelable: false }
-    // );
   };
 
   return (
