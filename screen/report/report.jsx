@@ -60,7 +60,7 @@ const Report = () => {
   };
 
   const handleSubmitClick = () => {
-    // postData();
+    postData();
   };
 
   const handleCloseClick = () => {};
@@ -72,16 +72,18 @@ const Report = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <Text style={styles.mainText}>신고하기</Text>
-        <TouchableOpacity activeOpacity={1} onPress={handleCloseClick}>
-          <Image
-            source={require("../../assets/close.png")}
-            style={{
-              width: 24,
-              height: 24,
-            }}
-          />
-        </TouchableOpacity>
+        <View style={{ paddingLeft: 20 }}>
+          <Text style={styles.mainText}>신고하기</Text>
+          <TouchableOpacity activeOpacity={1} onPress={handleCloseClick}>
+            <Image
+              source={require("../../assets/close.png")}
+              style={{
+                width: 24,
+                height: 24,
+              }}
+            />
+          </TouchableOpacity>
+        </View>
 
         <Text style={styles.mainText}>작성자</Text>
         <Text style={styles.text}>게시글/댓글/답글 작성자 닉네임</Text>
@@ -112,8 +114,8 @@ const styles = StyleSheet.create({
     minHeight: "100%",
   },
   contentContainer: {
-    paddingLeft: 20,
-    paddingRight: 0,
+    // paddingLeft: 20,
+    // paddingRight: 0,
   },
   mainText: {
     fontSize: 16,
