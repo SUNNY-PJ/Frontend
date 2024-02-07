@@ -34,6 +34,7 @@ import Winner from "./screen/Battle/winner";
 import Search from "./screen/Community/search";
 import Alarm from "./screen/Alarm/alarm";
 import Report from "./screen/report/report";
+import Terms from "./screen/terms/terms";
 // import ChatRoom from "./screen/Chat/chatRoom";
 
 const Stack = createStackNavigator();
@@ -99,6 +100,7 @@ function MainScreen() {
         />
         <Stack.Screen name="Alarm" component={Alarm} />
         <Stack.Screen name="Report" component={Report} />
+        <Stack.Screen name="Terms" component={Terms} />
         {/* <Stack.Screen name="Winner" component={Winner} /> */}
       </Stack.Navigator>
       <Bottom />
