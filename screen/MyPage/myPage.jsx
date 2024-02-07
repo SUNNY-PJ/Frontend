@@ -139,6 +139,12 @@ const MyPage = () => {
     }
   };
 
+  const handleTermsClick = () => {
+    navigation.navigate("Terms", {
+      screen: "Terms",
+    });
+  };
+
   const handleLogoutClick = () => {
     Alert.alert(
       "로그아웃",
@@ -291,11 +297,15 @@ const MyPage = () => {
           >
             회원
           </Text>
-          <TouchableOpacity activeOpacity={0.6} onPress={handleLogoutClick}>
+          <TouchableOpacity activeOpacity={1} onPress={handleTermsClick}>
+            <Text style={styles.description}>이용 약관</Text>
+          </TouchableOpacity>
+          <Line color={"#C1C1C1"} h={1} />
+          <TouchableOpacity activeOpacity={1} onPress={handleLogoutClick}>
             <Text style={styles.description}>로그아웃</Text>
           </TouchableOpacity>
           <Line color={"#C1C1C1"} h={1} />
-          <TouchableOpacity activeOpacity={0.6} onPress={handleLeaveClick}>
+          <TouchableOpacity activeOpacity={1} onPress={handleLeaveClick}>
             <Text style={styles.description}>회원 탈퇴</Text>
           </TouchableOpacity>
           <Line color={"#C1C1C1"} h={4} />
