@@ -311,7 +311,7 @@ const SettingProfile = () => {
           >
             * 2~10자 이내, 특수문자 및 숫자 사용 가능, 이모지 사용 불가
           </Text>
-          <View style={{ marginTop: 323 }}>
+          <View style={{ marginTop: 23 }}>
             {isAllFieldsFilled ? (
               <LargeBtn text={"저장하기"} onClick={handlePostApiStart} />
             ) : (
