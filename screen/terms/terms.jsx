@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   View,
   Image,
   Text,
   TouchableOpacity,
   StyleSheet,
-  Pressable,
-  Dimensions,
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -14,7 +12,6 @@ import { TermsData } from "../../data/termsData";
 
 const Terms = () => {
   const navigation = useNavigation();
-  const windowHeight = Dimensions.get("window").height;
 
   return (
     <View style={styles.container}>
@@ -43,7 +40,7 @@ const Terms = () => {
       >
         이용약관
       </Text>
-      <ScrollView style={{ marginBottom: 200 }}>
+      <ScrollView style={{ marginBottom: 220 }}>
         {TermsData.map((item, index) => (
           <View key={index} style={styles.section}>
             {item.title && (
