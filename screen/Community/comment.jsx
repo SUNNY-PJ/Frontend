@@ -14,12 +14,15 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 import Modal from "react-native-modal";
 import CommentActionSheet from "../../components/BottomSheet/commentActionSheet";
+import CommentViewerActionSheet from "../../components/BottomSheet/commentViewerActionSheet";
 
 const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const windowHeight = Dimensions.get("window").height;
+  const navigation = useNavigation();
 
   const inputURL = `/comment/${communityId}`;
   const url = proxyUrl + inputURL;
@@ -164,6 +167,11 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
   const handleModifyClick = () => {
     setActionSheetVisible(false);
+  };
+
+  const handleReportClick = () => {
+    setActionSheetVisible(false);
+    navigation.navigate("MainScreen", { screen: "Report" });
   };
 
   useEffect(() => {
@@ -395,12 +403,19 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
           </View>
         </View>
       </KeyboardAvoidingView>
-      <CommentActionSheet
+      {/* <CommentActionSheet
         isVisible={isActionSheetVisible}
         onClose={() => setActionSheetVisible(false)}
         onRemove={handleRemoveClick}
         onComment={handleCommentClick}
         onModify={handleModifyClick}
+        onProfile={handleProfileClick}
+      /> */}
+      <CommentViewerActionSheet
+        isVisible={isActionSheetVisible}
+        onClose={() => setActionSheetVisible(false)}
+        onReport={handleReportClick}
+        onComment={handleCommentClick}
         onProfile={handleProfileClick}
       />
     </Modal>
