@@ -18,10 +18,14 @@ import InputMax from "../../components/Input/inputMax";
 import LargeBtn from "../../components/Btn/largeBtn";
 import LargeBtnDisable from "../../components/Btn/largeBtnDisable";
 import Line from "../../components/Line";
+import ReportResult from "../../components/Modal/report/reportResult";
+import ReportMsg from "../../components/Modal/report/reportMsg";
 
 const Report = () => {
   const [content, setContent] = useState("");
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
+  const [result, setResult] = useState(false);
+  const [msg, setMsg] = useState(false);
 
   const handleContentChange = (text) => {
     setContent(text);
@@ -60,10 +64,14 @@ const Report = () => {
   };
 
   const handleSubmitClick = () => {
-    postData();
+    // postData();
+    setResult(true);
   };
 
-  const handleCloseClick = () => {};
+  const handleCloseClick = () => {
+    setMsg(false);
+    setResult(false);
+  };
 
   useEffect(() => {
     setIsAllFieldsFilled(content);
@@ -112,6 +120,16 @@ const Report = () => {
           <LargeBtnDisable text={"접수하기"} />
         )}
       </View>
+      <ReportMsg
+        isVisible={msg}
+        onDelete={handleCloseClick}
+        onCancel={() => setMsg(false)}
+      />
+      <ReportResult
+        isVisible={result}
+        onCancel={() => setResult(false)}
+        result={"good"}
+      />
     </View>
   );
 };
