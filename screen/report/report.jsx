@@ -65,38 +65,47 @@ const Report = () => {
 
   const handleCloseClick = () => {};
 
-  //   useEffect(() => {
-  //     setIsAllFieldsFilled(content);
-  //   }, [content]);
+  useEffect(() => {
+    setIsAllFieldsFilled(content);
+  }, [content]);
 
   return (
     <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <View style={{ paddingLeft: 20 }}>
-          <Text style={styles.mainText}>신고하기</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleCloseClick}>
-            <Image
-              source={require("../../assets/close.png")}
-              style={{
-                width: 24,
-                height: 24,
-              }}
-            />
-          </TouchableOpacity>
+      <View style={styles.section}>
+        <View style={{ alignSelf: "center" }}>
+          <Text style={[styles.mainText]}>신고하기</Text>
         </View>
+        <TouchableOpacity activeOpacity={1} onPress={handleCloseClick}>
+          <Image
+            source={require("../../assets/close.png")}
+            style={{
+              width: 16,
+              height: 16,
+              alignSelf: "flex-end",
+              bottom: 25,
+            }}
+            onPress={() => {}}
+          />
+        </TouchableOpacity>
 
-        <Text style={styles.mainText}>작성자</Text>
-        <Text style={styles.text}>게시글/댓글/답글 작성자 닉네임</Text>
-
-        <Text style={styles.mainText}>내용</Text>
-        <Text style={styles.text}>게시글/댓글/답글 내용</Text>
-        <Line h={4} color={"#C1C1C1"} />
-        <Text style={styles.mainText}>신고 사유</Text>
+        <Text style={[styles.mainText]}>작성자</Text>
+        <Text style={[styles.text, { marginBottom: 20 }]}>
+          게시글/댓글/답글 작성자 닉네임
+        </Text>
+        <Text style={[styles.mainText]}>내용</Text>
+        <Text style={[styles.text, { marginBottom: 18 }]}>
+          게시글/댓글/답글 내용
+        </Text>
+      </View>
+      <Line h={4} color={"#C1C1C1"} />
+      <View style={{ paddingRight: 20, paddingLeft: 20 }}>
+        <Text style={[styles.mainText, { marginTop: 18 }]}>신고 사유</Text>
         <InputMax
           placeholder={"내용 (최대 300자)"}
           inputValue={content}
           handleInputChange={handleContentChange}
         />
+        <View style={{ height: 50 }} />
         {isAllFieldsFilled ? (
           <LargeBtn text={"접수하기"} onClick={handleSubmitClick} />
         ) : (
@@ -113,14 +122,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFBF6",
     minHeight: "100%",
   },
-  contentContainer: {
-    // paddingLeft: 20,
-    // paddingRight: 0,
+  section: {
+    paddingRight: 20,
+    paddingLeft: 20,
+    marginTop: 16,
   },
   mainText: {
     fontSize: 16,
     fontWeight: 700,
     color: "#1F1F1F",
+    marginBottom: 8,
   },
   text: {
     fontSize: 16,
