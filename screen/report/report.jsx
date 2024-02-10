@@ -18,6 +18,8 @@ const Report = ({ id, status }) => {
   const [result, setResult] = useState(false);
   const [msg, setMsg] = useState(false);
 
+  console.log("msg:::", msg);
+
   const handleReasonChange = (text) => {
     setReason(text);
   };
@@ -41,7 +43,7 @@ const Report = ({ id, status }) => {
           Authorization: `Bearer ${access_token}`,
         },
       });
-
+      console.log("신고 제출출");
       if (response.status === 200) {
         alert("신고를 정상적으로 처리했습니다.");
       } else {
@@ -58,12 +60,16 @@ const Report = ({ id, status }) => {
   };
 
   const handleSubmitClick = () => {
+    setMsg(true);
+  };
+
+  const handleSubmitAgreeClick = () => {
+    setMsg(false);
     postData();
-    // setResult(true);
   };
 
   const handleCloseClick = () => {
-    setMsg(false);
+    // setMsg(false);
     setResult(false);
   };
 
@@ -116,7 +122,7 @@ const Report = ({ id, status }) => {
       </View>
       <ReportMsg
         isVisible={msg}
-        onDelete={handleCloseClick}
+        onSubmit={handleSubmitAgreeClick}
         onCancel={() => setMsg(false)}
       />
       <ReportResult
