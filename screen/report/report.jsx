@@ -2,16 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { proxyUrl } from "../../constant/common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-  ScrollView,
-  Dimensions,
-} from "react-native";
+import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import InputMax from "../../components/Input/inputMax";
@@ -21,14 +12,14 @@ import Line from "../../components/Line";
 import ReportResult from "../../components/Modal/report/reportResult";
 import ReportMsg from "../../components/Modal/report/reportMsg";
 
-const Report = () => {
-  const [content, setContent] = useState("");
+const Report = ({ id, status }) => {
+  const [reason, setReason] = useState("");
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
   const [result, setResult] = useState(false);
   const [msg, setMsg] = useState(false);
 
-  const handleContentChange = (text) => {
-    setContent(text);
+  const handleReasonChange = (text) => {
+    setReason(text);
   };
 
   const postData = async () => {
@@ -40,9 +31,9 @@ const Report = () => {
     console.log(access_token);
     try {
       const bodyData = {
-        id: 0,
-        reason: comment,
-        status: "COMMENT",
+        id: id,
+        reason: reason,
+        status: status,
       };
       const response = await axios.post(url, bodyData, {
         headers: {
@@ -52,6 +43,9 @@ const Report = () => {
       });
 
       if (response.status === 200) {
+        alert("신고를 정상적으로 처리했습니다.");
+      } else {
+        alert(`장애가 발생했습니다.\n 잠시후 다시 시도해주세요.`);
       }
     } catch (error) {
       if (error.response) {
@@ -64,8 +58,8 @@ const Report = () => {
   };
 
   const handleSubmitClick = () => {
-    // postData();
-    setResult(true);
+    postData();
+    // setResult(true);
   };
 
   const handleCloseClick = () => {
@@ -74,8 +68,8 @@ const Report = () => {
   };
 
   useEffect(() => {
-    setIsAllFieldsFilled(content);
-  }, [content]);
+    setIsAllFieldsFilled(reason);
+  }, [reason]);
 
   return (
     <View style={styles.container}>
@@ -110,8 +104,8 @@ const Report = () => {
         <Text style={[styles.mainText, { marginTop: 18 }]}>신고 사유</Text>
         <InputMax
           placeholder={"내용 (최대 300자)"}
-          inputValue={content}
-          handleInputChange={handleContentChange}
+          inputValue={reason}
+          handleInputChange={handleReasonChange}
         />
         <View style={{ height: 50 }} />
         {isAllFieldsFilled ? (
