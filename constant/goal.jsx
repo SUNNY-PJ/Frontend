@@ -5,7 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
-  Modal,
+  Alert,
 } from "react-native";
 import Input from "../components/Input/input";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
@@ -98,7 +98,7 @@ function Goal({ navigation }) {
         },
       });
       if (response.status === 200) {
-        alert("절약 목표를 등록하였습니다.");
+        Alert.alert("절약 목표를 등록하였습니다.");
         navigation.goBack();
       }
     } catch (error) {
@@ -134,6 +134,7 @@ function Goal({ navigation }) {
                 handleDateChange={handleStartDateChange}
                 inputText={"시작 일자:"}
                 title={"시작 일자"}
+                showDayOfWeek={true}
               />
             </TouchableOpacity>
             <Text style={styles.label}>절약 종료 일자를 선택해주세요</Text>
@@ -145,6 +146,7 @@ function Goal({ navigation }) {
                 handleDateChange={handleEndDateChange}
                 title={"종료 일자"}
                 inputText={"종료 일자:"}
+                showDayOfWeek={true}
               />
             </TouchableOpacity>
             <View style={styles.buttonContainer}>

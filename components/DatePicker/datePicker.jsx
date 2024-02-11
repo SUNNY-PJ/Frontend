@@ -10,6 +10,7 @@ const DatePicker = ({
   handleDateChange,
   title,
   inputText,
+  showDayOfWeek,
   //   resetDate,
 }) => {
   const [selectedDate, setSelectedDate] = useState();
@@ -38,7 +39,10 @@ const DatePicker = ({
       hideDatePicker();
     } else {
       // 올바른 날짜를 선택한 경우
-      const formattedDate = moment(selectedDate).format("YYYY.MM.DD");
+      const dateFormat = showDayOfWeek ? "YYYY.MM.DD ddd" : "YYYY.MM.DD";
+      const formattedDate = moment(selectedDate)
+        .locale("ko")
+        .format(dateFormat);
       setSelectedDate(formattedDate);
       hideDatePicker();
       handleDateChange(formattedDate);

@@ -230,6 +230,7 @@ function Note({ navigation }) {
                 isDatePickerVisible={isDatePickerVisible}
                 handleDateChange={handleDateChange}
                 title={"지출 일자"}
+                showDayOfWeek={false}
               />
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
