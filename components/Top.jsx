@@ -8,11 +8,42 @@ import {
   Animated,
 } from "react-native";
 import * as Notifications from "expo-notifications";
+import { proxyUrl } from "./common";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Top = ({ navigation }) => {
-  const [day, setDay] = useState(10);
-  const [progress, setProgress] = useState(30);
+  const inputURL = "/save";
+  const cleanedURL = inputURL.replace(/[\u200B]/g, "");
+  const url = proxyUrl + cleanedURL;
+  const [day, setDay] = useState(0);
+  const [progress, setProgress] = useState(0);
   const progressAnim = useRef(new Animated.Value(0)).current; // 초기 값 0으로 설정
+
+  // 절약 목표 조회
+  const fetchData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const response = await axios.post(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      if (response.status === 200) {
+        const SaveData = response.data.data;
+        console.log("절약 목표 조회::", SaveData);
+        setDay(SaveData.date);
+        setProgress(SaveData.savePercentage);
+      }
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   useEffect(() => {
     // progress 상태가 변경될 때마다 애니메이션을 실행
