@@ -8,6 +8,8 @@ const DatePicker = ({
   showDatePicker,
   hideDatePicker,
   handleDateChange,
+  title,
+  inputText,
   //   resetDate,
 }) => {
   const [selectedDate, setSelectedDate] = useState();
@@ -71,9 +73,11 @@ const DatePicker = ({
       >
         {selectedDate ? (
           // <Text>{`${moment(selectedDate).format("YYYY.MM.DD")}`}</Text>
-          <Text>{selectedDate}</Text>
+          <Text>
+            {inputText} {selectedDate}
+          </Text>
         ) : (
-          <Text style={{ color: "#C1C1C1" }}>지출 일자</Text>
+          <Text style={{ color: "#C1C1C1" }}>{title}</Text>
         )}
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
