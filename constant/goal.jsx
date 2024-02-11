@@ -14,8 +14,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import LargeBtn from "../components/Btn/largeBtn";
 import Notice from "../components/Modal/notice";
 import DatePicker from "../components/DatePicker/datePicker";
+import { proxyUrl } from "./common";
 
 function Goal({ navigation }) {
+  const inputURL = "/save";
+  const cleanedURL = inputURL.replace(/[\u200B]/g, "");
+  const url = proxyUrl + cleanedURL;
+
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
   const [isOpenNoticeMsg, setIsOpenNoticeMsg] = useState(false);
   const [isStartDatePickerVisible, setStartDatePickerVisibility] =
@@ -82,6 +87,7 @@ function Goal({ navigation }) {
     }
   }, [cost, startDate, endDate]);
 
+  // 절약 목표 등록
   const postData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
@@ -106,7 +112,7 @@ function Goal({ navigation }) {
     }
   };
 
-  const handlePostApiTestStart = () => {
+  const handlePost = () => {
     postData();
   };
 
@@ -151,7 +157,7 @@ function Goal({ navigation }) {
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
               {isAllFieldsFilled ? (
-                <LargeBtn text={"등록하기"} onClick={handlePostApiTestStart} />
+                <LargeBtn text={"등록하기"} onClick={handlePost} />
               ) : (
                 <LargeBtnDisable text={"등록하기"} />
               )}
