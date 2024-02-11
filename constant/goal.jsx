@@ -11,47 +11,50 @@ import Input from "../components/Input/input";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import DatePickerCalendar from "../components/Calendar/rangeCalendar";
 import LargeBtn from "../components/Btn/largeBtn";
+import Notice from "../components/Modal/notice";
+import DatePicker from "../components/DatePicker/datePicker";
 
 function Goal({ navigation }) {
-  const [isOpenNoticeMsg, setIsOpenNoticeMsg] = useState(false);
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
-  const [date, setDate] = useState("");
-  const [name, setName] = useState("");
+  const [isOpenNoticeMsg, setIsOpenNoticeMsg] = useState(false);
+  const [isStartDatePickerVisible, setStartDatePickerVisibility] =
+    useState(false);
+  const [isEndDatePickerVisible, setEndDatePickerVisibility] = useState(false);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [cost, setCost] = useState(0);
-  const [selectedStartDate, setSelectedStartDate] = useState("");
-  const [selectedEndDate, setSelectedEndDate] = useState("");
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [isInputFocused, setInputFocused] = useState(false);
 
-  const handleFocus = () => {
-    setInputFocused(true);
+  const handleStartDateChange = (formattedDate) => {
+    setStartDate(formattedDate);
   };
 
-  const handleBlur = () => {
-    setInputFocused(false);
+  const handleEndDateChange = (formattedDate) => {
+    setEndDate(formattedDate);
   };
 
-  console.log("date::", date);
-
-  const openModal = () => {
-    setModalVisible(true);
+  const showStartDatePicker = () => {
+    setStartDatePickerVisibility(true);
   };
 
-  const closeModal = () => {
-    setModalVisible(false);
+  const showEndDatePicker = () => {
+    setEndDatePickerVisibility(true);
   };
 
-  const handleDateRangeSelect = (start, end) => {
-    setSelectedStartDate(start);
-    setSelectedEndDate(end);
-    setDate(`${start} - ${end}`);
-    closeModal(); // 날짜 선택 후 모달 닫기
+  const hideStartDatePicker = () => {
+    setStartDatePickerVisibility(false);
   };
 
-  const handleNameChange = (text) => {
-    setName(text);
+  const hideEndDatePicker = () => {
+    setEndDatePickerVisibility(false);
+  };
+
+  const openNoticeMsg = () => {
+    setIsOpenNoticeMsg(!isOpenNoticeMsg);
+  };
+
+  const closeNoticeMsg = () => {
+    setIsOpenNoticeMsg(false);
   };
 
   const formattedMoney = (value) => {
@@ -72,19 +75,19 @@ function Goal({ navigation }) {
   };
 
   useEffect(() => {
-    if (name && cost && date) {
+    if (cost && startDate && endDate) {
       setIsAllFieldsFilled(true);
     } else {
       setIsAllFieldsFilled(false);
     }
-  }, [name, cost, date]);
+  }, [cost, startDate, endDate]);
 
   const postData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
       const bodyData = {
-        start_date: selectedStartDate,
-        end_date: selectedEndDate,
+        start_date: startDate,
+        end_date: endDate,
         cost: cost.replace(/,/g, ""),
       };
 
@@ -94,8 +97,10 @@ function Goal({ navigation }) {
           Authorization: `Bearer ${access_token}`,
         },
       });
-
-      navigation.navigate("FriendsList", { screen: "FriendsList" });
+      if (response.status === 200) {
+        alert("절약 목표를 등록하였습니다.");
+        navigation.goBack();
+      }
     } catch (error) {
       console.error("에러:", error);
     }
@@ -107,60 +112,40 @@ function Goal({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => setIsOpenNoticeMsg(false)}
-        activeOpacity={1}
-      >
+      <TouchableOpacity onPress={closeNoticeMsg} activeOpacity={1}>
         <ScrollView>
           <View style={styles.contentContainer}>
             <Text style={styles.headerText}>절약 목표 설정 </Text>
-            <Text style={styles.label}>절약 목표 내용을 입력해주세요</Text>
-            <Input
-              placeholder={"지출 내용"}
-              inputValue={name}
-              handleInputChange={handleNameChange}
-            />
-            <View>
-              {isOpenNoticeMsg && (
-                <Notice openNoticeMsg={() => setIsOpenNoticeMsg(true)} />
-              )}
-            </View>
             <Text style={styles.label}>지출 목표 금액을 입력해주세요</Text>
             <Input
               placeholder={"지출 금액"}
               inputValue={cost}
               handleInputChange={handleMoneyChange}
             />
-            <Text style={styles.label}>절약 기간을 선택해주세요</Text>
-            <TouchableOpacity
-              style={[
-                styles.calendar,
-                {
-                  borderColor: isInputFocused
-                    ? "#FFA851"
-                    : selectedStartDate
-                    ? "#1F1F1F"
-                    : "#C1C1C1",
-                  borderBottomWidth: isInputFocused
-                    ? 1.5
-                    : selectedStartDate
-                    ? 3
-                    : 1.5,
-                  borderRightWidth: isInputFocused
-                    ? 1.5
-                    : selectedStartDate
-                    ? 3
-                    : 1.5,
-                },
-              ]}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              onPress={openModal}
-            >
-              <Text>
-                {selectedStartDate} - {selectedEndDate}
-              </Text>
-              {/* <DatePickerCalendar onDateRangeSelect={handleDateRangeSelect} /> */}
+            <View>
+              {isOpenNoticeMsg && <Notice openNoticeMsg={openNoticeMsg} />}
+            </View>
+            <Text style={styles.label}>절약 시작 일자를 선택해주세요</Text>
+            <TouchableOpacity onPress={showStartDatePicker}>
+              <DatePicker
+                showDatePicker={showStartDatePicker}
+                hideDatePicker={hideStartDatePicker}
+                isDatePickerVisible={isStartDatePickerVisible}
+                handleDateChange={handleStartDateChange}
+                inputText={"시작 일자:"}
+                title={"시작 일자"}
+              />
+            </TouchableOpacity>
+            <Text style={styles.label}>절약 종료 일자를 선택해주세요</Text>
+            <TouchableOpacity onPress={showEndDatePicker}>
+              <DatePicker
+                showDatePicker={showEndDatePicker}
+                hideDatePicker={hideEndDatePicker}
+                isDatePickerVisible={isEndDatePickerVisible}
+                handleDateChange={handleEndDateChange}
+                title={"종료 일자"}
+                inputText={"종료 일자:"}
+              />
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
               {isAllFieldsFilled ? (
@@ -172,24 +157,6 @@ function Goal({ navigation }) {
           </View>
         </ScrollView>
       </TouchableOpacity>
-
-      {/* 모달 추가 */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={closeModal}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            {/* <Text>날짜를 선택하세요.</Text> */}
-            <DatePickerCalendar onDateRangeSelect={handleDateRangeSelect} />
-            {/* <TouchableOpacity onPress={closeModal}>
-              <Text style={styles.closeModalText}>닫기</Text>
-            </TouchableOpacity> */}
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 }

@@ -229,6 +229,7 @@ function Note({ navigation }) {
                 hideDatePicker={hideDatePicker}
                 isDatePickerVisible={isDatePickerVisible}
                 handleDateChange={handleDateChange}
+                title={"지출 일자"}
               />
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
