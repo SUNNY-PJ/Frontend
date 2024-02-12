@@ -31,7 +31,7 @@ const Top = ({ navigation }) => {
         },
       });
       if (response.status === 200) {
-        const SaveData = response.data;
+        const SaveData = response.data.data;
         console.log("절약 목표 조회::", SaveData);
         setSaveData(true);
         setDay(SaveData.date);
@@ -46,7 +46,7 @@ const Top = ({ navigation }) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [saveData, day, progress]);
 
   useEffect(() => {
     // progress 상태가 변경될 때마다 애니메이션을 실행
