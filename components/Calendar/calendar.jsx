@@ -83,8 +83,6 @@ const CalendarComponent = ({ onDataFetched }) => {
         },
         params,
       });
-      console.log(params);
-
       console.log("데이터:", response.data.data);
       // onDataFetched 함수를 호출하여 데이터를 부모 컴포넌트로 전달
       onDataFetched(response.data.data);
@@ -116,20 +114,20 @@ const CalendarComponent = ({ onDataFetched }) => {
         );
       }}
       theme={{
-        backgroundColor: "#ffffff",
-        calendarBackground: "#ffffff",
+        backgroundColor: "#FFFBF6",
+        calendarBackground: "#FFFBF6",
         textSectionTitleColor: "#b6c1cd",
         textSectionTitleDisabledColor: "#d9e1e8",
         selectedDayBackgroundColor: "#B9F4D6",
         selectedDayTextColor: "#ffffff",
         todayTextColor: "#B9F4D6",
-        dayTextColor: "#2d4150",
+        dayTextColor: "#1F1F1F",
         textDisabledColor: "#d9e1e8",
         dotColor: "#B9F4D6",
         selectedDotColor: "#ffffff",
-        arrowColor: "#B9F4D6",
+        arrowColor: "#1F1F1F",
         disabledArrowColor: "#d9e1e8",
-        monthTextColor: "black",
+        monthTextColor: "#1F1F1F",
         indicatorColor: "#B9F4D6",
         textDayFontWeight: "300",
         textMonthFontWeight: "bold",
@@ -191,6 +189,9 @@ const styles = StyleSheet.create({
     // ...기타 스타일
   },
   calendar: {
+    borderTopWidth: 0,
+    borderRightWidth: 0,
+    borderLeftWidth: 0,
     borderWidth: 4,
     borderColor: "#E9E9E9",
     paddingBottom: 30,
