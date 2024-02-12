@@ -17,6 +17,8 @@ import { proxyUrl } from "../../constant/common";
 import WinModal from "../../components/Modal/battle/win";
 import LoseModal from "../../components/Modal/battle/lose";
 import LeaveMsg from "../../components/Modal/myPage/leaveMsg";
+import SuccessModal from "../../components/Modal/goal/successModal";
+import FailModal from "../../components/Modal/goal/failModal";
 
 const MyPage = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -27,6 +29,7 @@ const MyPage = () => {
   const [profile, setProfile] = useState([]);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const handleConfirm = () => {
     leaveData();
@@ -167,23 +170,6 @@ const MyPage = () => {
 
   const handleLeaveClick = () => {
     setModalVisible(true);
-    // Alert.alert(
-    //   "회원 탈퇴",
-    //   "회원 탈퇴 하시겠습니까?",
-    //   [
-    //     {
-    //       text: "취소",
-    //       style: "cancel",
-    //     },
-    //     {
-    //       text: "확인",
-    //       onPress: () => {
-    //         leaveData();
-    //       },
-    //     },
-    //   ],
-    //   { cancelable: false }
-    // );
   };
 
   return (
@@ -227,7 +213,7 @@ const MyPage = () => {
               </View>
             </View>
           ))}
-          <Line color={"#C1C1C1"} h={4} />
+          {/* <Line color={"#C1C1C1"} h={4} /> */}
           <Text
             style={{
               fontSize: 16,
@@ -240,21 +226,15 @@ const MyPage = () => {
           >
             커뮤니티
           </Text>
-          {/* <TouchableOpacity
-          activeOpacity={0.6}
-          onPress={() =>
-            navigation.navigate("MyInfo", {
-              screen: "MyInfo",
-            })
-          }
-        > */}
           <TouchableOpacity
             activeOpacity={0.6}
             onPress={() => handleTabClick("scrap")}
           >
-            <Text style={styles.description}>스크랩</Text>
+            <Text style={styles.description}>
+              스크랩, 작성글, 작성 댓글 보기
+            </Text>
           </TouchableOpacity>
-          <Line color={"#C1C1C1"} h={1} />
+          {/* <Line color={"#C1C1C1"} h={1} />
           <TouchableOpacity
             activeOpacity={0.6}
             onPress={() => handleTabClick("write")}
@@ -267,7 +247,7 @@ const MyPage = () => {
             onPress={() => handleTabClick("comment")}
           >
             <Text style={styles.description}>작성 댓글</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <Line color={"#C1C1C1"} h={4} />
           <Text
             style={{
@@ -295,7 +275,7 @@ const MyPage = () => {
               marginBottom: 8,
             }}
           >
-            회원
+            기타
           </Text>
           <TouchableOpacity activeOpacity={1} onPress={handleTermsClick}>
             <Text style={styles.description}>이용 약관</Text>
@@ -308,9 +288,9 @@ const MyPage = () => {
           <TouchableOpacity activeOpacity={1} onPress={handleLeaveClick}>
             <Text style={styles.description}>회원 탈퇴</Text>
           </TouchableOpacity>
-          <Line color={"#C1C1C1"} h={4} />
+          <Line color={"#C1C1C1"} h={1} />
         </View>
-        <View
+        {/* <View
           style={{
             flexDirection: "row",
             justifyContent: "center",
@@ -318,15 +298,15 @@ const MyPage = () => {
             marginTop: 16,
           }}
         >
-          <Image
-            source={require("../../assets/myPage_notice.png")}
-            style={{ width: 56, height: 84 }}
-          />
+            <Image
+              source={require("../../assets/myPage_notice.png")}
+              style={{ width: 56, height: 84 }}
+            />
           <Image
             source={require("../../assets/myPage_center.png")}
             style={{ width: 56, height: 84 }}
           />
-        </View>
+        </View> */}
       </ScrollView>
       <LoseModal isOpenProfile={isOpenProfile} openProfile={openProfile} />
       <LeaveMsg
