@@ -3,17 +3,12 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { proxyUrl } from "../../constant/common";
 import { useCommunity } from "../../context/communityContext";
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Board from "./board";
 import Tip from "./tip";
 
 const Community = () => {
   const navigation = useNavigation();
   const { board, tip, setBoard, setTip, setCategory } = useCommunity();
-  const inputURL = "/community/board";
-
-  const url = proxyUrl + inputURL;
 
   const boardClick = () => {
     setBoard(true);
@@ -80,8 +75,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     color: "#C1C1C1",
-    paddingTop: 16,
-    paddingBottom: 9,
+    paddingTop: 9,
+    paddingBottom: 6,
   },
   activeTabText: {
     color: "#1F1F1F",
