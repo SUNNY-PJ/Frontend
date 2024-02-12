@@ -109,7 +109,7 @@ function Note({ navigation }) {
         setMoney("");
         setDate("");
         setName("");
-        navigation.navigate("MainScreen", { screen: "Statistics" }); // 필요에 따라 네비게이션 이동
+        navigation.navigate("MainScreen", { screen: "Statistics" });
       }
     } catch (error) {
       if (error.response) {
