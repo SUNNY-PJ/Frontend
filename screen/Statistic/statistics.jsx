@@ -245,13 +245,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFBF6",
     minHeight: "100%",
   },
-  contentContainer: {
-    // flex: 1,
-  },
-  categoryDataContainer: {
-    // flex: 2,
-    // bottom: 370,
-  },
   image: {
     width: 32,
     height: 32,
@@ -284,12 +277,10 @@ const styles = StyleSheet.create({
     gap: 4,
     alignSelf: "center",
     width: 52,
-    // justifyContent: "center",
   },
   bottomSection: {
     flexDirection: "row",
     paddingLeft: 20,
-    // paddingRight: 20,
     marginBottom: 16,
     marginTop: 16,
   },
@@ -313,15 +304,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     paddingRight: 20,
   },
-  // addIcon: {
-  //   width: 52,
-  //   height: 52,
-  //   transform: [{ translateY }],
-  // },
   addItem: {
     position: "absolute",
     alignItems: "flex-end",
-    bottom: 410,
+    bottom: 390,
     right: 21,
     zIndex: 10,
   },
