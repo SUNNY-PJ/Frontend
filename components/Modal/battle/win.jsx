@@ -14,12 +14,8 @@ import LottieView from "lottie-react-native";
 
 const WinModal = ({ isOpenProfile, openProfile }) => {
   const windowWidth = Dimensions.get("window").width;
-  const windowHeight = Dimensions.get("window").height;
   const animation = useRef(null);
-  useEffect(() => {
-    // You can control the ref programmatically, rather than using autoPlay
-    // animation.current?.play();
-  }, []);
+
   return (
     <View style={styles.container}>
       <Modal animationType="slide" transparent={true} visible={isOpenProfile}>
