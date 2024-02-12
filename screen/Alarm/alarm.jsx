@@ -18,6 +18,8 @@ import Line from "../../components/Line";
 const Alarm = () => {
   const navigation = useNavigation();
   const windowHeight = Dimensions.get("window").height;
+  const [pastData, setPastData] = useState([]);
+  const [recentData, setRecentData] = useState([]);
 
   const fetchData = async () => {
     const inputURL = "/alarm/list";
@@ -31,8 +33,14 @@ const Alarm = () => {
           Authorization: `Bearer ${access_token}`,
         },
       });
-
-      console.log("알림 데이터:", response.data.data);
+      if (response.status === 200) {
+        const AlarmData = response.data.data;
+        console.log("알림 데이터:", AlarmData);
+        const todayData = AlarmData.filter((item) => item.isToday);
+        const pastData = AlarmData.filter((item) => !item.isToday);
+        setRecentData(todayData); // 오늘 날짜 데이터
+        setPastData(pastData); // 과거 날짜 데이터
+      }
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
@@ -74,81 +82,63 @@ const Alarm = () => {
         알림
       </Text>
       <ScrollView style={{ height: windowHeight - 125 - 88 }}>
-        <View style={{ backgroundColor: "#fff" }}>
-          <Text style={styles.dayText}>오늘</Text>
-        </View>
-        <View style={{ backgroundColor: "#fff" }}>
-          <View style={styles.section}>
-            <Image
-              source={require("../../assets/myPage_profile.png")}
-              style={{ width: 60, height: 60 }}
-            />
-            <View>
-              <Text style={styles.titleText}>새로운 댓글이 달렸어요</Text>
-              <Text style={styles.contentText}>댓글 내용입니다아아ㅏㅏ</Text>
-              <View style={styles.bottomSection}>
-                <Text style={styles.nameText}>닉네임</Text>
-                <Text style={styles.dateText}>2023.09.10</Text>
+        {recentData.length > 0 && (
+          <View>
+            <View style={{ backgroundColor: "#fff" }}>
+              <Text style={styles.dayText}>오늘</Text>
+            </View>
+            <View style={{ backgroundColor: "#fff" }}>
+              <View style={styles.section}>
+                <Image
+                  source={require("../../assets/myPage_profile.png")}
+                  style={{ width: 60, height: 60 }}
+                />
+                {recentData.map((item, index) => (
+                  <View>
+                    <Text style={styles.titleText}>
+                      {item.notificationContent}
+                    </Text>
+                    <Text style={styles.contentText}>{item.title}</Text>
+                    <View style={styles.bottomSection}>
+                      <Text style={styles.nameText}>{item.postAuthor}</Text>
+                      <Text style={styles.dateText}>{item.createdAt}</Text>
+                    </View>
+                  </View>
+                ))}
               </View>
+              <Line h={1} color={"#C1C1C1"} />
             </View>
           </View>
-          <Line h={1} color={"#C1C1C1"} />
-        </View>
-        <View style={{ backgroundColor: "#fff" }}>
-          <View style={styles.section}>
-            <Image
-              source={require("../../assets/myPage_profile.png")}
-              style={{ width: 60, height: 60 }}
-            />
-            <View>
-              <Text style={styles.titleText}>새로운 댓글이 달렸어요</Text>
-              <Text style={styles.contentText}>댓글 내용입니다아아ㅏㅏ</Text>
-              <View style={styles.bottomSection}>
-                <Text style={styles.nameText}>닉네임</Text>
-                <Text style={styles.dateText}>2023.09.10</Text>
-              </View>
-            </View>
-          </View>
-          <Line h={1} color={"#C1C1C1"} />
-        </View>
+        )}
         <Line h={2} color={"#C1C1C1"} />
-        <View style={{ backgroundColor: "#fff" }}>
-          <Text style={styles.dayText}>지난 30일</Text>
-        </View>
-        <View style={{ backgroundColor: "#fff" }}>
-          <View style={styles.section}>
-            <Image
-              source={require("../../assets/myPage_profile.png")}
-              style={{ width: 60, height: 60 }}
-            />
-            <View>
-              <Text style={styles.titleText}>새로운 댓글이 달렸어요</Text>
-              <Text style={styles.contentText}>댓글 내용입니다아아ㅏㅏ</Text>
-              <View style={styles.bottomSection}>
-                <Text style={styles.nameText}>닉네임</Text>
-                <Text style={styles.dateText}>2023.09.10</Text>
-              </View>
+        {pastData.length > 0 && (
+          <View>
+            <View style={{ backgroundColor: "#fff" }}>
+              <Text style={styles.dayText}>지난 30일</Text>
+            </View>
+            <View style={{ backgroundColor: "#fff" }}>
+              {pastData.map((item, index) => (
+                <View style={styles.section}>
+                  <Image
+                    source={require("../../assets/myPage_profile.png")}
+                    style={{ width: 60, height: 60 }}
+                  />
+                  <View>
+                    <Text style={styles.titleText}>
+                      {item.notificationContent}
+                    </Text>
+                    <Text style={styles.contentText}>{item.title}</Text>
+                    <View style={styles.bottomSection}>
+                      <Text style={styles.nameText}>{item.postAuthor}</Text>
+                      <Text style={styles.dateText}>{item.createdAt}</Text>
+                    </View>
+                  </View>
+                </View>
+              ))}
+              <Line h={1} color={"#C1C1C1"} />
             </View>
           </View>
-          <Line h={1} color={"#C1C1C1"} />
-        </View>
-        <View style={{ backgroundColor: "#fff" }}>
-          <View style={styles.section}>
-            <Image
-              source={require("../../assets/myPage_profile.png")}
-              style={{ width: 60, height: 60 }}
-            />
-            <View>
-              <Text style={styles.titleText}>새로운 댓글이 달렸어요</Text>
-              <Text style={styles.contentText}>댓글 내용입니다아아ㅏㅏ</Text>
-              <View style={styles.bottomSection}>
-                <Text style={styles.nameText}>닉네임</Text>
-                <Text style={styles.dateText}>2023.09.10</Text>
-              </View>
-            </View>
-          </View>
-          <Line h={1} color={"#C1C1C1"} />
-        </View>
+        )}
       </ScrollView>
     </View>
   );
