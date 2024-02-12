@@ -6,11 +6,12 @@ import "moment/locale/ko";
 
 moment.locale("ko");
 
-const DatePicker = ({
+const DatePicker2 = ({
   isDatePickerVisible,
   showDatePicker,
   hideDatePicker,
   handleDateChange,
+  handleDateValueChange,
   title,
   inputText,
   showDayOfWeek,
@@ -31,22 +32,28 @@ const DatePicker = ({
 
   const handleConfirm = (date) => {
     const currentDate = new Date();
-    const selectedDate = new Date(date);
+    const selectedDate = new Date(date.setHours(0, 0, 0, 0));
+    currentDate.setHours(0, 0, 0, 0);
 
-    if (selectedDate > currentDate) {
-      // 현재 날짜 이후의 날짜를 선택한 경우
-      Alert.alert(
-        "잘못된 날짜 선택",
-        "지출 일자가 올바르지 않습니다.\n 다시 선택해주세요."
-      );
-      hideDatePicker();
-    } else {
+    // 사용자가 현재 날짜 이전을 선택했는지 검사합니다.
+    if (selectedDate >= currentDate) {
       // 올바른 날짜를 선택한 경우
-      const dateFormat = showDayOfWeek ? "YYYY.MM.DD ddd" : "YYYY.MM.DD";
-      const formattedDate = moment(selectedDate).format(dateFormat);
+      const dateFormat = showDayOfWeek ? "YYYY.MM.DD dddd" : "YYYY.MM.DD";
+      const formattedNoDayDate = moment(selectedDate).format("YYYY.MM.DD");
+      const formattedDate = moment(selectedDate)
+        .locale("ko")
+        .format(dateFormat);
       setSelectedDate(formattedDate);
       hideDatePicker();
       handleDateChange(formattedDate);
+      handleDateValueChange(formattedNoDayDate);
+    } else {
+      // 현재 날짜 이후의 날짜를 선택한 경우
+      Alert.alert(
+        "잘못된 날짜 선택",
+        "과거의 날짜는 선택할 수 없습니다.\n다시 선택해주세요."
+      );
+      hideDatePicker();
     }
   };
 
@@ -114,4 +121,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DatePicker;
+export default DatePicker2;

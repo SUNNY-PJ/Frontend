@@ -15,6 +15,7 @@ import LargeBtn from "../components/Btn/largeBtn";
 import Notice from "../components/Modal/notice";
 import DatePicker from "../components/DatePicker/datePicker";
 import { proxyUrl } from "./common";
+import DatePicker2 from "../components/DatePicker/datePicker2";
 
 function Goal({ navigation }) {
   const inputURL = "/save";
@@ -27,15 +28,27 @@ function Goal({ navigation }) {
     useState(false);
   const [isEndDatePickerVisible, setEndDatePickerVisibility] = useState(false);
   const [startDate, setStartDate] = useState("");
+  const [startDateVal, setStartDateVal] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [endDateVal, setEndDateVal] = useState("");
   const [cost, setCost] = useState(0);
+
+  console.log(startDate);
 
   const handleStartDateChange = (formattedDate) => {
     setStartDate(formattedDate);
   };
 
+  const handleStartDateValChange = (formattedDate) => {
+    setStartDateVal(formattedDate);
+  };
+
   const handleEndDateChange = (formattedDate) => {
     setEndDate(formattedDate);
+  };
+
+  const handleEndDateValChange = (formattedDate) => {
+    setEndDateVal(formattedDate);
   };
 
   const showStartDatePicker = () => {
@@ -92,10 +105,12 @@ function Goal({ navigation }) {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
       const bodyData = {
-        start_date: startDate,
-        end_date: endDate,
+        start_date: startDateVal,
+        end_date: endDateVal,
         cost: cost.replace(/,/g, ""),
       };
+
+      console.log("????", bodyData);
 
       const response = await axios.post(url, bodyData, {
         headers: {
@@ -106,7 +121,11 @@ function Goal({ navigation }) {
       if (response.status === 200) {
         Alert.alert("절약 목표를 등록하였습니다.");
         navigation.goBack();
+        console.log(response.data.data);
+      } else {
+        alert("서버에 장애가 발생하였습니다.");
       }
+      console.log("목표 등록");
     } catch (error) {
       console.error("에러:", error);
     }
@@ -133,11 +152,12 @@ function Goal({ navigation }) {
             </View>
             <Text style={styles.label}>절약 시작 일자를 선택해주세요</Text>
             <TouchableOpacity onPress={showStartDatePicker}>
-              <DatePicker
+              <DatePicker2
                 showDatePicker={showStartDatePicker}
                 hideDatePicker={hideStartDatePicker}
                 isDatePickerVisible={isStartDatePickerVisible}
                 handleDateChange={handleStartDateChange}
+                handleDateValueChange={handleStartDateValChange}
                 inputText={"시작 일자:"}
                 title={"시작 일자"}
                 showDayOfWeek={true}
@@ -145,11 +165,12 @@ function Goal({ navigation }) {
             </TouchableOpacity>
             <Text style={styles.label}>절약 종료 일자를 선택해주세요</Text>
             <TouchableOpacity onPress={showEndDatePicker}>
-              <DatePicker
+              <DatePicker2
                 showDatePicker={showEndDatePicker}
                 hideDatePicker={hideEndDatePicker}
                 isDatePickerVisible={isEndDatePickerVisible}
                 handleDateChange={handleEndDateChange}
+                handleDateValueChange={handleEndDateValChange}
                 title={"종료 일자"}
                 inputText={"종료 일자:"}
                 showDayOfWeek={true}
