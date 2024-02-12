@@ -87,8 +87,8 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "#6ADCA3",
     borderRadius: 24,
-    borderColor: "#1F1F1F",
-    borderRightWidth: 1.5,
+    // borderColor: "#1F1F1F",
+    // borderRightWidth: 1.5,
   },
   progressText: {
     // marginLeft: -20,
