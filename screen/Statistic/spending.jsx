@@ -45,6 +45,34 @@ const Spending = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            gap: 116,
+            marginTop: 15,
+            marginBottom: 6,
+          }}
+        >
+          <TouchableOpacity onPress={statisticsClick} activeOpacity={0.6}>
+            <Text style={[styles.tabText, statistics && styles.activeTabText]}>
+              지출 통계
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={historyClick} activeOpacity={0.6}>
+            <Text style={[styles.tabText, history && styles.activeTabText]}>
+              지출 내역
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.tabBar}>
+          <View
+            style={[styles.tabBarLine, statistics && styles.activeTabBarLine]}
+          />
+          <View
+            style={[styles.tabBarLine, history && styles.activeTabBarLine]}
+          />
+        </View>
         {!history && (
           <View
             style={{
@@ -72,35 +100,6 @@ const Spending = () => {
             </TouchableOpacity>
           </View>
         )}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            gap: 116,
-            marginTop: 15,
-            marginBottom: 6,
-          }}
-        >
-          <TouchableOpacity onPress={statisticsClick} activeOpacity={0.6}>
-            <Text style={[styles.tabText, statistics && styles.activeTabText]}>
-              지출 통계
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={historyClick} activeOpacity={0.6}>
-            <Text style={[styles.tabText, history && styles.activeTabText]}>
-              지출 내역
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.tabBar}>
-          <View
-            style={[styles.tabBarLine, statistics && styles.activeTabBarLine]}
-          />
-          <View
-            style={[styles.tabBarLine, history && styles.activeTabBarLine]}
-          />
-        </View>
         {statistics && <Statistics year={year} month={month} />}
         {history && <History />}
       </View>
