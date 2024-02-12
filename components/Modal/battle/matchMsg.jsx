@@ -7,8 +7,8 @@ import {
   Modal,
   TouchableOpacity,
 } from "react-native";
-import MiddleBtn from "../Btn/middleBtn";
-import MiddleBtnBlack from "../Btn/middleBtnBlack";
+import MiddleBtn from "../../Btn/middleBtn";
+import MiddleBtnBlack from "../../Btn/middleBtnBlack";
 
 const MatchMsg = ({ isVisible, toggleModal }) => {
   return (
