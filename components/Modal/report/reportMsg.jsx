@@ -10,7 +10,7 @@ import {
 import MiddleBtn from "../../Btn/middleBtn";
 import MiddleBtnBlack from "../../Btn/middleBtnBlack";
 
-const ReportMsg = ({ isVisible, toggleModal, onDelete, onCancel }) => {
+const ReportMsg = ({ isVisible, onSubmit, onCancel }) => {
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible}>
       <View
@@ -31,7 +31,7 @@ const ReportMsg = ({ isVisible, toggleModal, onDelete, onCancel }) => {
           </View>
           <Text style={styles.title}>신고를 진행할까요?</Text>
           <View style={styles.buttonContainer}>
-            <MiddleBtn text={"네"} onClick={onDelete} />
+            <MiddleBtn text={"네"} onClick={onSubmit} />
             <MiddleBtnBlack text={"아니오"} onClick={onCancel} />
           </View>
         </View>
