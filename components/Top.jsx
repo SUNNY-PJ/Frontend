@@ -96,13 +96,15 @@ const Top = ({ navigation }) => {
             ) : (
               <Text
                 style={{
-                  fontSize: 16,
-                  fontWeight: 900,
+                  fontSize: 15,
+                  fontWeight: 500,
                   color: "#1F1F1F",
-                  transform: [{ translateY: 0 }, { translateX: 15 }],
+                  alignSelf: "center",
+                  marginTop: 1,
                 }}
               >
-                절약 목표를 설정해보세요!
+                <Text style={{ fontWeight: "900" }}>절약 목표</Text>를
+                설정해보세요!
               </Text>
             )}
           </View>
@@ -172,6 +174,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: "#1F1F1F",
     overflow: "hidden",
+    backgroundColor: "#fff",
   },
   progressFill: {
     position: "absolute",
