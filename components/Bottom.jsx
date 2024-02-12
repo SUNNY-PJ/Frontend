@@ -11,12 +11,9 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-// const Bottom = ({ navigation }) => {
 const Bottom = () => {
   const windowWidth = Dimensions.get("window").width;
   const navigation = useNavigation();
-  const [iconVisible, setIconVisible] = useState(false);
-
   const [selectedIcon, setSelectedIcon] = useState("Note");
 
   const imageSource =
@@ -45,10 +42,6 @@ const Bottom = () => {
     }
   };
 
-  const handleMainIcon = () => {
-    setIconVisible(!iconVisible);
-  };
-
   // default 아이콘 선택 값
   useEffect(() => {
     if (!selectedIcon) {
@@ -65,31 +58,7 @@ const Bottom = () => {
           bottom: 130,
           alignSelf: "center",
         }}
-      >
-        {/* 중앙 아이콘 navigate 경로 */}
-        {iconVisible && (
-          <View style={{ flexDirection: "row", gap: 40 }}>
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() => navigation.navigate("Spending")}
-            >
-              <Image
-                source={require("../assets/lefrBtn.png")}
-                style={{ width: 64, height: 80 }}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() => navigation.navigate("Community")}
-            >
-              <Image
-                source={require("../assets/rightBtn.png")}
-                style={{ width: 64, height: 80 }}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
+      ></View>
       <ImageBackground
         source={require("../assets/bottom.png")}
         style={[styles.container, { width: windowWidth }]}
@@ -135,7 +104,10 @@ const Bottom = () => {
           activeOpacity={1}
           style={styles.menuItem}
           // onPress={handleMainIcon}
-          onPress={() => navigation.navigate("Spending")}
+          onPress={() => {
+            setSelectedIcon(null);
+            navigation.navigate("Spending");
+          }}
         >
           <Image
             source={require("../assets/bottomIcon.png")}

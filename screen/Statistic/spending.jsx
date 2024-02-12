@@ -51,7 +51,6 @@ const Spending = () => {
             justifyContent: "center",
             gap: 116,
             marginTop: 15,
-            marginBottom: 6,
           }}
         >
           <TouchableOpacity onPress={statisticsClick} activeOpacity={0.6}>
