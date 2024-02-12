@@ -225,7 +225,6 @@ const Statistics = ({ year, month }) => {
             ))}
         </ScrollView>
       </View>
-
       <TouchableOpacity
         activeOpacity={1}
         style={styles.addItem}
@@ -322,7 +321,7 @@ const styles = StyleSheet.create({
   addItem: {
     position: "absolute",
     alignItems: "flex-end",
-    bottom: 370,
+    bottom: 410,
     right: 21,
     zIndex: 10,
   },
