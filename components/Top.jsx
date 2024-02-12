@@ -8,9 +8,9 @@ import {
   Animated,
 } from "react-native";
 import * as Notifications from "expo-notifications";
-import { proxyUrl } from "./common";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { proxyUrl } from "../constant/common";
 
 const Top = ({ navigation }) => {
   const inputURL = "/save";
