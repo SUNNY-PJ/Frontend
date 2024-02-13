@@ -10,9 +10,6 @@ import {
 import { TabView, SceneMap } from "react-native-tab-view";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
-import { proxyUrl } from "../../constant/common";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import MyScrap from "./myScrap";
 import MyWrite from "./myWrite";
 import MyComment from "./myComment";
@@ -20,8 +17,6 @@ import MyComment from "./myComment";
 const MyInfo = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const inputURL = `/users`;
-  const url = proxyUrl + inputURL;
   const activeTabVal = route.params?.activeTab || "scrap";
   const initialLayout = { width: Dimensions.get("window").width };
   const [activeTab, setActiveTab] = useState(activeTabVal);
@@ -73,33 +68,9 @@ const MyInfo = () => {
     comment: MyComment,
   });
 
-  const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
-
-    try {
-      const response = await axios.get(url, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
-
-      console.log("프로필 정보:::", response.data);
-      const profileData = response.data;
-      setProfile([profileData]);
-    } catch (error) {
-      console.error("에러:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
     <View style={styles.container}>
-      <View style={{ paddingLeft: 20 }}>
+      <View style={{}}>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("MyPage", {
@@ -109,47 +80,22 @@ const MyInfo = () => {
         >
           <Image
             source={require("../../assets/prevBtn.png")}
-            style={{ width: 24, height: 24, marginTop: 16 }}
+            style={{ width: 24, height: 24, marginTop: 16, marginLeft: 20 }}
           />
         </TouchableOpacity>
+        <Text
+          style={{
+            fontSize: 16,
+            color: "#1F1F1F",
+            fontWeight: 700,
+            alignSelf: "center",
+            bottom: 17,
+          }}
+        >
+          커뮤니티
+        </Text>
       </View>
       <View style={styles.contentContainer}>
-        {profile.map((item, index) => (
-          <View
-            style={{
-              flexDirection: "row",
-              marginTop: 24,
-              marginBottom: 16,
-              paddingLeft: 20,
-              gap: 24,
-            }}
-            key={item.id}
-          >
-            <Image
-              source={{ uri: item.profile }}
-              style={{ width: 56, height: 56, borderRadius: 50 }}
-            />
-            <View style={{ gap: 8 }}>
-              <Text style={styles.name}>{item.name}</Text>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={() =>
-                  navigation.navigate("SettingProfile", {
-                    screen: "SettingProfile",
-                  })
-                }
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={styles.setting}>프로필 설정</Text>
-                  <Image
-                    source={require("../../assets/myPage_setting.png")}
-                    style={{ width: 16, height: 16, padding: 2, top: 2 }}
-                  />
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-        ))}
         <TabView
           navigationState={{ index, routes }}
           renderScene={renderScene}
@@ -240,7 +186,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFBF6",
     minHeight: "100%",
   },
-  contentContainer: {},
   section: {
     flexDirection: "row",
     justifyContent: "space-between",
