@@ -44,8 +44,10 @@ const MyPage = () => {
     setIsOpenProfile(!isOpenProfile);
   };
 
-  const handleWinModalClick = () => {
-    openProfile();
+  const handldSettingAlarmClick = () => {
+    navigation.navigate("MainScreen", {
+      screen: "SettingAlarm",
+    });
   };
 
   // 프로필 정보
@@ -261,7 +263,10 @@ const MyPage = () => {
           >
             알림
           </Text>
-          <TouchableOpacity activeOpacity={0.6} onPress={handleWinModalClick}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={handldSettingAlarmClick}
+          >
             <Text style={styles.description}>알림 설정</Text>
           </TouchableOpacity>
           <Line color={"#C1C1C1"} h={4} />
