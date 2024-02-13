@@ -44,7 +44,7 @@ const MatchMsg = ({ isVisible, toggleModal }) => {
               <Text style={styles.textValue}>맘스터치 기프티콘</Text>
             </View>
             <View style={styles.textRow}>
-              <Text style={styles.textLabel}>대결 기간/보상</Text>
+              <Text style={styles.textLabel}>대결 기간/금액</Text>
               <Text style={styles.textValue}>7일</Text>
               <Text style={styles.textValue}>150,000원</Text>
             </View>
