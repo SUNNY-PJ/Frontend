@@ -36,6 +36,7 @@ import Alarm from "./screen/Alarm/alarm";
 import Report from "./screen/report/report";
 import Terms from "./screen/terms/terms";
 import SettingAlarm from "./screen/MyPage/settingAlarm";
+import SendMatch from "./screen/Battle/sendMatch";
 // import ChatRoom from "./screen/Chat/chatRoom";
 
 const Stack = createStackNavigator();
@@ -103,6 +104,7 @@ function MainScreen() {
         <Stack.Screen name="Report" component={Report} />
         <Stack.Screen name="Terms" component={Terms} />
         <Stack.Screen name="SettingAlarm" component={SettingAlarm} />
+        <Stack.Screen name="SendMatch" component={SendMatch} />
         {/* <Stack.Screen name="Winner" component={Winner} /> */}
       </Stack.Navigator>
       <Bottom />

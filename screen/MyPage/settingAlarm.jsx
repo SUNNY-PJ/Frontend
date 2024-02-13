@@ -44,7 +44,7 @@ const SettingAlarm = () => {
             color: "#1F1F1F",
             fontWeight: 700,
             alignSelf: "center",
-            bottom: 17,
+            bottom: 20,
           }}
         >
           알림 설정
