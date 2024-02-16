@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { proxyUrl } from "../../constant/common";
+import Line from "../../components/Line";
 
 const BattleStatus = ({ navigation }) => {
   const [progress, setProgress] = useState(50);
@@ -42,82 +43,100 @@ const BattleStatus = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ marginTop: 70, marginBottom: 24 }}>
-        <Text style={[styles.topText, { marginTop: 0 }]}>
-          oo을 걸고
-          {"\n"}MM월 DD일까지 NNN,NNN원 쓰기
+      <View style={styles.section}>
+        <Text style={[styles.boldText, { textAlign: "center" }]}>
+          oo <Text style={[styles.text]}>을 걸고</Text>
+          {"\n"}MM월 DD일
+          <Text style={[styles.text]}>까지</Text> NNN,NNN원
+          <Text style={[styles.text]}>&nbsp;쓰기</Text>
         </Text>
       </View>
       <Line h={2} color={"#1F1F1F"} />
       <ScrollView>
-        <Text>D - NN</Text>
-        <Text>나는</Text>
-        <View
-          style={{
-            alignSelf: "center",
-            width: 300,
-            height: 32,
-            borderRadius: 32,
-            borderWidth: 1.5,
-          }}
-        >
+        <View style={{ alignItems: "center" }}>
+          <Text style={[styles.boldText]}>D - NN</Text>
+          <Text style={[styles.boldText, { marginTop: 13, marginBottom: 10 }]}>
+            나는
+          </Text>
           <View
-            style={[
-              styles.progressFill,
-              {
-                width: `${progress}%`,
-              },
-            ]}
-          />
-          <Image
-            source={require("../../assets/barIcon.png")}
             style={{
-              width: 32,
-              height: 32,
               alignSelf: "center",
-              //   zIndex: 10,
+              width: 300,
+              height: 32,
+              borderRadius: 32,
+              borderWidth: 1.5,
+            }}
+          >
+            <View
+              style={[
+                styles.progressFill,
+                {
+                  width: `${progress}%`,
+                },
+              ]}
+            />
+            <Image
+              source={require("../../assets/barIcon.png")}
+              style={{
+                width: 32,
+                height: 32,
+                alignSelf: "center",
+              }}
+            />
+          </View>
+          <Text style={[styles.boldText]}>
+            NN% <Text style={[styles.text]}>남았어요</Text>
+          </Text>
+          <Image
+            source={require("../../assets/VSIcon.png")}
+            style={{
+              width: 51,
+              height: 64,
+              alignSelf: "center",
+              marginTop: 25,
+              marginBottom: 11,
             }}
           />
-        </View>
-        <Text>NN% 남았어요</Text>
-        <Image
-          source={require("../../assets/VSIcon.png")}
-          style={{
-            width: 51,
-            height: 64,
-            alignSelf: "center",
-          }}
-        />
-        <Text>민규는 남았어요</Text>
-        <View
-          style={{
-            alignSelf: "center",
-            width: 300,
-            height: 32,
-            borderRadius: 32,
-            borderWidth: 1.5,
-          }}
-        >
+          <Text style={[styles.boldText, { marginBottom: 10 }]}>민규는</Text>
           <View
-            style={[
-              styles.progressFill,
-              {
-                width: `${progress}%`,
-              },
-            ]}
-          />
-          <Image
-            source={require("../../assets/barIcon.png")}
             style={{
-              width: 32,
-              height: 32,
               alignSelf: "center",
-              //   zIndex: 10,
+              width: 300,
+              height: 32,
+              borderRadius: 32,
+              borderWidth: 1.5,
             }}
-          />
+          >
+            <View
+              style={[
+                styles.progressFill,
+                {
+                  width: `${progress}%`,
+                },
+              ]}
+            />
+            <Image
+              source={require("../../assets/barIcon.png")}
+              style={{
+                width: 32,
+                height: 32,
+                alignSelf: "center",
+                //   zIndex: 10,
+              }}
+            />
+          </View>
+          <Text style={[styles.boldText]}>
+            NN% <Text style={[styles.text]}>남았어요</Text>
+          </Text>
+          <Text
+            style={[
+              styles.subText,
+              { textDecorationLine: "underline", marginTop: 40 },
+            ]}
+          >
+            포기하기
+          </Text>
         </View>
-        <Text>NN% 남았어요</Text>
-        <Text>포기하기</Text>
       </ScrollView>
     </View>
   );
@@ -128,11 +147,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFBF6",
     height: "100%",
   },
-  contentContainer: {
-    marginTop: 25,
-    marginBottom: 40,
-    paddingLeft: 28,
-    paddingRight: 27,
+  section: {
+    paddingTop: 22,
+    paddingBottom: 14,
+    backgroundColor: "#fff",
+    alignItems: "center",
+  },
+  boldText: {
+    fontSize: 22,
+    fontWeight: 900,
+    color: "#1F1F1F",
+    marginTop: 14,
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: 500,
+    color: "#1F1F1F",
+  },
+  subText: {
+    fontSize: 16,
+    fontWeight: 700,
+    color: "#5C5C5C",
   },
 });
 
