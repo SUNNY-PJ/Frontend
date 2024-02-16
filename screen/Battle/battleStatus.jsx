@@ -9,9 +9,9 @@ import {
 } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { proxyUrl } from "./common";
+import { proxyUrl } from "../../constant/common";
 
-function BattleStatus({ navigation }) {
+const BattleStatus = ({ navigation }) => {
   const [progress, setProgress] = useState(50);
 
   const inputURL = "";
@@ -121,7 +121,7 @@ function BattleStatus({ navigation }) {
       </ScrollView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
