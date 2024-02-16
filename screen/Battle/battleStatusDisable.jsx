@@ -12,7 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { proxyUrl } from "../../constant/common";
 import Line from "../../components/Line";
 
-const BattleStatus = ({ navigation }) => {
+const BattleStatusDisable = ({ navigation }) => {
   const [progress, setProgress] = useState(50);
 
   const inputURL = "";
@@ -54,7 +54,11 @@ const BattleStatus = ({ navigation }) => {
       <Line h={2} color={"#1F1F1F"} />
       {/* <ScrollView> */}
       <View style={{ alignItems: "center" }}>
-        <Text style={[styles.boldText]}>D - NN</Text>
+        <Text
+          style={[styles.boldSmallText, { marginBottom: 16, marginTop: 25 }]}
+        >
+          친구의 탈퇴로 대결이 자동 종료되었어요
+        </Text>
         <Text style={[styles.boldText, { marginTop: 13, marginBottom: 10 }]}>
           나는
         </Text>
@@ -88,7 +92,7 @@ const BattleStatus = ({ navigation }) => {
           NN% <Text style={[styles.text]}>남았어요</Text>
         </Text>
         <Image
-          source={require("../../assets/VSIcon.png")}
+          source={require("../../assets/VSIconDisable.png")}
           style={{
             width: 51,
             height: 64,
@@ -156,13 +160,19 @@ const styles = StyleSheet.create({
   boldText: {
     fontSize: 22,
     fontWeight: 900,
+    color: "#C1C1C1",
+    marginTop: 14,
+  },
+  boldSmallText: {
+    fontSize: 16,
+    fontWeight: 900,
     color: "#1F1F1F",
     marginTop: 14,
   },
   text: {
     fontSize: 20,
     fontWeight: 500,
-    color: "#1F1F1F",
+    color: "#C1C1C1",
   },
   subText: {
     fontSize: 16,
@@ -171,4 +181,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BattleStatus;
+export default BattleStatusDisable;
