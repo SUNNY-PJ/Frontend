@@ -11,10 +11,9 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { proxyUrl } from "../../constant/common";
 import Line from "../../components/Line";
+import Progress from "../../components/progress/progress";
 
 const BattleStatus = ({ navigation }) => {
-  const [progress, setProgress] = useState(50);
-
   const inputURL = "";
   const cleanedURL = inputURL.replace(/[\u200B]/g, "");
   const url = proxyUrl + cleanedURL;
@@ -58,32 +57,7 @@ const BattleStatus = ({ navigation }) => {
         <Text style={[styles.boldText, { marginTop: 13, marginBottom: 10 }]}>
           나는
         </Text>
-        <View
-          style={{
-            alignSelf: "center",
-            width: 300,
-            height: 32,
-            borderRadius: 32,
-            borderWidth: 1.5,
-          }}
-        >
-          <View
-            style={[
-              styles.progressFill,
-              {
-                width: `${progress}%`,
-              },
-            ]}
-          />
-          <Image
-            source={require("../../assets/barIcon.png")}
-            style={{
-              width: 32,
-              height: 32,
-              alignSelf: "center",
-            }}
-          />
-        </View>
+        <Progress progress={80} color={"#6ADCA3"} />
         <Text style={[styles.boldText]}>
           NN% <Text style={[styles.text]}>남았어요</Text>
         </Text>
@@ -98,33 +72,7 @@ const BattleStatus = ({ navigation }) => {
           }}
         />
         <Text style={[styles.boldText, { marginBottom: 10 }]}>민규는</Text>
-        <View
-          style={{
-            alignSelf: "center",
-            width: 300,
-            height: 32,
-            borderRadius: 32,
-            borderWidth: 1.5,
-          }}
-        >
-          <View
-            style={[
-              styles.progressFill,
-              {
-                width: `${progress}%`,
-              },
-            ]}
-          />
-          <Image
-            source={require("../../assets/barIcon.png")}
-            style={{
-              width: 32,
-              height: 32,
-              alignSelf: "center",
-              //   zIndex: 10,
-            }}
-          />
-        </View>
+        <Progress progress={30} color={"#FAC337"} />
         <Text style={[styles.boldText]}>
           NN% <Text style={[styles.text]}>남았어요</Text>
         </Text>

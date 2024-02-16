@@ -1,13 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  Animated,
-} from "react-native";
+import { View, StyleSheet, Image, Animated } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 const Progress = ({ progress, color }) => {
   const progressAnim = useRef(new Animated.Value(0)).current;
@@ -27,55 +20,48 @@ const Progress = ({ progress, color }) => {
 
   const imageLeft = progressAnim.interpolate({
     inputRange: [0, 100],
-    outputRange: [0, 260], // 300 (전체 너비) - 32 (이미지 너비) = 268
+    outputRange: [0, 268], // 전체 너비에서 이미지 너비를 뺀 값
   });
 
   return (
-    <>
-      <View
+    <View
+      style={{
+        alignSelf: "center",
+        width: 300,
+        height: 32,
+        borderRadius: 32,
+        borderWidth: 1.5,
+        backgroundColor: "#fff",
+        position: "relative",
+      }}
+    >
+      <Animated.View
         style={{
-          alignSelf: "center",
-          width: 300,
-          height: 32,
-          borderRadius: 32,
-          borderWidth: 1.5,
-          backgroundColor: "#fff",
-          position: "relative",
+          width: progressWidth,
+          height: "100%",
         }}
       >
-        <Animated.View
-          style={[
-            styles.progressFill,
-            {
-              width: progressWidth,
-              backgroundColor: color,
-            },
-          ]}
-        />
-        <Image
-        <Animated.Image
-          source={require("../../assets/barIcon.png")}
+        <LinearGradient
+          colors={["#fff", color]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
           style={{
-            width: 32,
-            height: 32,
-            position: "absolute",
-            left: imageLeft,
+            height: "100%",
+            borderRadius: 29,
           }}
         />
-      </View>
-    </>
+      </Animated.View>
+      <Animated.Image
+        source={require("../../assets/barIcon.png")}
+        style={{
+          width: 32,
+          height: 32,
+          position: "absolute",
+          left: imageLeft,
+        }}
+      />
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  progressFill: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    height: "100%",
-    borderBottomLeftRadius: 29,
-    borderTopLeftRadius: 29,
-  },
-});
 
 export default Progress;
