@@ -63,7 +63,7 @@ const BattleStatusDisable = ({ navigation }) => {
         <Text style={[styles.boldText, { marginTop: 13, marginBottom: 10 }]}>
           나는
         </Text>
-        <Progress progress={30} color={"#C1C1C1"} />
+        <Progress progress={50} color={"#C1C1C1"} />
         <Text style={[styles.boldText]}>
           NN% <Text style={[styles.text]}>남았어요</Text>
         </Text>
@@ -78,7 +78,7 @@ const BattleStatusDisable = ({ navigation }) => {
           }}
         />
         <Text style={[styles.boldText, { marginBottom: 10 }]}>민규는</Text>
-        <Progress progress={30} color={"#C1C1C1"} />
+        <Progress progress={50} color={"#C1C1C1"} />
         <Text style={[styles.boldText]}>
           NN% <Text style={[styles.text]}>남았어요</Text>
         </Text>
