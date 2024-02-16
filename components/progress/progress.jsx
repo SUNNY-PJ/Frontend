@@ -13,18 +13,21 @@ const Progress = ({ progress, color }) => {
   const progressAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // progress 상태가 변경될 때마다 애니메이션을 실행
     Animated.timing(progressAnim, {
-      toValue: progress, // 최종 값은 progress 상태 값으로 설정
-      duration: 500, // 애니메이션 지속 시간
-      useNativeDriver: false, // width 속성을 애니메이션하기 때문에 false로 설정
+      toValue: progress,
+      duration: 500,
+      useNativeDriver: false,
     }).start();
   }, [progress]);
 
-  // progressAnim 값을 width 퍼센테이지로 변환
   const progressWidth = progressAnim.interpolate({
     inputRange: [0, 100],
     outputRange: ["0%", "100%"],
+  });
+
+  const imageLeft = progressAnim.interpolate({
+    inputRange: [0, 100],
+    outputRange: [0, 260], // 300 (전체 너비) - 32 (이미지 너비) = 268
   });
 
   return (
@@ -37,6 +40,7 @@ const Progress = ({ progress, color }) => {
           borderRadius: 32,
           borderWidth: 1.5,
           backgroundColor: "#fff",
+          position: "relative",
         }}
       >
         <Animated.View
@@ -49,11 +53,13 @@ const Progress = ({ progress, color }) => {
           ]}
         />
         <Image
+        <Animated.Image
           source={require("../../assets/barIcon.png")}
           style={{
             width: 32,
             height: 32,
-            alignSelf: "center",
+            position: "absolute",
+            left: imageLeft,
           }}
         />
       </View>
@@ -67,8 +73,8 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     height: "100%",
-    backgroundColor: "#FFA851",
-    borderRadius: 29,
+    borderBottomLeftRadius: 29,
+    borderTopLeftRadius: 29,
   },
 });
 
