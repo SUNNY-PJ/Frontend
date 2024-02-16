@@ -8,10 +8,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import RegularBtnOrange from "../../Btn/regularBtnOrange";
+import Progress from "../../progress/progress";
 
-const GoalMsg = ({ isOpenGoalMessage, openGoalMessage }) => {
-  const [progress, setProgress] = useState(50);
-
+const GoalMsg = ({ isOpenGoalMessage, openGoalMessage, percentage, cost }) => {
   return (
     <Modal animationType="slide" transparent={true} visible={isOpenGoalMessage}>
       <View
@@ -24,40 +23,10 @@ const GoalMsg = ({ isOpenGoalMessage, openGoalMessage }) => {
       >
         <View style={styles.container}>
           <View style={styles.content}>
-            <Image
-              source={require("../../../assets/30bar.png")}
-              style={{ width: 300, height: 32, alignSelf: "center" }}
-            />
-            <View
-              style={{
-                alignSelf: "center",
-                width: 300,
-                height: 32,
-                borderRadius: 32,
-                borderWidth: 1.5,
-              }}
-            >
-              <View
-                style={[
-                  styles.progressFill,
-                  {
-                    width: `${progress}%`,
-                  },
-                ]}
-              />
-              <Image
-                source={require("../../../assets/barIcon.png")}
-                style={{
-                  width: 32,
-                  height: 32,
-                  alignSelf: "center",
-                  //   zIndex: 10,
-                }}
-              />
-            </View>
+            <Progress progress={percentage} color={""} />
             <Text style={styles.title}>
-              목표금액 150,000원까지 {"\n"}
-              벌써 30%에 도달 했어요!
+              목표금액 {cost}원까지 {"\n"}
+              벌써 {percentage}%에 도달 했어요!
             </Text>
             <TouchableOpacity onPress={openGoalMessage} activeOpacity={0.6}>
               <RegularBtnOrange text={"확인"} />
