@@ -68,7 +68,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
 
   // 친구인지 아닌지 확인
   const confirmData = async () => {
-    const inputURL = `/api/v1/friends/${friendId}`;
+    const inputURL = `/friends/${friendId}`;
     const url = proxyUrl + inputURL;
     const access_token = await AsyncStorage.getItem("access_token");
 
@@ -113,7 +113,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
 
   // 친구 신청
   const postData = async () => {
-    const inputURL = `/api/v1/friends/${friendId}`;
+    const inputURL = `/friends/${friendId}`;
     const url = proxyUrl + inputURL;
     const access_token = await AsyncStorage.getItem("access_token");
 
@@ -158,7 +158,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   // 친구 끊기
   const deleteFriendData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
-    const inputURL = `/api/v1/friends/${friendId}`;
+    const inputURL = `/friends/${friendId}`;
     const url = proxyUrl + inputURL;
 
     try {

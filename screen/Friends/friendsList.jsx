@@ -18,7 +18,7 @@ import FriendsComponent from "./friendsComponent";
 function FriendsList() {
   const navigation = useNavigation();
   const route = useRoute();
-  const inputURL = `/api/v1/friends`;
+  const inputURL = `/friends`;
   const url = proxyUrl + inputURL;
 
   const [isFriendsComponentVisible1, setIsFriendsComponentVisible1] =
@@ -107,23 +107,23 @@ function FriendsList() {
         ) : (
           <Line color={"#1F1F1F"} h={2} />
         )}
-        {isFriendsComponentVisible1 && (
-          <FriendsComponent Data={[]} />
-        )}
+        {isFriendsComponentVisible1 && <FriendsComponent Data={[]} />}
         {/* 친구 신청 목록 */}
         <TouchableOpacity onPress={toggleFriendsComponent2} activeOpacity={1}>
           <View style={{ ...styles.titleSection, paddingTop: 24 }}>
             <Text style={styles.title}>친구 신청</Text>
-            <Image
-              source={require("../../assets/arrowUp.png")}
-              style={{
-                width: 24,
-                height: 24,
-                transform: [
-                  { rotate: isFriendsComponentVisible2 ? "180deg" : "0deg" },
-                ],
-              }}
-            />
+            <TouchableOpacity>
+              <Image
+                source={require("../../assets/arrowUp.png")}
+                style={{
+                  width: 24,
+                  height: 24,
+                  transform: [
+                    { rotate: isFriendsComponentVisible2 ? "180deg" : "0deg" },
+                  ],
+                }}
+              />
+            </TouchableOpacity>
           </View>
         </TouchableOpacity>
         {isFriendsComponentVisible2 ? (
@@ -131,9 +131,7 @@ function FriendsList() {
         ) : (
           <Line color={"#1F1F1F"} h={2} />
         )}
-        {isFriendsComponentVisible2 && (
-          <FriendsComponent Data={waitData}  />
-        )}
+        {isFriendsComponentVisible2 && <FriendsComponent Data={waitData} />}
 
         {/* 친구 목록 */}
         <TouchableOpacity onPress={toggleFriendsComponent3} activeOpacity={1}>
@@ -156,9 +154,7 @@ function FriendsList() {
         ) : (
           <Line color={"#1F1F1F"} h={2} />
         )}
-        {isFriendsComponentVisible3 && (
-          <FriendsComponent Data={approveData} />
-        )}
+        {isFriendsComponentVisible3 && <FriendsComponent Data={approveData} />}
       </View>
     </View>
   );

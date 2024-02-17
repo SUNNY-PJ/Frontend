@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ApiTest = () => {
   const proxyUrl = "http://43.201.176.22:8080";
-  const getUrl = "/api/v1/friends";
+  const getUrl = "/friends";
   const postUrl = "/alarm";
 
   const cleanedURL = postUrl.replace(/[\u200B]/g, "");
