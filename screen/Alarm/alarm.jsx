@@ -22,7 +22,7 @@ const Alarm = () => {
   const [recentData, setRecentData] = useState([]);
 
   const fetchData = async () => {
-    const inputURL = "/alarm/list";
+    const inputURL = "/alarm";
     const url = proxyUrl + inputURL;
     const access_token = await AsyncStorage.getItem("access_token");
 
@@ -95,10 +95,10 @@ const Alarm = () => {
                 />
                 {recentData.map((item, index) => (
                   <View>
-                    <Text style={styles.titleText}>
+                    <Text style={styles.titleText}>{item.title}</Text>
+                    <Text style={styles.contentText}>
                       {item.notificationContent}
                     </Text>
-                    <Text style={styles.contentText}>{item.title}</Text>
                     <View style={styles.bottomSection}>
                       <Text style={styles.nameText}>{item.postAuthor}</Text>
                       <Text style={styles.dateText}>{item.createdAt}</Text>
@@ -124,10 +124,10 @@ const Alarm = () => {
                     style={{ width: 60, height: 60 }}
                   />
                   <View>
-                    <Text style={styles.titleText}>
+                    <Text style={styles.titleText}>{item.title}</Text>
+                    <Text style={styles.contentText}>
                       {item.notificationContent}
                     </Text>
-                    <Text style={styles.contentText}>{item.title}</Text>
                     <View style={styles.bottomSection}>
                       <Text style={styles.nameText}>{item.postAuthor}</Text>
                       <Text style={styles.dateText}>{item.createdAt}</Text>
