@@ -174,6 +174,10 @@ const MyPage = () => {
     setModalVisible(true);
   };
 
+  const handleTestClick = () => {
+    navigation.navigate("MainScreen", { screen: "BattleStatus" });
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={{ height: windowHeight - 125 - 88 }}>
@@ -294,6 +298,10 @@ const MyPage = () => {
             <Text style={styles.description}>회원 탈퇴</Text>
           </TouchableOpacity>
           <Line color={"#C1C1C1"} h={1} />
+          {/* 테스트 */}
+          <TouchableOpacity activeOpacity={1} onPress={handleTestClick}>
+            <Text style={styles.description}>테스트용</Text>
+          </TouchableOpacity>
         </View>
         {/* <View
           style={{
