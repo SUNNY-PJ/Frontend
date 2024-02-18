@@ -69,6 +69,8 @@ function FriendsList() {
     console.log("친구 목록");
   }, []);
 
+  const handleFriendPlusClick = () => {};
+
   return (
     <View
       style={{
@@ -112,7 +114,7 @@ function FriendsList() {
         <TouchableOpacity onPress={toggleFriendsComponent2} activeOpacity={1}>
           <View style={{ ...styles.titleSection, paddingTop: 24 }}>
             <Text style={styles.title}>친구 신청</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleFriendPlusClick} activeOpacity={1}>
               <Image
                 source={require("../../assets/arrowUp.png")}
                 style={{
