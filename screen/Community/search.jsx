@@ -150,20 +150,27 @@ const Search = () => {
                 <View
                   style={{
                     display: "flex",
-                    flexDirection: "row",
+                    flexDirection: "column",
                     justifyContent: "space-between",
                     paddingRight: 20,
                     paddingLeft: 20,
                     paddingBottom: 16,
                     paddingTop: 16,
+                    gap: 8,
                   }}
                 >
-                  <Text>{item.type}</Text>
-                  <Text>{item.title}</Text>
-                  <Text>{item.writer}</Text>
-                  <Text>{item.createdAt}</Text>
-                  <Text>조회 {item.viewCount}</Text>
-                  <Text>댓글 {item.commentCount}</Text>
+                  <Text style={[styles.type]}>{item.type}</Text>
+                  <Text style={[styles.title]}>{item.title}</Text>
+                  <View
+                    style={{ display: "flex", flexDirection: "row", gap: 10 }}
+                  >
+                    <Text style={[styles.writer]}>{item.writer}</Text>
+                    <Text style={[styles.writer]}>{item.createdAt}</Text>
+                    <Text style={[styles.writer]}>조회 {item.viewCount}</Text>
+                    <Text style={[styles.writer]}>
+                      댓글 {item.commentCount}
+                    </Text>
+                  </View>
                 </View>
                 <Line h={1} color={"#C1C1C1"} />
               </View>
@@ -250,6 +257,21 @@ const styles = StyleSheet.create({
   },
   recentSearch: {
     fontSize: 20,
+    fontWeight: 500,
+    color: "#1F1F1F",
+  },
+  type: {
+    fontSize: 12,
+    fontWeight: 500,
+    color: "#1F1F1F",
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 700,
+    color: "#1F1F1F",
+  },
+  writer: {
+    fontSize: 12,
     fontWeight: 500,
     color: "#1F1F1F",
   },
