@@ -176,6 +176,7 @@ function Goal({ navigation }) {
                 showDayOfWeek={true}
               />
             </TouchableOpacity>
+
             <View style={styles.buttonContainer}>
               {isAllFieldsFilled ? (
                 <LargeBtn text={"등록하기"} onClick={handlePost} />
@@ -183,6 +184,10 @@ function Goal({ navigation }) {
                 <LargeBtnDisable text={"등록하기"} />
               )}
             </View>
+            <Text style={[styles.subText, { marginTop: 8 }]}>
+              절약 목표는 사용자당 한 번에 하나씩만 등록 및 진행 가능하며,{"\n"}
+              종료 일자 자정 이후 자동으로 초기화됩니다.
+            </Text>
           </View>
         </ScrollView>
       </TouchableOpacity>
@@ -215,7 +220,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   buttonContainer: {
-    marginTop: 125,
+    marginTop: 105,
   },
   calendar: {
     width: "100%",
@@ -244,6 +249,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
     color: "#000",
+  },
+  subText: {
+    fontSize: 12,
+    fontWeight: "500",
+    color: "#5C5C5C",
+    textAlign: "center",
   },
 });
 
