@@ -302,7 +302,11 @@ const Detail = () => {
                   onPress={handleProfileClick}
                 >
                   <Text
-                    style={{ fontSize: 16, fontWeight: 700, color: "#1F1F1F" }}
+                    style={{
+                      fontSize: 16,
+                      fontWeight: 700,
+                      color: "#1F1F1F",
+                    }}
                   >
                     {item.writer}
                   </Text>
@@ -310,19 +314,9 @@ const Detail = () => {
                 <SmallBtn title={"대화하기"} border={4} onClick={handleChat} />
               </View>
               <View style={{ flexDirection: "row", gap: 8 }}>
-                <Text
-                  style={{ fontSize: 10, fontWeight: 500, color: "#1F1F1F" }}
-                >
-                  조회 {item.viewCount}
-                </Text>
-                <Text
-                  style={{ fontSize: 10, fontWeight: 500, color: "#1F1F1F" }}
-                >
-                  {item.createdAt}
-                </Text>
-                <Text
-                  style={{ fontSize: 10, fontWeight: 500, color: "#1F1F1F" }}
-                >
+                <Text style={styles.subDescription}>조회 {item.viewCount}</Text>
+                <Text style={styles.subDescription}>{item.createdAt}</Text>
+                <Text style={styles.subDescription}>
                   댓글 {item.commentCnt}
                 </Text>
               </View>
@@ -458,6 +452,12 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingTop: 16,
     marginBottom: 8,
+  },
+  subDescription: {
+    fontSize: 10,
+    fontWeight: 500,
+    color: "#1F1F1F",
+    fontFamily: "SUITE",
   },
 });
 

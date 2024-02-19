@@ -121,7 +121,7 @@ const Tip = () => {
                 <View style={styles.box}>
                   <Text style={styles.title}>{item.title}</Text>
                   <View style={{ flexDirection: "row" }}>
-                    <Text style={styles.description}>{item.writer}</Text>
+                    <Text style={styles.writer}>{item.writer}</Text>
                     <Text style={styles.description}>{item.createdAt}</Text>
                     <Text style={styles.description}>
                       조회 {item.viewCount}
@@ -193,9 +193,24 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     backgroundColor: "#fff",
   },
-  title: { fontSize: 20, color: "#000", fontWeight: 500, padding: 4 },
-  description: {
+  title: {
+    fontSize: 20,
+    color: "#000",
+    fontWeight: 500,
+    padding: 4,
+    fontFamily: "SUITE",
+  },
+  writer: {
+    fontFamily: "SUITE",
     fontSize: 12,
+    color: "#000",
+    fontWeight: 500,
+    padding: 3,
+    gap: 8,
+  },
+  description: {
+    fontFamily: "SUITE",
+    fontSize: 10,
     color: "#000",
     fontWeight: 500,
     padding: 4,

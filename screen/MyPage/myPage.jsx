@@ -220,18 +220,7 @@ const MyPage = () => {
             </View>
           ))}
           {/* <Line color={"#C1C1C1"} h={4} /> */}
-          <Text
-            style={{
-              fontSize: 16,
-              color: "#1F1F1F",
-              fontWeight: 900,
-              paddingLeft: 20,
-              paddingTop: 16,
-              marginBottom: 8,
-            }}
-          >
-            커뮤니티
-          </Text>
+          <Text style={styles.title}>커뮤니티</Text>
           <TouchableOpacity
             activeOpacity={0.6}
             onPress={() => handleTabClick("scrap")}
@@ -255,18 +244,7 @@ const MyPage = () => {
             <Text style={styles.description}>작성 댓글</Text>
           </TouchableOpacity> */}
           <Line color={"#C1C1C1"} h={4} />
-          <Text
-            style={{
-              fontSize: 16,
-              color: "#1F1F1F",
-              fontWeight: 900,
-              paddingLeft: 20,
-              paddingTop: 16,
-              marginBottom: 8,
-            }}
-          >
-            알림
-          </Text>
+          <Text style={styles.title}>알림</Text>
           <TouchableOpacity
             activeOpacity={0.6}
             onPress={handldSettingAlarmClick}
@@ -274,18 +252,7 @@ const MyPage = () => {
             <Text style={styles.description}>알림 설정</Text>
           </TouchableOpacity>
           <Line color={"#C1C1C1"} h={4} />
-          <Text
-            style={{
-              fontSize: 16,
-              color: "#1F1F1F",
-              fontWeight: 900,
-              paddingLeft: 20,
-              paddingTop: 16,
-              marginBottom: 8,
-            }}
-          >
-            기타
-          </Text>
+          <Text style={styles.title}>기타</Text>
           <TouchableOpacity activeOpacity={1} onPress={handleTermsClick}>
             <Text style={styles.description}>이용 약관</Text>
           </TouchableOpacity>
@@ -360,9 +327,9 @@ const styles = StyleSheet.create({
     fontWeight: 600,
   },
   title: {
+    fontFamily: "SUIT_Bold",
     fontSize: 16,
     color: "#1F1F1F",
-    fontWeight: 900,
     paddingLeft: 20,
     paddingTop: 16,
     marginBottom: 8,

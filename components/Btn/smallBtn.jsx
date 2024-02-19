@@ -22,6 +22,8 @@ const SmallBtn = ({ onClick, title, color, border }) => {
               fontSize: 12,
               fontWeight: 500,
               borderColor: "#1F1F1F",
+              fontFamily: "SUITE_Bold",
+              color: "#1F1F1F",
             }}
           >
             {title}
