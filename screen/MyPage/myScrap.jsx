@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Image, Text, StyleSheet } from "react-native";
+import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { proxyUrl } from "../../constant/common";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -12,6 +12,58 @@ const MyScrap = () => {
   const inputURL = "/users/scrap";
   const url = proxyUrl + inputURL;
   const [data, setData] = useState([]);
+  const [isScrap, setIsScrap] = useState(true);
+
+  const handleScrapClick = () => {
+    setIsScrap(!isScrap);
+    if (isScrap) {
+      deleteScrapData();
+    } else {
+      postScrapData();
+    }
+  };
+
+  // 스크랩 삭제
+  const deleteScrapData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    const inputURL = `/scrap/${itemId}`;
+    const url = proxyUrl + inputURL;
+
+    try {
+      const response = await axios.delete(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  // 스크랩 등록
+  const postScrapData = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    const inputURL = `/scrap/${itemId}`;
+    const url = proxyUrl + inputURL;
+
+    try {
+      const response = await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
 
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
@@ -54,13 +106,22 @@ const MyScrap = () => {
                 <Text style={styles.description}>댓글 {item.commentCnt}</Text>
               </View>
             </View>
-            <Image
-              source={require("../../assets/myPage_scrap_active.png")}
-              style={styles.icon}
-            />
+            <TouchableOpacity
+              onPress={handleScrapClick}
+              style={{ alignSelf: "center" }}
+            >
+              <Image
+                source={
+                  isScrap
+                    ? require("../../assets/myPage_scrap_active.png")
+                    : require("../../assets/myPage_scrap_inactive.png")
+                }
+                style={styles.icon}
+              />
+            </TouchableOpacity>
           </View>
           <Line color={"#C1C1C1"} h={1} />
-        </View>
+        </TouchableOpacity>
       ))}
     </View>
   );
@@ -92,7 +153,6 @@ const styles = StyleSheet.create({
   icon: {
     width: 24,
     height: 24,
-    alignSelf: "center",
   },
 });
 
