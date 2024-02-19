@@ -96,7 +96,16 @@ const BottomSheet = ({
           {...panResponders.panHandlers}
         >
           <View style={styles.header}>
-            <Text style={styles.title}>{title}</Text>
+            <Text
+              style={{
+                ...styles.title,
+                flex: 1,
+                textAlign: "center",
+                left: 24,
+              }}
+            >
+              {title}
+            </Text>
             <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
               {/* <Text style={styles.closeButtonText}>X</Text> */}
               <Image
@@ -117,7 +126,7 @@ const BottomSheet = ({
                 style={styles.item}
               >
                 <Text style={styles.text}>{item.title}</Text>
-                {index < data.length - 1 && <View style={styles.divider} />}
+                {/* {index < data.length - 1 && <View style={styles.divider} />} */}
               </TouchableOpacity>
             ))}
         </Animated.View>
@@ -172,7 +181,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12, // 터치 영역을 높입니다.
     paddingHorizontal: 16, // 여백을 추가합니다.
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
   },
   divider: {
