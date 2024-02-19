@@ -12,8 +12,11 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
 import { proxyUrl } from "../../constant/common";
+import { useNavigation } from "@react-navigation/native";
 
 const Search = () => {
+  const navigation = useNavigation();
+
   const inputURL = "/community/board";
   const url = proxyUrl + inputURL;
 
@@ -58,7 +61,7 @@ const Search = () => {
     ].slice(0, 10);
     setRecentSearches(newSearches);
     saveRecentSearches(newSearches);
-    setText("");
+    // setText("");
   };
 
   const clearRecentSearches = () => {
@@ -144,36 +147,53 @@ const Search = () => {
           </View>
         )}
         {data.length > 0 ? (
-          <ScrollView>
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="on-drag"
+          >
             {data.map((item, index) => (
-              <View key={index} style={{ backgroundColor: "#fff" }}>
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    paddingRight: 20,
-                    paddingLeft: 20,
-                    paddingBottom: 16,
-                    paddingTop: 16,
-                    gap: 8,
-                  }}
-                >
-                  <Text style={[styles.type]}>{item.type}</Text>
-                  <Text style={[styles.title]}>{item.title}</Text>
+              <TouchableOpacity
+                key={item.id}
+                onPress={() =>
+                  navigation.navigate("Detail", {
+                    screen: "Detail",
+                    params: {
+                      itemId: item.id,
+                      userId: item.userId,
+                    },
+                  })
+                }
+                activeOpacity={0.6}
+              >
+                <View key={index} style={{ backgroundColor: "#fff" }}>
                   <View
-                    style={{ display: "flex", flexDirection: "row", gap: 10 }}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      paddingRight: 20,
+                      paddingLeft: 20,
+                      paddingBottom: 16,
+                      paddingTop: 16,
+                      gap: 8,
+                    }}
                   >
-                    <Text style={[styles.writer]}>{item.writer}</Text>
-                    <Text style={[styles.writer]}>{item.createdAt}</Text>
-                    <Text style={[styles.writer]}>조회 {item.viewCount}</Text>
-                    <Text style={[styles.writer]}>
-                      댓글 {item.commentCount}
-                    </Text>
+                    <Text style={[styles.type]}>{item.type}</Text>
+                    <Text style={[styles.title]}>{item.title}</Text>
+                    <View
+                      style={{ display: "flex", flexDirection: "row", gap: 10 }}
+                    >
+                      <Text style={[styles.writer]}>{item.writer}</Text>
+                      <Text style={[styles.writer]}>{item.createdAt}</Text>
+                      <Text style={[styles.writer]}>조회 {item.viewCount}</Text>
+                      <Text style={[styles.writer]}>
+                        댓글 {item.commentCount}
+                      </Text>
+                    </View>
                   </View>
+                  <Line h={1} color={"#C1C1C1"} />
                 </View>
-                <Line h={1} color={"#C1C1C1"} />
-              </View>
+              </TouchableOpacity>
             ))}
           </ScrollView>
         ) : recentSearches.length > 0 ? (

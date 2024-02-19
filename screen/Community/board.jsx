@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { proxyUrl } from "../../constant/common";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { useCommunity } from "../../context/communityContext";
-import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
 import Line from "../../components/Line";
+import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
+import { useNavigation } from "@react-navigation/native";
 
 const Board = () => {
   const navigation = useNavigation();
@@ -30,6 +34,12 @@ const Board = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  // 검색
+  const handleSearch = () => {
+    console.log("게시글을 검색합니다.");
+    navigation.navigate("MainScreen", { screen: "Search" });
+  };
 
   return (
     <View style={styles.container}>
@@ -59,10 +69,12 @@ const Board = () => {
               gap: 22,
             }}
           >
-            <Image
-              source={require("../../assets/search.png")}
-              style={styles.icon}
-            />
+            <TouchableOpacity activeOpacity={0.6} onPress={handleSearch}>
+              <Image
+                source={require("../../assets/search.png")}
+                style={styles.icon}
+              />
+            </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() =>
@@ -79,39 +91,44 @@ const Board = () => {
           </View>
         </View>
         <Line color={"#C1C1C1"} h={2} />
-        {data &&
-          data.map((item, index) => (
-            <TouchableOpacity
-              key={item.id}
-              onPress={() =>
-                navigation.navigate("Detail", {
-                  screen: "Detail",
-                  params: {
-                    itemId: item.id,
-                    userId: item.userId,
-                  },
-                })
-              }
-              activeOpacity={0.6}
-            >
-              <View>
-                <View style={styles.box}>
-                  <Text style={styles.title}>{item.title}</Text>
-                  <View style={{ flexDirection: "row" }}>
-                    <Text style={styles.description}>{item.writer}</Text>
-                    <Text style={styles.description}>{item.createdAt}</Text>
-                    <Text style={styles.description}>
-                      조회 {item.viewCount}
-                    </Text>
-                    <Text style={styles.description}>
-                      댓글 {item.commentCount}
-                    </Text>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
+        >
+          {data &&
+            data.map((item, index) => (
+              <TouchableOpacity
+                key={item.id}
+                onPress={() =>
+                  navigation.navigate("Detail", {
+                    screen: "Detail",
+                    params: {
+                      itemId: item.id,
+                      userId: item.userId,
+                    },
+                  })
+                }
+                activeOpacity={0.6}
+              >
+                <View>
+                  <View style={styles.box}>
+                    <Text style={styles.title}>{item.title}</Text>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={styles.description}>{item.writer}</Text>
+                      <Text style={styles.description}>{item.createdAt}</Text>
+                      <Text style={styles.description}>
+                        조회 {item.viewCount}
+                      </Text>
+                      <Text style={styles.description}>
+                        댓글 {item.commentCount}
+                      </Text>
+                    </View>
                   </View>
+                  <Line color={"#C1C1C1"} h={2} />
                 </View>
-                <Line color={"#C1C1C1"} h={2} />
-              </View>
-            </TouchableOpacity>
-          ))}
+              </TouchableOpacity>
+            ))}
+        </ScrollView>
       </View>
       {open && (
         <BottomSheetScreen
