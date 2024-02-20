@@ -27,7 +27,7 @@ const MyComment = () => {
       });
 
       const myWriteData = response.data;
-      console.log(myWriteData.map((item) => item.id));
+      // console.log(myWriteData.map((item) => item.id));
       setData(myWriteData);
     } catch (error) {
       console.error("에러:", error);
@@ -84,11 +84,16 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     backgroundColor: "#fff",
   },
-  title: { fontSize: 20, color: "#000", fontWeight: 500, padding: 4 },
+  title: {
+    fontSize: 20,
+    color: "#000",
+    fontFamily: "SUITE_Medium",
+    padding: 4,
+  },
   description: {
     fontSize: 12,
     color: "#000",
-    fontWeight: 500,
+    fontFamily: "SUITE",
     padding: 4,
     gap: 8,
   },

@@ -117,7 +117,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     color: "#1F1F1F",
-    fontWeight: 900,
+    fontFamily: "SUIT_ExtraBold",
+
     paddingLeft: 20,
     paddingTop: 16,
     marginBottom: 8,
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     color: "#1F1F1F",
-    fontWeight: 500,
+    fontFamily: "SUITE_Medium",
   },
 });
 

@@ -109,14 +109,14 @@ const MyScrap = () => {
         >
           <View style={styles.box}>
             <View>
-              <Text style={styles.title}>{item.title}</Text>
+              <Text style={[styles.title]}>{item.title}</Text>
               <View style={{ flexDirection: "row" }}>
-                <Text style={styles.description}>{item.writer}</Text>
-                <Text style={styles.description}>
+                <Text style={[styles.description]}>{item.writer}</Text>
+                <Text style={[styles.description]}>
                   {formatDate(item.createDate)}
                 </Text>
-                <Text style={styles.description}>조회 {item.viewCnt}</Text>
-                <Text style={styles.description}>댓글 {item.commentCnt}</Text>
+                <Text style={[styles.description]}>조회 {item.viewCnt}</Text>
+                <Text style={[styles.description]}>댓글 {item.commentCnt}</Text>
               </View>
             </View>
             <TouchableOpacity
@@ -155,13 +155,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     justifyContent: "space-between",
   },
-  title: { fontSize: 20, color: "#000", fontWeight: 500, padding: 4 },
+  title: {
+    fontSize: 20,
+    color: "#000",
+    padding: 4,
+    fontFamily: "SUITE_Medium",
+  },
   description: {
     fontSize: 12,
     color: "#000",
-    fontWeight: 500,
     padding: 4,
     gap: 8,
+    fontFamily: "SUITE",
   },
   icon: {
     width: 24,

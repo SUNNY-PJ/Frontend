@@ -320,14 +320,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 12,
   },
-  name: { fontSize: 20, color: "#1F1F1F", fontWeight: 900 },
+  name: { fontSize: 20, color: "#1F1F1F", fontFamily: "SUIT_ExtraBold" },
   setting: {
     fontSize: 16,
     color: "#5C5C5C",
-    fontWeight: 600,
+    fontFamily: "SUIT_Medium",
   },
   title: {
-    fontFamily: "SUIT_Bold",
+    fontFamily: "SUIT_ExtraBold",
     fontSize: 16,
     color: "#1F1F1F",
     paddingLeft: 20,
@@ -335,9 +335,9 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   description: {
+    fontFamily: "SUIT_Medium",
     fontSize: 16,
     color: "#1F1F1F",
-    fontWeight: 500,
     paddingBottom: 16,
     paddingTop: 16,
     paddingLeft: 20,

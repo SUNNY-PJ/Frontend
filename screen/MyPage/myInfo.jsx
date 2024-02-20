@@ -198,6 +198,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     color: "#C1C1C1",
+    fontFamily: "SUIT_Bold",
   },
   activeTabText: {
     color: "#1F1F1F",
