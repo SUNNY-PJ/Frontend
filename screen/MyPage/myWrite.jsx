@@ -27,7 +27,8 @@ const MyWrite = () => {
       });
 
       const myWriteData = response.data;
-      console.log(myWriteData.map((item) => item.id));
+      console.log(myWriteData);
+      // console.log(myWriteData.map((item) => item.id));
       setData(myWriteData);
     } catch (error) {
       console.error("에러:", error);
@@ -45,11 +46,15 @@ const MyWrite = () => {
         // mypage/{id} 이런 api가 필요..
         <TouchableOpacity
           key={item.id}
-          onPress={() =>
-            navigation.navigate("Detail", {
-              screen: "Detail",
-            })
-          }
+          // onPress={() =>
+          //   navigation.navigate("Detail", {
+          //     screen: "Detail",
+          //     params: {
+          //       itemId: item.communityId,
+          //       userId: item.userId,
+          //     },
+          //   })
+          // }
           activeOpacity={0.6}
         >
           <View style={styles.box}>

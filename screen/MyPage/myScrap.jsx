@@ -78,6 +78,7 @@ const MyScrap = () => {
         },
       });
       const myScrapData = response.data;
+      console.log(myScrapData);
       // console.log(myWriteData.map((item) => item.id));
       setData(myScrapData);
     } catch (error) {
@@ -93,8 +94,20 @@ const MyScrap = () => {
   return (
     <View style={styles.container}>
       {data.map((item) => (
-        <View>
-          <View style={styles.box} key={item.id}>
+        <TouchableOpacity
+          key={item.id}
+          // onPress={() =>
+          //   navigation.navigate("Detail", {
+          //     screen: "Detail",
+          //     params: {
+          //       itemId: item.id,
+          //       userId: item.userId,
+          //     },
+          //   })
+          // }
+          activeOpacity={0.6}
+        >
+          <View style={styles.box}>
             <View>
               <Text style={styles.title}>{item.title}</Text>
               <View style={{ flexDirection: "row" }}>

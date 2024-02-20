@@ -42,7 +42,19 @@ const MyComment = () => {
   return (
     <View style={styles.container}>
       {data.map((item) => (
-        <View>
+        <TouchableOpacity
+          key={item.id}
+          // onPress={() =>
+          //   navigation.navigate("Detail", {
+          //     screen: "Detail",
+          //     params: {
+          //       itemId: item.id,
+          //       userId: item.userId,
+          //     },
+          //   })
+          // }
+          activeOpacity={0.6}
+        >
           <View style={styles.box}>
             <Text style={styles.title}>{item.content}</Text>
             <View style={{ flexDirection: "row" }}>
@@ -53,7 +65,7 @@ const MyComment = () => {
             </View>
           </View>
           <Line color={"#C1C1C1"} h={1} />
-        </View>
+        </TouchableOpacity>
       ))}
     </View>
   );
