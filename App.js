@@ -38,10 +38,24 @@ export default function App() {
 
   // 폰트 적용
   const customFonts = {
+    // SUIT
+    SUIT_Thin: require("./assets/fonts/SUIT-Thin.otf"),
+    SUIT_ExtraLight: require("./assets/fonts/SUIT-ExtraLight.otf"),
+    SUIT_Light: require("./assets/fonts/SUIT-Light.otf"),
     SUIT: require("./assets/fonts/SUIT-Regular.otf"),
+    SUIT_Medium: require("./assets/fonts/SUIT-Medium.otf"),
+    SUIT_SemiBold: require("./assets/fonts/SUIT-SemiBold.otf"),
     SUIT_Bold: require("./assets/fonts/SUIT-Bold.otf"),
+    SUIT_ExtraBold: require("./assets/fonts/SUIT-ExtraBold.otf"),
+    SUIT_Heavy: require("./assets/fonts/SUIT-Heavy.otf"),
+    // SUITE
+    SUITE_Light: require("./assets/fonts/SUITE-Light.otf"),
     SUITE: require("./assets/fonts/SUITE-Regular.otf"),
+    SUITE_Medium: require("./assets/fonts/SUITE-Medium.otf"),
+    SUITE_SemiBold: require("./assets/fonts/SUITE-SemiBold.otf"),
     SUITE_Bold: require("./assets/fonts/SUITE-Bold.otf"),
+    SUITE_ExtraBold: require("./assets/fonts/SUITE-ExtraBold.otf"),
+    SUITE_Heavy: require("./assets/fonts/SUITE-Heavy.otf"),
   };
   const [fontsLoaded, setFontsLoaded] = useState(false);
   async function loadFonts() {
