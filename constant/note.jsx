@@ -260,12 +260,14 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 22,
+    fontFamily: "SUITE_Bold",
     fontWeight: "700",
     color: "#1F1F1F",
     textAlign: "center",
   },
   label: {
     fontSize: 16,
+    fontFamily: "SUITE",
     fontWeight: "500",
     color: "#1F1F1F",
     marginBottom: 8,
