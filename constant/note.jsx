@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontFamily: "SUITE",
+    fontFamily: "SUIT_Medium",
     fontWeight: "500",
     color: "#1F1F1F",
     marginBottom: 8,
@@ -293,6 +293,7 @@ const styles = StyleSheet.create({
   noticeText: {
     fontSize: 12,
     fontWeight: "400",
+    fontFamily: "SUITE",
     color: "#5C5C5C",
   },
   radioContainer: {
@@ -304,6 +305,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: "#5C5C5C",
+    fontFamily: "SUIT_Medium",
   },
   radioIcon: {
     width: 24,

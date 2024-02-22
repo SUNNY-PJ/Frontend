@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   text: {
     color: "#5C5C5C",
     fontSize: 15,
-    fontWeight: "700",
+    fontFamily: "SUIT_Bold",
     alignSelf: "flex-end",
   },
   progressContainer: {

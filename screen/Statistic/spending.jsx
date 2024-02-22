@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
   },
   tabText: {
     fontSize: 20,
+    fontFamily: "SUIT_Bold",
     fontWeight: "700",
     color: "#C1C1C1",
     paddingTop: 9,

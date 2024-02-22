@@ -254,8 +254,8 @@ const styles = StyleSheet.create({
   text: {
     color: "#1F1F1F",
     fontSize: 20,
-    fontWeight: "700",
     alignSelf: "center",
+    fontFamily: "SUIT_Bold",
   },
   contentSection: {
     flexDirection: "row",
@@ -293,16 +293,16 @@ const styles = StyleSheet.create({
   bottomText: {
     color: "#1F1F1F",
     fontSize: 16,
-    fontWeight: 700,
+    fontFamily: "SUIT_Bold",
     marginLeft: 16,
     alignSelf: "center",
   },
   bottomPriceText: {
     color: "#1F1F1F",
     fontSize: 16,
-    fontWeight: 500,
     alignSelf: "center",
     paddingRight: 20,
+    fontFamily: "SUIT_Medium",
   },
   addItem: {
     position: "absolute",
