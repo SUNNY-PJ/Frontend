@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FFF9EF"
     },
     "assetBundlePatterns": ["**/*"],
     "notification": {
@@ -22,7 +22,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#FFF9EF"
       },
       "versionCode": 25,
       "permissions": ["CAMERA", "NOTIFICATIONS"],
