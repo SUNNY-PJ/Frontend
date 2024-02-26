@@ -13,7 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 
-const FriendsComponent = ({ Data }) => {
+const FriendsComponent = ({ Data, onAddFriend }) => {
   const navigation = useNavigation();
 
   return (
@@ -47,9 +47,9 @@ const FriendsComponent = ({ Data }) => {
               style={{
                 marginLeft: 8,
                 fontSize: 16,
-                fontWeight: 500,
                 color: "#1F1F1F",
                 alignSelf: "center",
+                fontFamily: "SUITE_Medium",
               }}
             >
               {item.name}
@@ -73,7 +73,10 @@ const FriendsComponent = ({ Data }) => {
           )}
           {item.friendStatus === "WAIT" && (
             <View style={{ flexDirection: "row", gap: 16 }}>
-              <TouchableOpacity activeOpacity={0.6}>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => onAddFriend(item.friendsId)}
+              >
                 <Image
                   source={require("../../assets/plusIcon.png")}
                   style={styles.icon}

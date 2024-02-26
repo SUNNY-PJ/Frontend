@@ -69,7 +69,37 @@ function FriendsList() {
     console.log("친구 목록");
   }, []);
 
-  const handleFriendPlusClick = () => {};
+  const PostData = async (friendId) => {
+    const inputURL = `/friends/approve/${friendId}`;
+    console.log(inputURL);
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log(access_token);
+
+    try {
+      const response = await axios.post(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      console.log(response);
+      if (response.status === 200) {
+        alert("친구가 되었습니다!");
+        fetchData();
+      } else if (response.status === 500) {
+        alert(response.message);
+      }
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  const AddFriendData = (friendId) => {
+    console.log("친구 신청을 받겠니?");
+    console.log(friendId);
+    PostData(friendId);
+  };
 
   return (
     <View
@@ -114,18 +144,16 @@ function FriendsList() {
         <TouchableOpacity onPress={toggleFriendsComponent2} activeOpacity={1}>
           <View style={{ ...styles.titleSection, paddingTop: 24 }}>
             <Text style={styles.title}>친구 신청</Text>
-            <TouchableOpacity onPress={handleFriendPlusClick} activeOpacity={1}>
-              <Image
-                source={require("../../assets/arrowUp.png")}
-                style={{
-                  width: 24,
-                  height: 24,
-                  transform: [
-                    { rotate: isFriendsComponentVisible2 ? "180deg" : "0deg" },
-                  ],
-                }}
-              />
-            </TouchableOpacity>
+            <Image
+              source={require("../../assets/arrowUp.png")}
+              style={{
+                width: 24,
+                height: 24,
+                transform: [
+                  { rotate: isFriendsComponentVisible2 ? "180deg" : "0deg" },
+                ],
+              }}
+            />
           </View>
         </TouchableOpacity>
         {isFriendsComponentVisible2 ? (
@@ -133,7 +161,10 @@ function FriendsList() {
         ) : (
           <Line color={"#1F1F1F"} h={2} />
         )}
-        {isFriendsComponentVisible2 && <FriendsComponent Data={waitData} />}
+        {isFriendsComponentVisible2 && (
+          <FriendsComponent Data={waitData} onAddFriend={AddFriendData} />
+        )}
+        {/* {isFriendsComponentVisible2 && <FriendsComponent Data={waitData} />} */}
 
         {/* 친구 목록 */}
         <TouchableOpacity onPress={toggleFriendsComponent3} activeOpacity={1}>
@@ -172,6 +203,7 @@ const styles = StyleSheet.create({
   },
   mainTitle: {
     fontSize: 22,
+    fontFamily: "SUITE_Bold",
     fontWeight: 700,
     color: "#1F1F1F",
     textAlign: "center",
@@ -179,7 +211,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 700,
+    fontFamily: "SUITE_Bold",
     color: "#1F1F1F",
   },
   menuItem: {
