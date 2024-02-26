@@ -39,6 +39,7 @@ import SettingAlarm from "./screen/MyPage/settingAlarm";
 import SendMatch from "./screen/Battle/sendMatch";
 import BattleStatus from "./screen/Battle/battleStatus";
 import BattleStatusDisable from "./screen/Battle/battleStatusDisable";
+import BottomRe from "./components/BottomRe";
 // import ChatRoom from "./screen/Chat/chatRoom";
 
 const Stack = createStackNavigator();
@@ -114,7 +115,8 @@ function MainScreen() {
         />
         {/* <Stack.Screen name="Winner" component={Winner} /> */}
       </Stack.Navigator>
-      <Bottom />
+      {/* <Bottom /> */}
+      <BottomRe />
     </>
   );
 }
