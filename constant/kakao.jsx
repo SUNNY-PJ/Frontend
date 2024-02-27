@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
-import { WebView } from "react-native-webview";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
+import WebView from "react-native-webview";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { proxyUrl } from "../constant/common";
@@ -11,6 +17,7 @@ const REDIRECT_URI = "http://192.168.50.45:19006";
 const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from webView')`;
 
 const Kakao = () => {
+  const [showOverlay, setShowOverlay] = useState(true);
   const inputURL = "/alarm/token";
   const url = proxyUrl + inputURL;
   const navigation = useNavigation();
@@ -18,13 +25,20 @@ const Kakao = () => {
   const kakao_url =
     "https://kauth.kakao.com/oauth/authorize?client_id=7ff971db2010c97a3e191dd319ec45cd&redirect_uri=http://43.201.176.22:8080/auth/kakao/callback&response_type=code";
 
-  const [kakaoLoginCompleted, setKakaoLoginCompleted] = useState(false);
-  const [tokenStoreCompleted, setTokenStoreCompleted] = useState(false);
-
   const handleWebViewMessage = (data) => {
     KakaoLoginWebView(data);
-    setKakaoLoginCompleted(true);
   };
+
+  function KakaoLoginWebView(data) {
+    console.log("카카오 로그인 시도:::");
+    const exp = "code=";
+    var condition = data.indexOf(exp);
+    if (condition != -1) {
+      var authorize_code = data.substring(condition + exp.length);
+      console.log("코드:::", authorize_code);
+      fetchData();
+    }
+  }
 
   const fetchData = async () => {
     console.log("카카오 fetch 실행");
@@ -34,14 +48,12 @@ const Kakao = () => {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-      // console.log("데이터:::::", response.headers.authorization);
-
       // const access_token = response.headers.authorization;
       const access_token = response.data.data.accessToken;
-      // const refresh_token = response.data.data.refreshToken;
-      console.log(access_token);
+      const refresh_token = response.data.data.refreshToken;
       await AsyncStorage.setItem("access_token", access_token);
-      // await AsyncStorage.setItem("refresh_token", refresh_token);
+      await AsyncStorage.setItem("refresh_token", refresh_token);
+      console.log("저장함::", access_token);
 
       navigation.navigate("MainScreen", { screen: "SignUp" });
     } catch (error) {
@@ -52,7 +64,6 @@ const Kakao = () => {
         console.error("에러:", error);
       }
     }
-    setTokenStoreCompleted(true);
   };
 
   // 디바이스 토큰 api
@@ -81,27 +92,8 @@ const Kakao = () => {
     }
   };
 
-  useEffect(() => {
-    if (kakaoLoginCompleted) {
-      fetchData();
-      if (tokenStoreCompleted) {
-        postData();
-      }
-    }
-  }, [kakaoLoginCompleted, tokenStoreCompleted]);
-
-  function KakaoLoginWebView(data) {
-    console.log("카카오 로그인 시도:::");
-    const exp = "code=";
-    var condition = data.indexOf(exp);
-    if (condition != -1) {
-      var authorize_code = data.substring(condition + exp.length);
-      console.log("코드:::", authorize_code);
-    }
-  }
-
   return (
-    <View style={Styles.container}>
+    <View style={styles.container}>
       <WebView
         style={{ flex: 1 }}
         originWhitelist={["*"]}
@@ -109,6 +101,12 @@ const Kakao = () => {
         source={{
           uri: kakao_url,
         }}
+        startInLoadingState={true}
+        renderLoading={() => (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#000" />
+          </View>
+        )}
         injectedJavaScript={INJECTED_JAVASCRIPT}
         javaScriptEnabled
         onMessage={(event) => {
@@ -121,10 +119,18 @@ const Kakao = () => {
 
 export default Kakao;
 
-const Styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 24,
     backgroundColor: "#fff",
+    zIndex: 100,
+  },
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+    zIndex: 100,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
