@@ -3,38 +3,33 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
-import { Text, View } from "react-native";
 import * as Font from "expo-font";
-
 import Navigation from "./Navigation";
-import Splash from "./screen/splash";
 
-// const Stack = createNativeStackNavigator();
-
-// Notifications.setNotificationHandler({
-//   handleNotification: async () => ({
-//     shouldShowAlert: true,
-//     shouldPlaySound: false,
-//     shouldSetBadge: false,
-//   }),
-// });
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 // 알림 울리기
-// async function schedulePushNotification(data) {
-//   await Notifications.scheduleNotificationAsync({
-//     content: {
-//       title: "테스트 알림",
-//       body: data,
-//     },
-//     trigger: null,
-//   });
-// }
+async function schedulePushNotification(data) {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "테스트 알림",
+      body: data,
+    },
+    trigger: null,
+  });
+}
 
 export default function App() {
-  // const [pushToken, setPushToken] = useState("");
-  // const [notification, setNotification] = useState(false);
-  // const notificationListener = useRef();
-  // const responseListener = useRef();
+  const [pushToken, setPushToken] = useState("");
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
   // 폰트 적용
   const customFonts = {
@@ -67,117 +62,92 @@ export default function App() {
     loadFonts();
   }, []);
 
-  if (!fontsLoaded) {
-    return <View />;
-  }
-
-  // const [isSplashScreen, setIsSplashScreen] = useState(true);
-  // // 스플래쉬 화면 2초 후에 숨김
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setIsSplashScreen(false);
-  //   }, 3000);
-  // }, []);
-
-  // if (isSplashScreen) {
-  //   return <Splash />;
+  // if (!fontsLoaded) {
+  //   return <View />;
   // }
 
-  // const [isSplashScreen, setIsSplashScreen] = useState(true);
+  useEffect(() => {
+    const registerForPushNotificationsAsync = async () => {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
 
-  // const handleAnimationEnd = () => {
-  //   setIsSplashScreen(false);
-  // };
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
 
-  // if (isSplashScreen) {
-  //   return <Splash onAnimationEnd={handleAnimationEnd} />;
-  // }
+      if (finalStatus !== "granted") {
+        alert("알림을 거부하였습니다. 앱에 대한 알림을 받을 수 없습니다.");
+        return;
+      }
 
-  // // 메인 화면 렌더링
-  // return <Navigation />;
+      const { data } = await Notifications.getExpoPushTokenAsync();
+      console.log("Expo Push Token:", data);
+      await AsyncStorage.setItem("device_token", data);
+      const device_token = await AsyncStorage.getItem("device_token");
+      console.log("이게 디바이스 토큰이지이이이", device_token);
 
-  // useEffect(() => {
-  //   const registerForPushNotificationsAsync = async () => {
-  //     const { status: existingStatus } =
-  //       await Notifications.getPermissionsAsync();
-  //     let finalStatus = existingStatus;
+      const expoPushToken = `${data}`;
 
-  //     if (existingStatus !== "granted") {
-  //       const { status } = await Notifications.requestPermissionsAsync();
-  //       finalStatus = status;
-  //     }
+      // 정규 표현식을 사용하여 토큰 값 추출
+      const tokenRegex = /\[([^\]]+)\]/;
+      const match = expoPushToken.match(tokenRegex);
 
-  //     if (finalStatus !== "granted") {
-  //       alert("알림을 거부하였습니다. 앱에 대한 알림을 받을 수 없습니다.");
-  //       return;
-  //     }
+      // match 배열의 두 번째 요소에 토큰 값이 있음
+      // 이게 진짜 토큰임
+      const token = match && match[1];
 
-  //     const { data } = await Notifications.getExpoPushTokenAsync();
-  //     console.log("Expo Push Token:", data);
-  //     await AsyncStorage.setItem("device_token", data);
-  //     const device_token = await AsyncStorage.getItem("device_token");
-  //     console.log("이게 디바이스 토큰이지이이이", device_token);
+      console.log("푸시 토큰 값:", token);
 
-  //     const expoPushToken = `${data}`;
+      return data;
+    };
 
-  //     // 정규 표현식을 사용하여 토큰 값 추출
-  //     const tokenRegex = /\[([^\]]+)\]/;
-  //     const match = expoPushToken.match(tokenRegex);
+    const initPushNotifications = async () => {
+      if (Platform.OS === "android") {
+        await Notifications.setNotificationChannelAsync("default", {
+          name: "default",
+          importance: Notifications.AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: "#FF231F7C",
+        });
+      }
 
-  //     // match 배열의 두 번째 요소에 토큰 값이 있음
-  //     // 이게 진짜 토큰임
-  //     const token = match && match[1];
+      const pushToken = await registerForPushNotificationsAsync();
+      setPushToken(pushToken);
+      console.log(pushToken);
 
-  //     console.log("푸시 토큰 값:", token);
+      Notifications.addNotificationReceivedListener((notification) => {
+        console.log("NOTIFICATION:", notification);
+      });
 
-  //     return data;
-  //   };
+      notificationListener.current =
+        Notifications.addNotificationReceivedListener((notification) => {
+          setNotification(notification);
+        });
 
-  // const initPushNotifications = async () => {
-  //   if (Platform.OS === "android") {
-  //     await Notifications.setNotificationChannelAsync("default", {
-  //       name: "default",
-  //       importance: Notifications.AndroidImportance.MAX,
-  //       vibrationPattern: [0, 250, 250, 250],
-  //       lightColor: "#FF231F7C",
-  //     });
-  //   }
+      responseListener.current =
+        Notifications.addNotificationResponseReceivedListener((response) => {
+          console.log(response);
+        });
+    };
 
-  //   const pushToken = await registerForPushNotificationsAsync();
-  //   setPushToken(pushToken);
-  //   console.log(pushToken);
+    initPushNotifications();
 
-  //   Notifications.addNotificationReceivedListener((notification) => {
-  //     console.log("NOTIFICATION:", notification);
-  //   });
-
-  //   notificationListener.current =
-  //     Notifications.addNotificationReceivedListener((notification) => {
-  //       setNotification(notification);
-  //     });
-
-  //   responseListener.current =
-  //     Notifications.addNotificationResponseReceivedListener((response) => {
-  //       console.log(response);
-  //     });
-  // };
-
-  // initPushNotifications();
-
-  // return () => {
-  //   Notifications.removeNotificationSubscription(
-  //     notificationListener.current
-  //   );
-  //   Notifications.removeNotificationSubscription(responseListener.current);
-  // };
-  // }, []);
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   // 알림 예약 함수 호출
-  // const handleScheduleNotification = async () => {
-  //   const notificationData = "알림 내용을 여기에 입력하세요";
-  //   await schedulePushNotification(notificationData);
-  // };
+  const handleScheduleNotification = async () => {
+    const notificationData = "알림 내용을 여기에 입력하세요";
+    await schedulePushNotification(notificationData);
+  };
 
-  // return <Navigation handleScheduleNotification={handleScheduleNotification} />;
-  return <Navigation />;
+  return <Navigation handleScheduleNotification={handleScheduleNotification} />;
+  // return <Navigation />;
 }

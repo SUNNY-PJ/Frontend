@@ -51,9 +51,14 @@ const SignUp = () => {
       if (response.status === 200) {
         alert("별명을 등록했습니다.");
         navigation.navigate("MainScreen", { screen: "Spending" });
+      } else if (response.status === 403) {
+        alert("이미 사용중인 닉네임입니다.");
       }
     } catch (error) {
       if (error.response) {
+        if (error.response.data.status === 403) {
+          alert(error.response.data.message);
+        }
         console.error("서버 응답 오류:", error.response.data);
         console.error("서버 응답 메세지:", error.message);
       } else {
@@ -62,8 +67,36 @@ const SignUp = () => {
     }
   };
 
+  // 디바이스 토큰 api
+  const postDeviceData = async () => {
+    const inputURL = "/alarm";
+    const url = proxyUrl + inputURL;
+    console.log("디바이스 토큰 post 실행");
+
+    const access_token = await AsyncStorage.getItem("access_token");
+    const device_token = await AsyncStorage.getItem("device_token");
+    try {
+      const bodyData = {
+        target_token: device_token,
+      };
+      const response = await axios.post(url, bodyData, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log("디바이스 토큰 api", response);
+
+      navigation.navigate("MainScreen", { screen: "FriendsList" });
+    } catch (error) {
+      console.error("device token 에러:", error);
+    }
+  };
+
   const handlePostApiTestStart = () => {
     postData();
+    postDeviceData();
   };
 
   return (

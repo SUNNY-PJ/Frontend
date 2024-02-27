@@ -109,12 +109,12 @@ const Top = ({ navigation }) => {
             )}
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        {/* <TouchableOpacity onPress={() => navigation.navigate("Login")}>
           <Image
             source={require("../assets/setting.png")}
             style={styles.icon}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* <TouchableOpacity
           onPress={() => {

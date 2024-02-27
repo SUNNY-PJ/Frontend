@@ -18,8 +18,7 @@ const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from
 
 const Kakao = () => {
   const [showOverlay, setShowOverlay] = useState(true);
-  const inputURL = "/alarm/token";
-  const url = proxyUrl + inputURL;
+
   const navigation = useNavigation();
 
   const kakao_url =
@@ -54,8 +53,8 @@ const Kakao = () => {
       await AsyncStorage.setItem("access_token", access_token);
       await AsyncStorage.setItem("refresh_token", refresh_token);
       console.log("저장함::", access_token);
-
-      navigation.navigate("MainScreen", { screen: "SignUp" });
+      // postData();
+      navigation.replace("MainScreen", { screen: "SignUp" });
     } catch (error) {
       console.log("errorMessage:::", error);
       if (error.response) {
@@ -63,32 +62,6 @@ const Kakao = () => {
       } else {
         console.error("에러:", error);
       }
-    }
-  };
-
-  // 디바이스 토큰 api
-  const postData = async () => {
-    console.log("카카오 post 실행");
-
-    const access_token = await AsyncStorage.getItem("access_token");
-    const device_token = await AsyncStorage.getItem("device_token");
-    try {
-      const bodyData = {
-        targetToken: device_token,
-      };
-
-      const response = await axios.post(url, bodyData, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
-
-      console.log("디바이스 토큰 api", response.data);
-
-      navigation.navigate("MainScreen", { screen: "FriendsList" });
-    } catch (error) {
-      console.error("에러:", error);
     }
   };
 
