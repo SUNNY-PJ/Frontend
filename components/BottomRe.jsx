@@ -14,27 +14,27 @@ import { useNavigation } from "@react-navigation/native";
 const BottomRe = () => {
   const windowWidth = Dimensions.get("window").width;
   const navigation = useNavigation();
-  const [selectedIcon, setSelectedIcon] = useState("Note");
+  const [selectedIcon, setSelectedIcon] = useState("Spending");
 
-  const imageSource =
-    selectedIcon === "MyPage"
-      ? require("../assets/profileClick.png")
-      : require("../assets/profile.png");
+  const homeImageSource =
+    selectedIcon === "Spending"
+      ? require("../assets/bottomHome.png")
+      : require("../assets/bottomHome.png");
 
   const friendsImageSource =
     selectedIcon === "FriendsList"
       ? require("../assets/friendsClick.png")
       : require("../assets/friends.png");
 
-  const homeImageSource =
-    selectedIcon === "Home"
-      ? require("../assets/bottomHome.png")
-      : require("../assets/bottomHome.png");
-
   const communityImageSource =
     selectedIcon === "Community"
       ? require("../assets/communityClick.png")
       : require("../assets/community.png");
+
+  const imageSource =
+    selectedIcon === "MyPage"
+      ? require("../assets/profileClick.png")
+      : require("../assets/profile.png");
 
   const toggleIcons = (iconName) => {
     if (selectedIcon !== iconName) {
@@ -45,7 +45,7 @@ const BottomRe = () => {
   // default 아이콘 선택 값
   useEffect(() => {
     if (!selectedIcon) {
-      setSelectedIcon("Note");
+      setSelectedIcon("Spending");
     }
   }, []);
 
@@ -78,14 +78,14 @@ const BottomRe = () => {
             activeOpacity={1}
             style={[styles.menuItem]}
             onPress={() => {
-              toggleIcons("Statistics");
-              navigation.navigate("Statistics");
+              toggleIcons("Spending");
+              navigation.navigate("Spending");
             }}
           >
             <View
               style={[
                 styles.iconBg,
-                selectedIcon === "Statistics" && styles.selectedIconContainer,
+                selectedIcon === "Spending" && styles.selectedIconContainer,
               ]}
             >
               <Image style={styles.icon} source={homeImageSource} />

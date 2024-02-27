@@ -50,7 +50,7 @@ const SignUp = () => {
 
       if (response.status === 200) {
         alert("별명을 등록했습니다.");
-        navigation.navigate("MainScreen", { screen: "MyPage" });
+        navigation.navigate("MainScreen", { screen: "Spending" });
       }
     } catch (error) {
       if (error.response) {

@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
   addItem: {
     position: "absolute",
     alignItems: "flex-end",
-    bottom: 390,
+    bottom: 400,
     right: 21,
     zIndex: 10,
   },

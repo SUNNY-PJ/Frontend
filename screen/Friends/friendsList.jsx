@@ -67,7 +67,7 @@ function FriendsList() {
   useEffect(() => {
     fetchData();
     console.log("친구 목록");
-  }, []);
+  }, [route]);
 
   const PostData = async (friendId) => {
     const inputURL = `/friends/approve/${friendId}`;
