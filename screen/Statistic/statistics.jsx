@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
   section: {
     gap: 4,
     alignSelf: "center",
-    width: 52,
+    width: 55,
   },
   bottomSection: {
     flexDirection: "row",
