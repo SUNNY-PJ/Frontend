@@ -33,33 +33,18 @@ const Terms = () => {
         style={{
           fontSize: 16,
           color: "#1F1F1F",
-          fontWeight: 700,
+          fontFamily: "SUITE_Bold",
           alignSelf: "center",
-          bottom: 17,
+          bottom: 20,
         }}
       >
         이용약관
       </Text>
-      <ScrollView style={{ marginBottom: 220 }}>
+      <ScrollView style={{ marginBottom: 200 }}>
         {TermsData.map((item, index) => (
           <View key={index} style={styles.section}>
-            {item.title && (
-              <Text
-                style={{
-                  fontSize: 15,
-                  color: "#1F1F1F",
-                  fontWeight: 700,
-                  marginTop: 10,
-                }}
-              >
-                {item.title}
-              </Text>
-            )}
-            {item.text && (
-              <Text style={{ fontSize: 12, color: "#1F1F1F", fontWeight: 500 }}>
-                {item.text}
-              </Text>
-            )}
+            {item.title && <Text style={styles.termsTitle}>{item.title}</Text>}
+            {item.text && <Text style={styles.termsText}>{item.text}</Text>}
           </View>
         ))}
       </ScrollView>
@@ -78,22 +63,16 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     gap: 3,
   },
-  screenTitle: {
-    fontSize: 16,
-    color: "#1F1F1F",
-    fontWeight: 700,
-    alignSelf: "center",
-    bottom: 17,
-  },
   termsTitle: {
     fontSize: 15,
     color: "#1F1F1F",
-    fontWeight: 700,
+    fontFamily: "SUITE_Bold",
+    marginTop: 10,
   },
   termsText: {
     fontSize: 12,
     color: "#1F1F1F",
-    fontWeight: 500,
+    fontFamily: "SUITE_Medium",
   },
 });
 

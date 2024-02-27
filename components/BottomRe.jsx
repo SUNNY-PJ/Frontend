@@ -54,7 +54,7 @@ const BottomRe = () => {
       <View
         style={{
           borderTopColor: "#fff",
-          backgroundColor: "#FFF",
+          backgroundColor: "#FFFBF6",
           derTopLeftRadius: 24,
           borderTopRightRadius: 24,
           bottom: 0,
@@ -70,8 +70,8 @@ const BottomRe = () => {
             borderWidth: 1.5,
             borderColor: "#1F1F1F",
             justifyContent: "space-around",
-            paddingBottom: 25,
-            paddingTop: 10,
+            paddingBottom: 24,
+            paddingTop: 16,
           }}
         >
           <TouchableOpacity
@@ -258,11 +258,11 @@ const styles = StyleSheet.create({
     // flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: 11,
   },
   menuText: {
     fontSize: 10,
-    fontWeight: "500",
+    fontFamily: "SUITE",
     color: "#1F1F1F",
     textAlign: "center",
     marginTop: 4,
