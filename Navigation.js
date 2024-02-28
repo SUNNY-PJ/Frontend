@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { CommunityProvider } from "./context/communityContext";
 import MainScreen from "./MainScreen";
+import SignUpScreen from "./SignUpScreen";
 import ChatScreen from "./ChatScreen";
 import KakaoScreen from "./KakaoScreen";
 
@@ -16,6 +17,11 @@ function Navigation() {
           <Stack.Screen
             name="KakaoScreen"
             component={KakaoScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SignUpScreen"
+            component={SignUpScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen

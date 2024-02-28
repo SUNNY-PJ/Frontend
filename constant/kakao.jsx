@@ -54,7 +54,7 @@ const Kakao = () => {
       await AsyncStorage.setItem("refresh_token", refresh_token);
       console.log("저장함::", access_token);
       // postData();
-      navigation.replace("MainScreen", { screen: "SignUp" });
+      navigation.replace("SignUpScreen", { screen: "SignUp" });
     } catch (error) {
       console.log("errorMessage:::", error);
       if (error.response) {
