@@ -8,7 +8,9 @@ import {
   Animated,
   ScrollView,
   Dimensions,
+  Alert,
 } from "react-native";
+import Swipeable from "react-native-gesture-handler/Swipeable";
 import Bar from "../../components/Bar";
 import axios from "axios";
 import { proxyUrl } from "../../constant/common";
@@ -162,6 +164,60 @@ const Statistics = ({ year, month }) => {
     }
   };
 
+  const renderRightActions = (consumptionId) => {
+    return (
+      <TouchableOpacity onPress={() => handleChatRoomDelete(consumptionId)}>
+        <View style={styles.deleteBox}>
+          <Text style={styles.deleteText}>삭제</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const handleChatRoomDelete = (consumptionId) => {
+    Alert.alert(
+      "지출",
+      "지출 기록을 삭제하시겠습니까?\n다시 되돌릴 수 없습니다.",
+      [
+        {
+          text: "취소",
+          // onPress: () => console.log("수정을 취소했습니다."),
+          style: "cancel",
+        },
+        {
+          text: "확인",
+          onPress: () => deleteData(consumptionId),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  // 지출 기록 삭제
+  const deleteData = async (consumptionId) => {
+    const inputURL = `/consumption/${consumptionId}`;
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.delete(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      const consumptionDeleteData = response.data;
+      if (consumptionDeleteData.status === 200) {
+        fetchData();
+        fetchCategoryData();
+      }
+      console.log("지출 기록 삭제:::", consumptionDeleteData);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -198,19 +254,23 @@ const Statistics = ({ year, month }) => {
       </View>
       <View style={styles.bottomSection}>
         <ScrollView
-          style={{ height: windowHeight - 476 - 250, flex: 1 }}
+          style={{ height: windowHeight - 500 - 250, flex: 1 }}
           // style={{ height: 50, flex: 1 }}
           // contentContainerStyle={{ paddingBottom: 20 }}
         >
           {Array.isArray(categoryData) &&
             categoryData.map((item, index) => (
-              <View styel={{}} key={item.id}>
+              <Swipeable
+                renderRightActions={() => renderRightActions(item.id)}
+                key={item.id}
+              >
                 <View
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
                     width: "100%",
-                    marginBottom: 25,
+                    paddingTop: 10,
+                    paddingBottom: 10,
                   }}
                 >
                   <View style={{ flexDirection: "row" }}>
@@ -221,7 +281,7 @@ const Statistics = ({ year, month }) => {
                     {formatNumberWithCommas(item.money)}원
                   </Text>
                 </View>
-              </View>
+              </Swipeable>
             ))}
         </ScrollView>
       </View>
@@ -262,7 +322,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 85,
     gap: 16,
-    marginBottom: 24,
+    marginBottom: 20,
     marginTop: 12,
   },
   selectedCategory: {
@@ -281,6 +341,7 @@ const styles = StyleSheet.create({
   bottomSection: {
     flexDirection: "row",
     paddingLeft: 20,
+    paddingRight: 20,
     marginBottom: 16,
     marginTop: 16,
   },
@@ -310,6 +371,18 @@ const styles = StyleSheet.create({
     bottom: 400,
     right: 21,
     zIndex: 10,
+  },
+  deleteBox: {
+    backgroundColor: "#5C5C5C",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+  },
+  deleteText: {
+    color: "white",
+    paddingHorizontal: 20,
+    fontWeight: "bold",
   },
 });
 
