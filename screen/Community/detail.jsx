@@ -274,7 +274,7 @@ const Detail = () => {
             style={{
               fontSize: 20,
               color: "#1F1F1F",
-              fontWeight: 500,
+              fontFamily: "SUITE_Medium",
               marginBottom: 9,
               padding: 4,
               marginBottom: 28,
@@ -304,7 +304,7 @@ const Detail = () => {
                   <Text
                     style={{
                       fontSize: 16,
-                      fontWeight: 700,
+                      fontFamily: "SUITE_Bold",
                       color: "#1F1F1F",
                     }}
                   >
@@ -327,7 +327,7 @@ const Detail = () => {
       <Line color={"#E8E9E8"} h={2} />
       {data.map((item) => (
         <View key={item.id}>
-          <ScrollView style={{ height: windowHeight - 259 - 180 }}>
+          <ScrollView style={{ height: windowHeight - 259 - 140 }}>
             <View style={styles.contentContainer}>
               <View style={{ marginTop: 24, marginBottom: 70 }}>
                 <Text>{item.contents}</Text>
@@ -365,7 +365,15 @@ const Detail = () => {
                       height: 24,
                     }}
                   />
-                  <Text>{item.commentCnt}</Text>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: "#1F1F1F",
+                      fontFamily: "SUITE",
+                    }}
+                  >
+                    {item.commentCnt}
+                  </Text>
                   <Image
                     source={require("../../assets/arrowLeft.png")}
                     style={{
@@ -421,17 +429,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingLeft: 20,
     paddingRight: 0,
-  },
-  // scrollViewContainer: {
-  //   height: windowHeight - 259 - 135,
-  // },
-  section: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingLeft: 16,
-    paddingRight: 24,
-    marginTop: 17,
-    marginBottom: 18,
   },
   image: {
     width: 32,
