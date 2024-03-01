@@ -34,6 +34,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const [parentId, setParentId] = useState("");
   const [parentWriter, setParentWriter] = useState("");
   const [isActionSheetVisible, setActionSheetVisible] = useState(false);
+  const [isActionSheetViewerVisible, setActionSheetViewerVisible] =
+    useState(false);
 
   console.log(communityId);
 
@@ -142,11 +144,17 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     console.log(comment);
   };
 
-  const handleMenuClick = (id, writer) => {
+  const handleMenuClick = (id, writer, author) => {
     console.log(id);
     setCommentId(id);
     setParentWriter(writer);
-    setActionSheetVisible(true);
+    if (author === true) {
+      setActionSheetVisible(true);
+      setActionSheetViewerVisible(false);
+    } else {
+      setActionSheetViewerVisible(true);
+      setActionSheetVisible(false);
+    }
   };
 
   const handleRemoveClick = () => {
@@ -251,7 +259,9 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                 <View>
                   <TouchableOpacity
                     activeOpacity={0.6}
-                    onPress={() => handleMenuClick(item.id, item.writer)}
+                    onPress={() =>
+                      handleMenuClick(item.id, item.writer, item.author)
+                    }
                   >
                     <Image
                       source={require("../../assets/commentDotMenu.png")}
@@ -345,7 +355,11 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                           <TouchableOpacity
                             activeOpacity={0.6}
                             onPress={() =>
-                              handleMenuClick(childItem.id, childItem.writer)
+                              handleMenuClick(
+                                childItem.id,
+                                childItem.writer,
+                                childItem.author
+                              )
                             }
                           >
                             <Image
@@ -411,17 +425,17 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
           </View>
         </View>
       </KeyboardAvoidingView>
-      {/* <CommentActionSheet
+      <CommentActionSheet
         isVisible={isActionSheetVisible}
         onClose={() => setActionSheetVisible(false)}
         onRemove={handleRemoveClick}
         onComment={handleCommentClick}
         onModify={handleModifyClick}
         onProfile={handleProfileClick}
-      /> */}
+      />
       <CommentViewerActionSheet
-        isVisible={isActionSheetVisible}
-        onClose={() => setActionSheetVisible(false)}
+        isVisible={isActionSheetViewerVisible}
+        onClose={() => setActionSheetViewerVisible(false)}
         onReport={handleReportClick}
         onComment={handleCommentClick}
         onProfile={handleProfileClick}

@@ -31,7 +31,7 @@ const Login = () => {
         style={{
           fontSize: 20,
           fontWeight: 500,
-          fontFamily: "SUITE_Medium",
+          // fontFamily: "SUITE_Medium",
           color: "#1F1F1F",
           marginTop: 48,
           textAlign: "center",
