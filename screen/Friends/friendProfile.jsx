@@ -203,7 +203,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
                 marginTop: 27,
               }}
             >
-              <TouchableOpacity style={styles.button}>
+              {/* <TouchableOpacity style={styles.button}>
                 <Text
                   style={{
                     color: "#000 ",
@@ -214,7 +214,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
                 >
                   대화하기
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity
                 style={[
                   styles.button,
@@ -225,16 +225,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
                 ]}
                 onPress={handleFriend}
               >
-                <Text
-                  style={{
-                    color: "#000 ",
-                    fontSize: 15,
-                    fontWeight: 700,
-                    alignSelf: "center",
-                  }}
-                >
-                  {status}
-                </Text>
+                <Text style={styles.btnText}>{status}</Text>
               </TouchableOpacity>
             </View>
             <View
@@ -290,7 +281,7 @@ const styles = StyleSheet.create({
   },
   tabText: {
     fontSize: 20,
-    fontWeight: "700",
+    fontFamily: "SUITE_Bold",
     color: "#C1C1C1",
   },
   activeTabText: {
@@ -317,7 +308,7 @@ const styles = StyleSheet.create({
   name: {
     color: "#1F1F1F",
     fontSize: 22,
-    fontWeight: 700,
+    fontFamily: "SUITE_Bold",
     alignSelf: "center",
   },
   box: {
@@ -343,6 +334,13 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 1,
     borderColor: "#1F1F1F",
+  },
+  btnText: {
+    color: "#000 ",
+    fontSize: 15,
+    fontWeight: 700,
+    alignSelf: "center",
+    fontFamily: "SUITE_Bold",
   },
 });
 

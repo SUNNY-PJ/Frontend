@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 22,
-    fontWeight: "700",
+    fontFamily: "SUITE_Bold",
     color: "#1F1F1F",
     textAlign: "center",
   },
