@@ -18,6 +18,7 @@ const Top = ({ navigation }) => {
   const url = proxyUrl + cleanedURL;
   const [day, setDay] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [cost, setCost] = useState(0);
   const progressAnim = useRef(new Animated.Value(0)).current; // 초기 값 0으로 설정
   const [saveData, setSaveData] = useState(false);
   // 절약 목표 조회
@@ -31,11 +32,15 @@ const Top = ({ navigation }) => {
         },
       });
       if (response.status === 200) {
-        const SaveData = response.data.data;
+        const SaveData = response.data.data[0];
         console.log("절약 목표 조회::", SaveData);
         setSaveData(true);
         setDay(SaveData.date);
         setProgress(SaveData.savePercentage);
+        setCost(SaveData.cost);
+
+        console.log(day);
+        console.log(cost);
       } else if (response.status === 404) {
         setSaveData(false);
       }
