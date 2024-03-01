@@ -158,12 +158,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 500,
     color: "#1F1F1F",
+    fontFamily: "SUITE_Medium",
     paddingLeft: 10,
   },
   subText: {
     fontSize: 12,
     fontWeight: 500,
     color: "#5C5C5C",
+    fontFamily: "SUITE_Medium",
     paddingLeft: 10,
   },
 });

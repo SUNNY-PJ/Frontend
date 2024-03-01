@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     marginBottom: 24,
+    fontFamily: "SUITE_Bold",
     textAlign: "center",
     color: "#000",
   },

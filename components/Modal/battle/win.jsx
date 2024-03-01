@@ -135,11 +135,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 10,
     right: 10,
-    // zIndex: 1,
   },
   resultText: {
     textAlign: "center",
     fontSize: 22,
+    fontFamily: "SUITE_Bold",
     fontWeight: 700,
     color: "#1F1F1F",
   },
@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 16,
     fontWeight: 700,
+    fontFamily: "SUITE_Bold",
     color: "#1F1F1F",
   },
   topText: {
@@ -154,11 +155,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 900,
     color: "#1F1F1F",
+    fontFamily: "SUITE_Heavy",
   },
   buttonText: {
     textAlign: "center",
     fontSize: 20,
     fontWeight: 700,
+    fontFamily: "SUITE_Bold",
     color: "#1F1F1F",
   },
   animationContainer: {

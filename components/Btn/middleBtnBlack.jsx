@@ -16,19 +16,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   button: {
-    paddingVertical: 12,
+    paddingVertical: 10,
     paddingHorizontal: 0,
     borderRadius: 8,
     borderWidth: 1.5,
     borderColor: "#1F1F1F",
     backgroundColor: "#1F1F1F",
-    width: 144,
+    width: 120,
     alignItems: "center",
     justifyContent: "center",
   },
   buttonText: {
-    fontSize: 20,
-    fontWeight: "700",
+    fontSize: 16,
+    fontFamily: "SUITE_Bold",
     color: "#fff",
   },
 });

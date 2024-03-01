@@ -81,28 +81,28 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     textAlign: "center",
     color: "#000",
+    fontFamily: "SUITE_Bold",
   },
   textContainer: {
     flexDirection: "cloumns",
     gap: 24,
     paddingLeft: 24,
-    // marginBottom: 24,
   },
   textRow: {
     flexDirection: "cloumns",
     gap: 8,
-    // justifyContent: "space-between",
-    // marginBottom: 8,
   },
   textLabel: {
     fontSize: 20,
     fontWeight: "700",
     color: "#000",
+    fontFamily: "SUITE_Bold",
   },
   textValue: {
     fontSize: 16,
     fontWeight: "500",
     color: "#000",
+    fontFamily: "SUITE_Medium",
   },
   buttonContainer: {
     flexDirection: "row",
