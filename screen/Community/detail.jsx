@@ -311,7 +311,7 @@ const Detail = () => {
                     {item.writer}
                   </Text>
                 </TouchableOpacity>
-                <SmallBtn title={"대화하기"} border={4} onClick={handleChat} />
+                {/* <SmallBtn title={"대화하기"} border={4} onClick={handleChat} /> */}
               </View>
               <View style={{ flexDirection: "row", gap: 8 }}>
                 <Text style={styles.subDescription}>조회 {item.viewCount}</Text>
