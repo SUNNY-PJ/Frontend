@@ -72,9 +72,9 @@ const Top = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.progressContainer}>
         {saveData ? (
-          <Text style={styles.text}>D - {day}</Text>
+          <Text style={[styles.text]}>D - {day}</Text>
         ) : (
-          <Text style={styles.text}>D - ??</Text>
+          <Text style={[styles.text]}>D - ??</Text>
         )}
         <TouchableOpacity onPress={() => navigation.navigate("Goal")}>
           <View style={styles.progressBar}>
@@ -91,7 +91,8 @@ const Top = ({ navigation }) => {
                 style={{
                   marginLeft: -20,
                   fontSize: 16,
-                  fontWeight: 900,
+                  fontFaily: "SUITE_Heavy",
+                  fontWeight: "900",
                   color: "#1F1F1F",
                   transform: [{ translateY: 0 }, { translateX: 90 }],
                 }}
@@ -102,14 +103,24 @@ const Top = ({ navigation }) => {
               <Text
                 style={{
                   fontSize: 15,
+                  fontFamily: "SUITE",
                   fontWeight: 500,
                   color: "#1F1F1F",
                   alignSelf: "center",
                   marginTop: 1,
                 }}
               >
-                <Text style={{ fontWeight: "900" }}>절약 목표</Text>를
-                설정해보세요!
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontFaily: "SUITE_Heavy",
+                    fontWeight: "900",
+                    color: "#1F1F1F",
+                  }}
+                >
+                  절약 목표
+                </Text>
+                를 설정해보세요!
               </Text>
             )}
           </View>
@@ -168,7 +179,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: 700,
+    fontFamily: "SUITE_Bold",
     color: "#1F1F1F",
   },
   progressBar: {

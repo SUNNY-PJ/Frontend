@@ -152,7 +152,6 @@ function Note({ navigation }) {
                 </View>
               </TouchableOpacity>
             </View>
-
             <View style={{ flexDirection: "row", gap: 16 }}>
               <TouchableOpacity
                 activeOpacity={0.6}
@@ -267,7 +266,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontFamily: "SUIT_Medium",
+    fontFamily: "SUITE_Medium",
     fontWeight: "500",
     color: "#1F1F1F",
     marginBottom: 8,
@@ -305,7 +304,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: "#5C5C5C",
-    fontFamily: "SUIT_Medium",
+    fontFamily: "SUITE_Medium",
   },
   radioIcon: {
     width: 24,

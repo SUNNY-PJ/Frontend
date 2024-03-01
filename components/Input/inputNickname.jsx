@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "#fff",
     borderWidth: 1.5,
+    fontFamily: "SUITE_Medium",
   },
 });
 

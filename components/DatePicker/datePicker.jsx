@@ -78,11 +78,11 @@ const DatePicker = ({
       >
         {selectedDate ? (
           // <Text>{`${moment(selectedDate).format("YYYY.MM.DD")}`}</Text>
-          <Text>
+          <Text style={{ fontFamily: "SUITE" }}>
             {inputText} {selectedDate}
           </Text>
         ) : (
-          <Text style={{ color: "#C1C1C1" }}>{title}</Text>
+          <Text style={{ color: "#C1C1C1", fontFamily: "SUITE" }}>{title}</Text>
         )}
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
