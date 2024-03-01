@@ -87,11 +87,11 @@ const WinModal = ({ isOpenProfile, openProfile }) => {
                 source={require("../../../data/battle_win.json")}
               />
             </View>
-            <Text style={[styles.text, { marginTop: 24 }]}>
+            <Text style={[styles.text, { marginTop: 80 }]}>
               @@님이 대결에서 이겼어요!
-              {"\n"}친구에게 메시지를 보내보세요
+              {"\n"}축하드려요!
             </Text>
-            <View
+            {/* <View
               style={{
                 backgroundColor: "#FFA851",
                 borderRadius: 8,
@@ -105,7 +105,7 @@ const WinModal = ({ isOpenProfile, openProfile }) => {
               }}
             >
               <Text style={[styles.buttonText, {}]}>**에게 메세지 보내기</Text>
-            </View>
+            </View> */}
           </View>
         </View>
       </Modal>

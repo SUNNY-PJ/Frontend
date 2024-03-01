@@ -102,14 +102,14 @@ const MatchSendMsg = ({ isMatchModal, matchModal }) => {
           />
           <Text style={styles.subText}>* 최대 20자</Text>
         </View>
-        <View style={styles.modalContent}>
+        {/* <View style={styles.modalContent}>
           <Text style={styles.modalText}>무엇을 걸고 대결할까요?</Text>
           <Input
             placeholder={"대결 보상"}
             inputValue={compensation}
             handleInputChange={handleCompensationChange}
           />
-        </View>
+        </View> */}
         <View style={styles.modalContent}>
           <Text style={styles.modalText}>대결 기간과 금액을 설정해 주세요</Text>
           <Input

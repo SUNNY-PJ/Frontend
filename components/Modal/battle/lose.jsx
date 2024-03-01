@@ -82,11 +82,11 @@ const LoseModal = ({ isOpenProfile, openProfile }) => {
                 source={require("../../../data/battle_lose.json")}
               />
             </View>
-            <Text style={[styles.text, { marginTop: 24 }]}>
+            <Text style={[styles.text, { marginTop: 80 }]}>
               @@님이 대결에서 졌어요
-              {"\n"}친구에게 메시지를 보내보세요
+              {"\n"}다음에는 조금 더 노력해 보아요!
             </Text>
-            <View
+            {/* <View
               style={{
                 backgroundColor: "#5C5C5C",
                 borderRadius: 8,
@@ -100,7 +100,7 @@ const LoseModal = ({ isOpenProfile, openProfile }) => {
               }}
             >
               <Text style={[styles.buttonText, {}]}>**에게 메세지 보내기</Text>
-            </View>
+            </View> */}
           </View>
         </View>
       </Modal>
