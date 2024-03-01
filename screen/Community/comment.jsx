@@ -71,7 +71,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       });
 
       const ResCommentData = response.data.data;
-      console.log("????", response.data);
+      console.log("????", ResCommentData);
 
       setCommentData(ResCommentData);
       console.log("????", ResCommentData);
@@ -203,7 +203,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
         />
         <View style={styles.modalContent}>
           <Line color={"#E8E9E8"} h={2} />
-          {commentData?.map((item) => (
+          {commentData?.map((item, index) => (
             <View style={styles.commentSection} key={item.id}>
               <View
                 style={{
@@ -263,23 +263,31 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
               <Text style={[styles.comment, { paddingLeft: 40 }]}>
                 {item.content}
               </Text>
-              <View
-                style={{
-                  flexDirection: "row",
-                  gap: 8,
-                  paddingLeft: 40,
-                  marginTop: 4,
-                  marginBottom: 21,
-                }}
-              >
-                <Text style={styles.subComment}>{item.createdDate}</Text>
-                <Text
-                  style={styles.subComment}
-                  onPress={() => handleReCommentClick(item.id, item.writer)}
+              {commentData[index].userId === null ? (
+                <View
+                  style={{
+                    marginBottom: 10,
+                  }}
+                />
+              ) : (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 8,
+                    paddingLeft: 40,
+                    marginTop: 4,
+                    marginBottom: 21,
+                  }}
                 >
-                  답글 쓰기
-                </Text>
-              </View>
+                  <Text style={styles.subComment}>{item.createdDate}</Text>
+                  <Text
+                    style={styles.subComment}
+                    onPress={() => handleReCommentClick(item.id, item.writer)}
+                  >
+                    답글 쓰기
+                  </Text>
+                </View>
+              )}
               <Line color={"#E8E9E8"} h={1} />
               {/* 대댓글 ui */}
               {item.children.length > 0 && (
