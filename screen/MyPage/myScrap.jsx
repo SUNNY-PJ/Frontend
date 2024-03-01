@@ -96,15 +96,15 @@ const MyScrap = () => {
       {data.map((item) => (
         <TouchableOpacity
           key={item.id}
-          // onPress={() =>
-          //   navigation.navigate("Detail", {
-          //     screen: "Detail",
-          //     params: {
-          //       itemId: item.id,
-          //       userId: item.userId,
-          //     },
-          //   })
-          // }
+          onPress={() =>
+            navigation.navigate("Detail", {
+              screen: "Detail",
+              params: {
+                itemId: item.communityId,
+                userId: item.userId,
+              },
+            })
+          }
           activeOpacity={0.6}
         >
           <View style={styles.box}>
