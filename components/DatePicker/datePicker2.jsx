@@ -85,7 +85,7 @@ const DatePicker2 = ({
       >
         {selectedDate ? (
           // <Text>{`${moment(selectedDate).format("YYYY.MM.DD")}`}</Text>
-          <Text>
+          <Text style={{ fontFamily: "SUITE", color: "#1F1F1F" }}>
             {inputText} {selectedDate}
           </Text>
         ) : (

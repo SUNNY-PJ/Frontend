@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontWeight: "500",
+    fontFamily: "SUITE_Medium",
     color: "#1F1F1F",
     marginBottom: 8,
     marginTop: 32,
@@ -252,9 +252,9 @@ const styles = StyleSheet.create({
   },
   subText: {
     fontSize: 12,
-    fontWeight: "500",
     color: "#5C5C5C",
     textAlign: "center",
+    fontFamily: "SUITE",
   },
 });
 
