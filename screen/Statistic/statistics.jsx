@@ -354,16 +354,17 @@ const styles = StyleSheet.create({
   bottomText: {
     color: "#1F1F1F",
     fontSize: 16,
-    fontFamily: "SUIT_Bold",
+    fontFamily: "SUITE_Bold",
+    fontWeight: 700,
     marginLeft: 16,
     alignSelf: "center",
   },
   bottomPriceText: {
     color: "#1F1F1F",
     fontSize: 16,
+    fontWeight: 500,
+    fontFamily: "SUITE_Medium",
     alignSelf: "center",
-    paddingRight: 20,
-    fontFamily: "SUIT_Medium",
   },
   addItem: {
     position: "absolute",

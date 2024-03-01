@@ -225,6 +225,7 @@ const Post = () => {
                   fontSize: 15,
                   fontWeight: 700,
                   borderColor: "#1F1F1F",
+                  fontFamily: "SUITE_Bold",
                 }}
               >
                 {selectedCategory ? selectedCategory : "카테고리 선택"}
@@ -248,6 +249,7 @@ const Post = () => {
               marginBottom: 8,
               marginTop: 16,
               paddingLeft: 12,
+              fontFamily: "SUITE_Medium",
             }}
           >
             제목
@@ -265,6 +267,7 @@ const Post = () => {
               marginBottom: 8,
               marginTop: 10,
               paddingLeft: 12,
+              fontFamily: "SUITE_Medium",
             }}
           >
             내용
@@ -281,6 +284,7 @@ const Post = () => {
               color: "#1F1F1F",
               marginBottom: 8,
               marginTop: 10,
+              fontFamily: "SUITE_Medium",
             }}
           >
             미디어 첨부
@@ -334,6 +338,7 @@ const Post = () => {
               fontWeight: 500,
               color: "#5C5C5C",
               marginTop: 8,
+              fontFamily: "SUITE_Medium",
             }}
           >
             미디어는 최대 4장까지 첨부가 가능합니다.
