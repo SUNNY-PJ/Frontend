@@ -19,6 +19,7 @@ import LoseModal from "../../components/Modal/battle/lose";
 import LeaveMsg from "../../components/Modal/myPage/leaveMsg";
 import SuccessModal from "../../components/Modal/goal/successModal";
 import FailModal from "../../components/Modal/goal/failModal";
+import ToggleBtn from "../../components/Btn/toggleBtn";
 
 const MyPage = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -237,20 +238,24 @@ const MyPage = () => {
             <Text style={styles.description}>작성글</Text>
           </TouchableOpacity>
           <Line color={"#C1C1C1"} h={1} />
-          <TouchableOpacity
-            activeOpacity={0.6}
-            onPress={() => handleTabClick("comment")}
-          >
-            <Text style={styles.description}>작성 댓글</Text>
-          </TouchableOpacity> */}
+          */}
           <Line color={"#C1C1C1"} h={4} />
-          <Text style={styles.title}>알림</Text>
-          <TouchableOpacity
+          <Text style={styles.alarmTitle}>알림</Text>
+          <View style={styles.section}>
+            <View style={styles.alarmSection}>
+              <Text style={styles.alarmDescription}>답글 알림</Text>
+              <Text style={styles.alarmSubDescription}>
+                커뮤니티, 대결, 대화, 친구 신청에 대한 전체 알림 설정
+              </Text>
+            </View>
+            <ToggleBtn />
+          </View>
+          {/* <TouchableOpacity
             activeOpacity={0.6}
             onPress={handldSettingAlarmClick}
           >
             <Text style={styles.description}>알림 설정</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <Line color={"#C1C1C1"} h={4} />
           <Text style={styles.title}>기타</Text>
           <TouchableOpacity activeOpacity={1} onPress={handleTermsClick}>
@@ -341,6 +346,28 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     paddingTop: 16,
     paddingLeft: 20,
+  },
+  alarmTitle: {
+    fontSize: 16,
+    color: "#1F1F1F",
+    fontFamily: "SUIT_ExtraBold",
+    paddingLeft: 20,
+    paddingTop: 16,
+    marginBottom: 8,
+  },
+  alarmDescription: {
+    fontSize: 16,
+    color: "#1F1F1F",
+    fontFamily: "SUITE_Medium",
+  },
+  alarmSubDescription: {
+    fontSize: 12,
+    color: "#5C5C5C",
+    fontFamily: "SUITE_Medium",
+  },
+  alarmSection: {
+    flexDirection: "column",
+    gap: 8,
   },
 });
 
