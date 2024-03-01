@@ -12,12 +12,12 @@ import RegularBtnOrange from "../Btn/regularBtnOrange";
 
 const ErrorModal = ({ isOpenErrorModal, openErrorModal }) => {
   return (
-    <Modal animationType="slide" transparent={true} visible={isOpenErrorModal}>
+    <Modal animationType="none" transparent={true} visible={isOpenErrorModal}>
       <View
         style={{
           justifyContent: "center",
           alignItems: "center",
-          //   backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
           height: "100%",
         }}
       >

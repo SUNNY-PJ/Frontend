@@ -12,12 +12,12 @@ import MiddleBtnBlack from "../Btn/middleBtnBlack";
 
 const FriendsMsg = ({ isVisible, toggleModal }) => {
   return (
-    <Modal animationType="slide" transparent={true} visible={isVisible}>
+    <Modal animationType="none" transparent={true} visible={isVisible}>
       <View
         style={{
           justifyContent: "center",
           alignItems: "center",
-          // backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
           height: "100%",
         }}
       >

@@ -11,12 +11,12 @@ import Line from "../../Line";
 
 const FailModal = ({ isOpenSuccess, openSuccess }) => {
   return (
-    <Modal animationType="slide" transparent={true} visible={isOpenSuccess}>
+    <Modal animationType="none" transparent={true} visible={isOpenSuccess}>
       <View
         style={{
           justifyContent: "center",
           alignItems: "center",
-          //   backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
           height: "100%",
         }}
       >

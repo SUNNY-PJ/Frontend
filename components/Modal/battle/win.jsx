@@ -18,7 +18,7 @@ const WinModal = ({ isOpenProfile, openProfile }) => {
 
   return (
     <View style={styles.container}>
-      <Modal animationType="slide" transparent={true} visible={isOpenProfile}>
+      <Modal animationType="none" transparent={true} visible={isOpenProfile}>
         <View style={styles.modalContainer}>
           {/* 모달 닫기 버튼 */}
           <TouchableOpacity onPress={openProfile} style={styles.closeButton}>
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     // justifyContent: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
     alignItems: "center",
     backgroundColor: "white",
   },

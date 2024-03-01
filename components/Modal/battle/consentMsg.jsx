@@ -11,7 +11,7 @@ import {
 const ConsentMsg = ({ isOpenConsentMessage, openConsentMessage }) => {
   return (
     <Modal
-      animationType="slide"
+      animationType="none"
       transparent={true}
       visible={isOpenConsentMessage}
     >
@@ -19,7 +19,7 @@ const ConsentMsg = ({ isOpenConsentMessage, openConsentMessage }) => {
         style={{
           justifyContent: "center",
           alignItems: "center",
-          // backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
           height: "100%",
         }}
       >

@@ -26,7 +26,7 @@ const OptionModal = ({
   };
 
   return (
-    <Modal animationType="slide" transparent={true} visible={isOpenOptionModal}>
+    <Modal animationType="none" transparent={true} visible={isOpenOptionModal}>
       <View style={styles.modalContainer}>
         <TouchableOpacity onPress={openOptionModal} activeOpacity={1}>
           <Image

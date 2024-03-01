@@ -12,12 +12,13 @@ import MiddleBtnBlack from "../../Btn/middleBtnBlack";
 
 const DeleteMsg = ({ isVisible, toggleModal, onDelete, onCancel }) => {
   return (
-    <Modal animationType="slide" transparent={true} visible={isVisible}>
+    <Modal animationType="none" transparent={true} visible={isVisible}>
       <View
         style={{
           justifyContent: "center",
           alignItems: "center",
           height: "100%",
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
         }}
       >
         <View style={styles.container}>

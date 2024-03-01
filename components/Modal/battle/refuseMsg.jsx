@@ -11,7 +11,7 @@ import {
 const RefuseMsg = ({ isOpenRefuseMessage, openRefuseMessage }) => {
   return (
     <Modal
-      animationType="slide"
+      animationType="none"
       transparent={true}
       visible={isOpenRefuseMessage}
     >
@@ -19,7 +19,7 @@ const RefuseMsg = ({ isOpenRefuseMessage, openRefuseMessage }) => {
         style={{
           justifyContent: "center",
           alignItems: "center",
-          // backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
           height: "100%",
         }}
       >

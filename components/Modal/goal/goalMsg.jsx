@@ -12,12 +12,12 @@ import Progress from "../../progress/progress";
 
 const GoalMsg = ({ isOpenGoalMessage, openGoalMessage, percentage, cost }) => {
   return (
-    <Modal animationType="slide" transparent={true} visible={isOpenGoalMessage}>
+    <Modal animationType="none" transparent={true} visible={isOpenGoalMessage}>
       <View
         style={{
           justifyContent: "center",
           alignItems: "center",
-          //   backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
           height: "100%",
         }}
       >

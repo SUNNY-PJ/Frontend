@@ -10,12 +10,12 @@ import {
 
 const WinnerModal = ({ isOpenWinnerModal, openWinnerModal }) => {
   return (
-    <Modal animationType="slide" transparent={true} visible={isOpenWinnerModal}>
+    <Modal animationType="none" transparent={true} visible={isOpenWinnerModal}>
       <View
         style={{
           justifyContent: "center",
           alignItems: "center",
-          // backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
           height: "100%",
         }}
       >
