@@ -325,14 +325,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 12,
   },
-  name: { fontSize: 20, color: "#1F1F1F", fontFamily: "SUIT_ExtraBold" },
+  name: { fontSize: 20, color: "#1F1F1F", fontFamily: "SUITE_ExtraBold" },
   setting: {
     fontSize: 16,
     color: "#5C5C5C",
-    fontFamily: "SUIT_Medium",
+    fontFamily: "SUITE_Medium",
   },
   title: {
-    fontFamily: "SUIT_ExtraBold",
+    fontFamily: "SUITE_ExtraBold",
     fontSize: 16,
     color: "#1F1F1F",
     paddingLeft: 20,
@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   description: {
-    fontFamily: "SUIT_Medium",
+    fontFamily: "SUITE_Medium",
     fontSize: 16,
     color: "#1F1F1F",
     paddingBottom: 16,
@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
   alarmTitle: {
     fontSize: 16,
     color: "#1F1F1F",
-    fontFamily: "SUIT_ExtraBold",
+    fontFamily: "SUITE_ExtraBold",
     paddingLeft: 20,
     paddingTop: 16,
     marginBottom: 8,

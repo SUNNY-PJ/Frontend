@@ -89,7 +89,8 @@ const MyInfo = () => {
             color: "#1F1F1F",
             fontWeight: 700,
             alignSelf: "center",
-            bottom: 17,
+            bottom: 20,
+            fontFamily: "SUITE_Bold",
           }}
         >
           커뮤니티
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     color: "#C1C1C1",
-    fontFamily: "SUIT_Bold",
+    fontFamily: "SUITE_Bold",
   },
   activeTabText: {
     color: "#1F1F1F",
