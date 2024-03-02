@@ -87,7 +87,7 @@ const SignUp = () => {
       });
 
       console.log("디바이스 토큰 api", response);
-      navigation.replace("MainScreen", { screen: "Spending" });
+      // navigation.replace("MainScreen", { screen: "Spending" });
     } catch (error) {
       console.error("device token 에러:", error);
     }
