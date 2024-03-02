@@ -50,6 +50,7 @@ const SignUp = () => {
 
       if (response.status === 200) {
         alert("별명을 등록했습니다.");
+        postDeviceData();
         // navigation.replace("MainScreen", { screen: "Spending" });
       } else if (response.status === 403) {
         alert("이미 사용중인 닉네임입니다.");
@@ -87,7 +88,7 @@ const SignUp = () => {
       });
 
       console.log("디바이스 토큰 api", response);
-      // navigation.replace("MainScreen", { screen: "Spending" });
+      navigation.replace("MainScreen", { screen: "Spending" });
     } catch (error) {
       console.error("device token 에러:", error);
     }
@@ -95,7 +96,6 @@ const SignUp = () => {
 
   const handlePostApiTestStart = () => {
     postData();
-    postDeviceData();
   };
 
   return (
