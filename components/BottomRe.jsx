@@ -54,7 +54,8 @@ const BottomRe = () => {
       <View
         style={{
           borderTopColor: "#fff",
-          backgroundColor: "#FFFBF6",
+          backgroundColor: "#FFF",
+          // backgroundColor: "#FFFBF6",
           derTopLeftRadius: 24,
           borderTopRightRadius: 24,
           bottom: 0,
