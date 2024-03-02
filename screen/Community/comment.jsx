@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { proxyUrl } from "../../constant/common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Dimensions,
+  PanResponder,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
@@ -36,7 +37,18 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const [isActionSheetViewerVisible, setActionSheetViewerVisible] =
     useState(false);
 
-  console.log(communityId);
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onPanResponderRelease: (evt, gestureState) => {
+        // 사용자가 아래로 스와이프할 때 모달 닫기
+        if (gestureState.dy > 10) {
+          // dy 값이 20 이상이면 아래로 스와이프한 것으로 간주
+          commentModal(); // 모달 닫기 함수 호출
+        }
+      },
+    })
+  ).current;
 
   const imageSource = secret
     ? require("../../assets/secretComment_checkBoxTrue.png")
@@ -182,233 +194,249 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     fetchData();
   }, [commentId]);
 
+  const [slide, setSlide] = useState(false);
+
+  const handleSlideDown = () => {
+    setSlide(true);
+    commentModal();
+    setSlide(false);
+  };
+  console.log(slide);
+
   return (
     <Modal
       isVisible={isCommentModal}
       animationIn="slideInUp"
       animationOut="slideOutDown"
-      onSwipeComplete={commentModal}
-      swipeDirection="down"
-      style={styles.modal}
+      // onSwipeComplete={commentModal}
+      // swipeDirection={slide ? "down" : []}
+      // swipeDirection="down"
+      style={[styles.modal, { maxHeight: windowHeight }]}
     >
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.modalContainer}
       >
-        <View
-          style={{
-            width: 64,
-            height: 4,
-            backgroundColor: "#C1C1C1",
-            alignSelf: "center",
-            borderRadius: 12,
-            marginBottom: 37,
-          }}
-        />
-        <View style={styles.modalContent}>
-          <Line color={"#E8E9E8"} h={2} />
-          {commentData?.map((item, index) => (
-            <View style={styles.commentSection} key={item.id}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
+        <TouchableOpacity onPress={handleSlideDown} activeOpacity={1}>
+          <View
+            style={{
+              width: 64,
+              height: 4,
+              backgroundColor: "#C1C1C1",
+              alignSelf: "center",
+              borderRadius: 12,
+              marginBottom: 37,
+            }}
+          />
+        </TouchableOpacity>
+        <View style={styles.modalContent} {...panResponder.panHandlers}>
+          <ScrollView style={{ maxHeight: windowHeight - 200 }}>
+            <Line color={"#E8E9E8"} h={2} />
+            {commentData?.map((item, index) => (
+              <View style={styles.commentSection} key={item.id}>
                 <View
                   style={{
                     flexDirection: "row",
-                    gap: 8,
+                    justifyContent: "space-between",
                   }}
                 >
-                  <Image
-                    source={require("../../assets/myPage_profile.png")}
-                    style={{ width: 32, height: 32 }}
-                  />
-                  <Text
+                  <View
                     style={{
-                      fontSize: 15,
-                      fontWeight: 500,
-                      color: "#1F1F1F",
-                      fontFamily: "SUITE_Medium",
-                      alignSelf: "center",
+                      flexDirection: "row",
+                      gap: 8,
+                      marginTop: 9,
                     }}
                   >
-                    {item.writer}
-                  </Text>
-                  {item.author === true ? (
-                    <View
+                    <Image
+                      source={require("../../assets/myPage_profile.png")}
+                      style={{ width: 32, height: 32 }}
+                    />
+                    <Text
                       style={{
-                        backgroundColor: "#6ADCA3",
-                        borderRadius: 12,
+                        fontSize: 15,
+                        fontWeight: 500,
+                        color: "#1F1F1F",
+                        fontFamily: "SUITE_Medium",
                         alignSelf: "center",
                       }}
                     >
-                      <Text
+                      {item.writer}
+                    </Text>
+                    {item.author === true ? (
+                      <View
                         style={{
-                          color: "#1F1F1F",
-                          fontSize: 10,
-                          fontWeight: 500,
-                          paddingRight: 5,
-                          paddingLeft: 5,
-                          paddingTop: 4,
-                          paddingBottom: 4,
+                          backgroundColor: "#6ADCA3",
+                          borderRadius: 12,
+                          alignSelf: "center",
                         }}
                       >
-                        작성자
-                      </Text>
+                        <Text
+                          style={{
+                            color: "#1F1F1F",
+                            fontSize: 10,
+                            fontWeight: 500,
+                            paddingRight: 5,
+                            paddingLeft: 5,
+                            paddingTop: 4,
+                            paddingBottom: 4,
+                          }}
+                        >
+                          작성자
+                        </Text>
+                      </View>
+                    ) : null}
+                  </View>
+                  {item.deleted === false ? (
+                    <View>
+                      <TouchableOpacity
+                        activeOpacity={0.6}
+                        onPress={() =>
+                          handleMenuClick(item.id, item.writer, item.author)
+                        }
+                      >
+                        <Image
+                          source={require("../../assets/commentDotMenu.png")}
+                          style={{ width: 20, height: 4, top: 10 }}
+                        />
+                      </TouchableOpacity>
                     </View>
                   ) : null}
                 </View>
-                {item.deleted === false ? (
-                  <View>
-                    <TouchableOpacity
-                      activeOpacity={0.6}
-                      onPress={() =>
-                        handleMenuClick(item.id, item.writer, item.author)
-                      }
-                    >
-                      <Image
-                        source={require("../../assets/commentDotMenu.png")}
-                        style={{ width: 20, height: 4, top: 10 }}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                ) : null}
-              </View>
-              <Text style={[styles.comment, { paddingLeft: 40 }]}>
-                {item.content}
-              </Text>
-              {item.deleted === true ? (
-                <View
-                  style={{
-                    marginBottom: 15,
-                  }}
-                />
-              ) : (
-                <View
-                  style={{
-                    flexDirection: "row",
-                    gap: 8,
-                    paddingLeft: 40,
-                    marginTop: 4,
-                    marginBottom: 15,
-                  }}
-                >
-                  <Text style={styles.subComment}>{item.createdDate}</Text>
-                  <Text
-                    style={styles.subComment}
-                    onPress={() => handleReCommentClick(item.id, item.writer)}
+                <Text style={[styles.comment, { paddingLeft: 40 }]}>
+                  {item.content}
+                </Text>
+                {item.deleted === true ? (
+                  <View
+                    style={{
+                      marginBottom: 15,
+                    }}
+                  />
+                ) : (
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 8,
+                      paddingLeft: 40,
+                      marginTop: 4,
+                      marginBottom: 15,
+                    }}
                   >
-                    답글 쓰기
-                  </Text>
-                </View>
-              )}
-              <Line color={"#E8E9E8"} h={1} />
-              {/* 대댓글 ui */}
-              {item.children.length > 0 && (
-                <View>
-                  {item.children.map((childItem) => (
-                    <View key={childItem.id}>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          paddingLeft: 40,
-                          marginTop: 9,
-                          justifyContent: "space-between",
-                        }}
-                      >
+                    <Text style={styles.subComment}>{item.createdDate}</Text>
+                    <Text
+                      style={styles.subComment}
+                      onPress={() => handleReCommentClick(item.id, item.writer)}
+                    >
+                      답글 쓰기
+                    </Text>
+                  </View>
+                )}
+                <Line color={"#E8E9E8"} h={1} />
+                {/* 대댓글 ui */}
+                {item.children.length > 0 && (
+                  <View>
+                    {item.children.map((childItem) => (
+                      <View key={childItem.id}>
                         <View
                           style={{
                             flexDirection: "row",
-                            gap: 8,
+                            paddingLeft: 40,
+                            marginTop: 9,
+                            justifyContent: "space-between",
                           }}
                         >
-                          <Image
-                            source={require("../../assets/myPage_profile.png")}
-                            style={{ width: 32, height: 32 }}
-                          />
-                          <Text
-                            style={[styles.comment, { alignSelf: "center" }]}
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              gap: 8,
+                              // marginTop: 9,
+                            }}
                           >
-                            {childItem.writer}
-                          </Text>
-                          {childItem.author === true ? (
-                            <View
-                              style={{
-                                backgroundColor: "#6ADCA3",
-                                borderRadius: 12,
-                                alignSelf: "center",
-                              }}
+                            <Image
+                              source={require("../../assets/myPage_profile.png")}
+                              style={{ width: 32, height: 32 }}
+                            />
+                            <Text
+                              style={[styles.comment, { alignSelf: "center" }]}
                             >
-                              <Text
+                              {childItem.writer}
+                            </Text>
+                            {childItem.author === true ? (
+                              <View
                                 style={{
-                                  color: "#1F1F1F",
-                                  fontSize: 10,
-                                  fontWeight: 500,
-                                  paddingRight: 5,
-                                  paddingLeft: 5,
-                                  paddingTop: 4,
-                                  paddingBottom: 4,
-                                  fontFamily: "SUITE_Medium",
+                                  backgroundColor: "#6ADCA3",
+                                  borderRadius: 12,
+                                  alignSelf: "center",
                                 }}
                               >
-                                작성자
-                              </Text>
+                                <Text
+                                  style={{
+                                    color: "#1F1F1F",
+                                    fontSize: 10,
+                                    fontWeight: 500,
+                                    paddingRight: 5,
+                                    paddingLeft: 5,
+                                    paddingTop: 4,
+                                    paddingBottom: 4,
+                                    fontFamily: "SUITE_Medium",
+                                  }}
+                                >
+                                  작성자
+                                </Text>
+                              </View>
+                            ) : null}
+                          </View>
+                          {childItem.deleted === false ? (
+                            <View>
+                              <TouchableOpacity
+                                activeOpacity={0.6}
+                                onPress={() =>
+                                  handleMenuClick(
+                                    childItem.id,
+                                    childItem.writer,
+                                    childItem.author
+                                  )
+                                }
+                              >
+                                <Image
+                                  source={require("../../assets/commentDotMenu.png")}
+                                  style={{ width: 20, height: 4, top: 10 }}
+                                />
+                              </TouchableOpacity>
                             </View>
                           ) : null}
                         </View>
+                        <Text style={[styles.comment, { paddingLeft: 80 }]}>
+                          {childItem.content}
+                        </Text>
                         {childItem.deleted === false ? (
-                          <View>
-                            <TouchableOpacity
-                              activeOpacity={0.6}
-                              onPress={() =>
-                                handleMenuClick(
-                                  childItem.id,
-                                  childItem.writer,
-                                  childItem.author
-                                )
-                              }
-                            >
-                              <Image
-                                source={require("../../assets/commentDotMenu.png")}
-                                style={{ width: 20, height: 4, top: 10 }}
-                              />
-                            </TouchableOpacity>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              gap: 8,
+                              paddingLeft: 80,
+                              marginTop: 4,
+                              marginBottom: 15,
+                            }}
+                          >
+                            <Text style={styles.subComment}>
+                              {childItem.createdDate}
+                            </Text>
                           </View>
-                        ) : null}
+                        ) : (
+                          <View
+                            style={{
+                              marginBottom: 15,
+                            }}
+                          />
+                        )}
+                        <Line color={"#E8E9E8"} h={1} />
                       </View>
-                      <Text style={[styles.comment, { paddingLeft: 80 }]}>
-                        {childItem.content}
-                      </Text>
-                      {childItem.deleted === false ? (
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            gap: 8,
-                            paddingLeft: 80,
-                            marginTop: 4,
-                            marginBottom: 15,
-                          }}
-                        >
-                          <Text style={styles.subComment}>
-                            {childItem.createdDate}
-                          </Text>
-                        </View>
-                      ) : (
-                        <View
-                          style={{
-                            marginBottom: 15,
-                          }}
-                        />
-                      )}
-                      <Line color={"#E8E9E8"} h={1} />
-                    </View>
-                  ))}
-                </View>
-              )}
-            </View>
-          ))}
+                    ))}
+                  </View>
+                )}
+              </View>
+            ))}
+          </ScrollView>
           <Line color={"#E8E9E8"} h={2} />
           <TouchableOpacity
             activeOpacity={1}
@@ -475,7 +503,7 @@ const styles = StyleSheet.create({
   },
   commentSection: { paddingLeft: 17, paddingRight: 17 },
   modalContent: {
-    marginBottom: 24,
+    marginBottom: 10,
     gap: 8,
   },
   input: {
