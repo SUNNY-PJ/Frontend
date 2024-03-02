@@ -281,10 +281,10 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
               <Text style={[styles.comment, { paddingLeft: 40 }]}>
                 {item.content}
               </Text>
-              {commentData[index].userId === null ? (
+              {item.deleted === true ? (
                 <View
                   style={{
-                    marginBottom: 10,
+                    marginBottom: 15,
                   }}
                 />
               ) : (
@@ -294,7 +294,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                     gap: 8,
                     paddingLeft: 40,
                     marginTop: 4,
-                    marginBottom: 21,
+                    marginBottom: 15,
                   }}
                 >
                   <Text style={styles.subComment}>{item.createdDate}</Text>
@@ -360,40 +360,50 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                             </View>
                           ) : null}
                         </View>
-                        <View>
-                          <TouchableOpacity
-                            activeOpacity={0.6}
-                            onPress={() =>
-                              handleMenuClick(
-                                childItem.id,
-                                childItem.writer,
-                                childItem.author
-                              )
-                            }
-                          >
-                            <Image
-                              source={require("../../assets/commentDotMenu.png")}
-                              style={{ width: 20, height: 4, top: 10 }}
-                            />
-                          </TouchableOpacity>
-                        </View>
+                        {childItem.deleted === false ? (
+                          <View>
+                            <TouchableOpacity
+                              activeOpacity={0.6}
+                              onPress={() =>
+                                handleMenuClick(
+                                  childItem.id,
+                                  childItem.writer,
+                                  childItem.author
+                                )
+                              }
+                            >
+                              <Image
+                                source={require("../../assets/commentDotMenu.png")}
+                                style={{ width: 20, height: 4, top: 10 }}
+                              />
+                            </TouchableOpacity>
+                          </View>
+                        ) : null}
                       </View>
                       <Text style={[styles.comment, { paddingLeft: 80 }]}>
                         {childItem.content}
                       </Text>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          gap: 8,
-                          paddingLeft: 80,
-                          marginTop: 4,
-                          marginBottom: 21,
-                        }}
-                      >
-                        <Text style={styles.subComment}>
-                          {childItem.createdDate}
-                        </Text>
-                      </View>
+                      {childItem.deleted === false ? (
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            gap: 8,
+                            paddingLeft: 80,
+                            marginTop: 4,
+                            marginBottom: 15,
+                          }}
+                        >
+                          <Text style={styles.subComment}>
+                            {childItem.createdDate}
+                          </Text>
+                        </View>
+                      ) : (
+                        <View
+                          style={{
+                            marginBottom: 15,
+                          }}
+                        />
+                      )}
                       <Line color={"#E8E9E8"} h={1} />
                     </View>
                   ))}
