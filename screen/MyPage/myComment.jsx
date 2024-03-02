@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import { proxyUrl } from "../../constant/common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -11,6 +19,7 @@ const MyComment = () => {
   const navigation = useNavigation();
   const inputURL = "/users/comment";
   const url = proxyUrl + inputURL;
+  const windowHeight = Dimensions.get("window").height;
 
   const [data, setData] = useState([]);
 
@@ -41,32 +50,36 @@ const MyComment = () => {
 
   return (
     <View style={styles.container}>
-      {data.map((item) => (
-        <TouchableOpacity
-          key={item.id}
-          onPress={() =>
-            navigation.navigate("Detail", {
-              screen: "Detail",
-              params: {
-                itemId: item.communityId,
-                userId: item.userId,
-              },
-            })
-          }
-          activeOpacity={0.6}
-        >
-          <View style={styles.box}>
-            <Text style={styles.title}>{item.content}</Text>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.description}>{item.writer}</Text>
-              <Text style={styles.description}>
-                {formatDate(item.createdDate)}
-              </Text>
-            </View>
-          </View>
-          <Line color={"#C1C1C1"} h={1} />
-        </TouchableOpacity>
-      ))}
+      <View>
+        <ScrollView style={{ height: windowHeight - 259 - 57 }}>
+          {data.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              onPress={() =>
+                navigation.navigate("Detail", {
+                  screen: "Detail",
+                  params: {
+                    itemId: item.communityId,
+                    userId: item.userId,
+                  },
+                })
+              }
+              activeOpacity={0.6}
+            >
+              <View style={styles.box}>
+                <Text style={styles.title}>{item.content}</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.description}>{item.writer}</Text>
+                  <Text style={styles.description}>
+                    {formatDate(item.createdDate)}
+                  </Text>
+                </View>
+              </View>
+              <Line color={"#C1C1C1"} h={1} />
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
     </View>
   );
 };

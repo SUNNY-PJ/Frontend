@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import { proxyUrl } from "../../constant/common";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -11,6 +19,8 @@ const MyScrap = () => {
   const navigation = useNavigation();
   const inputURL = "/users/scrap";
   const url = proxyUrl + inputURL;
+  const windowHeight = Dimensions.get("window").height;
+
   const [data, setData] = useState([]);
   const [isScrap, setIsScrap] = useState(true);
 
@@ -68,7 +78,6 @@ const MyScrap = () => {
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     console.log(access_token);
-    console.log("get 실행");
 
     try {
       const response = await axios.get(url, {
@@ -88,54 +97,61 @@ const MyScrap = () => {
 
   useEffect(() => {
     fetchData();
-    console.log("실행된건가");
   }, []);
 
   return (
     <View style={styles.container}>
-      {data.map((item) => (
-        <TouchableOpacity
-          key={item.id}
-          onPress={() =>
-            navigation.navigate("Detail", {
-              screen: "Detail",
-              params: {
-                itemId: item.communityId,
-                userId: item.userId,
-              },
-            })
-          }
-          activeOpacity={0.6}
-        >
-          <View style={styles.box}>
-            <View>
-              <Text style={[styles.title]}>{item.title}</Text>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={[styles.description]}>{item.writer}</Text>
-                <Text style={[styles.description]}>
-                  {formatDate(item.createDate)}
-                </Text>
-                <Text style={[styles.description]}>조회 {item.viewCnt}</Text>
-                <Text style={[styles.description]}>댓글 {item.commentCnt}</Text>
-              </View>
-            </View>
+      <View>
+        <ScrollView style={{ height: windowHeight - 259 - 57 }}>
+          {data.map((item) => (
             <TouchableOpacity
-              onPress={handleScrapClick}
-              style={{ alignSelf: "center" }}
+              key={item.id}
+              onPress={() =>
+                navigation.navigate("Detail", {
+                  screen: "Detail",
+                  params: {
+                    itemId: item.communityId,
+                    userId: item.userId,
+                  },
+                })
+              }
+              activeOpacity={0.6}
             >
-              <Image
-                source={
-                  isScrap
-                    ? require("../../assets/myPage_scrap_active.png")
-                    : require("../../assets/myPage_scrap_inactive.png")
-                }
-                style={styles.icon}
-              />
+              <View style={styles.box}>
+                <View>
+                  <Text style={[styles.title]}>{item.title}</Text>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={[styles.description]}>{item.writer}</Text>
+                    <Text style={[styles.description]}>
+                      {formatDate(item.createDate)}
+                    </Text>
+                    <Text style={[styles.description]}>
+                      조회 {item.viewCnt}
+                    </Text>
+                    <Text style={[styles.description]}>
+                      댓글 {item.commentCnt}
+                    </Text>
+                  </View>
+                </View>
+                <TouchableOpacity
+                  onPress={handleScrapClick}
+                  style={{ alignSelf: "center" }}
+                >
+                  <Image
+                    source={
+                      isScrap
+                        ? require("../../assets/myPage_scrap_active.png")
+                        : require("../../assets/myPage_scrap_inactive.png")
+                    }
+                    style={styles.icon}
+                  />
+                </TouchableOpacity>
+              </View>
+              <Line color={"#C1C1C1"} h={1} />
             </TouchableOpacity>
-          </View>
-          <Line color={"#C1C1C1"} h={1} />
-        </TouchableOpacity>
-      ))}
+          ))}
+        </ScrollView>
+      </View>
     </View>
   );
 };

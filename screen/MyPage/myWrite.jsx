@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import { proxyUrl } from "../../constant/common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -11,6 +18,7 @@ const MyWrite = () => {
   const navigation = useNavigation();
   const inputURL = "/users/community";
   const url = proxyUrl + inputURL;
+  const windowHeight = Dimensions.get("window").height;
 
   const [data, setData] = useState([]);
 
@@ -42,36 +50,40 @@ const MyWrite = () => {
 
   return (
     <View style={styles.container}>
-      {data.map((item) => (
-        // mypage/{id} 이런 api가 필요..
-        <TouchableOpacity
-          key={item.id}
-          onPress={() =>
-            navigation.navigate("Detail", {
-              screen: "Detail",
-              params: {
-                itemId: item.communityId,
-                userId: item.userId,
-              },
-            })
-          }
-          activeOpacity={0.6}
-        >
-          <View style={styles.box}>
-            <Text style={styles.title}>{item.title}</Text>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.description}>{item.writer}</Text>
-              <Text style={styles.description}>
-                {" "}
-                {formatDate(item.createdDate)}
-              </Text>
-              <Text style={styles.description}>조회 {item.viewCnt}</Text>
-              <Text style={styles.description}>댓글 {item.commentCnt}</Text>
-            </View>
-          </View>
-          <Line color={"#C1C1C1"} h={1} />
-        </TouchableOpacity>
-      ))}
+      <View>
+        <ScrollView style={{ height: windowHeight - 259 - 57 }}>
+          {data.map((item) => (
+            // mypage/{id} 이런 api가 필요..
+            <TouchableOpacity
+              key={item.id}
+              onPress={() =>
+                navigation.navigate("Detail", {
+                  screen: "Detail",
+                  params: {
+                    itemId: item.communityId,
+                    userId: item.userId,
+                  },
+                })
+              }
+              activeOpacity={0.6}
+            >
+              <View style={styles.box}>
+                <Text style={styles.title}>{item.title}</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.description}>{item.writer}</Text>
+                  <Text style={styles.description}>
+                    {" "}
+                    {formatDate(item.createdDate)}
+                  </Text>
+                  <Text style={styles.description}>조회 {item.viewCnt}</Text>
+                  <Text style={styles.description}>댓글 {item.commentCnt}</Text>
+                </View>
+              </View>
+              <Line color={"#C1C1C1"} h={1} />
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
     </View>
   );
 };

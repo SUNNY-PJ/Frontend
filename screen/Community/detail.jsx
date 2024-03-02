@@ -31,7 +31,6 @@ const Detail = () => {
   const url = proxyUrl + inputURL;
   // 화면의 전체 높이
   const windowHeight = Dimensions.get("window").height;
-
   const [data, setData] = useState([]);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
