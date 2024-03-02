@@ -9,6 +9,8 @@ import {
   Image,
   Pressable,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
@@ -179,173 +181,175 @@ const Modify = () => {
 
   return (
     <>
-      <View style={styles.container}>
-        {data.map((item) => (
-          <View style={styles.contentContainer} key={item.MediaTypeOptions}>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: 700,
-                color: "#1F1F1F",
-                alignSelf: "center",
-                marginTop: 17,
-              }}
-            >
-              게시글 수정
-            </Text>
-            <View
-              style={{
-                marginTop: 8,
-                marginBottom: 20,
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <SmallBtn
-                title={"취소"}
-                color={"#E8E9E8"}
-                onClick={() =>
-                  navigation.navigate("Community", {
-                    screen: "Community",
-                  })
-                }
-              />
-              <SmallBtn title={"등록"} onClick={handlePost} />
-            </View>
-            {/* 카테고리 선택 */}
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginBottom: 5,
-              }}
-            >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.container}>
+          {data.map((item) => (
+            <View style={styles.contentContainer} key={item.MediaTypeOptions}>
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: 20,
                   fontWeight: 700,
-                  borderColor: "#1F1F1F",
-                  fontFamily: "SUITE_Bold",
+                  color: "#1F1F1F",
+                  alignSelf: "center",
+                  marginTop: 17,
                 }}
               >
-                카테고리 선택
+                게시글 수정
               </Text>
-              <Image
-                source={require("../../assets/categoryArrow.png")}
+              <View
                 style={{
-                  width: 24,
-                  height: 24,
+                  marginTop: 8,
+                  marginBottom: 20,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                 }}
+              >
+                <SmallBtn
+                  title={"취소"}
+                  color={"#E8E9E8"}
+                  onClick={() =>
+                    navigation.navigate("Community", {
+                      screen: "Community",
+                    })
+                  }
+                />
+                <SmallBtn title={"등록"} onClick={handlePost} />
+              </View>
+              {/* 카테고리 선택 */}
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginBottom: 5,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: 700,
+                    borderColor: "#1F1F1F",
+                    fontFamily: "SUITE_Bold",
+                  }}
+                >
+                  카테고리 선택
+                </Text>
+                <Image
+                  source={require("../../assets/categoryArrow.png")}
+                  style={{
+                    width: 24,
+                    height: 24,
+                  }}
+                />
+              </View>
+              <Line color={"#C1C1C1"} h={1} />
+              {/* 카테고리 선택 */}
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 500,
+                  color: "#1F1F1F",
+                  marginBottom: 8,
+                  marginTop: 16,
+                  paddingLeft: 12,
+                }}
+              >
+                제목
+              </Text>
+              <Input
+                placeholder="제목을 입력하세요"
+                inputValue={title || item.title}
+                handleInputChange={handleTitleChange}
               />
-            </View>
-            <Line color={"#C1C1C1"} h={1} />
-            {/* 카테고리 선택 */}
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 500,
-                color: "#1F1F1F",
-                marginBottom: 8,
-                marginTop: 16,
-                paddingLeft: 12,
-              }}
-            >
-              제목
-            </Text>
-            <Input
-              placeholder="제목을 입력하세요"
-              inputValue={title || item.title}
-              handleInputChange={handleTitleChange}
-            />
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 500,
-                color: "#1F1F1F",
-                marginBottom: 8,
-                marginTop: 10,
-                paddingLeft: 12,
-                fontFamily: "SUITE_Medium",
-              }}
-            >
-              내용
-            </Text>
-            <InputMax
-              placeholder="내용을 입력하세요"
-              placeholderTextColor="#000"
-              inputValue={content || item.contents}
-              handleInputChange={handleContentChange}
-            />
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 500,
+                  color: "#1F1F1F",
+                  marginBottom: 8,
+                  marginTop: 10,
+                  paddingLeft: 12,
+                  fontFamily: "SUITE_Medium",
+                }}
+              >
+                내용
+              </Text>
+              <InputMax
+                placeholder="내용을 입력하세요"
+                placeholderTextColor="#000"
+                inputValue={content || item.contents}
+                handleInputChange={handleContentChange}
+              />
 
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: 500,
-                color: "#1F1F1F",
-                marginBottom: 8,
-                marginTop: 10,
-                fontFamily: "SUITE_Medium",
-              }}
-            >
-              미디어 첨부
-            </Text>
-            <View style={styles.media}>
-              {images.map((image, index) => (
-                <View key={index} style={{ position: "relative" }}>
-                  <Image
-                    source={{ uri: image }}
-                    style={{
-                      width: 70,
-                      height: 70,
-                      borderColor: "#C1C1C1",
-                      borderRadius: 8,
-                      borderWidth: 1.5,
-                    }}
-                  />
-                  <Pressable
-                    onPress={() => removeImage(index)}
-                    style={{
-                      position: "absolute",
-                      top: 0,
-                      right: 0,
-                    }}
-                  >
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: 500,
+                  color: "#1F1F1F",
+                  marginBottom: 8,
+                  marginTop: 10,
+                  fontFamily: "SUITE_Medium",
+                }}
+              >
+                미디어 첨부
+              </Text>
+              <View style={styles.media}>
+                {images.map((image, index) => (
+                  <View key={index} style={{ position: "relative" }}>
                     <Image
-                      source={require("../../assets/deletePhoto.png")}
+                      source={{ uri: image }}
                       style={{
-                        width: 18,
-                        height: 18,
-                        position: "absolute",
-                        top: -6,
-                        right: -6,
+                        width: 70,
+                        height: 70,
+                        borderColor: "#C1C1C1",
+                        borderRadius: 8,
+                        borderWidth: 1.5,
                       }}
                     />
+                    <Pressable
+                      onPress={() => removeImage(index)}
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        right: 0,
+                      }}
+                    >
+                      <Image
+                        source={require("../../assets/deletePhoto.png")}
+                        style={{
+                          width: 18,
+                          height: 18,
+                          position: "absolute",
+                          top: -6,
+                          right: -6,
+                        }}
+                      />
+                    </Pressable>
+                  </View>
+                ))}
+                {images.length < 4 && (
+                  <Pressable onPress={uploadImage}>
+                    <Image
+                      source={require("../../assets/photo.png")}
+                      style={{ width: 70, height: 70 }}
+                    />
                   </Pressable>
-                </View>
-              ))}
-              {images.length < 4 && (
-                <Pressable onPress={uploadImage}>
-                  <Image
-                    source={require("../../assets/photo.png")}
-                    style={{ width: 70, height: 70 }}
-                  />
-                </Pressable>
-              )}
+                )}
+              </View>
+              <Text
+                style={{
+                  fontSize: 10,
+                  fontWeight: 500,
+                  color: "#5C5C5C",
+                  marginTop: 8,
+                  fontFamily: "SUITE_Medium",
+                }}
+              >
+                미디어는 최대 4장까지 첨부가 가능합니다.
+              </Text>
             </View>
-            <Text
-              style={{
-                fontSize: 10,
-                fontWeight: 500,
-                color: "#5C5C5C",
-                marginTop: 8,
-                fontFamily: "SUITE_Medium",
-              }}
-            >
-              미디어는 최대 4장까지 첨부가 가능합니다.
-            </Text>
-          </View>
-        ))}
-      </View>
+          ))}
+        </View>
+      </TouchableWithoutFeedback>
     </>
   );
 };

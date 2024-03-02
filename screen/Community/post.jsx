@@ -6,6 +6,8 @@ import {
   Image,
   Pressable,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { proxyUrl } from "../../constant/common";
 import axios from "axios";
@@ -184,176 +186,178 @@ const Post = () => {
 
   return (
     <>
-      <View style={styles.container}>
-        <View style={styles.contentContainer}>
-          <View
-            style={{
-              marginTop: 12,
-              marginBottom: 20,
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("Community", {
-                  screen: "Community",
-                })
-              }
-            >
-              <Image
-                source={require("../../assets/close.png")}
-                style={{
-                  width: 16,
-                  height: 16,
-                }}
-              />
-            </TouchableOpacity>
-            <SmallBtn title={"등록"} onClick={handlePost} />
-          </View>
-          {/* 카테고리 선택 */}
-          <TouchableOpacity onPress={handleCategoryClick}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.container}>
+          <View style={styles.contentContainer}>
             <View
               style={{
+                marginTop: 12,
+                marginBottom: 20,
                 flexDirection: "row",
                 justifyContent: "space-between",
-                marginBottom: 5,
               }}
             >
-              <Text
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("Community", {
+                    screen: "Community",
+                  })
+                }
+              >
+                <Image
+                  source={require("../../assets/close.png")}
+                  style={{
+                    width: 16,
+                    height: 16,
+                  }}
+                />
+              </TouchableOpacity>
+              <SmallBtn title={"등록"} onClick={handlePost} />
+            </View>
+            {/* 카테고리 선택 */}
+            <TouchableOpacity onPress={handleCategoryClick}>
+              <View
                 style={{
-                  fontSize: 15,
-                  fontWeight: 700,
-                  borderColor: "#1F1F1F",
-                  fontFamily: "SUITE_Bold",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginBottom: 5,
                 }}
               >
-                {selectedCategory ? selectedCategory : "카테고리 선택"}
-              </Text>
-              <Image
-                source={require("../../assets/categoryArrow.png")}
-                style={{
-                  width: 24,
-                  height: 24,
-                }}
-              />
-            </View>
-          </TouchableOpacity>
-          <Line color={"#C1C1C1"} h={1} />
-          {/* 카테고리 선택 */}
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: 500,
-              color: "#1F1F1F",
-              marginBottom: 8,
-              marginTop: 16,
-              paddingLeft: 12,
-              fontFamily: "SUITE_Medium",
-            }}
-          >
-            제목
-          </Text>
-          <Input
-            placeholder={"제목을 입력하세요"}
-            inputValue={title}
-            handleInputChange={handleTitleChange}
-          />
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: 500,
-              color: "#1F1F1F",
-              marginBottom: 8,
-              marginTop: 10,
-              paddingLeft: 12,
-              fontFamily: "SUITE_Medium",
-            }}
-          >
-            내용
-          </Text>
-          <InputMax
-            placeholder={"내용을 입력하세요"}
-            inputValue={content}
-            handleInputChange={handleContentChange}
-          />
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: 500,
-              color: "#1F1F1F",
-              marginBottom: 8,
-              marginTop: 10,
-              fontFamily: "SUITE_Medium",
-            }}
-          >
-            미디어 첨부
-          </Text>
-          <View style={styles.media}>
-            {images.map((image, index) => (
-              <View key={index} style={{ position: "relative" }}>
-                <Image
-                  source={{ uri: image }}
+                <Text
                   style={{
-                    width: 70,
-                    height: 70,
-                    borderColor: "#C1C1C1",
-                    borderRadius: 8,
-                    borderWidth: 1.5,
-                  }}
-                />
-                <Pressable
-                  onPress={() => removeImage(index)}
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
+                    fontSize: 15,
+                    fontWeight: 700,
+                    borderColor: "#1F1F1F",
+                    fontFamily: "SUITE_Bold",
                   }}
                 >
+                  {selectedCategory ? selectedCategory : "카테고리 선택"}
+                </Text>
+                <Image
+                  source={require("../../assets/categoryArrow.png")}
+                  style={{
+                    width: 24,
+                    height: 24,
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
+            <Line color={"#C1C1C1"} h={1} />
+            {/* 카테고리 선택 */}
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 500,
+                color: "#1F1F1F",
+                marginBottom: 8,
+                marginTop: 16,
+                paddingLeft: 12,
+                fontFamily: "SUITE_Medium",
+              }}
+            >
+              제목
+            </Text>
+            <Input
+              placeholder={"제목을 입력하세요"}
+              inputValue={title}
+              handleInputChange={handleTitleChange}
+            />
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 500,
+                color: "#1F1F1F",
+                marginBottom: 8,
+                marginTop: 10,
+                paddingLeft: 12,
+                fontFamily: "SUITE_Medium",
+              }}
+            >
+              내용
+            </Text>
+            <InputMax
+              placeholder={"내용을 입력하세요"}
+              inputValue={content}
+              handleInputChange={handleContentChange}
+            />
+            <Text
+              style={{
+                fontSize: 16,
+                fontWeight: 500,
+                color: "#1F1F1F",
+                marginBottom: 8,
+                marginTop: 10,
+                fontFamily: "SUITE_Medium",
+              }}
+            >
+              미디어 첨부
+            </Text>
+            <View style={styles.media}>
+              {images.map((image, index) => (
+                <View key={index} style={{ position: "relative" }}>
                   <Image
-                    source={require("../../assets/deletePhoto.png")}
+                    source={{ uri: image }}
                     style={{
-                      width: 18,
-                      height: 18,
-                      position: "absolute",
-                      top: -6,
-                      right: -6,
+                      width: 70,
+                      height: 70,
+                      borderColor: "#C1C1C1",
+                      borderRadius: 8,
+                      borderWidth: 1.5,
                     }}
                   />
+                  <Pressable
+                    onPress={() => removeImage(index)}
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      right: 0,
+                    }}
+                  >
+                    <Image
+                      source={require("../../assets/deletePhoto.png")}
+                      style={{
+                        width: 18,
+                        height: 18,
+                        position: "absolute",
+                        top: -6,
+                        right: -6,
+                      }}
+                    />
+                  </Pressable>
+                </View>
+              ))}
+              {images.length < 4 && (
+                <Pressable onPress={uploadImage}>
+                  <Image
+                    source={require("../../assets/photo.png")}
+                    style={{ width: 70, height: 70 }}
+                  />
                 </Pressable>
-              </View>
-            ))}
-            {images.length < 4 && (
-              <Pressable onPress={uploadImage}>
-                <Image
-                  source={require("../../assets/photo.png")}
-                  style={{ width: 70, height: 70 }}
-                />
-              </Pressable>
-            )}
+              )}
+            </View>
+            <Text
+              style={{
+                fontSize: 10,
+                fontWeight: 500,
+                color: "#5C5C5C",
+                marginTop: 8,
+                fontFamily: "SUITE_Medium",
+              }}
+            >
+              미디어는 최대 4장까지 첨부가 가능합니다.
+            </Text>
           </View>
-          <Text
-            style={{
-              fontSize: 10,
-              fontWeight: 500,
-              color: "#5C5C5C",
-              marginTop: 8,
-              fontFamily: "SUITE_Medium",
-            }}
-          >
-            미디어는 최대 4장까지 첨부가 가능합니다.
-          </Text>
+          {open && (
+            <BottomSheetScreen
+              title={"카테고리"}
+              data={COMMUNITY_CATEGORY}
+              modalVisible={open}
+              modalDisable={handleCategoryClick}
+              onCategorySelect={handleCategorySelect}
+            />
+          )}
         </View>
-        {open && (
-          <BottomSheetScreen
-            title={"카테고리"}
-            data={COMMUNITY_CATEGORY}
-            modalVisible={open}
-            modalDisable={handleCategoryClick}
-            onCategorySelect={handleCategorySelect}
-          />
-        )}
-      </View>
+      </TouchableWithoutFeedback>
     </>
   );
 };
