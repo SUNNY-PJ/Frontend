@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+} from "react-native";
 import { proxyUrl } from "../../constant/common";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
@@ -11,6 +18,7 @@ const FriendComment = ({ userId }) => {
   const navigation = useNavigation();
   const inputURL = `/users/comment`;
   const url = proxyUrl + inputURL;
+  const windowHeight = Dimensions.get("window").height;
 
   const [data, setData] = useState([]);
 
@@ -32,7 +40,6 @@ const FriendComment = ({ userId }) => {
       console.log("데이터:", response.data);
 
       const myWriteData = response.data;
-      console.log(myWriteData.map((item) => item.id));
       setData(myWriteData);
     } catch (error) {
       console.error("에러:", error);
@@ -46,22 +53,38 @@ const FriendComment = ({ userId }) => {
 
   return (
     <View style={styles.container}>
-      {data.map((item) => (
-        <View>
-          <View style={styles.box}>
-            <Text style={styles.title}>{item.content}</Text>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.description}>{item.writer}</Text>
-              <Text style={styles.description}>
-                {formatDate(item.createdDate)}
-              </Text>
-              {/* <Text style={styles.description}>조회 {item.viewCnt}</Text>
+      <View>
+        <ScrollView style={{ height: windowHeight - 259 - 80 }}>
+          {data.map((item) => (
+            <TouchableOpacity
+              key={item.id}
+              onPress={() =>
+                navigation.navigate("Detail", {
+                  screen: "Detail",
+                  params: {
+                    userId: item.userId,
+                    itemId: item.communityId,
+                  },
+                })
+              }
+              activeOpacity={0.6}
+            >
+              <View style={styles.box}>
+                <Text style={styles.title}>{item.content}</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.description}>{item.writer}</Text>
+                  <Text style={styles.description}>
+                    {formatDate(item.createdDate)}
+                  </Text>
+                  {/* <Text style={styles.description}>조회 {item.viewCnt}</Text>
               <Text style={styles.description}>댓글 {item.commentCnt}</Text> */}
-            </View>
-          </View>
-          <Line color={"#C1C1C1"} h={1} />
-        </View>
-      ))}
+                </View>
+              </View>
+              <Line color={"#C1C1C1"} h={1} />
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -70,7 +93,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     backgroundColor: "#FFFBF6",
-    minHeight: "100%",
+    // minHeight: "100%",
   },
   box: {
     paddingLeft: 16,
