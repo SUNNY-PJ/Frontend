@@ -29,7 +29,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const [comment, setComment] = useState("");
   const [commentId, setCommentId] = useState("");
   const [commentData, setCommentData] = useState([]);
-  const [childrenCommentData, setChildrenCommentData] = useState([]);
   const [secret, setSecret] = useState(false);
   const [parentId, setParentId] = useState("");
   const [parentWriter, setParentWriter] = useState("");
@@ -74,11 +73,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
       const ResCommentData = response.data.data;
       console.log("????", ResCommentData);
-
       setCommentData(ResCommentData);
-      console.log("????", ResCommentData);
-      const ChildrenCommentData = commentData.map((item) => item.children);
-      setChildrenCommentData(ChildrenCommentData);
+      // const ChildrenCommentData = commentData.map((item) => item.children);
     } catch (error) {
       console.error("에러:", error);
     }
