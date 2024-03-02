@@ -264,19 +264,21 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                     </View>
                   ) : null}
                 </View>
-                <View>
-                  <TouchableOpacity
-                    activeOpacity={0.6}
-                    onPress={() =>
-                      handleMenuClick(item.id, item.writer, item.author)
-                    }
-                  >
-                    <Image
-                      source={require("../../assets/commentDotMenu.png")}
-                      style={{ width: 20, height: 4, top: 10 }}
-                    />
-                  </TouchableOpacity>
-                </View>
+                {item.deleted === false ? (
+                  <View>
+                    <TouchableOpacity
+                      activeOpacity={0.6}
+                      onPress={() =>
+                        handleMenuClick(item.id, item.writer, item.author)
+                      }
+                    >
+                      <Image
+                        source={require("../../assets/commentDotMenu.png")}
+                        style={{ width: 20, height: 4, top: 10 }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
               </View>
               <Text style={[styles.comment, { paddingLeft: 40 }]}>
                 {item.content}
