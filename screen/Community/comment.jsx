@@ -116,6 +116,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       if (response.status === 200) {
         alert("댓글을 등록하였습니다.");
         fetchData();
+        setComment("");
+        setParentId();
       }
       console.log("데이터:", response.data);
     } catch (error) {
