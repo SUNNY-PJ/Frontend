@@ -16,8 +16,9 @@
       "icon": "./assets/app_icon.png"
     },
     "ios": {
+      "usesAppleSignIn": true,
       "supportsTablet": true,
-      "bundleIdentifier": "com.yeoniii20.sunny"
+      "bundleIdentifier": "com.yeoniii20.SUNNY"
     },
     "android": {
       "adaptiveIcon": {
@@ -40,6 +41,7 @@
       "eas": {
         "projectId": "83373cfb-00a5-4b86-bd2b-0263e1e51d76"
       }
-    }
+    },
+    "plugins": ["expo-apple-authentication"]
   }
 }
