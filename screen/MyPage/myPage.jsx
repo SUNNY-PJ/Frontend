@@ -176,7 +176,8 @@ const MyPage = () => {
   };
 
   const handleTestClick = () => {
-    navigation.navigate("MainScreen", { screen: "BattleStatus" });
+    // navigation.navigate("MainScreen", { screen: "BattleStatus" });
+    navigation.navigate("KakaoScreen", { screen: "AppleLogin" });
   };
 
   return (
