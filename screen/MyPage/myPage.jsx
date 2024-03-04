@@ -82,30 +82,26 @@ const MyPage = () => {
     return unsubscribe;
   }, [navigation]);
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
   // 로그아웃
   const logoutData = async () => {
-    const lououtUrl = "http://43.201.176.22:8080/mypage/auth/kakao/logout";
-    const inputURL = "/users/auth/kakao/logout";
+    // const lououtUrl = "http://43.201.176.22:8080/mypage/auth/kakao/logout";
+    const inputURL = "/auth/kakao/logout";
     const url = proxyUrl + inputURL;
     const access_token = await AsyncStorage.getItem("access_token");
     try {
-      const params = {
-        client_id: "7ff971db2010c97a3e191dd319ec45cd",
-        logout_redirect_uri: lououtUrl,
-      };
+      // const params = {
+      //   client_id: "7ff971db2010c97a3e191dd319ec45cd",
+      //   logout_redirect_uri: lououtUrl,
+      // };
 
       const response = await axios.get(url, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
-        params,
+        // params,
       });
-      console.log("데이터:", response.data);
+      console.log("데이터:", response.headers);
       alert("로그아웃 되었습니다.");
 
       navigation.navigate("KakaoScreen", { screen: "Login" });
@@ -121,7 +117,7 @@ const MyPage = () => {
 
   // 회원 탈퇴
   const leaveData = async () => {
-    const inputURL = "/users/auth/leave";
+    const inputURL = "/auth/leave";
     const url = proxyUrl + inputURL;
     const access_token = await AsyncStorage.getItem("access_token");
     try {
