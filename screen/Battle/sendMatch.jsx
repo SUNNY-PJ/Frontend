@@ -1,33 +1,83 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import LargeBtnDisable from "../../components/Btn/largeBtnDisable";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LargeBtn from "../../components/Btn/largeBtn";
 import Input from "../../components/Input/input";
 import { proxyUrl } from "../../constant/common";
+import { useRoute } from "@react-navigation/native";
+import DatePicker2 from "../../components/DatePicker/datePicker2";
 
 function SendMatch({ navigation }) {
-  const inputURL = "/consumption";
+  const inputURL = "/competition";
   const cleanedURL = inputURL.replace(/[\u200B]/g, "");
   const url = proxyUrl + cleanedURL;
-  const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
+  const route = useRoute();
+  const { friendsId } = route.params;
+  const { name } = route.params;
 
-  const [date, setDate] = useState("");
+  const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
+  // const [date, setDate] = useState("");
   const [money, setMoney] = useState(0);
   const [message, setMessage] = useState("");
-  const [reward, setReward] = useState("");
+  // const [reward, setReward] = useState("");
+  const [isStartDatePickerVisible, setStartDatePickerVisibility] =
+    useState(false);
+  const [isEndDatePickerVisible, setEndDatePickerVisibility] = useState(false);
+  const [startDate, setStartDate] = useState("");
+  const [startDateVal, setStartDateVal] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [endDateVal, setEndDateVal] = useState("");
 
-  const handleDateChange = (text) => {
-    setDate(text);
+  // const handleDateChange = (text) => {
+  //   setDate(text);
+  // };
+
+  const handleStartDateChange = (formattedDate) => {
+    setStartDate(formattedDate);
+  };
+
+  const handleStartDateValChange = (formattedDate) => {
+    setStartDateVal(formattedDate);
+  };
+
+  const handleEndDateChange = (formattedDate) => {
+    setEndDate(formattedDate);
+  };
+
+  const handleEndDateValChange = (formattedDate) => {
+    setEndDateVal(formattedDate);
+  };
+
+  const showStartDatePicker = () => {
+    setStartDatePickerVisibility(true);
+  };
+
+  const showEndDatePicker = () => {
+    setEndDatePickerVisibility(true);
+  };
+
+  const hideStartDatePicker = () => {
+    setStartDatePickerVisibility(false);
+  };
+
+  const hideEndDatePicker = () => {
+    setEndDatePickerVisibility(false);
   };
 
   const handleMessageChange = (text) => {
     setMessage(text);
   };
-  const handleRewardChange = (text) => {
-    setReward(text);
-  };
+  // const handleRewardChange = (text) => {
+  //   setReward(text);
+  // };
 
   const formattedMoney = (value) => {
     const parsedValue = parseFloat(value.replace(/,/g, ""));
@@ -45,17 +95,26 @@ function SendMatch({ navigation }) {
   };
 
   useEffect(() => {
-    if (message && money && date) {
+    if (message && money && startDate && endDate) {
       setIsAllFieldsFilled(true);
     } else {
       setIsAllFieldsFilled(false);
     }
-  }, [message, money, date, reward]);
+  }, [message, money, startDate, endDate]);
 
   const postData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
-      const bodyData = {};
+      const bodyData = {
+        compensation: "없음",
+        startDate: startDateVal,
+        endDate: endDateVal,
+        friendsId: friendsId,
+        message: message,
+        price: money,
+      };
+
+      console.log(bodyData);
 
       const response = await axios.post(url, bodyData, {
         headers: {
@@ -63,12 +122,9 @@ function SendMatch({ navigation }) {
           Authorization: `Bearer ${access_token}`,
         },
       });
+      console.log(response.data);
       if (response.status === 200) {
-        alert("지출을 등록하였습니다.");
-        setMoney(0);
-        setDate("");
-        setReward("");
-        setMessage("");
+        alert(`${name}에게 대결 신청을 했습니다.`);
         navigation.navigate("MainScreen", { screen: "FreindsList" });
       }
     } catch (error) {
@@ -82,35 +138,62 @@ function SendMatch({ navigation }) {
   };
 
   const handlePost = () => {
-    // postData();
+    postData();
   };
 
   return (
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.contentContainer}>
-          <Text style={styles.headerText}>민규에게 대결 신청</Text>
+          <Text style={styles.headerText}>{name}에게 대결 신청</Text>
           <Text style={styles.label}>친구를 도발해보세요!</Text>
           <Input
             placeholder={"도발 메시지"}
             inputValue={message}
             handleInputChange={handleMessageChange}
           />
-          <Text style={styles.label}>무엇을 걸고 대결할까요?</Text>
+          {/* <Text style={styles.label}>무엇을 걸고 대결할까요?</Text>
           <Input
             placeholder={"대결 보상"}
             inputValue={reward}
             handleInputChange={handleRewardChange}
-          />
-          <Text style={styles.label}>대결 기간과 금액을 선택해주세요</Text>
-          <Input
+          /> */}
+          {/* <Text style={styles.label}>대결 기간과 금액을 선택해주세요</Text> */}
+          {/* <Input
             placeholder={"대결 기간"}
             inputValue={date}
             handleInputChange={handleDateChange}
-          />
+          /> */}
+          <Text style={styles.label}>대결 시작 일자를 선택해주세요</Text>
+          <TouchableOpacity onPress={showStartDatePicker}>
+            <DatePicker2
+              showDatePicker={showStartDatePicker}
+              hideDatePicker={hideStartDatePicker}
+              isDatePickerVisible={isStartDatePickerVisible}
+              handleDateChange={handleStartDateChange}
+              handleDateValueChange={handleStartDateValChange}
+              inputText={"대결 시작 일자:"}
+              title={"대결 시작 일자"}
+              showDayOfWeek={false}
+            />
+          </TouchableOpacity>
+          <Text style={styles.label}>대결 종료 일자를 선택해주세요</Text>
+          <TouchableOpacity onPress={showEndDatePicker}>
+            <DatePicker2
+              showDatePicker={showEndDatePicker}
+              hideDatePicker={hideEndDatePicker}
+              isDatePickerVisible={isEndDatePickerVisible}
+              handleDateChange={handleEndDateChange}
+              handleDateValueChange={handleEndDateValChange}
+              title={"대결 종료 일자"}
+              inputText={"대결 종료 일자:"}
+              showDayOfWeek={false}
+            />
+          </TouchableOpacity>
           <Text style={styles.subText}>
             * 상대가 승낙한 시점부터 대결이 시작됩니다
           </Text>
+          <Text style={styles.label}>대결 금액을 입력해주세요</Text>
           <Input
             placeholder={"지출 금액"}
             inputValue={money}
@@ -118,9 +201,9 @@ function SendMatch({ navigation }) {
           />
           <View style={styles.buttonContainer}>
             {isAllFieldsFilled ? (
-              <LargeBtn text={"등록하기"} onClick={handlePost} />
+              <LargeBtn text={"전송하기"} onClick={handlePost} />
             ) : (
-              <LargeBtnDisable text={"등록하기"} />
+              <LargeBtnDisable text={"전송하기"} />
             )}
           </View>
         </View>
@@ -145,6 +228,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "#1F1F1F",
     textAlign: "center",
+    fontFamily: "SUITE_Bold",
   },
   label: {
     fontSize: 16,
@@ -153,6 +237,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginTop: 32,
     paddingLeft: 10,
+    fontFamily: "SUITE_Medium",
   },
 
   buttonContainer: {
@@ -163,6 +248,8 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     color: "#5C5C5C",
     paddingLeft: 10,
+    fontFamily: "SUITE",
+    marginTop: 8,
   },
 });
 

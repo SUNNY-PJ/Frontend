@@ -16,6 +16,16 @@ import { useNavigation } from "@react-navigation/native";
 const FriendsComponent = ({ Data, onAddFriend }) => {
   const navigation = useNavigation();
 
+  const handleBattle = (friendsId, name) => {
+    navigation.navigate("MainScreen", {
+      screen: "SendMatch",
+      params: {
+        friendsId: friendsId,
+        name: name,
+      },
+    });
+  };
+
   return (
     <ScrollView>
       {Data.map((item) => (
@@ -57,12 +67,12 @@ const FriendsComponent = ({ Data, onAddFriend }) => {
           </View>
           {item.friendStatus === "BATTLE" && (
             <View style={{ flexDirection: "row", gap: 16 }}>
-              <TouchableOpacity activeOpacity={0.6}>
+              {/* <TouchableOpacity activeOpacity={0.6}>
                 <Image
                   source={require("../../assets/messageBlack.png")}
                   style={styles.icon}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity activeOpacity={0.6}>
                 <Image
                   source={require("../../assets/VersusIcon.png")}
@@ -86,13 +96,18 @@ const FriendsComponent = ({ Data, onAddFriend }) => {
           )}
           {item.friendStatus === "APPROVE" && (
             <View style={{ flexDirection: "row", gap: 16 }}>
-              <TouchableOpacity activeOpacity={0.6}>
+              {/* <TouchableOpacity activeOpacity={0.6}>
                 <Image
                   source={require("../../assets/messageBlack.png")}
                   style={styles.icon}
                 />
-              </TouchableOpacity>
-              <TouchableOpacity activeOpacity={0.6}>
+              </TouchableOpacity> */}
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => {
+                  handleBattle(item.friendsId, item.name);
+                }}
+              >
                 <Image
                   source={require("../../assets/VersusIconBlack.png")}
                   style={styles.icon}
@@ -120,6 +135,7 @@ const styles = StyleSheet.create({
     color: "#1F1F1F",
     textAlign: "center",
     marginBottom: 24,
+    fontFamily: "SUITE_Bold",
   },
   title: {
     fontSize: 20,

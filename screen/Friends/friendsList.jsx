@@ -77,16 +77,24 @@ function FriendsList() {
     console.log(access_token);
 
     try {
-      const response = await axios.post(url, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
-      console.log(response);
+      const response = await axios.post(
+        url,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      );
+      console.log("친구 수락함", response.data);
       if (response.status === 200) {
-        alert("친구가 되었습니다!");
-        fetchData();
+        if (response.data.status === 401) {
+          alert("에러가 발생했습니다. 관리자에게 문의 바랍니다.");
+        } else {
+          alert("친구가 되었습니다!");
+          fetchData();
+        }
       } else if (response.status === 500) {
         alert(response.message);
       }
