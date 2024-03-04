@@ -26,7 +26,7 @@ const LargeBtnDisable = ({ text, onClick }) => {
       onPress={onClick}
     >
       <Text
-        style={{ color: "#5C5C5C", fontSize: 20, fontFamily: "SUITE_Bold" }}
+        style={{ color: "#5C5C5C", fontSize: 20, fontFamily: "SUITE_Medium" }}
       >
         {text}
       </Text>

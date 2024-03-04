@@ -28,7 +28,7 @@ const LargeBtn = ({ text, onClick, backgroundColor }) => {
       onPress={onClick}
     >
       <Text
-        style={{ color: "#1F1F1F ", fontSize: 20, fontFamily: "SUITE_Bold" }}
+        style={{ color: "#1F1F1F ", fontSize: 20, fontFamily: "SUITE_Medium" }}
       >
         {text}
       </Text>

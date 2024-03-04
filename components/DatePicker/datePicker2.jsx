@@ -85,7 +85,7 @@ const DatePicker2 = ({
       >
         {selectedDate ? (
           // <Text>{`${moment(selectedDate).format("YYYY.MM.DD")}`}</Text>
-          <Text style={{ fontFamily: "SUITE", color: "#1F1F1F" }}>
+          <Text style={{ fontFamily: "SUITE_Medium", color: "#1F1F1F" }}>
             {inputText} {selectedDate}
           </Text>
         ) : (
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     color: "black",
     backgroundColor: "#fff",
+    fontFamily: "SUITE_Medium",
   },
 });
 
