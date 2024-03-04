@@ -38,9 +38,6 @@ const Top = ({ navigation }) => {
         setDay(SaveData.date);
         setProgress(SaveData.savePercentage);
         setCost(SaveData.cost);
-
-        console.log(day);
-        console.log(cost);
       } else if (response.status === 404) {
         setSaveData(false);
       }

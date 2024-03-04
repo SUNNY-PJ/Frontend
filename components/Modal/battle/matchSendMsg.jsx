@@ -91,7 +91,7 @@ const MatchSendMsg = ({ isMatchModal, matchModal }) => {
             marginTop: 24,
           }}
         >
-          민규에게 대결 신청
+          친구에게 대결 신청
         </Text>
         <View style={styles.modalContent}>
           <Text style={styles.modalText}>친구를 도발해보세요!</Text>

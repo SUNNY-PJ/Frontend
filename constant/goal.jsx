@@ -23,7 +23,6 @@ function Goal({ navigation }) {
   const url = proxyUrl + cleanedURL;
 
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
-  const [isOpenNoticeMsg, setIsOpenNoticeMsg] = useState(false);
   const [isStartDatePickerVisible, setStartDatePickerVisibility] =
     useState(false);
   const [isEndDatePickerVisible, setEndDatePickerVisibility] = useState(false);
@@ -32,8 +31,6 @@ function Goal({ navigation }) {
   const [endDate, setEndDate] = useState("");
   const [endDateVal, setEndDateVal] = useState("");
   const [cost, setCost] = useState(0);
-
-  console.log(startDate);
 
   const handleStartDateChange = (formattedDate) => {
     setStartDate(formattedDate);
@@ -65,14 +62,6 @@ function Goal({ navigation }) {
 
   const hideEndDatePicker = () => {
     setEndDatePickerVisibility(false);
-  };
-
-  const openNoticeMsg = () => {
-    setIsOpenNoticeMsg(!isOpenNoticeMsg);
-  };
-
-  const closeNoticeMsg = () => {
-    setIsOpenNoticeMsg(false);
   };
 
   const formattedMoney = (value) => {
@@ -137,60 +126,55 @@ function Goal({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={closeNoticeMsg} activeOpacity={1}>
-        <ScrollView>
-          <View style={styles.contentContainer}>
-            <Text style={styles.headerText}>절약 목표 설정 </Text>
-            <Text style={styles.label}>지출 목표 금액을 입력해주세요</Text>
-            <Input
-              placeholder={"지출 금액"}
-              inputValue={cost}
-              handleInputChange={handleMoneyChange}
+      <ScrollView>
+        <View style={styles.contentContainer}>
+          <Text style={styles.headerText}>절약 목표 설정 </Text>
+          <Text style={styles.label}>지출 목표 금액을 입력해주세요</Text>
+          <Input
+            placeholder={"지출 금액"}
+            inputValue={cost}
+            handleInputChange={handleMoneyChange}
+          />
+          <Text style={styles.label}>절약 시작 일자를 선택해주세요</Text>
+          <TouchableOpacity onPress={showStartDatePicker}>
+            <DatePicker2
+              showDatePicker={showStartDatePicker}
+              hideDatePicker={hideStartDatePicker}
+              isDatePickerVisible={isStartDatePickerVisible}
+              handleDateChange={handleStartDateChange}
+              handleDateValueChange={handleStartDateValChange}
+              inputText={"시작 일자:"}
+              title={"시작 일자"}
+              showDayOfWeek={true}
             />
-            <View>
-              {isOpenNoticeMsg && <Notice openNoticeMsg={openNoticeMsg} />}
-            </View>
-            <Text style={styles.label}>절약 시작 일자를 선택해주세요</Text>
-            <TouchableOpacity onPress={showStartDatePicker}>
-              <DatePicker2
-                showDatePicker={showStartDatePicker}
-                hideDatePicker={hideStartDatePicker}
-                isDatePickerVisible={isStartDatePickerVisible}
-                handleDateChange={handleStartDateChange}
-                handleDateValueChange={handleStartDateValChange}
-                inputText={"시작 일자:"}
-                title={"시작 일자"}
-                showDayOfWeek={true}
-              />
-            </TouchableOpacity>
-            <Text style={styles.label}>절약 종료 일자를 선택해주세요</Text>
-            <TouchableOpacity onPress={showEndDatePicker}>
-              <DatePicker2
-                showDatePicker={showEndDatePicker}
-                hideDatePicker={hideEndDatePicker}
-                isDatePickerVisible={isEndDatePickerVisible}
-                handleDateChange={handleEndDateChange}
-                handleDateValueChange={handleEndDateValChange}
-                title={"종료 일자"}
-                inputText={"종료 일자:"}
-                showDayOfWeek={true}
-              />
-            </TouchableOpacity>
+          </TouchableOpacity>
+          <Text style={styles.label}>절약 종료 일자를 선택해주세요</Text>
+          <TouchableOpacity onPress={showEndDatePicker}>
+            <DatePicker2
+              showDatePicker={showEndDatePicker}
+              hideDatePicker={hideEndDatePicker}
+              isDatePickerVisible={isEndDatePickerVisible}
+              handleDateChange={handleEndDateChange}
+              handleDateValueChange={handleEndDateValChange}
+              title={"종료 일자"}
+              inputText={"종료 일자:"}
+              showDayOfWeek={true}
+            />
+          </TouchableOpacity>
 
-            <View style={styles.buttonContainer}>
-              {isAllFieldsFilled ? (
-                <LargeBtn text={"등록하기"} onClick={handlePost} />
-              ) : (
-                <LargeBtnDisable text={"등록하기"} />
-              )}
-            </View>
-            <Text style={[styles.subText, { marginTop: 8 }]}>
-              절약 목표는 사용자당 한 번에 하나씩만 등록 및 진행 가능하며,{"\n"}
-              종료 일자 자정 이후 자동으로 초기화됩니다.
-            </Text>
+          <View style={styles.buttonContainer}>
+            {isAllFieldsFilled ? (
+              <LargeBtn text={"등록하기"} onClick={handlePost} />
+            ) : (
+              <LargeBtnDisable text={"등록하기"} />
+            )}
           </View>
-        </ScrollView>
-      </TouchableOpacity>
+          <Text style={[styles.subText, { marginTop: 8 }]}>
+            절약 목표는 사용자당 한 번에 하나씩만 등록 및 진행 가능하며,{"\n"}
+            종료 일자 자정 이후 자동으로 초기화됩니다.
+          </Text>
+        </View>
+      </ScrollView>
     </View>
   );
 }
