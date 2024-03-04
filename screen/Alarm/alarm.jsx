@@ -8,6 +8,7 @@ import {
   Dimensions,
   Button,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import axios from "axios";
 import { proxyUrl } from "../../constant/common";
@@ -15,11 +16,27 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
 
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
 const Alarm = () => {
   const navigation = useNavigation();
   const windowHeight = Dimensions.get("window").height;
+  const [refreshing, setRefreshing] = useState(false);
+  const [data, setData] = useState([]);
   const [pastData, setPastData] = useState([]);
   const [recentData, setRecentData] = useState([]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(700).then(() => {
+      console.log(refreshing);
+      setRefreshing(false);
+      // 데이터를 새로고침
+      fetchData();
+    });
+  }, []);
 
   const fetchData = async () => {
     const inputURL = "/alarm";
@@ -81,7 +98,12 @@ const Alarm = () => {
       >
         알림
       </Text>
-      <ScrollView style={{ height: windowHeight - 125 - 88 }}>
+      <ScrollView
+        style={{ height: windowHeight - 125 - 88 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         {recentData.length > 0 && (
           <View>
             <View style={{ backgroundColor: "#fff" }}>
