@@ -269,8 +269,12 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
                 style={[styles.tabBarLine, comment && styles.activeTabBarLine]}
               />
             </View>
-            {write && <FriendWrite userId={userId} />}
-            {comment && <FriendComment userId={userId} />}
+            {write && (
+              <FriendWrite userId={userId} closeProfile={openProfile} />
+            )}
+            {comment && (
+              <FriendComment userId={userId} closeProfile={openProfile} />
+            )}
           </View>
         ))}
       </View>

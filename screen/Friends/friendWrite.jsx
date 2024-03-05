@@ -14,7 +14,7 @@ import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import { formatDate } from "../../constant/formatData/format";
 
-const FriendWrite = ({ userId }) => {
+const FriendWrite = ({ userId, closeProfile }) => {
   const navigation = useNavigation();
   const inputURL = `/users/community`;
   const url = proxyUrl + inputURL;
@@ -22,9 +22,19 @@ const FriendWrite = ({ userId }) => {
 
   const [data, setData] = useState([]);
 
+  const navigateToDetail = (itemId, userId) => {
+    closeProfile();
+    navigation.navigate("Detail", {
+      screen: "Detail",
+      params: {
+        itemId: itemId,
+        userId: userId,
+      },
+    });
+  };
+
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
-    console.log("get 실행");
 
     try {
       const response = await axios.get(url, {
@@ -40,7 +50,7 @@ const FriendWrite = ({ userId }) => {
       console.log("데이터:", response.data);
 
       const myWriteData = response.data;
-      console.log(myWriteData.map((item) => item.userId));
+      console.log(myWriteData.map((item) => item.communityId));
       setData(myWriteData);
     } catch (error) {
       console.error("에러:", error);
@@ -49,41 +59,35 @@ const FriendWrite = ({ userId }) => {
 
   useEffect(() => {
     fetchData();
-    console.log("실행된건가");
   }, []);
 
   return (
     <View style={styles.container}>
       <View>
         <ScrollView style={{ height: windowHeight - 259 - 80 }}>
-          {data.map((item) => (
-            <TouchableOpacity
-              key={item.id}
-              onPress={() =>
-                navigation.navigate("Detail", {
-                  screen: "Detail",
-                  params: {
-                    userId: item.userId,
-                    itemId: item.communityId,
-                  },
-                })
-              }
-              activeOpacity={0.6}
-            >
-              <View style={styles.box}>
-                <Text style={styles.title}>{item.title}</Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={styles.description}>{item.writer}</Text>
-                  <Text style={styles.description}>
-                    {formatDate(item.createdDate)}
-                  </Text>
-                  <Text style={styles.description}>조회 {item.viewCnt}</Text>
-                  <Text style={styles.description}>댓글 {item.commentCnt}</Text>
+          {data &&
+            data.map((item, index) => (
+              <TouchableOpacity
+                key={item.id}
+                onPress={() => navigateToDetail(item.communityId, item.userId)}
+                activeOpacity={0.6}
+              >
+                <View style={styles.box}>
+                  <Text style={styles.title}>{item.title}</Text>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={styles.description}>{item.writer}</Text>
+                    <Text style={styles.description}>
+                      {formatDate(item.createdDate)}
+                    </Text>
+                    <Text style={styles.description}>조회 {item.viewCnt}</Text>
+                    <Text style={styles.description}>
+                      댓글 {item.commentCnt}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-              <Line color={"#C1C1C1"} h={1} />
-            </TouchableOpacity>
-          ))}
+                <Line color={"#C1C1C1"} h={1} />
+              </TouchableOpacity>
+            ))}
         </ScrollView>
       </View>
     </View>

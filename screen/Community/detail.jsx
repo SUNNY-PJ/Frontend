@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
+import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 import Comment from "./comment";
 import OptionModal from "../../components/Modal/community/optionModal";
@@ -79,7 +80,7 @@ const Detail = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [itemId]);
 
   // 게시글 삭제
   const deleteData = async () => {
@@ -111,7 +112,6 @@ const Detail = () => {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      console.log(response.data);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -134,7 +134,6 @@ const Detail = () => {
           },
         }
       );
-      console.log(response.data);
     } catch (error) {
       console.error("에러:", error);
     }

@@ -61,7 +61,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
   const handleSecretClick = () => {
     setSecret(!secret);
-    console.log(secret);
+    // console.log(secret);
   };
 
   const handleReCommentClick = (parentId, parentIdWriter) => {
@@ -84,7 +84,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       });
 
       const ResCommentData = response.data.data;
-      console.log("????", ResCommentData);
+      // console.log("????", ResCommentData);
       setCommentData(ResCommentData);
       // const ChildrenCommentData = commentData.map((item) => item.children);
     } catch (error) {
@@ -151,7 +151,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const handlePostComment = () => {
     postData();
     setComment("");
-    console.log(comment);
+    // console.log(comment);
   };
 
   const handleMenuClick = (id, writer, author) => {
@@ -203,7 +203,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     commentModal();
     setSlide(false);
   };
-  console.log(slide);
+  // console.log(slide);
 
   return (
     <Modal

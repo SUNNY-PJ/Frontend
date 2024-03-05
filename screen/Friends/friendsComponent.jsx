@@ -39,7 +39,7 @@ const FriendsComponent = ({ Data, onAddFriend }) => {
 
   useEffect(() => {
     console.log("userId::::", userId);
-    console.log(isOpenProfile);
+    console.log("rrr", isOpenProfile);
   }, [userId]);
 
   return (

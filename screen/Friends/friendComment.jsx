@@ -14,13 +14,24 @@ import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import { formatDate } from "../../constant/formatData/format";
 
-const FriendComment = ({ userId }) => {
+const FriendComment = ({ userId, closeProfile }) => {
   const navigation = useNavigation();
   const inputURL = `/users/comment`;
   const url = proxyUrl + inputURL;
   const windowHeight = Dimensions.get("window").height;
 
   const [data, setData] = useState([]);
+
+  const navigateToDetail = (itemId, userId) => {
+    closeProfile();
+    navigation.navigate("Detail", {
+      screen: "Detail",
+      params: {
+        itemId: itemId,
+        userId: userId,
+      },
+    });
+  };
 
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
@@ -48,41 +59,33 @@ const FriendComment = ({ userId }) => {
 
   useEffect(() => {
     fetchData();
-    console.log("실행된건가");
   }, []);
 
   return (
     <View style={styles.container}>
       <View>
         <ScrollView style={{ height: windowHeight - 259 - 80 }}>
-          {data.map((item) => (
-            <TouchableOpacity
-              key={item.id}
-              onPress={() =>
-                navigation.navigate("Detail", {
-                  screen: "Detail",
-                  params: {
-                    userId: item.userId,
-                    itemId: item.communityId,
-                  },
-                })
-              }
-              activeOpacity={0.6}
-            >
-              <View style={styles.box}>
-                <Text style={styles.title}>{item.content}</Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={styles.description}>{item.writer}</Text>
-                  <Text style={styles.description}>
-                    {formatDate(item.createdDate)}
-                  </Text>
-                  {/* <Text style={styles.description}>조회 {item.viewCnt}</Text>
+          {data &&
+            data.map((item, index) => (
+              <TouchableOpacity
+                key={item.id}
+                onPress={() => navigateToDetail(item.communityId, item.userId)}
+                activeOpacity={0.6}
+              >
+                <View style={styles.box}>
+                  <Text style={styles.title}>{item.content}</Text>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={styles.description}>{item.writer}</Text>
+                    <Text style={styles.description}>
+                      {formatDate(item.createdDate)}
+                    </Text>
+                    {/* <Text style={styles.description}>조회 {item.viewCnt}</Text>
               <Text style={styles.description}>댓글 {item.commentCnt}</Text> */}
+                  </View>
                 </View>
-              </View>
-              <Line color={"#C1C1C1"} h={1} />
-            </TouchableOpacity>
-          ))}
+                <Line color={"#C1C1C1"} h={1} />
+              </TouchableOpacity>
+            ))}
         </ScrollView>
       </View>
     </View>
