@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import LargeBtnDisable from "../../components/Btn/largeBtnDisable";
 import axios from "axios";
@@ -124,8 +125,15 @@ function SendMatch({ navigation }) {
       });
       console.log(response.data);
       if (response.status === 200) {
-        alert(`${name}에게 대결 신청을 했습니다.`);
-        navigation.navigate("MainScreen", { screen: "FreindsList" });
+        if (response.data.status === 400) {
+          Alert.alert(
+            "Error",
+            `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
+          );
+        } else {
+          Alert.alert("대결 신청", `${name}에게 대결 신청을 했습니다.`);
+          navigation.navigate("MainScreen", { screen: "FreindsList" });
+        }
       }
     } catch (error) {
       if (error.response) {
