@@ -16,12 +16,12 @@ import { useNavigation } from "@react-navigation/native";
 const FriendsComponent = ({ Data, onAddFriend }) => {
   const navigation = useNavigation();
 
-  const handleBattle = (friendsId, name) => {
+  const handleBattle = (friendsId, nickname) => {
     navigation.navigate("MainScreen", {
       screen: "SendMatch",
       params: {
         friendsId: friendsId,
-        name: name,
+        name: nickname,
       },
     });
   };
@@ -62,7 +62,7 @@ const FriendsComponent = ({ Data, onAddFriend }) => {
                 fontFamily: "SUITE_Medium",
               }}
             >
-              {item.name}
+              {item.nickname}
             </Text>
           </View>
           {item.friendStatus === "BATTLE" && (
@@ -105,7 +105,7 @@ const FriendsComponent = ({ Data, onAddFriend }) => {
               <TouchableOpacity
                 activeOpacity={0.6}
                 onPress={() => {
-                  handleBattle(item.friendsId, item.name);
+                  handleBattle(item.friendsId, item.nickname);
                 }}
               >
                 <Image
