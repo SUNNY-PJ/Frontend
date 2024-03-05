@@ -12,11 +12,14 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LargeBtn from "../../components/Btn/largeBtn";
 import Input from "../../components/Input/input";
+import { useNavigation } from "@react-navigation/native";
 import { proxyUrl } from "../../constant/common";
 import { useRoute } from "@react-navigation/native";
 import DatePicker2 from "../../components/DatePicker/datePicker2";
 
-function SendMatch({ navigation }) {
+function SendMatch() {
+  const navigation = useNavigation();
+
   const inputURL = "/competition";
   const cleanedURL = inputURL.replace(/[\u200B]/g, "");
   const url = proxyUrl + cleanedURL;
@@ -112,7 +115,7 @@ function SendMatch({ navigation }) {
         endDate: endDateVal,
         friendsId: friendsId,
         message: message,
-        price: money,
+        price: money.replace(/,/g, ""),
       };
 
       console.log(bodyData);
@@ -123,7 +126,7 @@ function SendMatch({ navigation }) {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      console.log(response.data);
+      console.log(response.data.data);
       if (response.status === 200) {
         if (response.data.status === 400) {
           Alert.alert(
@@ -132,7 +135,7 @@ function SendMatch({ navigation }) {
           );
         } else {
           Alert.alert("대결 신청", `${name}에게 대결 신청을 했습니다.`);
-          navigation.navigate("MainScreen", { screen: "FreindsList" });
+          navigation.navigate("MainScreen", { screen: "FriendsList" });
         }
       }
     } catch (error) {
