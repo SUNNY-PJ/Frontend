@@ -380,9 +380,8 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   deleteText: {
-    color: "white",
-    paddingHorizontal: 20,
-    fontWeight: "bold",
+    color: "#fff",
+    fontFamily: "SUITE",
   },
 });
 

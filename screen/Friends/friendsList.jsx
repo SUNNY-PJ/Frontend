@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import { proxyUrl } from "../../constant/common";
 import axios from "axios";
@@ -104,9 +105,69 @@ function FriendsList() {
   };
 
   const AddFriendData = (friendId) => {
-    console.log("친구 신청을 받겠니?");
-    console.log(friendId);
-    PostData(friendId);
+    Alert.alert(
+      "친구 수락",
+      "친구 신청을 수락하시겠습니까?",
+      [
+        {
+          text: "취소",
+          style: "cancel",
+        },
+        {
+          text: "확인",
+          onPress: () => PostData(friendId),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const onRemoveFriend = (friendsId) => {
+    Alert.alert(
+      "친구 삭제",
+      "친구를 삭제하시겠습니까?",
+      [
+        {
+          text: "취소",
+          style: "cancel",
+        },
+        {
+          text: "확인",
+          onPress: () => deleteData(friendsId),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  // 친구 삭제
+  const deleteData = async (friendsId) => {
+    const inputURL = `/friends/${friendsId}`;
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.delete(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log("친구 삭제함", response.data);
+      if (response.status === 200) {
+        if (response.data.status === 401) {
+          alert("에러가 발생했습니다. 관리자에게 문의 바랍니다.");
+        } else {
+          alert("친구를 삭제했습니다");
+          fetchData();
+        }
+      } else if (response.status === 500) {
+        alert(response.message);
+      }
+    } catch (error) {
+      console.error("에러:", error);
+    }
   };
 
   return (
@@ -195,7 +256,12 @@ function FriendsList() {
         ) : (
           <Line color={"#1F1F1F"} h={2} />
         )}
-        {isFriendsComponentVisible3 && <FriendsComponent Data={approveData} />}
+        {isFriendsComponentVisible3 && (
+          <FriendsComponent
+            Data={approveData}
+            onRemoveFriend={onRemoveFriend}
+          />
+        )}
       </View>
     </View>
   );
