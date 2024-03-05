@@ -12,9 +12,20 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
+import FriendProfile from "./friendProfile";
 
 const FriendsComponent = ({ Data, onAddFriend }) => {
   const navigation = useNavigation();
+  const [userId, setUserId] = useState("");
+  const [isOpenProfile, setIsOpenProfile] = useState(false);
+
+  const openProfile = (friendsId) => {
+    setUserId(friendsId);
+    console.log("userId::::", userId);
+    if (userId) {
+      setIsOpenProfile(!isOpenProfile);
+    }
+  };
 
   const handleBattle = (friendsId, nickname) => {
     navigation.navigate("MainScreen", {
@@ -25,6 +36,11 @@ const FriendsComponent = ({ Data, onAddFriend }) => {
       },
     });
   };
+
+  useEffect(() => {
+    console.log("userId::::", userId);
+    console.log(isOpenProfile);
+  }, [userId]);
 
   return (
     <ScrollView>
@@ -42,11 +58,9 @@ const FriendsComponent = ({ Data, onAddFriend }) => {
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
               activeOpacity={0.6}
-              onPress={() =>
-                navigation.navigate("FriendProfile", {
-                  screen: "FriendProfile",
-                })
-              }
+              onPress={() => {
+                openProfile(item.userFriendId);
+              }}
             >
               <Image
                 source={require("../../assets/Avatar.png")}
@@ -118,6 +132,11 @@ const FriendsComponent = ({ Data, onAddFriend }) => {
         </View>
       ))}
       <Line color={"#C1C1C1"} h={2} />
+      <FriendProfile
+        isOpenProfile={isOpenProfile}
+        openProfile={openProfile}
+        userId={userId}
+      />
     </ScrollView>
   );
 };
