@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Modal,
+  Alert,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import FriendWrite from "./friendWrite";
@@ -26,6 +27,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   const [isFriend, setIsFriend] = useState();
   const [status, setStatus] = useState();
   const [friendId, setFriendId] = useState(0);
+  const [friendName, setFriendName] = useState("");
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -59,7 +61,9 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
       console.log("데이터1111:", response.data);
       const ProfileData = response.data;
       const ProfileId = [ProfileData].map((item) => item.id);
+      const ProfileName = [ProfileData].map((item) => item.name);
       setFriendId(ProfileId);
+      setFriendName(ProfileName);
       setData([ProfileData]);
     } catch (error) {
       console.error("에러:", error);
@@ -128,11 +132,21 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
           },
         }
       );
+      console.log("친구신청>>>>", response.data);
 
       if (response.status === 200) {
-        alert("친구 신청을 했습니다.");
+        if (response.data.status === 400) {
+          Alert.alert(
+            "Error",
+            `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
+          );
+        } else if (response.data.status === 500) {
+          Alert.alert("친구 신청", `이미 친구 신청을 했습니다.`);
+        } else {
+          Alert.alert("친구 신청", `${friendName}에게 친구 신청을 했습니다.`);
+          fetchData();
+        }
       }
-      console.log("친구신청>>>>", response.data.data);
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);

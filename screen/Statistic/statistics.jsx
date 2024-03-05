@@ -80,7 +80,6 @@ const Statistics = ({ year, month }) => {
       const CategoryDataValue = response.data.data;
       console.log("카테고리 데이터:", CategoryDataValue);
       setCategoryData(CategoryDataValue);
-      // 추가적인 데이터 처리 로직
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);

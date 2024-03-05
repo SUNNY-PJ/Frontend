@@ -14,7 +14,6 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
-import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 import Comment from "./comment";
 import OptionModal from "../../components/Modal/community/optionModal";

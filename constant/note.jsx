@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import Input from "../components/Input/input";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
@@ -105,11 +106,18 @@ function Note({ navigation }) {
 
       // 성공 시 메시지 표시 및 데이터 초기화
       if (response.status === 200) {
-        alert("지출을 등록하였습니다.");
-        setMoney("");
-        setDate("");
-        setName("");
-        navigation.navigate("MainScreen", { screen: "Statistics" });
+        if (response.data.status === 400) {
+          Alert.alert(
+            "Error",
+            `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
+          );
+        } else {
+          Alert.alert("지출 내역", `지출을 등록하였습니다.`);
+          setMoney("");
+          setDate("");
+          setName("");
+          navigation.navigate("MainScreen", { screen: "Spending" });
+        }
       }
     } catch (error) {
       if (error.response) {
