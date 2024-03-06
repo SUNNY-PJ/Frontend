@@ -10,15 +10,16 @@ import {
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { proxyUrl } from "../../constant/common";
+import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 import Progress from "../../components/progress/progress";
 
 const BattleStatusDisable = ({ navigation }) => {
-  const [progress, setProgress] = useState(50);
+  const navigation = useNavigation();
+  const inputURL = `competition/status${friendId}`;
+  const url = proxyUrl + inputURL;
 
-  const inputURL = "";
-  const cleanedURL = inputURL.replace(/[\u200B]/g, "");
-  const url = proxyUrl + cleanedURL;
+  const [data, setData] = useState({});
 
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
@@ -29,8 +30,11 @@ const BattleStatusDisable = ({ navigation }) => {
           Authorization: `Bearer ${access_token}`,
         },
       });
+      const StatusData = response.data;
+      console.log(StatusData);
       if (response.status === 200) {
-        navigation.navigate("MainScreen", { screen: "Statistics" });
+        setData(StatusData);
+        // navigation.navigate("MainScreen", { screen: "FriendsList" });
       }
     } catch (error) {
       if (error.response) {
@@ -41,6 +45,10 @@ const BattleStatusDisable = ({ navigation }) => {
       }
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [friendId]);
 
   return (
     <View style={styles.container}>
