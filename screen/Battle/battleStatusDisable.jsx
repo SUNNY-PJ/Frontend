@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 import Progress from "../../components/progress/progress";
 
-const BattleStatusDisable = ({ navigation }) => {
+const BattleStatusDisable = () => {
   const navigation = useNavigation();
   const inputURL = `competition/status${friendId}`;
   const url = proxyUrl + inputURL;
