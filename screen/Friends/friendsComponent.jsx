@@ -49,6 +49,16 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
     });
   };
 
+  const handleBattleStatus = (friendsId) => {
+    navigation.navigate("MainScreen", {
+      screen: "SendMatch",
+      params: {
+        friendsId: friendsId,
+        name: nickname,
+      },
+    });
+  };
+
   useEffect(() => {
     console.log("userId::::", userId);
     console.log("rrr", isOpenProfile);
@@ -107,7 +117,12 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
                   style={styles.icon}
                 />
               </TouchableOpacity> */}
-                <TouchableOpacity activeOpacity={0.6}>
+                <TouchableOpacity
+                  activeOpacity={0.6}
+                  onPress={() => {
+                    handleBattleStatus(item.friendsIdß);
+                  }}
+                >
                   <Image
                     source={require("../../assets/VersusIcon.png")}
                     style={styles.icon}
