@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import CalendarComponent from "../../components/Calendar/calendar";
 import { useEffect } from "react";
 
@@ -18,7 +11,6 @@ const History = () => {
   };
 
   const onDataFetched = (data) => {
-    console.log("받아온 데이터::", data);
     setData(data);
   };
 
@@ -65,9 +57,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     marginTop: 24,
-    // marginBottom: 40,
-    // paddingLeft: 28,
-    // paddingRight: 27,
   },
   image: {
     width: 32,

@@ -12,8 +12,6 @@ import LargeBtnDisable from "../components/Btn/largeBtnDisable";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LargeBtn from "../components/Btn/largeBtn";
-import Notice from "../components/Modal/notice";
-import DatePicker from "../components/DatePicker/datePicker";
 import { proxyUrl } from "./common";
 import DatePicker2 from "../components/DatePicker/datePicker2";
 
@@ -99,8 +97,6 @@ function Goal({ navigation }) {
         cost: cost.replace(/,/g, ""),
       };
 
-      console.log("????", bodyData);
-
       const response = await axios.post(url, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -114,7 +110,6 @@ function Goal({ navigation }) {
       } else {
         alert("서버에 장애가 발생하였습니다.");
       }
-      console.log("목표 등록");
     } catch (error) {
       console.error("에러:", error);
     }
