@@ -17,7 +17,8 @@
     },
     "ios": {
       "usesAppleSignIn": true,
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yeoniii20.SUNNY"
     },
     "android": {
       "adaptiveIcon": {
