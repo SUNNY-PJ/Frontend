@@ -64,33 +64,33 @@ const Top = ({ navigation }) => {
     fetchData();
   }, [saveData, day, progress]);
 
-  useEffect(() => {
-    if (!saveData) {
-      setIsOpenTopTooltip(true);
-    }
-  }, [saveData]);
-
-  const openTopTooltip = () => {
-    setIsOpenTopTooltip(false);
-  };
-
   // useEffect(() => {
-  //   const checkTooltipShown = async () => {
-  //     const hasShownTopTooltip = await AsyncStorage.getItem(
-  //       "hasShownTopTooltip"
-  //     );
-  //     if (hasShownTopTooltip === "true") {
-  //       setIsOpenTopTooltip(false);
-  //     }
-  //   };
-
-  //   checkTooltipShown();
-  // }, []);
+  //   if (!saveData) {
+  //     setIsOpenTopTooltip(true);
+  //   }
+  // }, [saveData]);
 
   // const openTopTooltip = () => {
   //   setIsOpenTopTooltip(false);
-  //   AsyncStorage.setItem("hasShownTopTooltip", "true");
   // };
+
+  useEffect(() => {
+    const checkTooltipShown = async () => {
+      const hasShownTopTooltip = await AsyncStorage.getItem(
+        "hasShownTopTooltip"
+      );
+      if (hasShownTopTooltip === "true") {
+        setIsOpenTopTooltip(false);
+      }
+    };
+
+    checkTooltipShown();
+  }, []);
+
+  const openTopTooltip = () => {
+    setIsOpenTopTooltip(false);
+    AsyncStorage.setItem("hasShownTopTooltip", "true");
+  };
 
   useEffect(() => {
     // progress 상태가 변경될 때마다 애니메이션을 실행

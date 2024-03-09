@@ -376,8 +376,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#5C5C5C",
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
+    // width: "100%",
+    width: 50,
     height: "100%",
+    marginLeft: 10,
   },
   deleteText: {
     color: "#fff",

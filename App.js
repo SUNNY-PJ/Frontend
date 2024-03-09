@@ -52,19 +52,13 @@ export default function App() {
     SUITE_ExtraBold: require("./assets/fonts/SUITE-ExtraBold.otf"),
     SUITE_Heavy: require("./assets/fonts/SUITE-Heavy.otf"),
   };
-  const [fontsLoaded, setFontsLoaded] = useState(false);
   async function loadFonts() {
     await Font.loadAsync(customFonts);
-    setFontsLoaded(true);
   }
 
   useEffect(() => {
     loadFonts();
   }, []);
-
-  // if (!fontsLoaded) {
-  //   return <View />;
-  // }
 
   useEffect(() => {
     const registerForPushNotificationsAsync = async () => {
@@ -148,6 +142,6 @@ export default function App() {
     await schedulePushNotification(notificationData);
   };
 
-  return <Navigation handleScheduleNotification={handleScheduleNotification} />;
-  // return <Navigation />;
+  // return <Navigation handleScheduleNotification={handleScheduleNotification} />;
+  return <Navigation />;
 }

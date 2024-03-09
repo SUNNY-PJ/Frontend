@@ -35,7 +35,7 @@ export const CommunityProvider = ({ children }) => {
         },
         params: paramsData,
       });
-      console.log("데이터:111", response.data.data);
+      console.log("데이터:111", response.data);
       console.log("데이터:222", paramsData);
 
       setData(response.data.data);
