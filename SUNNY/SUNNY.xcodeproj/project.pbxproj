@@ -7,62 +7,61 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		083C29B42B9CD21A00EB4840 /* SUNNYApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C29B32B9CD21A00EB4840 /* SUNNYApp.swift */; };
-		083C29B62B9CD21A00EB4840 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C29B52B9CD21A00EB4840 /* ContentView.swift */; };
-		083C29B82B9CD21C00EB4840 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 083C29B72B9CD21C00EB4840 /* Assets.xcassets */; };
-		083C29BC2B9CD21C00EB4840 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 083C29BB2B9CD21C00EB4840 /* Preview Assets.xcassets */; };
-		083C29C62B9CD21C00EB4840 /* SUNNYTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C29C52B9CD21C00EB4840 /* SUNNYTests.swift */; };
-		083C29D02B9CD21C00EB4840 /* SUNNYUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C29CF2B9CD21C00EB4840 /* SUNNYUITests.swift */; };
-		083C29D22B9CD21C00EB4840 /* SUNNYUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C29D12B9CD21C00EB4840 /* SUNNYUITestsLaunchTests.swift */; };
+		083C2AC32B9CE2C600EB4840 /* SUNNYApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C2AC22B9CE2C600EB4840 /* SUNNYApp.swift */; };
+		083C2AC52B9CE2C600EB4840 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C2AC42B9CE2C600EB4840 /* ContentView.swift */; };
+		083C2AC72B9CE2C800EB4840 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 083C2AC62B9CE2C800EB4840 /* Assets.xcassets */; };
+		083C2ACA2B9CE2C800EB4840 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 083C2AC92B9CE2C800EB4840 /* Preview Assets.xcassets */; };
+		083C2AD42B9CE2C800EB4840 /* SUNNYTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C2AD32B9CE2C800EB4840 /* SUNNYTests.swift */; };
+		083C2ADE2B9CE2C800EB4840 /* SUNNYUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C2ADD2B9CE2C800EB4840 /* SUNNYUITests.swift */; };
+		083C2AE02B9CE2C800EB4840 /* SUNNYUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083C2ADF2B9CE2C800EB4840 /* SUNNYUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		083C29C22B9CD21C00EB4840 /* PBXContainerItemProxy */ = {
+		083C2AD02B9CE2C800EB4840 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 083C29A82B9CD21A00EB4840 /* Project object */;
+			containerPortal = 083C2AB72B9CE2C600EB4840 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 083C29AF2B9CD21A00EB4840;
+			remoteGlobalIDString = 083C2ABE2B9CE2C600EB4840;
 			remoteInfo = SUNNY;
 		};
-		083C29CC2B9CD21C00EB4840 /* PBXContainerItemProxy */ = {
+		083C2ADA2B9CE2C800EB4840 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 083C29A82B9CD21A00EB4840 /* Project object */;
+			containerPortal = 083C2AB72B9CE2C600EB4840 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 083C29AF2B9CD21A00EB4840;
+			remoteGlobalIDString = 083C2ABE2B9CE2C600EB4840;
 			remoteInfo = SUNNY;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		083C29B02B9CD21A00EB4840 /* SUNNY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SUNNY.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		083C29B32B9CD21A00EB4840 /* SUNNYApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUNNYApp.swift; sourceTree = "<group>"; };
-		083C29B52B9CD21A00EB4840 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		083C29B72B9CD21C00EB4840 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		083C29B92B9CD21C00EB4840 /* SUNNY.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SUNNY.entitlements; sourceTree = "<group>"; };
-		083C29BB2B9CD21C00EB4840 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		083C29C12B9CD21C00EB4840 /* SUNNYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SUNNYTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		083C29C52B9CD21C00EB4840 /* SUNNYTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUNNYTests.swift; sourceTree = "<group>"; };
-		083C29CB2B9CD21C00EB4840 /* SUNNYUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SUNNYUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		083C29CF2B9CD21C00EB4840 /* SUNNYUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUNNYUITests.swift; sourceTree = "<group>"; };
-		083C29D12B9CD21C00EB4840 /* SUNNYUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUNNYUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		083C2ABF2B9CE2C600EB4840 /* SUNNY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SUNNY.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		083C2AC22B9CE2C600EB4840 /* SUNNYApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUNNYApp.swift; sourceTree = "<group>"; };
+		083C2AC42B9CE2C600EB4840 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		083C2AC62B9CE2C800EB4840 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		083C2AC92B9CE2C800EB4840 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		083C2ACF2B9CE2C800EB4840 /* SUNNYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SUNNYTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		083C2AD32B9CE2C800EB4840 /* SUNNYTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUNNYTests.swift; sourceTree = "<group>"; };
+		083C2AD92B9CE2C800EB4840 /* SUNNYUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SUNNYUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		083C2ADD2B9CE2C800EB4840 /* SUNNYUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUNNYUITests.swift; sourceTree = "<group>"; };
+		083C2ADF2B9CE2C800EB4840 /* SUNNYUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SUNNYUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		083C29AD2B9CD21A00EB4840 /* Frameworks */ = {
+		083C2ABC2B9CE2C600EB4840 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		083C29BE2B9CD21C00EB4840 /* Frameworks */ = {
+		083C2ACC2B9CE2C800EB4840 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		083C29C82B9CD21C00EB4840 /* Frameworks */ = {
+		083C2AD62B9CE2C800EB4840 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -72,59 +71,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		083C29A72B9CD21A00EB4840 = {
+		083C2AB62B9CE2C600EB4840 = {
 			isa = PBXGroup;
 			children = (
-				083C29B22B9CD21A00EB4840 /* SUNNY */,
-				083C29C42B9CD21C00EB4840 /* SUNNYTests */,
-				083C29CE2B9CD21C00EB4840 /* SUNNYUITests */,
-				083C29B12B9CD21A00EB4840 /* Products */,
+				083C2AC12B9CE2C600EB4840 /* SUNNY */,
+				083C2AD22B9CE2C800EB4840 /* SUNNYTests */,
+				083C2ADC2B9CE2C800EB4840 /* SUNNYUITests */,
+				083C2AC02B9CE2C600EB4840 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		083C29B12B9CD21A00EB4840 /* Products */ = {
+		083C2AC02B9CE2C600EB4840 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				083C29B02B9CD21A00EB4840 /* SUNNY.app */,
-				083C29C12B9CD21C00EB4840 /* SUNNYTests.xctest */,
-				083C29CB2B9CD21C00EB4840 /* SUNNYUITests.xctest */,
+				083C2ABF2B9CE2C600EB4840 /* SUNNY.app */,
+				083C2ACF2B9CE2C800EB4840 /* SUNNYTests.xctest */,
+				083C2AD92B9CE2C800EB4840 /* SUNNYUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		083C29B22B9CD21A00EB4840 /* SUNNY */ = {
+		083C2AC12B9CE2C600EB4840 /* SUNNY */ = {
 			isa = PBXGroup;
 			children = (
-				083C29B32B9CD21A00EB4840 /* SUNNYApp.swift */,
-				083C29B52B9CD21A00EB4840 /* ContentView.swift */,
-				083C29B72B9CD21C00EB4840 /* Assets.xcassets */,
-				083C29B92B9CD21C00EB4840 /* SUNNY.entitlements */,
-				083C29BA2B9CD21C00EB4840 /* Preview Content */,
+				083C2AC22B9CE2C600EB4840 /* SUNNYApp.swift */,
+				083C2AC42B9CE2C600EB4840 /* ContentView.swift */,
+				083C2AC62B9CE2C800EB4840 /* Assets.xcassets */,
+				083C2AC82B9CE2C800EB4840 /* Preview Content */,
 			);
 			path = SUNNY;
 			sourceTree = "<group>";
 		};
-		083C29BA2B9CD21C00EB4840 /* Preview Content */ = {
+		083C2AC82B9CE2C800EB4840 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				083C29BB2B9CD21C00EB4840 /* Preview Assets.xcassets */,
+				083C2AC92B9CE2C800EB4840 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		083C29C42B9CD21C00EB4840 /* SUNNYTests */ = {
+		083C2AD22B9CE2C800EB4840 /* SUNNYTests */ = {
 			isa = PBXGroup;
 			children = (
-				083C29C52B9CD21C00EB4840 /* SUNNYTests.swift */,
+				083C2AD32B9CE2C800EB4840 /* SUNNYTests.swift */,
 			);
 			path = SUNNYTests;
 			sourceTree = "<group>";
 		};
-		083C29CE2B9CD21C00EB4840 /* SUNNYUITests */ = {
+		083C2ADC2B9CE2C800EB4840 /* SUNNYUITests */ = {
 			isa = PBXGroup;
 			children = (
-				083C29CF2B9CD21C00EB4840 /* SUNNYUITests.swift */,
-				083C29D12B9CD21C00EB4840 /* SUNNYUITestsLaunchTests.swift */,
+				083C2ADD2B9CE2C800EB4840 /* SUNNYUITests.swift */,
+				083C2ADF2B9CE2C800EB4840 /* SUNNYUITestsLaunchTests.swift */,
 			);
 			path = SUNNYUITests;
 			sourceTree = "<group>";
@@ -132,13 +130,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		083C29AF2B9CD21A00EB4840 /* SUNNY */ = {
+		083C2ABE2B9CE2C600EB4840 /* SUNNY */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 083C29D52B9CD21C00EB4840 /* Build configuration list for PBXNativeTarget "SUNNY" */;
+			buildConfigurationList = 083C2AE32B9CE2C800EB4840 /* Build configuration list for PBXNativeTarget "SUNNY" */;
 			buildPhases = (
-				083C29AC2B9CD21A00EB4840 /* Sources */,
-				083C29AD2B9CD21A00EB4840 /* Frameworks */,
-				083C29AE2B9CD21A00EB4840 /* Resources */,
+				083C2ABB2B9CE2C600EB4840 /* Sources */,
+				083C2ABC2B9CE2C600EB4840 /* Frameworks */,
+				083C2ABD2B9CE2C600EB4840 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -146,69 +144,69 @@
 			);
 			name = SUNNY;
 			productName = SUNNY;
-			productReference = 083C29B02B9CD21A00EB4840 /* SUNNY.app */;
+			productReference = 083C2ABF2B9CE2C600EB4840 /* SUNNY.app */;
 			productType = "com.apple.product-type.application";
 		};
-		083C29C02B9CD21C00EB4840 /* SUNNYTests */ = {
+		083C2ACE2B9CE2C800EB4840 /* SUNNYTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 083C29D82B9CD21C00EB4840 /* Build configuration list for PBXNativeTarget "SUNNYTests" */;
+			buildConfigurationList = 083C2AE62B9CE2C800EB4840 /* Build configuration list for PBXNativeTarget "SUNNYTests" */;
 			buildPhases = (
-				083C29BD2B9CD21C00EB4840 /* Sources */,
-				083C29BE2B9CD21C00EB4840 /* Frameworks */,
-				083C29BF2B9CD21C00EB4840 /* Resources */,
+				083C2ACB2B9CE2C800EB4840 /* Sources */,
+				083C2ACC2B9CE2C800EB4840 /* Frameworks */,
+				083C2ACD2B9CE2C800EB4840 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				083C29C32B9CD21C00EB4840 /* PBXTargetDependency */,
+				083C2AD12B9CE2C800EB4840 /* PBXTargetDependency */,
 			);
 			name = SUNNYTests;
 			productName = SUNNYTests;
-			productReference = 083C29C12B9CD21C00EB4840 /* SUNNYTests.xctest */;
+			productReference = 083C2ACF2B9CE2C800EB4840 /* SUNNYTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		083C29CA2B9CD21C00EB4840 /* SUNNYUITests */ = {
+		083C2AD82B9CE2C800EB4840 /* SUNNYUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 083C29DB2B9CD21C00EB4840 /* Build configuration list for PBXNativeTarget "SUNNYUITests" */;
+			buildConfigurationList = 083C2AE92B9CE2C800EB4840 /* Build configuration list for PBXNativeTarget "SUNNYUITests" */;
 			buildPhases = (
-				083C29C72B9CD21C00EB4840 /* Sources */,
-				083C29C82B9CD21C00EB4840 /* Frameworks */,
-				083C29C92B9CD21C00EB4840 /* Resources */,
+				083C2AD52B9CE2C800EB4840 /* Sources */,
+				083C2AD62B9CE2C800EB4840 /* Frameworks */,
+				083C2AD72B9CE2C800EB4840 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				083C29CD2B9CD21C00EB4840 /* PBXTargetDependency */,
+				083C2ADB2B9CE2C800EB4840 /* PBXTargetDependency */,
 			);
 			name = SUNNYUITests;
 			productName = SUNNYUITests;
-			productReference = 083C29CB2B9CD21C00EB4840 /* SUNNYUITests.xctest */;
+			productReference = 083C2AD92B9CE2C800EB4840 /* SUNNYUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		083C29A82B9CD21A00EB4840 /* Project object */ = {
+		083C2AB72B9CE2C600EB4840 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
-					083C29AF2B9CD21A00EB4840 = {
+					083C2ABE2B9CE2C600EB4840 = {
 						CreatedOnToolsVersion = 15.2;
 					};
-					083C29C02B9CD21C00EB4840 = {
+					083C2ACE2B9CE2C800EB4840 = {
 						CreatedOnToolsVersion = 15.2;
-						TestTargetID = 083C29AF2B9CD21A00EB4840;
+						TestTargetID = 083C2ABE2B9CE2C600EB4840;
 					};
-					083C29CA2B9CD21C00EB4840 = {
+					083C2AD82B9CE2C800EB4840 = {
 						CreatedOnToolsVersion = 15.2;
-						TestTargetID = 083C29AF2B9CD21A00EB4840;
+						TestTargetID = 083C2ABE2B9CE2C600EB4840;
 					};
 				};
 			};
-			buildConfigurationList = 083C29AB2B9CD21A00EB4840 /* Build configuration list for PBXProject "SUNNY" */;
+			buildConfigurationList = 083C2ABA2B9CE2C600EB4840 /* Build configuration list for PBXProject "SUNNY" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -216,36 +214,36 @@
 				en,
 				Base,
 			);
-			mainGroup = 083C29A72B9CD21A00EB4840;
-			productRefGroup = 083C29B12B9CD21A00EB4840 /* Products */;
+			mainGroup = 083C2AB62B9CE2C600EB4840;
+			productRefGroup = 083C2AC02B9CE2C600EB4840 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				083C29AF2B9CD21A00EB4840 /* SUNNY */,
-				083C29C02B9CD21C00EB4840 /* SUNNYTests */,
-				083C29CA2B9CD21C00EB4840 /* SUNNYUITests */,
+				083C2ABE2B9CE2C600EB4840 /* SUNNY */,
+				083C2ACE2B9CE2C800EB4840 /* SUNNYTests */,
+				083C2AD82B9CE2C800EB4840 /* SUNNYUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		083C29AE2B9CD21A00EB4840 /* Resources */ = {
+		083C2ABD2B9CE2C600EB4840 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				083C29BC2B9CD21C00EB4840 /* Preview Assets.xcassets in Resources */,
-				083C29B82B9CD21C00EB4840 /* Assets.xcassets in Resources */,
+				083C2ACA2B9CE2C800EB4840 /* Preview Assets.xcassets in Resources */,
+				083C2AC72B9CE2C800EB4840 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		083C29BF2B9CD21C00EB4840 /* Resources */ = {
+		083C2ACD2B9CE2C800EB4840 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		083C29C92B9CD21C00EB4840 /* Resources */ = {
+		083C2AD72B9CE2C800EB4840 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -255,49 +253,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		083C29AC2B9CD21A00EB4840 /* Sources */ = {
+		083C2ABB2B9CE2C600EB4840 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				083C29B62B9CD21A00EB4840 /* ContentView.swift in Sources */,
-				083C29B42B9CD21A00EB4840 /* SUNNYApp.swift in Sources */,
+				083C2AC52B9CE2C600EB4840 /* ContentView.swift in Sources */,
+				083C2AC32B9CE2C600EB4840 /* SUNNYApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		083C29BD2B9CD21C00EB4840 /* Sources */ = {
+		083C2ACB2B9CE2C800EB4840 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				083C29C62B9CD21C00EB4840 /* SUNNYTests.swift in Sources */,
+				083C2AD42B9CE2C800EB4840 /* SUNNYTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		083C29C72B9CD21C00EB4840 /* Sources */ = {
+		083C2AD52B9CE2C800EB4840 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				083C29D22B9CD21C00EB4840 /* SUNNYUITestsLaunchTests.swift in Sources */,
-				083C29D02B9CD21C00EB4840 /* SUNNYUITests.swift in Sources */,
+				083C2AE02B9CE2C800EB4840 /* SUNNYUITestsLaunchTests.swift in Sources */,
+				083C2ADE2B9CE2C800EB4840 /* SUNNYUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		083C29C32B9CD21C00EB4840 /* PBXTargetDependency */ = {
+		083C2AD12B9CE2C800EB4840 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 083C29AF2B9CD21A00EB4840 /* SUNNY */;
-			targetProxy = 083C29C22B9CD21C00EB4840 /* PBXContainerItemProxy */;
+			target = 083C2ABE2B9CE2C600EB4840 /* SUNNY */;
+			targetProxy = 083C2AD02B9CE2C800EB4840 /* PBXContainerItemProxy */;
 		};
-		083C29CD2B9CD21C00EB4840 /* PBXTargetDependency */ = {
+		083C2ADB2B9CE2C800EB4840 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 083C29AF2B9CD21A00EB4840 /* SUNNY */;
-			targetProxy = 083C29CC2B9CD21C00EB4840 /* PBXContainerItemProxy */;
+			target = 083C2ABE2B9CE2C600EB4840 /* SUNNY */;
+			targetProxy = 083C2ADA2B9CE2C800EB4840 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		083C29D32B9CD21C00EB4840 /* Debug */ = {
+		083C2AE12B9CE2C800EB4840 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -349,16 +347,18 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		083C29D42B9CD21C00EB4840 /* Release */ = {
+		083C2AE22B9CE2C800EB4840 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -404,90 +404,75 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		083C29D62B9CD21C00EB4840 /* Debug */ = {
+		083C2AE42B9CE2C800EB4840 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = SUNNY/SUNNY.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SUNNY/Preview Content\"";
 				DEVELOPMENT_TEAM = 8L6HR8J2B8;
-				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yeoniii20.SUNNY;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sunny-money.SUNNY";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		083C29D72B9CD21C00EB4840 /* Release */ = {
+		083C2AE52B9CE2C800EB4840 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = SUNNY/SUNNY.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SUNNY/Preview Content\"";
 				DEVELOPMENT_TEAM = 8L6HR8J2B8;
-				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
-				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
-				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
-				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yeoniii20.SUNNY;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sunny-money.SUNNY";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
-		083C29D92B9CD21C00EB4840 /* Debug */ = {
+		083C2AE72B9CE2C800EB4840 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -497,12 +482,9 @@
 				DEVELOPMENT_TEAM = 8L6HR8J2B8;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yeoniii20.SUNNYTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sunny-money.SUNNYTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -510,7 +492,7 @@
 			};
 			name = Debug;
 		};
-		083C29DA2B9CD21C00EB4840 /* Release */ = {
+		083C2AE82B9CE2C800EB4840 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -520,12 +502,9 @@
 				DEVELOPMENT_TEAM = 8L6HR8J2B8;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yeoniii20.SUNNYTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sunny-money.SUNNYTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -533,7 +512,7 @@
 			};
 			name = Release;
 		};
-		083C29DC2B9CD21C00EB4840 /* Debug */ = {
+		083C2AEA2B9CE2C800EB4840 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -541,13 +520,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8L6HR8J2B8;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yeoniii20.SUNNYUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sunny-money.SUNNYUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -555,7 +530,7 @@
 			};
 			name = Debug;
 		};
-		083C29DD2B9CD21C00EB4840 /* Release */ = {
+		083C2AEB2B9CE2C800EB4840 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -563,13 +538,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8L6HR8J2B8;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
-				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yeoniii20.SUNNYUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sunny-money.SUNNYUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -580,43 +551,43 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		083C29AB2B9CD21A00EB4840 /* Build configuration list for PBXProject "SUNNY" */ = {
+		083C2ABA2B9CE2C600EB4840 /* Build configuration list for PBXProject "SUNNY" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				083C29D32B9CD21C00EB4840 /* Debug */,
-				083C29D42B9CD21C00EB4840 /* Release */,
+				083C2AE12B9CE2C800EB4840 /* Debug */,
+				083C2AE22B9CE2C800EB4840 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		083C29D52B9CD21C00EB4840 /* Build configuration list for PBXNativeTarget "SUNNY" */ = {
+		083C2AE32B9CE2C800EB4840 /* Build configuration list for PBXNativeTarget "SUNNY" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				083C29D62B9CD21C00EB4840 /* Debug */,
-				083C29D72B9CD21C00EB4840 /* Release */,
+				083C2AE42B9CE2C800EB4840 /* Debug */,
+				083C2AE52B9CE2C800EB4840 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		083C29D82B9CD21C00EB4840 /* Build configuration list for PBXNativeTarget "SUNNYTests" */ = {
+		083C2AE62B9CE2C800EB4840 /* Build configuration list for PBXNativeTarget "SUNNYTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				083C29D92B9CD21C00EB4840 /* Debug */,
-				083C29DA2B9CD21C00EB4840 /* Release */,
+				083C2AE72B9CE2C800EB4840 /* Debug */,
+				083C2AE82B9CE2C800EB4840 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		083C29DB2B9CD21C00EB4840 /* Build configuration list for PBXNativeTarget "SUNNYUITests" */ = {
+		083C2AE92B9CE2C800EB4840 /* Build configuration list for PBXNativeTarget "SUNNYUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				083C29DC2B9CD21C00EB4840 /* Debug */,
-				083C29DD2B9CD21C00EB4840 /* Release */,
+				083C2AEA2B9CE2C800EB4840 /* Debug */,
+				083C2AEB2B9CE2C800EB4840 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 083C29A82B9CD21A00EB4840 /* Project object */;
+	rootObject = 083C2AB72B9CE2C600EB4840 /* Project object */;
 }
