@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#FFF9EF"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "notification": {
       "icon": "./assets/app_icon.png"
     },
@@ -27,10 +25,7 @@
         "backgroundColor": "#FFF9EF"
       },
       "versionCode": 25,
-      "permissions": [
-        "CAMERA",
-        "NOTIFICATIONS"
-      ],
+      "permissions": ["CAMERA", "NOTIFICATIONS"],
       "package": "com.sunny.inout_webview",
       "googleServicesFile": "./google-services.json"
     },
@@ -42,9 +37,7 @@
         "projectId": "99b2fa8d-2739-4de2-b65f-991835ff78b3"
       }
     },
-    "plugins": [
-      "expo-apple-authentication"
-    ],
+    "plugins": ["expo-apple-authentication"],
     "owner": "suyoooi"
   }
 }
