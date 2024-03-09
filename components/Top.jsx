@@ -32,12 +32,23 @@ const Top = ({ navigation }) => {
         },
       });
       if (response.status === 200) {
-        const SaveData = response.data.data[0];
-        console.log("절약 목표 조회::", SaveData);
-        setSaveData(true);
-        setDay(SaveData.date);
-        setProgress(SaveData.savePercentage);
-        setCost(SaveData.cost);
+        console.log("절약 목표", response.data);
+        const SaveDataVal = response.data.data;
+
+        if (SaveDataVal && SaveDataVal.length > 0) {
+          const SaveData = SaveDataVal[0];
+          console.log("절약 목표 조회::", SaveData);
+          setSaveData(true);
+          setDay(SaveData.date);
+          setProgress(SaveData.savePercentage);
+          setCost(SaveData.cost);
+        } else {
+          console.log("절약 목표 조회::", SaveDataVal);
+          setSaveData(false);
+          setDay(0);
+          setProgress(0);
+          setCost(0);
+        }
       } else if (response.status === 404) {
         setSaveData(false);
       }
@@ -97,14 +108,10 @@ const Top = ({ navigation }) => {
                 {progress}%
               </Text>
             ) : (
-              <Text
+              <View
                 style={{
-                  fontSize: 15,
-                  fontFamily: "SUITE",
-                  fontWeight: 500,
-                  color: "#1F1F1F",
-                  alignSelf: "center",
-                  marginTop: 1,
+                  display: "flex",
+                  alignItems: "center",
                 }}
               >
                 <Text
@@ -116,9 +123,20 @@ const Top = ({ navigation }) => {
                   }}
                 >
                   절약 목표
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      fontFamily: "SUITE",
+                      fontWeight: 500,
+                      color: "#1F1F1F",
+                      alignSelf: "center",
+                      marginTop: 1,
+                    }}
+                  >
+                    를 설정해보세요!
+                  </Text>
                 </Text>
-                를 설정해보세요!
-              </Text>
+              </View>
             )}
           </View>
         </TouchableOpacity>
