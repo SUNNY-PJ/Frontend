@@ -65,7 +65,7 @@ const MyPage = () => {
         },
       });
 
-      console.log("프로필 정보:::", response);
+      console.log("프로필 정보:::", response.data);
       const profileData = response.data;
       setProfile([profileData]);
     } catch (error) {

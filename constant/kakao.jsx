@@ -29,7 +29,7 @@ const Kakao = () => {
   };
 
   function KakaoLoginWebView(data) {
-    console.log("카카오 로그인 시도:::");
+    console.log("카카오 로그인 시도:::", data);
     const exp = "code=";
     var condition = data.indexOf(exp);
     if (condition != -1) {
