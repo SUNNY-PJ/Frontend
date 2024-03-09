@@ -11,6 +11,7 @@ import * as Notifications from "expo-notifications";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { proxyUrl } from "../constant/common";
+import TopTooltip from "./Modal/topTooltip";
 
 const Top = ({ navigation }) => {
   const inputURL = "/save";
@@ -21,6 +22,8 @@ const Top = ({ navigation }) => {
   const [cost, setCost] = useState(0);
   const progressAnim = useRef(new Animated.Value(0)).current; // 초기 값 0으로 설정
   const [saveData, setSaveData] = useState(false);
+  const [isOpenTopTooltip, setIsOpenTopTooltip] = useState(false);
+
   // 절약 목표 조회
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
@@ -62,6 +65,34 @@ const Top = ({ navigation }) => {
   }, [saveData, day, progress]);
 
   useEffect(() => {
+    if (!saveData) {
+      setIsOpenTopTooltip(true);
+    }
+  }, [saveData]);
+
+  const openTopTooltip = () => {
+    setIsOpenTopTooltip(false);
+  };
+
+  // useEffect(() => {
+  //   const checkTooltipShown = async () => {
+  //     const hasShownTopTooltip = await AsyncStorage.getItem(
+  //       "hasShownTopTooltip"
+  //     );
+  //     if (hasShownTopTooltip === "true") {
+  //       setIsOpenTopTooltip(false);
+  //     }
+  //   };
+
+  //   checkTooltipShown();
+  // }, []);
+
+  // const openTopTooltip = () => {
+  //   setIsOpenTopTooltip(false);
+  //   AsyncStorage.setItem("hasShownTopTooltip", "true");
+  // };
+
+  useEffect(() => {
     // progress 상태가 변경될 때마다 애니메이션을 실행
     Animated.timing(progressAnim, {
       toValue: progress, // 최종 값은 progress 상태 값으로 설정
@@ -79,11 +110,24 @@ const Top = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.progressContainer}>
-        {saveData ? (
-          <Text style={[styles.text]}>D - {day}</Text>
-        ) : (
-          <Text style={[styles.text]}>D - ??</Text>
-        )}
+        <Text style={[styles.text]}>
+          D -&nbsp;
+          {saveData ? (
+            { day }
+          ) : (
+            <Text
+              style={{
+                fontFaily: "SUITE_Bold",
+                fontWeight: "700",
+                color: "#1F1F1F",
+                fontSize: 16,
+              }}
+            >
+              ??
+            </Text>
+          )}
+        </Text>
+
         <TouchableOpacity onPress={() => navigation.navigate("Goal")}>
           <View style={styles.progressBar}>
             <Animated.View
@@ -166,6 +210,9 @@ const Top = ({ navigation }) => {
             style={styles.icon}
           />
         </TouchableOpacity>
+      </View>
+      <View>
+        {isOpenTopTooltip && <TopTooltip openTopTooltip={openTopTooltip} />}
       </View>
     </View>
   );
