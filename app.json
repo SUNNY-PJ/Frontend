@@ -2,7 +2,7 @@
   "expo": {
     "name": "sunny",
     "slug": "sunny",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/app_icon.png",
     "userInterfaceStyle": "light",
@@ -18,7 +18,8 @@
     "ios": {
       "usesAppleSignIn": true,
       "supportsTablet": true,
-      "bundleIdentifier": "com.yeoniii20.SUNNY"
+      "bundleIdentifier": "com.yeoniii20.SUNNY",
+      "buildNumber": "1.0.1"
     },
     "android": {
       "adaptiveIcon": {
