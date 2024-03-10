@@ -110,12 +110,12 @@ const Alarm = () => {
               <Text style={styles.dayText}>오늘</Text>
             </View>
             <View style={{ backgroundColor: "#fff" }}>
-              <View style={styles.section}>
-                <Image
-                  source={require("../../assets/myPage_profile.png")}
-                  style={{ width: 60, height: 60 }}
-                />
-                {recentData.map((item, index) => (
+              {recentData.map((item, index) => (
+                <View style={styles.section}>
+                  <Image
+                    source={require("../../assets/myPage_profile.png")}
+                    style={{ width: 60, height: 60 }}
+                  />
                   <View>
                     <Text style={styles.titleText}>{item.title}</Text>
                     <Text style={styles.contentText}>
@@ -126,8 +126,8 @@ const Alarm = () => {
                       <Text style={styles.dateText}>{item.createdAt}</Text>
                     </View>
                   </View>
-                ))}
-              </View>
+                </View>
+              ))}
               <Line h={1} color={"#C1C1C1"} />
             </View>
           </View>
@@ -179,6 +179,8 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     gap: 12,
+    borderBottomColor: "#C1C1C1",
+    borderBottomWidth: 1,
   },
   dayText: {
     fontSize: 20,
