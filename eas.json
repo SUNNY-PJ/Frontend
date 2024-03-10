@@ -13,6 +13,12 @@
     "production": {}
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleId": "6suyeon@naver.com",
+        "ascAppId": "6479210024",
+        "appleTeamId": "8L6HR8J2B8"
+      }
+    }
   }
 }
