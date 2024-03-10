@@ -113,11 +113,11 @@ const Top = ({ navigation }) => {
         <Text style={[styles.text]}>
           D -&nbsp;
           {saveData ? (
-            { day }
+            day
           ) : (
             <Text
               style={{
-                fontFaily: "SUITE_Bold",
+                fontFamily: "SUITE_Bold",
                 fontWeight: "700",
                 color: "#1F1F1F",
                 fontSize: 16,
@@ -127,7 +127,6 @@ const Top = ({ navigation }) => {
             </Text>
           )}
         </Text>
-
         <TouchableOpacity onPress={() => navigation.navigate("Goal")}>
           <View style={styles.progressBar}>
             <Animated.View
