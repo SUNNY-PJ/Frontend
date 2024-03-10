@@ -35,7 +35,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "99b2fa8d-2739-4de2-b65f-991835ff78b3"
+        "projectId": "badbfb2c-f7ac-4ace-9b2b-74f36571714c"
       }
     },
     "plugins": ["expo-apple-authentication"],
