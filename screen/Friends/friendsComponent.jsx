@@ -7,9 +7,6 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { proxyUrl } from "../../constant/common";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
@@ -61,7 +58,6 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
 
   useEffect(() => {
     console.log("userId::::", userId);
-    console.log("rrr", isOpenProfile);
   }, [userId]);
 
   return (
@@ -81,8 +77,10 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
               justifyContent: "space-between",
               paddingLeft: 28,
               paddingRight: 28,
-              marginBottom: 20,
+              paddingBottom: 20,
               paddingTop: 20,
+              borderBottomColor: "#C1C1C1",
+              borderBottomWidth: 1,
             }}
           >
             <View style={{ flexDirection: "row" }}>
@@ -144,7 +142,12 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
               </View>
             )}
             {item.friendStatus === "APPROVE" && (
-              <View style={{ flexDirection: "row", gap: 16 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 16,
+                }}
+              >
                 {/* <TouchableOpacity activeOpacity={0.6}>
                 <Image
                   source={require("../../assets/messageBlack.png")}
@@ -216,6 +219,8 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     marginLeft: 10,
     marginRight: 10,
+    borderBottomColor: "#C1C1C1",
+    borderBottomWidth: 1,
   },
   deleteButtonText: {
     color: "#fff",
