@@ -25,7 +25,7 @@ export const CommunityProvider = ({ children }) => {
         //   page: 1,
         //   size: 10,
         sortType: sort,
-        pageSize: 20,
+        pageSize: 1000,
         boardType: category,
       };
       const response = await axios.get(url, {

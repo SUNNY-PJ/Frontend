@@ -1,107 +1,49 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Image,
   Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  RefreshControl,
 } from "react-native";
 import { useCommunity } from "../../context/communityContext";
 import Line from "../../components/Line";
-import { proxyUrl } from "../../constant/common";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
 import { useNavigation } from "@react-navigation/native";
+
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 const Tip = () => {
   const navigation = useNavigation();
-  const { data, fetchData, setTipSort, tipSort } = useCommunity();
-  // const [selectedSort, setSelectedSort] = useState("LATEST");
-  const [open, setOpen] = useState(false);
+  const { data, fetchData } = useCommunity();
+  const [refreshing, setRefreshing] = useState(false);
 
-  const COMMUNITY_SORT = [
-    { title: "최신순", data: "LATEST" },
-    { title: "조회순", data: "VIEW" },
-  ];
-
-  const handleSortClick = () => {
-    setOpen(!open);
-    console.log("정렬하시게씀까");
-  };
-
-  const handleCategorySelect = (data) => {
-    // setSelectedSort(data);
-    setTipSort(data);
-    console.log("여기가 팁이야", data);
-  };
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(700).then(() => {
+      console.log(refreshing);
+      setRefreshing(false);
+      // 데이터를 새로고침
+      fetchData();
+    });
+  }, []);
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  // 검색
-  const handleSearch = () => {
-    console.log("게시글을 검색합니다.");
-    navigation.navigate("MainScreen", { screen: "Search" });
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <View style={styles.section}>
-          <TouchableOpacity activeOpacity={0.6} onPress={handleSortClick}>
-            <View style={{ flexDirection: "row", gap: 3 }}>
-              <Image
-                source={require("../../assets/sort.png")}
-                style={styles.icon}
-              />
-              <Text
-                style={{
-                  color: "#262626",
-                  fontSize: 15,
-                  fontWeight: 500,
-                  alignSelf: "center",
-                }}
-              >
-                {tipSort === "LATEST" ? "최신순" : "조회순"}
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <View
-            style={{
-              flexDirection: "row",
-              gap: 22,
-            }}
-          >
-            <TouchableOpacity activeOpacity={0.6} onPress={handleSearch}>
-              <Image
-                source={require("../../assets/search.png")}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() =>
-                navigation.navigate("Post", {
-                  screen: "Post",
-                })
-              }
-            >
-              <Image
-                source={require("../../assets/write.png")}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <Line color={"#C1C1C1"} h={2} />
         <ScrollView
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="on-drag"
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         >
-          {/* <Line color={"#C1C1C1"} h={2} /> */}
           {data &&
             data.map((item, index) => (
               // {data.map((item) => (
@@ -136,15 +78,6 @@ const Tip = () => {
             ))}
         </ScrollView>
       </View>
-      {open && (
-        <BottomSheetScreen
-          title={"정렬기준"}
-          data={COMMUNITY_SORT}
-          modalVisible={open}
-          modalDisable={handleSortClick}
-          onCategorySelect={handleCategorySelect}
-        />
-      )}
     </View>
   );
 };
@@ -153,19 +86,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     backgroundColor: "#FFFBF6",
-    minHeight: "100%",
-    // flex: 1,
   },
   contentContainer: {
     marginBottom: 40,
-  },
-  section: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingLeft: 16,
-    paddingRight: 24,
-    marginTop: 17,
-    marginBottom: 18,
   },
   image: {
     width: 32,
@@ -175,16 +98,11 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: "row",
-    // marginBottom: 12,
   },
   tabBarLine: {
     flex: 1,
     height: 2,
     backgroundColor: "#C1C1C1",
-  },
-  icon: {
-    width: 20,
-    height: 20,
   },
   box: {
     paddingLeft: 16,
