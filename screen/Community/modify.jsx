@@ -148,7 +148,6 @@ const Modify = () => {
 
   const fetchData = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
 
     try {
       const response = await axios.get(url, {
@@ -231,15 +230,16 @@ const Modify = () => {
                     fontFamily: "SUITE_Bold",
                   }}
                 >
-                  카테고리 선택
+                  {/* 카테고리 선택 */}
+                  {item.type}
                 </Text>
-                <Image
+                {/* <Image
                   source={require("../../assets/categoryArrow.png")}
                   style={{
                     width: 24,
                     height: 24,
                   }}
-                />
+                /> */}
               </View>
               <Line color={"#C1C1C1"} h={1} />
               {/* 카테고리 선택 */}
@@ -279,7 +279,6 @@ const Modify = () => {
                 inputValue={content || item.contents}
                 handleInputChange={handleContentChange}
               />
-
               <Text
                 style={{
                   fontSize: 16,
