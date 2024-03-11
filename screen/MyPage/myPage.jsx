@@ -14,11 +14,8 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { proxyUrl } from "../../constant/common";
-import WinModal from "../../components/Modal/battle/win";
 import LoseModal from "../../components/Modal/battle/lose";
 import LeaveMsg from "../../components/Modal/myPage/leaveMsg";
-import SuccessModal from "../../components/Modal/goal/successModal";
-import FailModal from "../../components/Modal/goal/failModal";
 import ToggleBtn from "../../components/Btn/toggleBtn";
 
 const MyPage = () => {
@@ -31,6 +28,12 @@ const MyPage = () => {
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [modal, setModal] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
+
+  const toggleSwitch = () => {
+    setIsEnabled(!isEnabled);
+    // alarmFetchData();
+  };
 
   const handleConfirm = () => {
     leaveData();
@@ -43,12 +46,6 @@ const MyPage = () => {
 
   const openProfile = () => {
     setIsOpenProfile(!isOpenProfile);
-  };
-
-  const handldSettingAlarmClick = () => {
-    navigation.navigate("MainScreen", {
-      screen: "SettingAlarm",
-    });
   };
 
   // 프로필 정보
@@ -240,12 +237,12 @@ const MyPage = () => {
           <Text style={styles.alarmTitle}>알림</Text>
           <View style={styles.section}>
             <View style={styles.alarmSection}>
-              <Text style={styles.alarmDescription}>답글 알림</Text>
+              <Text style={styles.alarmDescription}>서비스 알림 설정</Text>
               <Text style={styles.alarmSubDescription}>
                 커뮤니티, 대결, 대화, 친구 신청에 대한 전체 알림 설정
               </Text>
             </View>
-            <ToggleBtn />
+            <ToggleBtn isEnabled={isEnabled} toggleSwitch={toggleSwitch} />
           </View>
           {/* <TouchableOpacity
             activeOpacity={0.6}
