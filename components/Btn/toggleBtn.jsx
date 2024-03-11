@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { View, Switch, StyleSheet } from "react-native";
 
-const ToggleBtn = () => {
-  const [isEnabled, setIsEnabled] = useState(false);
+const ToggleBtn = ({ isEnabled, toggleSwitch }) => {
+  console.log(isEnabled);
+  // const [isEnabled, setIsEnabled] = useState(false);
 
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  // const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
 
   return (
     <>
