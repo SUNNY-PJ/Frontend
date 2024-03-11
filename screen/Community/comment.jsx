@@ -213,6 +213,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       // onSwipeComplete={commentModal}
       // swipeDirection={slide ? "down" : []}
       // swipeDirection="down"
+      onBackdropPress={commentModal}
       style={[styles.modal, { maxHeight: windowHeight }]}
     >
       <KeyboardAvoidingView
@@ -505,7 +506,7 @@ const styles = StyleSheet.create({
   },
   commentSection: { paddingLeft: 17, paddingRight: 17 },
   modalContent: {
-    marginBottom: 10,
+    marginBottom: 18,
     gap: 8,
   },
   input: {
