@@ -157,12 +157,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 700,
     color: "#1F1F1F",
+    fontFamily: "SUITE_Bold",
     marginBottom: 8,
   },
   text: {
     fontSize: 16,
     fontWeight: 500,
     color: "#1F1F1F",
+    fontFamily: "SUITE",
   },
 });
 
