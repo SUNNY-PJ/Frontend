@@ -88,7 +88,14 @@ const Spending = () => {
                 style={[styles.vectorImage, { transform: [{ scaleX: -1 }] }]}
               />
             </TouchableOpacity>
-            <Text style={{ fontSize: 22, fontWeight: 700, color: "#1F1F1F" }}>
+            <Text
+              style={{
+                fontSize: 22,
+                fontWeight: 700,
+                color: "#1F1F1F",
+                fontFamily: "SUITE_Bold",
+              }}
+            >
               {formatDate(currentDate)}
             </Text>
             <TouchableOpacity onPress={nextMonth}>
