@@ -336,12 +336,19 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     backgroundColor: "#fff",
   },
-  title: { fontSize: 20, color: "#000", fontWeight: 500, padding: 4 },
+  title: {
+    fontSize: 20,
+    color: "#000",
+    fontWeight: 500,
+    padding: 4,
+    fontFamily: "SUITE",
+  },
   description: {
     fontSize: 12,
     color: "#000",
     fontWeight: 500,
     padding: 4,
+    fontFamily: "SUITE",
     gap: 8,
   },
   button: {
