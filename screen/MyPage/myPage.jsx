@@ -29,10 +29,11 @@ const MyPage = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modal, setModal] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
+  const [alarmDataVal, setAlarmDataVal] = useState(true);
 
   const toggleSwitch = () => {
     setIsEnabled(!isEnabled);
-    // alarmFetchData();
+    alarmData();
   };
 
   const handleConfirm = () => {
@@ -70,10 +71,58 @@ const MyPage = () => {
     }
   };
 
+  // 알림 설정
+  const alarmData = async () => {
+    const inputURL = `/alarm/permission`;
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+    const device_token = await AsyncStorage.getItem("device_token");
+    const bodyData = {
+      allow: isEnabled,
+      target_token: device_token,
+    };
+
+    try {
+      const response = await axios.post(url, bodyData, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log("알림 정보:::", response.data);
+      alarmFetchData();
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  // 알림 허용 여부
+  const alarmFetchData = async () => {
+    const inputURL = `/alarm/permission/allow`;
+    const url = proxyUrl + inputURL;
+    const access_token = await AsyncStorage.getItem("access_token");
+
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      const alarmPermission = response.data.data;
+      console.log("알림 정보:::", alarmPermission);
+      setAlarmDataVal(alarmPermission);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
   useEffect(() => {
     // 화면이 focus될 때마다 fetchData 호출
     const unsubscribe = navigation.addListener("focus", () => {
       fetchData();
+      alarmFetchData();
     });
 
     return unsubscribe;
@@ -242,7 +291,7 @@ const MyPage = () => {
                 커뮤니티, 대결, 대화, 친구 신청에 대한 전체 알림 설정
               </Text>
             </View>
-            <ToggleBtn isEnabled={isEnabled} toggleSwitch={toggleSwitch} />
+            <ToggleBtn isEnabled={alarmDataVal} toggleSwitch={toggleSwitch} />
           </View>
           {/* <TouchableOpacity
             activeOpacity={0.6}
