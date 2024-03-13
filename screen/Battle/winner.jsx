@@ -36,6 +36,7 @@ const Winner = () => {
             color: "#1F1F1F",
             textAlign: "center",
             marginBottom: 24,
+            fontFamily: "SUITE_Bold",
           }}
         >
           채팅 목록

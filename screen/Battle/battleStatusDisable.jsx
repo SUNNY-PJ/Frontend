@@ -120,22 +120,26 @@ const styles = StyleSheet.create({
     fontWeight: 900,
     color: "#C1C1C1",
     marginTop: 14,
+    fontFamily: "SUITE_ExtraBold",
   },
   boldSmallText: {
     fontSize: 16,
     fontWeight: 900,
     color: "#1F1F1F",
     marginTop: 14,
+    fontFamily: "SUITE_ExtraBold",
   },
   text: {
     fontSize: 20,
     fontWeight: 500,
     color: "#C1C1C1",
+    fontFamily: "SUITE",
   },
   subText: {
     fontSize: 16,
     fontWeight: 700,
     color: "#5C5C5C",
+    fontFamily: "SUITE_Bold",
   },
 });
 
