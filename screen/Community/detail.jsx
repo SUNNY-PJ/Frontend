@@ -433,11 +433,17 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 12,
   },
-  name: { fontSize: 20, color: "#1F1F1F", fontWeight: 500 },
+  name: {
+    fontSize: 20,
+    color: "#1F1F1F",
+    fontFamily: "SUITE",
+    fontWeight: 500,
+  },
   setting: {
     fontSize: 16,
     color: "#5C5C5C",
     fontWeight: 600,
+    fontFamily: "SUITE_Medium",
   },
   subDescription: {
     fontSize: 10,

@@ -265,6 +265,7 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 500,
     fontSize: 16,
+    fontFamily: "SUITE",
     color: "#C1C1C1",
   },
   recentSearchesHeader: {
@@ -279,20 +280,24 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 500,
     color: "#1F1F1F",
+    fontFamily: "SUITE",
   },
   type: {
     fontSize: 12,
     fontWeight: 500,
+    fontFamily: "SUITE",
     color: "#1F1F1F",
   },
   title: {
     fontSize: 16,
     fontWeight: 700,
+    fontFamily: "SUITE",
     color: "#1F1F1F",
   },
   writer: {
     fontSize: 12,
     fontWeight: 500,
+    fontFamily: "SUITE",
     color: "#1F1F1F",
   },
 });

@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 500,
     fontSize: 16,
+    fontFamily: "SUITE",
     color: "#C1C1C1",
   },
   recentSearchesHeader: {
@@ -167,6 +168,7 @@ const styles = StyleSheet.create({
   recentSearch: {
     fontSize: 20,
     fontWeight: 500,
+    fontFamily: "SUITE",
     color: "#1F1F1F",
   },
 });
