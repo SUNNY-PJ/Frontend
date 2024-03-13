@@ -129,6 +129,7 @@ const ChatList = () => {
             color: "#1F1F1F",
             textAlign: "center",
             marginBottom: 24,
+            fontFamily: "SUITE_Bold",
           }}
         >
           채팅 목록
@@ -153,6 +154,7 @@ const ChatList = () => {
                       fontWeight: 700,
                       color: "#1F1F1F",
                       marginBottom: 8,
+                      fontFamily: "SUITE_Bold",
                     }}
                   >
                     민지
@@ -162,6 +164,7 @@ const ChatList = () => {
                       fontSize: 15,
                       fontWeight: 500,
                       color: "#1F1F1F",
+                      fontFamily: "SUITE",
                     }}
                   >
                     {truncateText("뭐하고 있니")}
@@ -174,6 +177,7 @@ const ChatList = () => {
                     fontSize: 10,
                     fontWeight: 500,
                     color: "#1F1F1F",
+                    fontFamily: "SUITE",
                   }}
                 >
                   07:09
@@ -195,6 +199,7 @@ const ChatList = () => {
                       color: "#fff",
                       textAlign: "center",
                       top: 4,
+                      fontFamily: "SUITE",
                     }}
                   >
                     22
@@ -223,6 +228,7 @@ const ChatList = () => {
                       fontWeight: 700,
                       color: "#1F1F1F",
                       marginBottom: 8,
+                      fontFamily: "SUITE_Bold",
                     }}
                   >
                     수연
@@ -242,6 +248,7 @@ const ChatList = () => {
                     fontSize: 15,
                     fontWeight: 500,
                     color: "#1F1F1F",
+                    fontFamily: "SUITE",
                   }}
                 >
                   {truncateText(
@@ -256,6 +263,7 @@ const ChatList = () => {
                   fontSize: 10,
                   fontWeight: 500,
                   color: "#1F1F1F",
+                  fontFamily: "SUITE",
                 }}
               >
                 07:09
@@ -315,7 +323,7 @@ const styles = StyleSheet.create({
   deleteText: {
     color: "white",
     paddingHorizontal: 20,
-    fontWeight: "bold",
+    fontFamily: "SUITE",
   },
 });
 

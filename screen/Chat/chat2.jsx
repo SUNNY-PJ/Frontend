@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   sendButtonText: {
     color: "white",
-    fontWeight: "bold",
+    fontFamily: "SUITE_Bold",
   },
 });
 

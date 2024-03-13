@@ -135,7 +135,14 @@ const ChatRoom = () => {
                 paddingLeft: 18,
               }}
             >
-              <Text style={{ fontSize: 15, fontWeight: 700, color: "#1F1F1F" }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: 700,
+                  color: "#1F1F1F",
+                  fontFamily: "SUITE_Bold",
+                }}
+              >
                 Today
               </Text>
             </View>
