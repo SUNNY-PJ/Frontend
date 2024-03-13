@@ -190,11 +190,32 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingTop: 20,
     paddingBottom: 8,
+    fontFamily: "SUITE",
   },
-  dateText: { fontSize: 12, fontWeight: 500, color: "#1F1F1F" },
-  nameText: { fontSize: 12, fontWeight: 500, color: "#1F1F1F" },
-  contentText: { fontSize: 16, fontWeight: 500, color: "#1F1F1F" },
-  titleText: { fontSize: 12, fontWeight: 700, color: "#5C5C5C" },
+  dateText: {
+    fontSize: 12,
+    fontWeight: 500,
+    fontFamily: "SUITE",
+    color: "#1F1F1F",
+  },
+  nameText: {
+    fontSize: 12,
+    fontWeight: 500,
+    fontFamily: "SUITE",
+    color: "#1F1F1F",
+  },
+  contentText: {
+    fontSize: 16,
+    fontWeight: 500,
+    fontFamily: "SUITE",
+    color: "#1F1F1F",
+  },
+  titleText: {
+    fontSize: 12,
+    fontWeight: 700,
+    fontFamily: "SUITE_Bold",
+    color: "#5C5C5C",
+  },
   bottomSection: { flexDirection: "row", gap: 8, marginTop: 6 },
 });
 
