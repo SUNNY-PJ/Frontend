@@ -191,6 +191,7 @@ const Modify = () => {
                   color: "#1F1F1F",
                   alignSelf: "center",
                   marginTop: 17,
+                  fontFamily: "SUITE_Bold",
                 }}
               >
                 게시글 수정
@@ -251,6 +252,7 @@ const Modify = () => {
                   marginBottom: 8,
                   marginTop: 16,
                   paddingLeft: 12,
+                  fontFamily: "SUITE_Medium",
                 }}
               >
                 제목
