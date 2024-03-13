@@ -258,6 +258,7 @@ const SettingProfile = () => {
           fontWeight: 700,
           alignSelf: "center",
           bottom: 17,
+          fontFamily: "SUITE_Bold",
         }}
       >
         프로필 설정
@@ -288,6 +289,7 @@ const SettingProfile = () => {
               color: "#1F1F1F",
               fontWeight: 500,
               marginBottom: 16,
+              fontFamily: "SUITE",
             }}
           >
             닉네임
@@ -307,6 +309,7 @@ const SettingProfile = () => {
               textAlign: "left",
               paddingLeft: 12,
               marginBottom: 278,
+              fontFamily: "SUITE",
             }}
           >
             * 2~10자 이내, 특수문자 및 숫자 사용 가능, 이모지 사용 불가
@@ -354,11 +357,17 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 12,
   },
-  name: { fontSize: 20, color: "#1F1F1F", fontWeight: 500 },
+  name: {
+    fontSize: 20,
+    color: "#1F1F1F",
+    fontWeight: 500,
+    fontFamily: "SUITE",
+  },
   setting: {
     fontSize: 16,
     color: "#5C5C5C",
     fontWeight: 600,
+    fontFamily: "SUITE_Medium",
   },
   title: {
     fontSize: 16,
@@ -367,6 +376,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingTop: 16,
     marginBottom: 8,
+    fontFamily: "SUITE_ExtraBold",
   },
   profileImage: {
     width: 80,

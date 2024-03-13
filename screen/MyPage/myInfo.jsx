@@ -222,7 +222,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 12,
   },
-  name: { fontSize: 20, color: "#1F1F1F", fontWeight: 900 },
+  name: {
+    fontSize: 20,
+    color: "#1F1F1F",
+    fontWeight: 900,
+    fontFamily: "SUITE_ExtraBold",
+  },
   setting: {
     fontSize: 16,
     color: "#5C5C5C",
