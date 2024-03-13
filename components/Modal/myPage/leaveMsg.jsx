@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textAlign: "center",
     color: "#000",
+    fontFamily: "SUITE_Bold",
   },
   buttonContainer: {
     flexDirection: "row",
