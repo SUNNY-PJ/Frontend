@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#000",
     marginBottom: 9,
+    fontFamily: "SUITE_Bold",
   },
   content: {
     gap: 15,

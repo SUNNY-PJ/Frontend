@@ -94,27 +94,32 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     textAlign: "center",
     color: "#000",
+    fontFamily: "SUITE_Bold",
   },
   text: {
     fontSize: 18,
     fontWeight: 500,
     textAlign: "center",
     color: "#1F1F1F",
+    fontFamily: "SUITE",
   },
   btnText: {
     fontWeight: 700,
     fontSize: 16,
     color: "#1F1F1F",
+    fontFamily: "SUITE_Bold",
   },
   contentTitle: {
     fontWeight: 700,
     fontSize: 16,
     color: "#1F1F1F",
+    fontFamily: "SUITE_Bold",
   },
   contentText: {
     fontWeight: 500,
     fontSize: 16,
     color: "#1F1F1F",
+    fontFamily: "SUITE",
   },
 });
 

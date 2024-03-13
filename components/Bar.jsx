@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "900",
     color: "#1F1F1F",
+    fontFamily: "SUITE_ExtraBold"
   },
 });
 

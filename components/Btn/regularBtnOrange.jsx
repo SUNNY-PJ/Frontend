@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textAlign: "center",
     color: "#1F1F1F",
+    fontFamily: "SUITE_Bold",
   },
 });
 

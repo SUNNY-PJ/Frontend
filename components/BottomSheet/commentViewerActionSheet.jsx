@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     color: "#1F1F1F",
     paddingTop: 10,
     paddingBottom: 10,
+    fontFamily: "SUITE",
   },
 });
 

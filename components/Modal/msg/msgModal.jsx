@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textAlign: "center",
     color: "#000",
+    fontFamily: "SUITE_Bold",
   },
   textContainer: {
     flexDirection: "cloumns",
@@ -75,11 +76,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "700",
     color: "#000",
+    fontFamily: "SUITE_Bold",
   },
   textValue: {
     fontSize: 16,
     fontWeight: "500",
     color: "#000",
+    fontFamily: "SUITE",
   },
   buttonContainer: {
     flexDirection: "row",
