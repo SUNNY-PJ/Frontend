@@ -14,11 +14,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import { formatDate } from "../../constant/formatData/format";
+import apiClient from "../../api/apiClient";
 
 const MyScrap = () => {
   const navigation = useNavigation();
-  const inputURL = "/users/scrap";
-  const url = proxyUrl + inputURL;
   const windowHeight = Dimensions.get("window").height;
 
   const [data, setData] = useState([]);
@@ -35,15 +34,11 @@ const MyScrap = () => {
 
   // 스크랩 삭제
   const deleteScrapData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     const inputURL = `/scrap/${itemId}`;
-    const url = proxyUrl + inputURL;
-
     try {
-      const response = await axios.delete(url, {
+      const response = await apiClient.delete(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
       console.log(response.data);
@@ -75,20 +70,17 @@ const MyScrap = () => {
     }
   };
 
+  // 스크랩 조회
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
-
+    const inputURL = "/users/scrap";
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
       const myScrapData = response.data;
       console.log(myScrapData);
-      // console.log(myWriteData.map((item) => item.id));
       setData(myScrapData);
     } catch (error) {
       console.error("에러:", error);
