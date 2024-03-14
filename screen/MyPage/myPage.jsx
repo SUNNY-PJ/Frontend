@@ -53,14 +53,10 @@ const MyPage = () => {
   // 프로필 정보
   const fetchData = async () => {
     const inputURL = `/users`;
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
 
@@ -75,7 +71,6 @@ const MyPage = () => {
   // 알림 설정
   const alarmData = async () => {
     const inputURL = `/alarm/permission`;
-    const access_token = await AsyncStorage.getItem("access_token");
     const device_token = await AsyncStorage.getItem("device_token");
     const bodyData = {
       allow: isEnabled,
@@ -86,11 +81,8 @@ const MyPage = () => {
       const response = await apiClient.post(inputURL, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          // Authorization: `Bearer ${access_token}`,
         },
       });
-
-      console.log("알림 정보:::", response.data);
       alarmFetchData();
     } catch (error) {
       console.error("에러:", error);
@@ -104,11 +96,9 @@ const MyPage = () => {
       const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          // Authorization: `Bearer ${access_token}`,
         },
       });
       const alarmPermission = response.data.data;
-      console.log("알림 정보:::", alarmPermission);
       setAlarmDataVal(alarmPermission);
     } catch (error) {
       console.error("에러:", error);
@@ -128,20 +118,15 @@ const MyPage = () => {
   const logoutData = async () => {
     // const lououtUrl = "http://43.201.176.22:8080/mypage/auth/kakao/logout";
     const inputURL = "/auth/kakao/logout";
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
     try {
       // const params = {
       //   client_id: "7ff971db2010c97a3e191dd319ec45cd",
       //   logout_redirect_uri: lououtUrl,
       // };
-
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
-        // params,
       });
       console.log("데이터:", response.headers);
       alert("로그아웃 되었습니다.");
@@ -151,6 +136,7 @@ const MyPage = () => {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
         console.error("서버 응답 메세지:", error.message);
+        alert(error.message);
       } else {
         console.error("에러:", error);
       }
@@ -160,23 +146,20 @@ const MyPage = () => {
   // 회원 탈퇴
   const leaveData = async () => {
     const inputURL = "/auth/leave";
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
       console.log("데이터:", response.data);
       alert("탈퇴 되었습니다.");
-
       navigation.navigate("KakaoScreen", { screen: "Login" });
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
         console.error("서버 응답 메세지:", error.message);
+        alert(error.message);
       } else {
         console.error("에러:", error);
       }
