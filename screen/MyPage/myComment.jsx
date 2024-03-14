@@ -14,29 +14,24 @@ import axios from "axios";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import { formatDate } from "../../constant/formatData/format";
+import apiClient from "../../api/apiClient";
 
 const MyComment = () => {
   const navigation = useNavigation();
   const inputURL = "/users/comment";
-  const url = proxyUrl + inputURL;
   const windowHeight = Dimensions.get("window").height;
 
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log("get 실행");
-
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
 
       const myWriteData = response.data;
-      // console.log(myWriteData.map((item) => item.id));
       setData(myWriteData);
     } catch (error) {
       console.error("에러:", error);
@@ -45,7 +40,6 @@ const MyComment = () => {
 
   useEffect(() => {
     fetchData();
-    console.log("실행된건가");
   }, []);
 
   return (
