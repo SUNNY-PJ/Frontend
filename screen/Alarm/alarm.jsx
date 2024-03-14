@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  Button,
   ScrollView,
   RefreshControl,
 } from "react-native";
@@ -94,6 +93,7 @@ const Alarm = () => {
           fontWeight: 700,
           alignSelf: "center",
           bottom: 22,
+          fontFamily: "SUITE_Bold",
         }}
       >
         알림
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingTop: 20,
     paddingBottom: 8,
-    fontFamily: "SUITE",
+    fontFamily: "SUITE_Bold",
   },
   dateText: {
     fontSize: 12,
