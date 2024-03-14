@@ -159,7 +159,6 @@ const SettingProfile = () => {
       const response = await apiClient.post(inputURL, null, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
         params,
       });
@@ -190,18 +189,13 @@ const SettingProfile = () => {
 
   const fetchData = async () => {
     const inputURL = `/users`;
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
 
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
-
       console.log("프로필 정보:::", response.data);
       const profileData = response.data;
       setProfile([profileData]);

@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
 import InputNickName from "../components/Input/inputNickname";
 import LargeBtn from "../components/Btn/largeBtn";
+import apiClient from "../api/apiClient";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -29,41 +30,28 @@ const SignUp = () => {
 
   const postData = async () => {
     const inputURL = "/auth/nickname";
-    const cleanedURL = inputURL.replace(/[\u200B]/g, "");
-
-    const url = proxyUrl + cleanedURL;
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
-    console.log("별명을 등록합니다.");
     try {
       const params = {
         name: name,
       };
-
-      const response = await axios.post(url, null, {
+      const response = await apiClient.post(inputURL, null, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
         params,
       });
 
-      if (response.status === 200) {
+      if (response.data.status === 200) {
         alert("별명을 등록했습니다.");
         postDeviceData();
         navigation.replace("MainScreen", { screen: "Spending" });
-      } else if (response.status === 403) {
+      } else if (response.data.status === 403) {
         alert("이미 사용중인 닉네임입니다.");
       }
     } catch (error) {
-      if (error.response) {
-        if (error.response.data.status === 403) {
-          alert(error.response.data.message);
-        }
-        console.error("서버 응답 오류:", error.response.data);
-        console.error("서버 응답 메세지:", error.message);
-      } else {
-        console.error("에러:", error);
+      console.error("서버 응답 오류:", error.response.data);
+      if (error.response.status === 403) {
+        alert("이미 사용중인 닉네임입니다.");
       }
     }
   };
@@ -71,23 +59,17 @@ const SignUp = () => {
   // 디바이스 토큰 api
   const postDeviceData = async () => {
     const inputURL = "/alarm";
-    const url = proxyUrl + inputURL;
-    console.log("디바이스 토큰 post 실행");
-
-    const access_token = await AsyncStorage.getItem("access_token");
     const device_token = await AsyncStorage.getItem("device_token");
     try {
       const bodyData = {
         target_token: device_token,
       };
-      const response = await axios.post(url, bodyData, {
+      const response = await apiClient.post(inputURL, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
-
-      console.log("디바이스 토큰 api", response);
+      console.log("디바이스 토큰 api", response.data);
       // navigation.replace("MainScreen", { screen: "Spending" });
     } catch (error) {
       console.error("device token 에러:", error);
