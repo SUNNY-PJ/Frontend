@@ -20,7 +20,6 @@ const MyInfo = () => {
   const activeTabVal = route.params?.activeTab || "scrap";
   const initialLayout = { width: Dimensions.get("window").width };
   const [activeTab, setActiveTab] = useState(activeTabVal);
-  const [profile, setProfile] = useState([]);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -232,6 +231,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#5C5C5C",
     fontWeight: 600,
+    fontFamily: "SUITE_Medium",
   },
   box: {
     paddingLeft: 16,
@@ -240,12 +240,19 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     backgroundColor: "#fff",
   },
-  title: { fontSize: 20, color: "#000", fontWeight: 500, padding: 4 },
+  title: {
+    fontSize: 20,
+    color: "#000",
+    fontWeight: 500,
+    padding: 4,
+    fontFamily: "SUITE",
+  },
   description: {
     fontSize: 12,
     color: "#000",
     fontWeight: 500,
     padding: 4,
+    fontFamily: "SUITE",
     gap: 8,
   },
 });

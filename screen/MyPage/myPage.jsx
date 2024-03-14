@@ -116,7 +116,6 @@ const MyPage = () => {
   };
 
   useEffect(() => {
-    // 화면이 focus될 때마다 fetchData 호출
     const unsubscribe = navigation.addListener("focus", () => {
       fetchData();
       alarmFetchData();
