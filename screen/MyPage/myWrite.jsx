@@ -8,35 +8,29 @@ import {
   ScrollView,
 } from "react-native";
 import { proxyUrl } from "../../constant/common";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import { formatDate } from "../../constant/formatData/format";
+import apiClient from "../../api/apiClient";
 
 const MyWrite = () => {
   const navigation = useNavigation();
-  const inputURL = "/users/community";
-  const url = proxyUrl + inputURL;
   const windowHeight = Dimensions.get("window").height;
 
   const [data, setData] = useState([]);
 
+  // 작성한 글 조회
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log("get 실행");
-
+    const inputURL = "/users/community";
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
 
       const myWriteData = response.data;
       console.log(myWriteData);
-      // console.log(myWriteData.map((item) => item.id));
       setData(myWriteData);
     } catch (error) {
       console.error("에러:", error);
@@ -45,7 +39,6 @@ const MyWrite = () => {
 
   useEffect(() => {
     fetchData();
-    console.log("실행된건가");
   }, []);
 
   return (
@@ -53,7 +46,6 @@ const MyWrite = () => {
       <View>
         <ScrollView style={{ height: windowHeight - 259 - 57 }}>
           {data.map((item) => (
-            // mypage/{id} 이런 api가 필요..
             <TouchableOpacity
               key={item.id}
               onPress={() =>
