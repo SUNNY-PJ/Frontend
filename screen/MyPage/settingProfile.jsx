@@ -16,6 +16,7 @@ import LargeBtnDisable from "../../components/Btn/largeBtnDisable";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
 import ImageActionSheet from "../../components/BottomSheet/ImageActionSheet";
+import apiClient from "../../api/apiClient";
 
 const SettingProfile = () => {
   const navigation = useNavigation();
@@ -109,8 +110,6 @@ const SettingProfile = () => {
 
   const postImageData = async () => {
     const inputURL = "/users/profile";
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
 
     // FormData 객체 생성
     const formData = new FormData();
@@ -138,13 +137,12 @@ const SettingProfile = () => {
     }
 
     try {
-      const response = await axios.post(url, formData, {
+      const response = await apiClient.post(inputURL, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${access_token}`,
         },
       });
-
+      console.log(response.data);
       navigation.navigate("MyPage", { screen: "MyPage" });
     } catch (error) {
       // 에러 핸들링 로직
@@ -153,29 +151,24 @@ const SettingProfile = () => {
 
   const postNicknameData = async () => {
     const inputURL = "/auth/nickname";
-    const cleanedURL = inputURL.replace(/[\u200B]/g, "");
-
-    const url = proxyUrl + cleanedURL;
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
-    console.log("별명을 등록합니다.");
     try {
       const params = {
         name: name,
       };
 
-      const response = await axios.post(url, null, {
+      const response = await apiClient.post(inputURL, null, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${access_token}`,
         },
         params,
       });
-
-      navigation.navigate("MyPage", { screen: "MyPage" });
+      if (response.data.status === 200) {
+        navigation.navigate("MyPage", { screen: "MyPage" });
+      }
     } catch (error) {
       console.error("서버 응답 오류:", error.response.data);
-      if (error.response.data.status === 403) {
+      if (error.response.status === 403) {
         alert("이미 사용중인 닉네임입니다.");
       }
     }
