@@ -93,7 +93,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
         setStatus("대기중");
       } else if (statusData === "APPROVE") {
         setStatus("친구끊기");
-      } else if (statusData === null) {
+      } else {
         setStatus("친구맺기");
       }
     } catch (error) {
