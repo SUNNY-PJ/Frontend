@@ -17,6 +17,7 @@ import { proxyUrl } from "../../constant/common";
 import LoseModal from "../../components/Modal/battle/lose";
 import LeaveMsg from "../../components/Modal/myPage/leaveMsg";
 import ToggleBtn from "../../components/Btn/toggleBtn";
+import apiClient from "../../api/apiClient";
 
 const MyPage = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -74,7 +75,6 @@ const MyPage = () => {
   // 알림 설정
   const alarmData = async () => {
     const inputURL = `/alarm/permission`;
-    const url = proxyUrl + inputURL;
     const access_token = await AsyncStorage.getItem("access_token");
     const device_token = await AsyncStorage.getItem("device_token");
     const bodyData = {
@@ -83,10 +83,10 @@ const MyPage = () => {
     };
 
     try {
-      const response = await axios.post(url, bodyData, {
+      const response = await apiClient.post(inputURL, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
+          // Authorization: `Bearer ${access_token}`,
         },
       });
 
@@ -100,14 +100,11 @@ const MyPage = () => {
   // 알림 허용 여부
   const alarmFetchData = async () => {
     const inputURL = `/alarm/permission/allow`;
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
+          // Authorization: `Bearer ${access_token}`,
         },
       });
       const alarmPermission = response.data.data;

@@ -14,6 +14,7 @@ import {
 import { useRoute } from "@react-navigation/native";
 import FriendWrite from "./friendWrite";
 import FriendComment from "./friendComment";
+import apiClient from "../../api/apiClient";
 
 const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   // const activeTabVal = route.params?.activeTab || "scrap";
@@ -73,14 +74,12 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   // 친구인지 아닌지 확인
   const confirmData = async () => {
     const inputURL = `/friends/${friendId}`;
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
 
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
+          // Authorization 헤더는 apiClient 인터셉터에서 자동으로 처리
         },
       });
 
@@ -104,6 +103,40 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
       }
     }
   };
+
+  // const confirmData = async () => {
+  //   const inputURL = `/friends/${friendId}`;
+  //   const url = proxyUrl + inputURL;
+  //   const access_token = await AsyncStorage.getItem("access_token");
+
+  //   try {
+  //     const response = await axios.get(url, {
+  //       headers: {
+  //         "Content-Type": "application/json; charset=utf-8",
+  //         Authorization: `Bearer ${access_token}`,
+  //       },
+  //     });
+
+  //     console.log("데이터:??", response.data.data);
+  //     const isFriendData = response.data.data.isFriend;
+  //     const statusData = response.data.data.status;
+  //     setIsFriend(isFriendData);
+  //     setStatus(statusData);
+  //     if (statusData === "WAIT") {
+  //       setStatus("대기중");
+  //     } else if (statusData === "APPROVE") {
+  //       setStatus("친구끊기");
+  //     } else {
+  //       setStatus("친구맺기");
+  //     }
+  //   } catch (error) {
+  //     if (error.response) {
+  //       console.error("서버 응답 오류:", error.response.data);
+  //     } else {
+  //       console.error("에러:", error);
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     fetchData();
