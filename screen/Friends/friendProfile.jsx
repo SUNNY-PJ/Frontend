@@ -1,7 +1,4 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { proxyUrl } from "../../constant/common";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   View,
   Image,
@@ -17,11 +14,6 @@ import FriendComment from "./friendComment";
 import apiClient from "../../api/apiClient";
 
 const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
-  // const activeTabVal = route.params?.activeTab || "scrap";
-  const route = useRoute();
-  const inputURL = `/users`;
-  const url = proxyUrl + inputURL;
-  // const [activeTab, setActiveTab] = useState(activeTabVal);
   const [comment, setComment] = useState(false);
   const [write, setWrite] = useState(true);
   const [data, setData] = useState([]);
@@ -29,10 +21,6 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   const [status, setStatus] = useState();
   const [friendId, setFriendId] = useState(0);
   const [friendName, setFriendName] = useState("");
-
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
-  };
 
   const commentClick = () => {
     setComment(true);
@@ -45,20 +33,16 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   };
 
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
-
+    const inputURL = `/users`;
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
         params: {
           userId: userId,
         },
       });
-
       console.log("데이터1111:", response.data);
       const ProfileData = response.data;
       const ProfileId = [ProfileData].map((item) => item.id);
@@ -74,12 +58,10 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   // 친구인지 아닌지 확인
   const confirmData = async () => {
     const inputURL = `/friends/${friendId}`;
-
     try {
       const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          // Authorization 헤더는 apiClient 인터셉터에서 자동으로 처리
         },
       });
 
@@ -104,40 +86,6 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
     }
   };
 
-  // const confirmData = async () => {
-  //   const inputURL = `/friends/${friendId}`;
-  //   const url = proxyUrl + inputURL;
-  //   const access_token = await AsyncStorage.getItem("access_token");
-
-  //   try {
-  //     const response = await axios.get(url, {
-  //       headers: {
-  //         "Content-Type": "application/json; charset=utf-8",
-  //         Authorization: `Bearer ${access_token}`,
-  //       },
-  //     });
-
-  //     console.log("데이터:??", response.data.data);
-  //     const isFriendData = response.data.data.isFriend;
-  //     const statusData = response.data.data.status;
-  //     setIsFriend(isFriendData);
-  //     setStatus(statusData);
-  //     if (statusData === "WAIT") {
-  //       setStatus("대기중");
-  //     } else if (statusData === "APPROVE") {
-  //       setStatus("친구끊기");
-  //     } else {
-  //       setStatus("친구맺기");
-  //     }
-  //   } catch (error) {
-  //     if (error.response) {
-  //       console.error("서버 응답 오류:", error.response.data);
-  //     } else {
-  //       console.error("에러:", error);
-  //     }
-  //   }
-  // };
-
   useEffect(() => {
     fetchData();
   }, [userId]);
@@ -151,17 +99,13 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   // 친구 신청
   const postData = async () => {
     const inputURL = `/friends/${friendId}`;
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
-      const response = await axios.post(
-        url,
+      const response = await apiClient.post(
+        inputURL,
         {},
         {
           headers: {
             "Content-Type": "application/json; charset=utf-8",
-            Authorization: `Bearer ${access_token}`,
           },
         }
       );
@@ -194,28 +138,38 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
 
   const handleFriend = () => {
     if (isFriend) {
-      console.log("친구를 끊어볼까");
       deleteFriendData();
     } else if (!isFriend) {
-      console.log("친구를 맺어볼까");
       postData();
     }
   };
 
   // 친구 끊기
   const deleteFriendData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     const inputURL = `/friends/${friendId}`;
-    const url = proxyUrl + inputURL;
-
     try {
-      const response = await axios.delete(url, {
+      const response = await apiClient.delete(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
-      console.log(response.data);
+      console.log("친구삭제>>>>", response.data);
+      if (response.status === 200) {
+        if (response.data.status === 400) {
+          Alert.alert(
+            "Error",
+            `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
+          );
+        } else if (response.data.status === 500) {
+          Alert.alert("친구 삭제", ``);
+        } else {
+          Alert.alert(
+            "친구 삭제",
+            `${friendName}를 친구 리스트에서 삭제하시겠습니까?`
+          );
+          fetchData();
+        }
+      }
     } catch (error) {
       console.error("에러:", error);
     }
