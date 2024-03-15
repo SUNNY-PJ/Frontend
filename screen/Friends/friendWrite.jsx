@@ -7,17 +7,13 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { proxyUrl } from "../../constant/common";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import { formatDate } from "../../constant/formatData/format";
+import apiClient from "../../api/apiClient";
 
 const FriendWrite = ({ userId, closeProfile }) => {
   const navigation = useNavigation();
-  const inputURL = `/users/community`;
-  const url = proxyUrl + inputURL;
   const windowHeight = Dimensions.get("window").height;
 
   const [data, setData] = useState([]);
@@ -34,23 +30,18 @@ const FriendWrite = ({ userId, closeProfile }) => {
   };
 
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-
+    const inputURL = `/users/community`;
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
         params: {
           userId: userId,
         },
       });
-
       console.log("데이터:", response.data);
-
       const myWriteData = response.data;
-      console.log(myWriteData.map((item) => item.communityId));
       setData(myWriteData);
     } catch (error) {
       console.error("에러:", error);
