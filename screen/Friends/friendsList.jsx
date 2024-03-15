@@ -5,7 +5,6 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  ScrollView,
   Alert,
 } from "react-native";
 import { proxyUrl } from "../../constant/common";
@@ -15,13 +14,10 @@ import Line from "../../components/Line";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import FriendsComponent from "./friendsComponent";
+import apiClient from "../../api/apiClient";
 
 function FriendsList() {
-  const navigation = useNavigation();
   const route = useRoute();
-  const inputURL = `/friends`;
-  const url = proxyUrl + inputURL;
-
   const [isFriendsComponentVisible1, setIsFriendsComponentVisible1] =
     useState(true);
   const [isFriendsComponentVisible2, setIsFriendsComponentVisible2] =
@@ -43,14 +39,11 @@ function FriendsList() {
   const [waitData, setWaitData] = useState([]);
 
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
-
+    const inputURL = `/friends`;
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
       const Data = response.data.data;
@@ -67,24 +60,17 @@ function FriendsList() {
 
   useEffect(() => {
     fetchData();
-    console.log("친구 목록");
   }, [route]);
 
   const PostData = async (friendId) => {
     const inputURL = `/friends/approve/${friendId}`;
-    console.log(inputURL);
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
-
     try {
-      const response = await axios.post(
-        url,
+      const response = await apiClient.post(
+        inputURL,
         {},
         {
           headers: {
             "Content-Type": "application/json; charset=utf-8",
-            Authorization: `Bearer ${access_token}`,
           },
         }
       );
@@ -186,7 +172,6 @@ function FriendsList() {
         }}
       >
         <Text style={styles.mainTitle}>친구 목록</Text>
-
         {/* 대결 중인 친구 목록 */}
         <TouchableOpacity onPress={toggleFriendsComponent1} activeOpacity={1}>
           <View style={styles.titleSection}>
