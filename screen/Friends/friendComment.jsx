@@ -13,11 +13,10 @@ import axios from "axios";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import { formatDate } from "../../constant/formatData/format";
+import apiClient from "../../api/apiClient";
 
 const FriendComment = ({ userId, closeProfile }) => {
   const navigation = useNavigation();
-  const inputURL = `/users/comment`;
-  const url = proxyUrl + inputURL;
   const windowHeight = Dimensions.get("window").height;
 
   const [data, setData] = useState([]);
@@ -34,14 +33,11 @@ const FriendComment = ({ userId, closeProfile }) => {
   };
 
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log("get 실행");
-
+    const inputURL = `/users/comment`;
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
         params: {
           userId: userId,
@@ -49,7 +45,6 @@ const FriendComment = ({ userId, closeProfile }) => {
       });
 
       console.log("데이터:", response.data);
-
       const myWriteData = response.data;
       setData(myWriteData);
     } catch (error) {
