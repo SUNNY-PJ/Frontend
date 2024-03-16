@@ -12,7 +12,6 @@ import SignUp from "./constant/SignUp";
 import Kakao from "./constant/kakao";
 import Spending from "./screen/Statistic/spending";
 import History from "./screen/Statistic/history";
-import ApiTest from "./constant/apiTest";
 import Community from "./screen/Community/community";
 import MyPage from "./screen/MyPage/myPage";
 import SettingProfile from "./screen/MyPage/settingProfile";
@@ -78,7 +77,6 @@ function MainScreen() {
         <Stack.Screen name="Note" component={Note} />
         <Stack.Screen name="Statistics" component={Statistics} />
         <Stack.Screen name="History" component={History} />
-        <Stack.Screen name="ApiTest" component={ApiTest} />
         <Stack.Screen name="Community" component={Community} />
         <Stack.Screen name="MyPage" component={MyPage} />
         <Stack.Screen name="SettingProfile" component={SettingProfile} />
