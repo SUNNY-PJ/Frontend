@@ -12,10 +12,8 @@ import {
 } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import Bar from "../../components/Bar";
-import axios from "axios";
-import { proxyUrl } from "../../constant/common";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import apiClient from "../../api/apiClient";
 
 const Statistics = ({ year, month }) => {
   const navigation = useNavigation();
@@ -30,24 +28,17 @@ const Statistics = ({ year, month }) => {
   // 전체 데이터
   const fetchData = async () => {
     const inputURL = "/consumption/spendTypeStatistics";
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
 
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
         params: {
           year: year,
           month: month,
         },
       });
-
-      console.log(data);
-
-      console.log("데이터:", response.data);
       setData(response.data.data);
     } catch (error) {
       if (error.response) {
@@ -61,14 +52,10 @@ const Statistics = ({ year, month }) => {
   // 카테고리에 따라 API 호출
   const fetchCategoryData = async (categoryParam) => {
     const inputURL = "/consumption/category";
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
         params: {
           spendType: categoryParam,
@@ -78,7 +65,6 @@ const Statistics = ({ year, month }) => {
       });
 
       const CategoryDataValue = response.data.data;
-      console.log("카테고리 데이터:", CategoryDataValue);
       setCategoryData(CategoryDataValue);
     } catch (error) {
       if (error.response) {
@@ -195,14 +181,10 @@ const Statistics = ({ year, month }) => {
   // 지출 기록 삭제
   const deleteData = async (consumptionId) => {
     const inputURL = `/consumption/${consumptionId}`;
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
-      const response = await axios.delete(url, {
+      const response = await apiClient.delete(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
 
@@ -211,7 +193,6 @@ const Statistics = ({ year, month }) => {
         fetchData();
         fetchCategoryData();
       }
-      console.log("지출 기록 삭제:::", consumptionDeleteData);
     } catch (error) {
       console.error("에러:", error);
     }
