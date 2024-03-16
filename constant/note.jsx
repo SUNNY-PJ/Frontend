@@ -10,18 +10,13 @@ import {
 } from "react-native";
 import Input from "../components/Input/input";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
-import axios from "axios";
 import Notice from "../components/Modal/notice";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import DatePicker from "../components/DatePicker/datePicker";
-import { proxyUrl } from "./common";
 import LargeBtn from "../components/Btn/largeBtn";
+import apiClient from "../api/apiClient";
 
 function Note({ navigation }) {
   const inputURL = "/consumption";
-  const cleanedURL = inputURL.replace(/[\u200B]/g, "");
-
-  const url = proxyUrl + cleanedURL;
 
   const [isOpenNoticeMsg, setIsOpenNoticeMsg] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -88,7 +83,6 @@ function Note({ navigation }) {
   }, [name, money, date]);
 
   const postData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     try {
       const bodyData = {
         date_field: date,
@@ -97,10 +91,9 @@ function Note({ navigation }) {
         category: place,
       };
 
-      const response = await axios.post(url, bodyData, {
+      const response = await apiClient.post(inputURL, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
 

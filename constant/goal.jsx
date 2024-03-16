@@ -9,16 +9,12 @@ import {
 } from "react-native";
 import Input from "../components/Input/input";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import LargeBtn from "../components/Btn/largeBtn";
-import { proxyUrl } from "./common";
 import DatePicker2 from "../components/DatePicker/datePicker2";
+import apiClient from "../api/apiClient";
 
 function Goal({ navigation }) {
   const inputURL = "/save";
-  const cleanedURL = inputURL.replace(/[\u200B]/g, "");
-  const url = proxyUrl + cleanedURL;
 
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
   const [isStartDatePickerVisible, setStartDatePickerVisibility] =
@@ -89,7 +85,6 @@ function Goal({ navigation }) {
 
   // 절약 목표 등록
   const postData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     try {
       const bodyData = {
         start_date: startDateVal,
@@ -97,14 +92,13 @@ function Goal({ navigation }) {
         cost: cost.replace(/,/g, ""),
       };
 
-      const response = await axios.post(url, bodyData, {
+      const response = await apiClient.post(inputURL, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
       if (response.status === 200) {
-        Alert.alert("절약 목표를 등록하였습니다.");
+        Alert.alert("절약 목표", "절약 목표를 등록하였습니다.");
         navigation.goBack();
         console.log(response.data.data);
       } else {
