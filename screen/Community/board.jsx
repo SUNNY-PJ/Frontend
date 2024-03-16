@@ -35,15 +35,15 @@ const Board = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          keyboardDismissMode="on-drag"
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="on-drag"
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <View style={styles.container}>
+        <View style={styles.contentContainer}>
           {data &&
             data.map((item, index) => (
               <TouchableOpacity
@@ -77,9 +77,9 @@ const Board = () => {
                 </View>
               </TouchableOpacity>
             ))}
-        </ScrollView>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     minHeight: "100%",
   },
   contentContainer: {
-    marginBottom: 40,
+    paddingBottom: 300,
   },
   section: {
     flexDirection: "row",

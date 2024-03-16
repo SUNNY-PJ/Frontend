@@ -35,15 +35,15 @@ const Tip = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          keyboardDismissMode="on-drag"
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        >
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="on-drag"
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <View style={styles.container}>
+        <View style={styles.contentContainer}>
           {data &&
             data.map((item, index) => (
               // {data.map((item) => (
@@ -76,9 +76,9 @@ const Tip = () => {
                 <Line color={"#C1C1C1"} h={2} />
               </TouchableOpacity>
             ))}
-        </ScrollView>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFBF6",
   },
   contentContainer: {
-    marginBottom: 40,
+    marginBottom: 300,
   },
   image: {
     width: 32,
