@@ -11,11 +11,10 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { proxyUrl } from "../../constant/common";
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
+import apiClient from "../../api/apiClient";
 
 const ChatRoom = () => {
   const navigation = useNavigation();
@@ -83,14 +82,11 @@ const ChatRoom = () => {
   // 대화 내용
   const fetchData = async () => {
     const inputURL = `/chat/{chatRoomId}`;
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
 
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
 

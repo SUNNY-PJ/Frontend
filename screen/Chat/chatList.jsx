@@ -9,12 +9,10 @@ import {
   Dimensions,
   Alert,
 } from "react-native";
-import { proxyUrl } from "../../constant/common";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
+import apiClient from "../../api/apiClient";
 
 const ChatList = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -35,14 +33,11 @@ const ChatList = () => {
   // 채팅방 리스트
   const fetchData = async () => {
     const inputURL = `/chat/room`;
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
 
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
 
@@ -60,14 +55,11 @@ const ChatList = () => {
   // 채팅방 삭제
   const deleteData = async (chatRoomId) => {
     const inputURL = `/chat/${chatRoomId}`;
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
 
     try {
-      const response = await axios.delete(url, {
+      const response = await apiClient.delete(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
 
