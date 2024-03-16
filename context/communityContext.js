@@ -1,7 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { proxyUrl } from "../constant/common";
+import apiClient from "../api/apiClient";
 
 const CommunityContext = createContext();
 
@@ -15,11 +13,8 @@ export const CommunityProvider = ({ children }) => {
   const [boardSort, setBoardSort] = useState("LATEST");
 
   const inputURL = "/community/board";
-  const url = proxyUrl + inputURL;
 
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
       const paramsData = {
         //   page: 1,
@@ -28,10 +23,9 @@ export const CommunityProvider = ({ children }) => {
         pageSize: 1000,
         boardType: category,
       };
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
         params: paramsData,
       });
