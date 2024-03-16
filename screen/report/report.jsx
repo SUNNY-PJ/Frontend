@@ -1,7 +1,4 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { proxyUrl } from "../../constant/common";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   View,
   Image,
@@ -10,6 +7,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import InputMax from "../../components/Input/inputMax";
 import LargeBtn from "../../components/Btn/largeBtn";
@@ -17,6 +15,7 @@ import LargeBtnDisable from "../../components/Btn/largeBtnDisable";
 import Line from "../../components/Line";
 import ReportResult from "../../components/Modal/report/reportResult";
 import ReportMsg from "../../components/Modal/report/reportMsg";
+import apiClient from "../../api/apiClient";
 
 const Report = ({ id, status }) => {
   const [reason, setReason] = useState("");
@@ -24,36 +23,31 @@ const Report = ({ id, status }) => {
   const [result, setResult] = useState(false);
   const [msg, setMsg] = useState(false);
 
-  console.log("msg:::", msg);
-
   const handleReasonChange = (text) => {
     setReason(text);
   };
 
   const postData = async () => {
     const inputURL = "/users/report";
-    const cleanedURL = inputURL.replace(/[\u200B]/g, "");
-
-    const url = proxyUrl + cleanedURL;
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
     try {
       const bodyData = {
         id: id,
         reason: reason,
         status: status,
       };
-      const response = await axios.post(url, bodyData, {
+      const response = await apiClient.post(inputURL, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
       console.log("신고 제출출");
       if (response.status === 200) {
-        alert("신고를 정상적으로 처리했습니다.");
+        Alert.alert("신고", "신고를 정상적으로 처리했습니다.");
       } else {
-        alert(`장애가 발생했습니다.\n 잠시후 다시 시도해주세요.`);
+        Alert.alert(
+          "error",
+          `장애가 발생했습니다.\n 잠시후 다시 시도해주세요.`
+        );
       }
     } catch (error) {
       if (error.response) {
