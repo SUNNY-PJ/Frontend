@@ -9,11 +9,9 @@ import {
   ScrollView,
   RefreshControl,
 } from "react-native";
-import axios from "axios";
-import { proxyUrl } from "../../constant/common";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
+import apiClient from "../../api/apiClient";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -23,7 +21,6 @@ const Alarm = () => {
   const navigation = useNavigation();
   const windowHeight = Dimensions.get("window").height;
   const [refreshing, setRefreshing] = useState(false);
-  const [data, setData] = useState([]);
   const [pastData, setPastData] = useState([]);
   const [recentData, setRecentData] = useState([]);
 
@@ -39,14 +36,10 @@ const Alarm = () => {
 
   const fetchData = async () => {
     const inputURL = "/alarm";
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
       if (response.status === 200) {
