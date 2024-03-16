@@ -20,13 +20,13 @@ import Line from "../../components/Line";
 import Modal from "react-native-modal";
 import CommentActionSheet from "../../components/BottomSheet/commentActionSheet";
 import CommentViewerActionSheet from "../../components/BottomSheet/commentViewerActionSheet";
+import apiClient from "../../api/apiClient";
 
 const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();
 
   const inputURL = `/comment/${communityId}`;
-  const url = proxyUrl + inputURL;
   const [comment, setComment] = useState("");
   const [commentId, setCommentId] = useState("");
   const [commentData, setCommentData] = useState([]);
@@ -72,21 +72,15 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
   // 댓글 조회
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
-
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
 
       const ResCommentData = response.data.data;
-      // console.log("????", ResCommentData);
       setCommentData(ResCommentData);
-      // const ChildrenCommentData = commentData.map((item) => item.children);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -94,11 +88,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
   // 댓글 등록
   const postData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
-
-    // const isReply = comment.startsWith("@");
-
     bodyData = {
       content: comment,
       // parent_id: isReply ? comment.split(" ")[0].substring(1) : null,
@@ -107,10 +96,9 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     };
 
     try {
-      const response = await axios.post(url, bodyData, {
+      const response = await apiClient.post(inputURL, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
       if (response.status === 200) {
@@ -128,14 +116,10 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   // 댓글 삭제
   const deleteData = async () => {
     const inputURL = `/comment/${commentId}`;
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
-      const response = await axios.delete(url, {
+      const response = await apiClient.delete(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
       if (response.status === 200) {
@@ -151,7 +135,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const handlePostComment = () => {
     postData();
     setComment("");
-    // console.log(comment);
   };
 
   const handleMenuClick = (id, writer, author) => {
@@ -203,7 +186,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     commentModal();
     setSlide(false);
   };
-  // console.log(slide);
 
   return (
     <Modal

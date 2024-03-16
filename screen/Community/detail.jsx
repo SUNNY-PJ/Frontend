@@ -1,26 +1,23 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { proxyUrl } from "../../constant/common";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   View,
   Image,
   Text,
   TouchableOpacity,
   StyleSheet,
-  Alert,
   ScrollView,
   Dimensions,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
-import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 import Comment from "./comment";
 import OptionModal from "../../components/Modal/community/optionModal";
 import DeleteMsg from "../../components/Modal/community/deleteMsg";
 import FriendProfile from "../Friends/friendProfile";
 import ModifyMsg from "../../components/Modal/community/modifyMsg";
+import apiClient from "../../api/apiClient";
 
 const Detail = () => {
   const navigation = useNavigation();
@@ -28,7 +25,6 @@ const Detail = () => {
   const { userId } = route.params.params;
   const { itemId } = route.params.params;
   const inputURL = `/community/${itemId}`;
-  const url = proxyUrl + inputURL;
   // 화면의 전체 높이
   const windowHeight = Dimensions.get("window").height;
   const [data, setData] = useState([]);
@@ -58,14 +54,10 @@ const Detail = () => {
   };
 
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-    console.log(access_token);
-
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
 
@@ -84,16 +76,13 @@ const Detail = () => {
 
   // 게시글 삭제
   const deleteData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
-      const response = await axios.delete(url, {
+      const response = await apiClient.delete(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
-      alert("게시글이 삭제되었습니다.");
+      Alert.alert("게시글 삭제", "게시글이 삭제되었습니다.");
     } catch (error) {
       console.error("에러:", error);
     }
@@ -101,15 +90,11 @@ const Detail = () => {
 
   // 스크랩 삭제
   const deleteScrapData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     const inputURL = `/scrap/${itemId}`;
-    const url = proxyUrl + inputURL;
-
     try {
-      const response = await axios.delete(url, {
+      const response = await apiClient.delete(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
     } catch (error) {
@@ -119,18 +104,14 @@ const Detail = () => {
 
   // 스크랩 등록
   const postScrapData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     const inputURL = `/scrap/${itemId}`;
-    const url = proxyUrl + inputURL;
-
     try {
-      const response = await axios.post(
-        url,
+      const response = await apiClient.post(
+        inputURL,
         {},
         {
           headers: {
             "Content-Type": "application/json; charset=utf-8",
-            Authorization: `Bearer ${access_token}`,
           },
         }
       );

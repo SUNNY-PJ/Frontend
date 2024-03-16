@@ -8,17 +8,13 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
-import { proxyUrl } from "../../constant/common";
 import { useNavigation } from "@react-navigation/native";
 
 const Search = () => {
   const navigation = useNavigation();
-
   const inputURL = "/community/board";
-  const url = proxyUrl + inputURL;
 
   const RECENT_SEARCHES_KEY = "recent_searches";
   const [text, setText] = useState("");
@@ -76,18 +72,15 @@ const Search = () => {
   };
 
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
       const paramsData = {
         sortType: "LATEST",
         pageSize: 20,
         search: text,
       };
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
         params: paramsData,
       });

@@ -135,7 +135,6 @@ const Post = () => {
       const response = await apiClient.post(inputURL, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${access_token}`,
         },
       });
 

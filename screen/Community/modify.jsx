@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { proxyUrl } from "../../constant/common";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import {
   View,
   Text,
   StyleSheet,
   Image,
   Pressable,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
@@ -19,13 +16,13 @@ import Input from "../../components/Input/input";
 import InputMax from "../../components/Input/inputMax";
 import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
+import apiClient from "../../api/apiClient";
 
 const Modify = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { itemId } = route.params.params;
   const inputURL = `/community/${itemId}`;
-  const url = proxyUrl + inputURL;
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -74,13 +71,10 @@ const Modify = () => {
   };
 
   const postData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
 
@@ -123,16 +117,13 @@ const Modify = () => {
         }
       });
 
-      const postResponse = await axios.put(url, formData, {
+      const postResponse = await apiClient.put(inputURL, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${access_token}`,
         },
       });
-
-      console.log("데이터:123123", postResponse.data);
       if (response.status === 200) {
-        alert("게시글을 수정하였습니다.");
+        Alert.alert("게시글 수정", "게시글을 수정하였습니다.");
         fetchData();
         navigation.navigate("Community", { screen: "Community" });
       }
@@ -142,25 +133,19 @@ const Modify = () => {
   };
 
   const handlePost = () => {
-    console.log("수정 버튼 클릭");
     postData();
   };
 
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
-
       console.log("데이터:", response.data);
       const DetailData = response.data.data;
       setData([DetailData]);
-      console.log("5555", DetailData.title);
       // photoList가 존재하는지 확인하고 images 업데이트
       if (DetailData.photoList && DetailData.photoList.length > 0) {
         const initialImages = DetailData.photoList;

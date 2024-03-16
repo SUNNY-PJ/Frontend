@@ -8,29 +8,15 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
-import { proxyUrl } from "../../constant/common";
+import apiClient from "../../api/apiClient";
 
 const SearchCommunity = ({ searchTerms }) => {
   const inputURL = "/community/board";
-  const url = proxyUrl + inputURL;
 
   const [data, setData] = useState([]);
 
-  // const putData = async () => {
-  //   navigation.navigate("", {
-  //     screen: "SearchCommunity",
-  //     params: {
-  //       searchTerms: text,
-  //     },
-  //   });
-  // };
-
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
       const paramsData = {
         //   page: 1,
@@ -40,15 +26,13 @@ const SearchCommunity = ({ searchTerms }) => {
         search: searchTerms,
         // boardType: category,
       };
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
         params: paramsData,
       });
       console.log("데이터:111", response.data.data);
-      console.log("데이터:222", paramsData);
 
       setData(response.data.data);
     } catch (error) {
