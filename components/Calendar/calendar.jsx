@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, Button, Platform } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
-import axios from "axios";
-import { proxyUrl } from "../../constant/common";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import apiClient from "../../api/apiClient";
 
 const CalendarComponent = ({ onDataFetched }) => {
   const [selected, setSelected] = useState("");
@@ -68,18 +66,13 @@ const CalendarComponent = ({ onDataFetched }) => {
 
   const fetchData = async (selectedDate) => {
     const inputURL = "/consumption/date";
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
       const params = {
         datefield: selectedDate,
       };
-
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
         params,
       });

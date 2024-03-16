@@ -9,29 +9,23 @@ import {
 } from "react-native";
 import MiddleBtn from "../../Btn/middleBtn";
 import MiddleBtnBlack from "../../Btn/middleBtnBlack";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { proxyUrl } from "../../constant/common";
+import apiClient from "../../../api/apiClient";
 
 const MatchMsg = ({ isVisible, toggleModal, friendsId }) => {
   const inputURL = `/competition/approve/${friendsId}`;
-  const url = proxyUrl + inputURL;
 
   // 대결 신청 수락
   const approveMatch = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     try {
-      const response = await axios.post(
-        url,
+      const response = await apiClient.post(
+        inputURL,
         {},
         {
           headers: {
             "Content-Type": "application/json; charset=utf-8",
-            Authorization: `Bearer ${access_token}`,
           },
         }
       );
-
       console.log(response.data);
       if (response.status === 200) {
         if (response.data.status === 400) {
@@ -56,15 +50,13 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId }) => {
 
   // 대결 신청 거절
   const refuseMatch = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     try {
-      const response = await axios.delete(
-        url,
+      const response = await apiClient.delete(
+        inputURL,
         {},
         {
           headers: {
             "Content-Type": "application/json; charset=utf-8",
-            Authorization: `Bearer ${access_token}`,
           },
         }
       );
