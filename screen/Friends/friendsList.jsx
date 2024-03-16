@@ -7,12 +7,8 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { proxyUrl } from "../../constant/common";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
 import { useRoute } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
 import FriendsComponent from "./friendsComponent";
 import apiClient from "../../api/apiClient";
 
@@ -129,23 +125,22 @@ function FriendsList() {
   // 친구 삭제
   const deleteData = async (friendsId) => {
     const inputURL = `/friends/${friendsId}`;
-    const url = proxyUrl + inputURL;
-    const access_token = await AsyncStorage.getItem("access_token");
-
     try {
-      const response = await axios.delete(url, {
+      const response = await apiClient.delete(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
 
       console.log("친구 삭제함", response.data);
       if (response.status === 200) {
         if (response.data.status === 401) {
-          alert("에러가 발생했습니다. 관리자에게 문의 바랍니다.");
+          Alert.alert(
+            "error",
+            "에러가 발생했습니다. 관리자에게 문의 바랍니다."
+          );
         } else {
-          alert("친구를 삭제했습니다");
+          Alert.alert("친구 삭제", "친구를 삭제했습니다");
           fetchData();
         }
       } else if (response.status === 500) {
