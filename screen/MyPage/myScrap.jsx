@@ -8,9 +8,6 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import { proxyUrl } from "../../constant/common";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import { formatDate } from "../../constant/formatData/format";
@@ -49,22 +46,17 @@ const MyScrap = () => {
 
   // 스크랩 등록
   const postScrapData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     const inputURL = `/scrap/${itemId}`;
-    const url = proxyUrl + inputURL;
-
     try {
-      const response = await axios.post(
-        url,
+      const response = await apiClient.post(
+        inputURL,
         {},
         {
           headers: {
             "Content-Type": "application/json; charset=utf-8",
-            Authorization: `Bearer ${access_token}`,
           },
         }
       );
-      console.log(response.data);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -80,7 +72,6 @@ const MyScrap = () => {
         },
       });
       const myScrapData = response.data;
-      console.log(myScrapData);
       setData(myScrapData);
     } catch (error) {
       console.error("에러:", error);
