@@ -7,16 +7,12 @@ import {
   TouchableOpacity,
   Animated,
 } from "react-native";
-import * as Notifications from "expo-notifications";
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { proxyUrl } from "../constant/common";
 import TopTooltip from "./Modal/topTooltip";
+import apiClient from "../api/apiClient";
 
 const Top = ({ navigation }) => {
   const inputURL = "/save";
-  const cleanedURL = inputURL.replace(/[\u200B]/g, "");
-  const url = proxyUrl + cleanedURL;
   const [day, setDay] = useState(0);
   const [progress, setProgress] = useState(0);
   const [cost, setCost] = useState(0);
@@ -26,12 +22,10 @@ const Top = ({ navigation }) => {
 
   // 절약 목표 조회
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
       if (response.status === 200) {
