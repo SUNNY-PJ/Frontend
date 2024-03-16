@@ -9,8 +9,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { proxyUrl } from "../../constant/common";
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { useCommunity } from "../../context/communityContext";
@@ -20,19 +18,16 @@ import InputMax from "../../components/Input/inputMax";
 import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
-import COMMUNITY_CATEGORY from "../../data/communityData";
+import apiClient from "../../api/apiClient";
 
 const Post = () => {
   const { fetchData } = useCommunity();
   const navigation = useNavigation();
   const inputURL = "/community";
-  // const cleanedURL = inputURL.replace(/[\u200B]/g, "");
   const COMMUNITY_CATEGORY = [
     { title: "절약 꿀팁", data: "절약 꿀팁" },
     { title: "자유 게시판", data: "자유 게시판" },
   ];
-
-  const url = proxyUrl + inputURL;
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -109,27 +104,12 @@ const Post = () => {
 
   // post api
   const formData = new FormData();
-  // formData.append("title", title);
-  // formData.append("contents", content);
-  // formData.append("type", "꿀팁");
-  // formData.append(
-  //   (communityRequest = {
-  //     title: title,
-  //     contents: content,
-  //     type: "꿀팁",
-  //   })
-  // );
   formData.append("communityRequest", JSON.stringify(communityRequest));
 
   images.forEach((image, index) => {
     const fileName = image.split("/").pop();
     const match = /\.(\w+)$/.exec(fileName ?? "");
     const type = match ? `image/${match[1]}` : `image`;
-    // formData.append(`image${index}`, {
-    //   uri: image,
-    //   name: fileName,
-    //   type: type,
-    // });
     formData.append("files", {
       uri: image,
       name: fileName,
@@ -152,12 +132,7 @@ const Post = () => {
     }
 
     try {
-      // const bodyData = {
-      //   title: title,
-      //   contents: content,
-      //   type: "꿀팁",
-      // };
-      const response = await axios.post(url, formData, {
+      const response = await apiClient.post(inputURL, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${access_token}`,
@@ -172,7 +147,10 @@ const Post = () => {
       }
     } catch (error) {
       if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 오류:", error.response.status);
+        if (error.response.status === 400) {
+          alert("카테고리를 선택해주세요.");
+        }
       } else {
         console.error("에러:", error);
       }
