@@ -16,13 +16,11 @@ import { useNavigation } from "@react-navigation/native";
 import { proxyUrl } from "../../constant/common";
 import { useRoute } from "@react-navigation/native";
 import DatePicker2 from "../../components/DatePicker/datePicker2";
+import apiClient from "../../api/apiClient";
 
 function SendMatch() {
   const navigation = useNavigation();
-
   const inputURL = "/competition";
-  const cleanedURL = inputURL.replace(/[\u200B]/g, "");
-  const url = proxyUrl + cleanedURL;
   const route = useRoute();
   const { friendsId } = route.params;
   const { name } = route.params;
@@ -107,7 +105,6 @@ function SendMatch() {
   }, [message, money, startDate, endDate]);
 
   const postData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     try {
       const bodyData = {
         compensation: "없음",
@@ -117,13 +114,9 @@ function SendMatch() {
         message: message,
         price: money.replace(/,/g, ""),
       };
-
-      console.log(bodyData);
-
-      const response = await axios.post(url, bodyData, {
+      const response = await apiClient.post(inputURL, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
       console.log(response.data.data);

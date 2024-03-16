@@ -1,33 +1,21 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { proxyUrl } from "../../constant/common";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 import Progress from "../../components/progress/progress";
+import apiClient from "../../api/apiClient";
 
 const BattleStatus = ({ friendId }) => {
   const navigation = useNavigation();
   const inputURL = `competition/status${friendId}`;
-  const url = proxyUrl + inputURL;
 
   const [data, setData] = useState({});
 
   const fetchData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     try {
-      const response = await axios.get(url, {
+      const response = await apiClient.get(inputURL, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${access_token}`,
         },
       });
       const StatusData = response.data;
