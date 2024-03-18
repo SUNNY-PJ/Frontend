@@ -15,3 +15,5 @@ eas login
 
 디바이스 등록
 https://developer.apple.com/account/resources/devices/list
+
+npx expo install --fix
