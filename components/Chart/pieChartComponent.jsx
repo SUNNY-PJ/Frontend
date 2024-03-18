@@ -5,28 +5,28 @@ import { View } from "react-native";
 const data = [
   {
     name: "의류",
-    population: 2800000,
+    population: 28,
     color: "#007560",
     legendFontColor: "#7F7F7F",
     legendFontSize: 15,
   },
   {
     name: "기타",
-    population: 527612,
+    population: 52,
     color: "#6adca3",
     legendFontColor: "#7F7F7F",
     legendFontSize: 15,
   },
   {
     name: "주거",
-    population: 8538000,
+    population: 85,
     color: "#b9f4d6",
     legendFontColor: "#7F7F7F",
     legendFontSize: 15,
   },
   {
     name: "식생활",
-    population: 11920000,
+    population: 11,
     color: "#e9fbf2",
     legendFontColor: "#7F7F7F",
     legendFontSize: 15,
