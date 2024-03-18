@@ -39,6 +39,7 @@ import SendMatch from "./screen/Battle/sendMatch";
 import BattleStatus from "./screen/Battle/battleStatus";
 import BattleStatusDisable from "./screen/Battle/battleStatusDisable";
 import BottomRe from "./components/BottomRe";
+import TestScreen from "./test/testScreen";
 // import ChatRoom from "./screen/Chat/chatRoom";
 
 const Stack = createStackNavigator();
@@ -111,6 +112,7 @@ function MainScreen() {
           name="BattleStatusDisable"
           component={BattleStatusDisable}
         />
+        <Stack.Screen name="TestScreen" component={TestScreen} />
         {/* <Stack.Screen name="Winner" component={Winner} /> */}
       </Stack.Navigator>
       {/* <Bottom /> */}
