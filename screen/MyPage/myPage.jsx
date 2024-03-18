@@ -197,8 +197,9 @@ const MyPage = () => {
   };
 
   const handleTestClick = () => {
+    navigation.navigate("MainScreen", { screen: "TestScreen" });
     // navigation.navigate("MainScreen", { screen: "BattleStatus" });
-    navigation.navigate("KakaoScreen", { screen: "AppleLogin" });
+    // navigation.navigate("KakaoScreen", { screen: "AppleLogin" });
   };
 
   return (
