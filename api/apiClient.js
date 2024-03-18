@@ -7,7 +7,7 @@ const apiClient = axios.create({
 });
 
 const tokenFetchData = async () => {
-  const inputURL = `/auth/reissue`;
+  const inputURL = `/apple/auth/reissue`;
   const refresh_token = await AsyncStorage.getItem("refresh_token");
 
   try {
