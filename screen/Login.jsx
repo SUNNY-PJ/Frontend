@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, Image, TouchableOpacity } from "react-native";
+import AppleLogin from "../test/apple/login";
 
 const Login = () => {
   const navigation = useNavigation();
 
-  const handleKakaoLogin = () => {
-    navigation.navigate("KakaoScreen", { screen: "AppleLogin" });
-    // navigation.navigate("Kakao");
-  };
+  // const handleKakaoLogin = () => {
+  //   navigation.navigate("KakaoScreen", { screen: "AppleLogin" });
+  //   // navigation.navigate("Kakao");
+  // };
 
   return (
     <View
@@ -40,7 +41,7 @@ const Login = () => {
         간편하게 로그인하고 {"\n"}
         써니의 서비스를 이용해보세요
       </Text>
-      <TouchableOpacity onPress={handleKakaoLogin} activeOpacity={0.6}>
+      {/* <TouchableOpacity onPress={handleKakaoLogin} activeOpacity={0.6}>
         <Image
           // source={require("../assets/kakao_login_medium_wide.png")}
           source={require("../assets/kakao_login_large.png")}
@@ -51,7 +52,8 @@ const Login = () => {
             alignSelf: "center",
           }}
         />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+      <AppleLogin />
     </View>
   );
 };
