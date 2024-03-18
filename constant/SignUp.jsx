@@ -29,7 +29,7 @@ const SignUp = () => {
   }, [isValidName]);
 
   const postData = async () => {
-    const inputURL = "/auth/nickname";
+    const inputURL = "/apple/auth/nickname";
     try {
       const params = {
         name: name,

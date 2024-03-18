@@ -150,7 +150,7 @@ const SettingProfile = () => {
   };
 
   const postNicknameData = async () => {
-    const inputURL = "/auth/nickname";
+    const inputURL = "/apple/auth/nickname";
     try {
       const params = {
         name: name,
