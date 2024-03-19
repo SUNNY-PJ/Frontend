@@ -14,6 +14,8 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 import Bar from "../../components/Bar";
 import { useNavigation } from "@react-navigation/native";
 import apiClient from "../../api/apiClient";
+import Line from "../../components/Line";
+import DonutChart from "../../components/Chart/donutChart";
 
 const Statistics = ({ year, month }) => {
   const navigation = useNavigation();
@@ -142,6 +144,7 @@ const Statistics = ({ year, month }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleCategoryClick = (category) => {
+    console.log("Selected category:", category);
     setSelectedCategory(category);
     const categoryParam = categoryParams[category];
     if (categoryParam) {
@@ -198,9 +201,40 @@ const Statistics = ({ year, month }) => {
     }
   };
 
+  const donutData = [
+    {
+      value: 30,
+      color: "#007560",
+      url: require("../../assets/clothes_chart.png"),
+      title: "의류",
+      category: "CLOTHING",
+    },
+    {
+      value: 20,
+      color: "#6adca3",
+      url: require("../../assets/food_chart.png"),
+      title: "식생활",
+      category: "FOOD",
+    },
+    {
+      value: 12,
+      color: "#b9f4d6",
+      url: require("../../assets/home_chart.png"),
+      title: "주거",
+      category: "SHELTER",
+    },
+    {
+      value: 38,
+      color: "#e9fbf2",
+      url: require("../../assets/ect_chart.png"),
+      title: "기타",
+      category: "OTHERS",
+    },
+  ];
+
   return (
     <View style={styles.container}>
-      <View style={styles.contentContainer}>
+      {/* <View style={styles.contentContainer}>
         {Array.isArray(data) &&
           data.map((item, index) => (
             // {data.map((item, index) => (
@@ -231,7 +265,11 @@ const Statistics = ({ year, month }) => {
               <View style={styles.bar} />
             </TouchableOpacity>
           ))}
+      </View> */}
+      <View style={{ marginTop: 24, marginBottom: 27 }}>
+        <DonutChart data={donutData} onCategorySelect={handleCategoryClick} />
       </View>
+      <Line h={4} color={"#C1C1C1"} />
       <View style={styles.bottomSection}>
         <ScrollView
           style={{ height: windowHeight - 500 - 250, flex: 1 }}
