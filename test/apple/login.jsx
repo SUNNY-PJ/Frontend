@@ -18,6 +18,7 @@ const AppleLogin = () => {
       const idTokenVal = credential.identityToken;
       // console.log("인증 코드:", credential.identityToken);
       if (credential.authorizationCode) {
+        AsyncStorage.setItem("authorizationCode", credential.authorizationCode);
         // 서버로 인증 코드 전송
         fetchData(idTokenVal);
       }
@@ -45,7 +46,6 @@ const AppleLogin = () => {
 
   const fetchData = async (idToken) => {
     const apple_url = `http://43.201.176.22:8080/apple/auth/callback`;
-    console.log("apple 로그인 실행");
     try {
       const response = await axios.get(apple_url, {
         headers: {
@@ -53,13 +53,12 @@ const AppleLogin = () => {
         },
         params: { code: idToken },
       });
-      console.log(response.data);
-      // const access_token = response.headers.authorization;
+      console.log("apple 로그인 실행", response.data);
       const access_token = response.data.data.accessToken;
       const refresh_token = response.data.data.refreshToken;
       await AsyncStorage.setItem("access_token", access_token);
       await AsyncStorage.setItem("refresh_token", refresh_token);
-      console.log("저장함::", access_token);
+
       // postData();
       navigation.replace("SignUpScreen", { screen: "SignUp" });
     } catch (error) {
