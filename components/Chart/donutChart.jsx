@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 
-const DonutChart = ({ data }) => {
+const DonutChart = ({ data, onCategorySelect }) => {
   // 도넛 차트의 중심 좌표 및 반지름 설정
   const centerX = 110; // 중앙 X 좌표를 수정합니다.
   const centerY = 110; // 중앙 Y 좌표를 수정합니다.
@@ -69,7 +69,7 @@ const DonutChart = ({ data }) => {
               fill={item.color}
               stroke="black"
               strokeWidth="1.5"
-              onPress={() => handlePress(item)}
+              onPress={() => onCategorySelect(item.category)}
             />,
             ,
           ];
@@ -81,7 +81,7 @@ const DonutChart = ({ data }) => {
           fill="white"
           stroke="black"
           strokeWidth="1.5"
-          onPress={() => handlePress({ value: "center" })}
+          onPress={() => onCategorySelect("center")}
         />
       </Svg>
       <View style={{ flexDirection: "row", gap: 24 }}>
