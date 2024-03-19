@@ -2,27 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 
-const DonutChart = () => {
-  // 데이터 설정 (값과 색상)
-  const data = [
-    {
-      value: 30,
-      color: "#007560",
-      url: require("../../assets/clothes_chart.png"),
-    },
-    {
-      value: 20,
-      color: "#6adca3",
-      url: require("../../assets/food_chart.png"),
-    },
-    {
-      value: 12,
-      color: "#b9f4d6",
-      url: require("../../assets/home_chart.png"),
-    },
-    { value: 38, color: "#e9fbf2", url: require("../../assets/ect_chart.png") },
-  ];
-
+const DonutChart = ({ data }) => {
   // 도넛 차트의 중심 좌표 및 반지름 설정
   const centerX = 110; // 중앙 X 좌표를 수정합니다.
   const centerY = 110; // 중앙 Y 좌표를 수정합니다.
@@ -39,6 +19,8 @@ const DonutChart = () => {
   const handlePress = (item) => {
     console.log("Clicked data:", item);
   };
+
+  const handleCategoryClick = () => {};
 
   return (
     <View style={styles.container}>
@@ -102,19 +84,21 @@ const DonutChart = () => {
           onPress={() => handlePress({ value: "center" })}
         />
       </Svg>
-      <View style={{ flexDirection: "row", gap: 20 }}>
+      <View style={{ flexDirection: "row", gap: 24 }}>
         {data.map((item) => (
-          <View style={{ gap: 3, marginTop: 10 }}>
-            <Image source={item.url} style={styles.image} />
-            <Text
-              style={{
-                fontFamily: "SUITE_Bold",
-                fontSize: 16,
-                color: "#1F1F1F",
-              }}
+          <View
+            style={{
+              gap: 3,
+              marginTop: 10,
+            }}
+          >
+            <View
+              style={[styles.imageContainer, { backgroundColor: item.color }]}
             >
-              {item.value}%
-            </Text>
+              <Image source={item.url} style={styles.image} />
+            </View>
+            <Text style={[styles.text, { fontSize: 12 }]}>{item.title}</Text>
+            <Text style={[styles.text, { fontSize: 16 }]}>{item.value}%</Text>
           </View>
         ))}
       </View>
@@ -127,9 +111,28 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  imageContainer: {
+    width: 36,
+    height: 36,
+    justifyContent: "center",
+    alignItems: "center",
+    // backgroundColor: "#5C5C5C",
+    paddingTop: 7,
+    paddingBottom: 7,
+    paddingRight: 5,
+    paddingLeft: 5,
+    borderRadius: 50,
+    borderWidth: 1.5,
+  },
   image: {
-    width: 32,
-    height: 32,
+    resizeMode: "contain",
+    width: 20,
+    height: 20,
+  },
+  text: {
+    fontFamily: "SUITE_Bold",
+    color: "#1F1F1F",
+    alignSelf: "center",
   },
 });
 
