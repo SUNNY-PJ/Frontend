@@ -145,16 +145,20 @@ const MyPage = () => {
 
   // 회원 탈퇴
   const leaveData = async () => {
-    const inputURL = "/auth/leave";
+    const secession_url = "http://43.201.176.22:8080/apple/auth/leave";
+    const authorizationCode = await AsyncStorage.getItem("authorizationCode");
     try {
-      const response = await apiClient.get(inputURL, {
+      const response = await apiClient.get(secession_url, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
+        params: { code: authorizationCode },
       });
       console.log("데이터:", response.data);
-      alert("탈퇴 되었습니다.");
-      navigation.navigate("KakaoScreen", { screen: "Login" });
+      if (response.data === 200) {
+        Alert.alert("회원 탈퇴", "탈퇴 되었습니다.");
+        navigation.navigate("KakaoScreen", { screen: "Login" });
+      }
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
