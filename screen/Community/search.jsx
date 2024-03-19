@@ -11,6 +11,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
+import apiClient from "../../api/apiClient";
 
 const Search = () => {
   const navigation = useNavigation();
@@ -85,15 +86,16 @@ const Search = () => {
         params: paramsData,
       });
 
-      // Check if data exists and is an array
+      console.log(response.data);
+
       if (response.data && Array.isArray(response.data.data)) {
         setData(response.data.data);
       } else {
-        setData([]); // Set data to an empty array if response is not as expected
+        setData([]);
       }
     } catch (error) {
       console.error("Search error:", error);
-      setData([]); // Reset data in case of error
+      setData([]);
     }
   };
 
