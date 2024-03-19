@@ -116,32 +116,38 @@ const MyPage = () => {
 
   // 로그아웃
   const logoutData = async () => {
-    // const lououtUrl = "http://43.201.176.22:8080/mypage/auth/kakao/logout";
-    const inputURL = "/auth/kakao/logout";
-    try {
-      // const params = {
-      //   client_id: "7ff971db2010c97a3e191dd319ec45cd",
-      //   logout_redirect_uri: lououtUrl,
-      // };
-      const response = await apiClient.get(inputURL, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      });
-      console.log("데이터:", response.headers);
-      alert("로그아웃 되었습니다.");
-
-      navigation.navigate("KakaoScreen", { screen: "Login" });
-    } catch (error) {
-      if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
-        console.error("서버 응답 메세지:", error.message);
-        alert(error.message);
-      } else {
-        console.error("에러:", error);
-      }
-    }
+    await AsyncStorage.removeItem("access_token");
+    await AsyncStorage.removeItem("refresh_token");
+    navigation.replace("KakaoScreen", { screen: "Login" });
   };
+
+  // const logoutData = async () => {
+  //   const logout_url = "http://43.201.176.22:8080/apple/auth/callback";
+  //   const idToken = await AsyncStorage.getItem("idToken");
+
+  //   try {
+  //     const response = await apiClient.get(logout_url, {
+  //       headers: {
+  //         "Content-Type": "application/json; charset=utf-8",
+  //       },
+  //       params: { code: idToken },
+  //     });
+
+  //     if (response.status === 200) {
+  //       Alert.alert("로그아웃 되었습니다.");
+  //     }
+
+  //     navigation.navigate("KakaoScreen", { screen: "Login" });
+  //   } catch (error) {
+  //     if (error.response) {
+  //       console.error("서버 응답 오류:", error.response.data);
+  //       console.error("서버 응답 메세지:", error.message);
+  //       alert(error.message);
+  //     } else {
+  //       console.error("에러:", error);
+  //     }
+  //   }
+  // };
 
   // 회원 탈퇴
   const leaveData = async () => {
