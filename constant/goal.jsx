@@ -113,6 +113,38 @@ function Goal({ navigation }) {
     postData();
   };
 
+  // 절약 목표 세부 조회
+  const fetchData = async () => {
+    const inputURL = "/save/detail";
+    try {
+      const response = await apiClient.get(inputURL, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      });
+
+      if (response.status === 200) {
+        const Data = response.data.data[0];
+        console.log("절약 목표 세부 조회", Data);
+        // expire 필드가 false일 때만 상태 업데이트
+        if (!Data.expire) {
+          const formattedCost = Data.cost.toLocaleString("ko-KR");
+          setCost(formattedCost);
+          setStartDate(Data.startDate);
+          setEndDate(Data.endDate);
+        }
+      } else {
+        Alert.alert("error", "서버에 장애가 발생하였습니다.");
+      }
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <View style={styles.container}>
       <ScrollView>
