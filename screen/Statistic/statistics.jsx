@@ -20,6 +20,7 @@ const Statistics = ({ year, month }) => {
   const windowHeight = Dimensions.get("window").height;
 
   const [data, setData] = useState([]);
+  const [noData, setNoData] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
   const formatNumberWithCommas = (number) => {
     return new Intl.NumberFormat().format(number);
@@ -62,7 +63,7 @@ const Statistics = ({ year, month }) => {
     const allValuesAreZero = data.every((item) => item.percentage === 0);
     const noDataColor = ["#5C5C5C", "#C1C1C1", "#E8E9E8", "#F1F1F1"];
     const Color = ["#007560", "#6adca3", "#b9f4d6", "#e9fbf2"];
-
+    setNoData(allValuesAreZero);
     // 색상 배열
     const colors = allValuesAreZero ? noDataColor : Color;
 
@@ -215,7 +216,11 @@ const Statistics = ({ year, month }) => {
   return (
     <View style={styles.container}>
       <View style={{ marginTop: 24, marginBottom: 27 }}>
-        <DonutChart data={data} onCategorySelect={handleCategoryClick} />
+        <DonutChart
+          data={data}
+          noData={noData}
+          onCategorySelect={handleCategoryClick}
+        />
       </View>
       <Line h={4} color={"#C1C1C1"} />
       <View style={styles.bottomSection}>

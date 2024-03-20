@@ -1,8 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 
-const DonutChart = ({ data, onCategorySelect }) => {
+const DonutChart = ({ data, noData, onCategorySelect }) => {
+  const windowWidth = Dimensions.get("window").width;
+
   // 도넛 차트의 중심 좌표 및 반지름 설정
   const centerX = 110; // 중앙 X 좌표를 수정
   const centerY = 110; // 중앙 Y 좌표를 수정
@@ -98,6 +100,15 @@ const DonutChart = ({ data, onCategorySelect }) => {
           strokeWidth="1.5"
           onPress={() => onCategorySelect("center")}
         />
+        {/* 중앙 텍스트 추가 */}
+        {noData && (
+          <Image
+            source={require("../../assets/donutText.png")}
+            x={centerX}
+            y={centerY}
+            style={{ top: 90, right: -18, width: 184, height: 36 }}
+          />
+        )}
       </Svg>
       <View style={{ flexDirection: "row", gap: 24 }}>
         {data.map((item) => (
@@ -156,34 +167,3 @@ const styles = StyleSheet.create({
 });
 
 export default DonutChart;
-
-// const donutData = [
-//   {
-//     value: 29,
-//     color: "#007560",
-//     url: require("../../assets/clothes_chart.png"),
-//     title: "의류",
-//     category: "CLOTHING",
-//   },
-//   {
-//     value: 20,
-//     color: "#6adca3",
-//     url: require("../../assets/food_chart.png"),
-//     title: "식생활",
-//     category: "FOOD",
-//   },
-//   {
-//     value: 12,
-//     color: "#b9f4d6",
-//     url: require("../../assets/home_chart.png"),
-//     title: "주거",
-//     category: "SHELTER",
-//   },
-//   {
-//     value: 38,
-//     color: "#e9fbf2",
-//     url: require("../../assets/ect_chart.png"),
-//     title: "기타",
-//     category: "OTHERS",
-//   },
-// ];
