@@ -211,37 +211,6 @@ const Statistics = ({ year, month }) => {
     }
   };
 
-  const donutData = [
-    {
-      value: 29,
-      color: "#007560",
-      url: require("../../assets/clothes_chart.png"),
-      title: "의류",
-      category: "CLOTHING",
-    },
-    {
-      value: 20,
-      color: "#6adca3",
-      url: require("../../assets/food_chart.png"),
-      title: "식생활",
-      category: "FOOD",
-    },
-    {
-      value: 12,
-      color: "#b9f4d6",
-      url: require("../../assets/home_chart.png"),
-      title: "주거",
-      category: "SHELTER",
-    },
-    {
-      value: 38,
-      color: "#e9fbf2",
-      url: require("../../assets/ect_chart.png"),
-      title: "기타",
-      category: "OTHERS",
-    },
-  ];
-
   return (
     <View style={styles.container}>
       <View style={{ marginTop: 24, marginBottom: 27 }}>
