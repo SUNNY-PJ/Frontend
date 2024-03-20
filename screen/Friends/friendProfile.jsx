@@ -21,6 +21,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   const [status, setStatus] = useState();
   const [friendId, setFriendId] = useState(0);
   const [friendName, setFriendName] = useState("");
+  const [isMine, setIsMine] = useState(false);
 
   const commentClick = () => {
     setComment(true);
@@ -43,12 +44,14 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
           userId: userId,
         },
       });
-      // console.log("데이터1111:", response.data);
+      console.log("데이터1111:", response.data);
       const ProfileData = response.data;
       const ProfileId = [ProfileData].map((item) => item.id);
       const ProfileName = [ProfileData].map((item) => item.name);
+      const ProfileOwner = [ProfileData].map((item) => item.owner);
       setFriendId(ProfileId);
       setFriendName(ProfileName);
+      setIsMine(ProfileOwner);
       setData([ProfileData]);
     } catch (error) {
       console.error("에러:", error);
@@ -216,18 +219,22 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
                   대화하기
                 </Text>
               </TouchableOpacity> */}
-              <TouchableOpacity
-                style={[
-                  styles.button,
-                  {
-                    backgroundColor:
-                      status === "대기중" ? "#F1F1F1" : "#FFC891",
-                  },
-                ]}
-                onPress={handleFriend}
-              >
-                <Text style={styles.btnText}>{status}</Text>
-              </TouchableOpacity>
+              {item.owner ? (
+                <View style={{ height: 12 }} />
+              ) : (
+                <TouchableOpacity
+                  style={[
+                    styles.button,
+                    {
+                      backgroundColor:
+                        status === "대기중" ? "#F1F1F1" : "#FFC891",
+                    },
+                  ]}
+                  onPress={handleFriend}
+                >
+                  <Text style={styles.btnText}>{status}</Text>
+                </TouchableOpacity>
+              )}
             </View>
             <View
               style={{
