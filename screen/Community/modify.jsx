@@ -19,6 +19,12 @@ import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 import apiClient from "../../api/apiClient";
 import { useCommunity } from "../../context/communityContext";
+import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
+
+const COMMUNITY_CATEGORY = [
+  { title: "절약 꿀팁", data: "절약 꿀팁" },
+  { title: "자유 게시판", data: "자유 게시판" },
+];
 
 const Modify = () => {
   const navigation = useNavigation();
@@ -118,7 +124,7 @@ const Modify = () => {
       const communityRequest = {
         title: modifiedData.title,
         contents: modifiedData.contents,
-        type: "절약 꿀팁",
+        type: category,
       };
 
       // 유효성 검사
@@ -181,6 +187,7 @@ const Modify = () => {
       const DetailData = response.data.data;
       setTitle(DetailData.title);
       setContent(DetailData.contents);
+      setSelectedCategory(DetailData.type);
       setData([DetailData]);
       // photoList가 존재하는지 확인하고 images 업데이트
       if (DetailData.photoList && DetailData.photoList.length > 0) {
