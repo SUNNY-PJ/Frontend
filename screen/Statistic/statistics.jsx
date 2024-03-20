@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableOpacity,
   Animated,
   ScrollView,
@@ -11,7 +10,6 @@ import {
   Alert,
 } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
-import Bar from "../../components/Bar";
 import { useNavigation } from "@react-navigation/native";
 import apiClient from "../../api/apiClient";
 import Line from "../../components/Line";
@@ -27,10 +25,16 @@ const Statistics = ({ year, month }) => {
     return new Intl.NumberFormat().format(number);
   };
 
+  const categoryImages = {
+    의류: require("../../assets/clothes_chart.png"),
+    식생활: require("../../assets/food_chart.png"),
+    주거: require("../../assets/home_chart.png"),
+    기타: require("../../assets/ect_chart.png"),
+  };
+
   // 전체 데이터
   const fetchData = async () => {
     const inputURL = "/consumption/spendTypeStatistics";
-
     try {
       const response = await apiClient.get(inputURL, {
         headers: {
@@ -41,7 +45,10 @@ const Statistics = ({ year, month }) => {
           month: month,
         },
       });
-      setData(response.data.data);
+      // 응답 데이터를 기반으로 donutData 생성
+      const updatedDonutData = createDonutData(response.data.data);
+      setData(updatedDonutData);
+      console.log(updatedDonutData);
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
@@ -49,6 +56,29 @@ const Statistics = ({ year, month }) => {
         console.error("에러:", error);
       }
     }
+  };
+
+  const createDonutData = (data) => {
+    const allValuesAreZero = data.every((item) => item.percentage === 0);
+
+    // 색상 배열
+    const colors = allValuesAreZero
+      ? ["#FFFBF6"]
+      : ["#007560", "#6adca3", "#b9f4d6", "#e9fbf2"];
+
+    // 데이터를 percentage에 따라 내림차순 정렬
+    const sortedData = data.sort((a, b) => b.percentage - a.percentage);
+
+    // 정렬된 데이터에 색상과 필요한 정보 매핑
+    return sortedData.map((item, index) => ({
+      value: item.percentage,
+      title: item.category,
+      color: colors[index % colors.length],
+      category: item.category,
+      url:
+        categoryImages[item.category.toUpperCase()] ||
+        require("../../assets/ect_chart.png"), // 카테고리에 맞는 이미지 경로 할당
+    }));
   };
 
   // 카테고리에 따라 API 호출
@@ -115,25 +145,6 @@ const Statistics = ({ year, month }) => {
     };
   }, [data]);
 
-  const imageData = [
-    {
-      category: "식생활",
-      image: require("../../assets/food.png"),
-    },
-    {
-      category: "주거",
-      image: require("../../assets/home.png"),
-    },
-    {
-      category: "기타",
-      image: require("../../assets/etc.png"),
-    },
-    {
-      category: "의류",
-      image: require("../../assets/shirt.png"),
-    },
-  ];
-
   const categoryParams = {
     의류: "CLOTHING",
     식생활: "FOOD",
@@ -169,7 +180,6 @@ const Statistics = ({ year, month }) => {
       [
         {
           text: "취소",
-          // onPress: () => console.log("수정을 취소했습니다."),
           style: "cancel",
         },
         {
@@ -203,7 +213,7 @@ const Statistics = ({ year, month }) => {
 
   const donutData = [
     {
-      value: 30,
+      value: 29,
       color: "#007560",
       url: require("../../assets/clothes_chart.png"),
       title: "의류",
@@ -234,48 +244,12 @@ const Statistics = ({ year, month }) => {
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.contentContainer}>
-        {Array.isArray(data) &&
-          data.map((item, index) => (
-            // {data.map((item, index) => (
-            <TouchableOpacity
-              activeOpacity={1}
-              onPress={() => handleCategoryClick(item.category)}
-              key={index}
-              style={[
-                selectedCategory === item.category
-                  ? styles.selectedCategory
-                  : null,
-              ]}
-            >
-              <View style={styles.contentSection}>
-                <View style={styles.section}>
-                  <Image
-                    source={
-                      imageData.find(
-                        (imageItem) => imageItem.category === item.category
-                      )?.image || require("../../assets/shirt.png")
-                    }
-                    style={styles.image}
-                  />
-                  <Text style={styles.text}>{item.category}</Text>
-                </View>
-                <Bar text={item.totalMoney} progress={item.percentage} />
-              </View>
-              <View style={styles.bar} />
-            </TouchableOpacity>
-          ))}
-      </View> */}
       <View style={{ marginTop: 24, marginBottom: 27 }}>
-        <DonutChart data={donutData} onCategorySelect={handleCategoryClick} />
+        <DonutChart data={data} onCategorySelect={handleCategoryClick} />
       </View>
       <Line h={4} color={"#C1C1C1"} />
       <View style={styles.bottomSection}>
-        <ScrollView
-          style={{ height: windowHeight - 500 - 250, flex: 1 }}
-          // style={{ height: 50, flex: 1 }}
-          // contentContainerStyle={{ paddingBottom: 20 }}
-        >
+        <ScrollView style={{ height: windowHeight - 500 - 250, flex: 1 }}>
           {Array.isArray(categoryData) &&
             categoryData.map((item, index) => (
               <Swipeable
