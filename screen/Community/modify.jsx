@@ -17,13 +17,14 @@ import InputMax from "../../components/Input/inputMax";
 import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 import apiClient from "../../api/apiClient";
+import { useCommunity } from "../../context/communityContext";
 
 const Modify = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { itemId } = route.params.params;
   const inputURL = `/community/${itemId}`;
-
+  const { fetchData } = useCommunity();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [data, setData] = useState([]);
@@ -78,25 +79,38 @@ const Modify = () => {
         },
       });
 
-      const originalData = response.data.data;
+      const modifiedData = {};
 
-      const modifiedTitle = title !== "" ? title : originalData.title;
-      const modifiedContents = content !== "" ? content : originalData.contents;
+      // 제목이 변경되었다면 수정된 제목을 추가
+      if (title && title !== data.title) {
+        modifiedData.title = title;
+      }
+
+      // 내용이 변경되었다면 수정된 내용을 추가
+      if (content && content !== data.contents) {
+        modifiedData.contents = content;
+      }
+
+      // 변경된 데이터가 없으면 early return
+      if (Object.keys(modifiedData).length === 0) {
+        Alert.alert("변경사항 없음", "변경된 내용이 없습니다.");
+        return;
+      }
 
       const communityRequest = {
-        title: modifiedTitle,
-        contents: modifiedContents,
+        title: modifiedData.title,
+        contents: modifiedData.contents,
         type: "절약 꿀팁",
       };
 
       // 유효성 검사
-      if (modifiedTitle.trim() === "") {
+      if (modifiedData.title.trim() === "") {
         alert("제목을 입력해주세요.");
         return;
-      } else if (modifiedContents.trim() === "") {
+      } else if (modifiedData.contents.trim() === "") {
         alert("내용을 입력해주세요.");
         return;
-      } else if (modifiedTitle.length > 35) {
+      } else if (modifiedData.title.length > 35) {
         alert("제목은 35자 이하로 입력해주세요.");
         return;
       }
@@ -117,7 +131,7 @@ const Modify = () => {
         }
       });
 
-      const postResponse = await apiClient.put(inputURL, formData, {
+      const postResponse = await apiClient.patch(inputURL, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -136,7 +150,7 @@ const Modify = () => {
     postData();
   };
 
-  const fetchData = async () => {
+  const fetchCommunityData = async () => {
     try {
       const response = await apiClient.get(inputURL, {
         headers: {
@@ -145,6 +159,8 @@ const Modify = () => {
       });
       console.log("데이터:", response.data);
       const DetailData = response.data.data;
+      setTitle(DetailData.title);
+      setContent(DetailData.contents);
       setData([DetailData]);
       // photoList가 존재하는지 확인하고 images 업데이트
       if (DetailData.photoList && DetailData.photoList.length > 0) {
@@ -160,7 +176,7 @@ const Modify = () => {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchCommunityData();
   }, []);
 
   return (
@@ -244,7 +260,7 @@ const Modify = () => {
               </Text>
               <Input
                 placeholder="제목을 입력하세요"
-                inputValue={title || item.title}
+                inputValue={title}
                 handleInputChange={handleTitleChange}
               />
               <Text
@@ -263,7 +279,7 @@ const Modify = () => {
               <InputMax
                 placeholder="내용을 입력하세요"
                 placeholderTextColor="#000"
-                inputValue={content || item.contents}
+                inputValue={content}
                 handleInputChange={handleContentChange}
               />
               <Text
