@@ -159,6 +159,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
   const handleCommentClick = () => {
     setActionSheetVisible(false);
+    setActionSheetViewerVisible(false);
     setComment(`@${parentWriter} `);
     setParentId(commentId);
   };
