@@ -60,7 +60,11 @@ const AppleLogin = () => {
       await AsyncStorage.setItem("refresh_token", refresh_token);
 
       // postData();
-      navigation.replace("SignUpScreen", { screen: "SignUp" });
+      if (response.data.data.isUserRegistered) {
+        navigation.replace("MainScreen", { screen: "Spending" });
+      } else {
+        navigation.replace("SignUpScreen", { screen: "SignUp" });
+      }
     } catch (error) {
       console.log("errorMessage:::", error);
       if (error.response) {
