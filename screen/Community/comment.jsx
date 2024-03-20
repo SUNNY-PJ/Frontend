@@ -21,18 +21,22 @@ import Modal from "react-native-modal";
 import CommentActionSheet from "../../components/BottomSheet/commentActionSheet";
 import CommentViewerActionSheet from "../../components/BottomSheet/commentViewerActionSheet";
 import apiClient from "../../api/apiClient";
+import FriendProfile from "../Friends/friendProfile";
 
 const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();
 
   const inputURL = `/comment/${communityId}`;
+  const [userId, setUserId] = useState(0);
   const [comment, setComment] = useState("");
   const [commentId, setCommentId] = useState("");
   const [commentData, setCommentData] = useState([]);
   const [secret, setSecret] = useState(false);
   const [parentId, setParentId] = useState("");
   const [parentWriter, setParentWriter] = useState("");
+  const [isOpenProfile, setIsOpenProfile] = useState(false);
+  const [isOpenOptionModal, setIsOpenOptionModal] = useState(false);
   const [isActionSheetVisible, setActionSheetVisible] = useState(false);
   const [isActionSheetViewerVisible, setActionSheetViewerVisible] =
     useState(false);
@@ -56,7 +60,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
   const handleCommentChange = (text) => {
     setComment(text);
-    console.log(comment);
+    // console.log(comment);
   };
 
   const handleSecretClick = () => {
@@ -67,7 +71,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const handleReCommentClick = (parentId, parentIdWriter) => {
     setComment(`@${parentIdWriter} `);
     setParentId(parentId);
-    console.log("대댓글", comment);
+    // console.log("대댓글", comment);
   };
 
   // 댓글 조회
@@ -81,7 +85,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
       const ResCommentData = response.data.data;
       setCommentData(ResCommentData);
-      console.log(ResCommentData);
+      console.log("댓글 데이터", ResCommentData);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -108,7 +112,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
         setComment("");
         setParentId();
       }
-      console.log("데이터:", response.data);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -127,7 +130,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
         alert("댓글을 삭제하였습니다.");
         fetchData(); // 댓글 목록을 다시 불러옵니다.
       }
-      console.log("데이터:", response.data);
+      // console.log("데이터:", response.data);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -138,8 +141,10 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     setComment("");
   };
 
-  const handleMenuClick = (id, writer, author) => {
-    console.log(id);
+  const handleMenuClick = (id, writer, author, userId) => {
+    console.log(userId);
+    openOptionModal();
+    setUserId(userId);
     setCommentId(id);
     setParentWriter(writer);
     if (author === true) {
@@ -152,8 +157,9 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   };
 
   const handleRemoveClick = () => {
-    console.log(commentId);
+    // console.log(commentId);
     deleteData();
+    데이;
     setActionSheetVisible(false);
   };
 
@@ -164,8 +170,17 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     setParentId(commentId);
   };
 
+  const openProfile = () => {
+    setIsOpenProfile(!isOpenProfile);
+  };
+  const openOptionModal = () => {
+    setIsOpenOptionModal(!isOpenOptionModal);
+  };
+
   const handleProfileClick = () => {
     setActionSheetVisible(false);
+    setActionSheetViewerVisible(false);
+    openProfile();
   };
 
   const handleModifyClick = () => {
@@ -281,7 +296,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                           handleMenuClick(
                             item.id,
                             item.writer,
-                            item.commentAuthor
+                            item.commentAuthor,
+                            item.userId
                           )
                         }
                       >
@@ -384,7 +400,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                                   handleMenuClick(
                                     childItem.id,
                                     childItem.writer,
-                                    childItem.commentAuthor
+                                    childItem.commentAuthor,
+                                    childItem.userId
                                   )
                                 }
                               >
@@ -475,6 +492,11 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
         onReport={handleReportClick}
         onComment={handleCommentClick}
         onProfile={handleProfileClick}
+      />
+      <FriendProfile
+        isOpenProfile={isOpenProfile}
+        openProfile={openProfile}
+        userId={userId}
       />
     </Modal>
   );

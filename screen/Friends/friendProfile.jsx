@@ -43,7 +43,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
           userId: userId,
         },
       });
-      console.log("데이터1111:", response.data);
+      // console.log("데이터1111:", response.data);
       const ProfileData = response.data;
       const ProfileId = [ProfileData].map((item) => item.id);
       const ProfileName = [ProfileData].map((item) => item.name);
@@ -65,7 +65,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
         },
       });
 
-      console.log("데이터:??", response.data.data);
+      // console.log("데이터:??", response.data.data);
       const isFriendData = response.data.data.isFriend;
       const statusData = response.data.data.status;
       setIsFriend(isFriendData);

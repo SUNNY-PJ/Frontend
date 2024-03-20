@@ -61,7 +61,7 @@ const Detail = () => {
         },
       });
 
-      console.log("데이터:", response.data);
+      // console.log("데이터:", response.data);
       const DetailData = response.data.data;
       setData([DetailData]);
       setIsScrap(DetailData.isScraped);
