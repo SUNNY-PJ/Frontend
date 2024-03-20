@@ -6,6 +6,7 @@ import {
   Image,
   Pressable,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   Keyboard,
   Alert,
 } from "react-native";
@@ -18,6 +19,12 @@ import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 import apiClient from "../../api/apiClient";
 import { useCommunity } from "../../context/communityContext";
+import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
+
+const COMMUNITY_CATEGORY = [
+  { title: "절약 꿀팁", data: "절약 꿀팁" },
+  { title: "자유 게시판", data: "자유 게시판" },
+];
 
 const Modify = () => {
   const navigation = useNavigation();
@@ -26,8 +33,11 @@ const Modify = () => {
   const inputURL = `/community/${itemId}`;
   const { fetchData } = useCommunity();
   const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [content, setContent] = useState("");
   const [data, setData] = useState([]);
+  const [open, setOpen] = useState(false);
 
   const handleTitleChange = (text) => {
     setTitle(text);
@@ -71,6 +81,20 @@ const Modify = () => {
     setImages(updatedImages);
   };
 
+  const handleCategoryClick = () => {
+    setOpen(!open);
+    console.log("카테고리 클릭");
+  };
+
+  const handleCategorySelect = (data) => {
+    setSelectedCategory(data);
+    if (data === "절약 꿀팁") {
+      setCategory("절약 꿀팁");
+    } else if (data === "자유 게시판") {
+      setCategory("자유 게시판");
+    }
+  };
+
   const postData = async () => {
     try {
       const response = await apiClient.get(inputURL, {
@@ -100,7 +124,7 @@ const Modify = () => {
       const communityRequest = {
         title: modifiedData.title,
         contents: modifiedData.contents,
-        type: "절약 꿀팁",
+        type: category,
       };
 
       // 유효성 검사
@@ -161,6 +185,7 @@ const Modify = () => {
       const DetailData = response.data.data;
       setTitle(DetailData.title);
       setContent(DetailData.contents);
+      setSelectedCategory(DetailData.type);
       setData([DetailData]);
       // photoList가 존재하는지 확인하고 images 업데이트
       if (DetailData.photoList && DetailData.photoList.length > 0) {
@@ -217,32 +242,34 @@ const Modify = () => {
                 <SmallBtn title={"등록"} onClick={handlePost} />
               </View>
               {/* 카테고리 선택 */}
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginBottom: 5,
-                }}
-              >
-                <Text
+              <TouchableOpacity onPress={handleCategoryClick}>
+                <View
                   style={{
-                    fontSize: 15,
-                    fontWeight: 700,
-                    borderColor: "#1F1F1F",
-                    fontFamily: "SUITE_Bold",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginBottom: 5,
                   }}
                 >
-                  {/* 카테고리 선택 */}
-                  {item.type}
-                </Text>
-                {/* <Image
-                  source={require("../../assets/categoryArrow.png")}
-                  style={{
-                    width: 24,
-                    height: 24,
-                  }}
-                /> */}
-              </View>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 700,
+                      borderColor: "#1F1F1F",
+                      fontFamily: "SUITE_Bold",
+                    }}
+                  >
+                    {/* 카테고리 선택 */}
+                    {selectedCategory ? selectedCategory : item.type}
+                  </Text>
+                  <Image
+                    source={require("../../assets/categoryArrow.png")}
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                  />
+                </View>
+              </TouchableOpacity>
               <Line color={"#C1C1C1"} h={1} />
               {/* 카테고리 선택 */}
               <Text
@@ -350,6 +377,15 @@ const Modify = () => {
               </Text>
             </View>
           ))}
+          {open && (
+            <BottomSheetScreen
+              title={"카테고리"}
+              data={COMMUNITY_CATEGORY}
+              modalVisible={open}
+              modalDisable={handleCategoryClick}
+              onCategorySelect={handleCategorySelect}
+            />
+          )}
         </View>
       </TouchableWithoutFeedback>
     </>
