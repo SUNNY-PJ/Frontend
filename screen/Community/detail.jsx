@@ -227,21 +227,22 @@ const Detail = () => {
                   }}
                 />
               </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={handleMenuClick}
-                style={{
-                  alignSelf: "center",
-                }}
-              >
-                <Image
-                  source={require("../../assets/menu.png")}
+              {item.isAuthor === true && (
+                <TouchableOpacity
+                  onPress={handleMenuClick}
                   style={{
-                    width: 20,
-                    height: 4,
+                    alignSelf: "center",
                   }}
-                />
-              </TouchableOpacity>
+                >
+                  <Image
+                    source={require("../../assets/menu.png")}
+                    style={{
+                      width: 20,
+                      height: 4,
+                    }}
+                  />
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         </View>
