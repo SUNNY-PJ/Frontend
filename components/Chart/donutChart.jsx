@@ -17,9 +17,10 @@ const DonutChart = ({ data, onCategorySelect }) => {
   let prevTextX = 0;
 
   const allZero = data.every((item) => item.value === 0);
-  const adjustedData = allZero
-    ? data.map((item) => ({ ...item, value: 100 / data.length }))
-    : data;
+  console.log(allZero);
+  // const adjustedData = allZero
+  //   ? data.map((item) => ({ ...item, value: 100 / data.length }))
+  //   : data;
 
   //   <Circle
   //   cx={centerX}
@@ -114,7 +115,11 @@ const DonutChart = ({ data, onCategorySelect }) => {
               <Image source={item.url} style={styles.image} />
             </View>
             <Text style={[styles.text, { fontSize: 12 }]}>{item.title}</Text>
-            <Text style={[styles.text, { fontSize: 16 }]}>{item.value}%</Text>
+            {item.allZero ? (
+              <Text style={[styles.text, { fontSize: 16 }]}>%</Text>
+            ) : (
+              <Text style={[styles.text, { fontSize: 16 }]}>{item.value}%</Text>
+            )}
           </View>
         ))}
       </View>

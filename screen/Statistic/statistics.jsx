@@ -60,24 +60,25 @@ const Statistics = ({ year, month }) => {
 
   const createDonutData = (data) => {
     const allValuesAreZero = data.every((item) => item.percentage === 0);
+    const noDataColor = ["#5C5C5C", "#C1C1C1", "#E8E9E8", "#F1F1F1"];
+    const Color = ["#007560", "#6adca3", "#b9f4d6", "#e9fbf2"];
 
     // 색상 배열
-    const colors = allValuesAreZero
-      ? ["#FFFBF6"]
-      : ["#007560", "#6adca3", "#b9f4d6", "#e9fbf2"];
+    const colors = allValuesAreZero ? noDataColor : Color;
 
     // 데이터를 percentage에 따라 내림차순 정렬
     const sortedData = data.sort((a, b) => b.percentage - a.percentage);
 
     // 정렬된 데이터에 색상과 필요한 정보 매핑
     return sortedData.map((item, index) => ({
-      value: item.percentage,
+      allZero: allValuesAreZero,
+      value: allValuesAreZero ? 25 : item.percentage,
       title: item.category,
       color: colors[index % colors.length],
       category: item.category,
       url:
         categoryImages[item.category.toUpperCase()] ||
-        require("../../assets/ect_chart.png"), // 카테고리에 맞는 이미지 경로 할당
+        require("../../assets/ect_chart.png"),
     }));
   };
 
