@@ -81,6 +81,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
       const ResCommentData = response.data.data;
       setCommentData(ResCommentData);
+      console.log(ResCommentData);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -276,7 +277,11 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                       <TouchableOpacity
                         activeOpacity={0.6}
                         onPress={() =>
-                          handleMenuClick(item.id, item.writer, item.author)
+                          handleMenuClick(
+                            item.id,
+                            item.writer,
+                            item.commentAuthor
+                          )
                         }
                       >
                         <Image
@@ -378,7 +383,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                                   handleMenuClick(
                                     childItem.id,
                                     childItem.writer,
-                                    childItem.author
+                                    childItem.commentAuthor
                                   )
                                 }
                               >
