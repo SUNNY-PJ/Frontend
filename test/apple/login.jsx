@@ -54,19 +54,30 @@ const AppleLogin = () => {
         params: { code: idToken },
       });
       console.log("apple 로그인 실행", response.data);
-      const access_token = response.data.data.accessToken;
-      const refresh_token = response.data.data.refreshToken;
-      await AsyncStorage.setItem("access_token", access_token);
-      await AsyncStorage.setItem("refresh_token", refresh_token);
 
-      // postData();
-      if (response.data.data.isUserRegistered) {
-        navigation.replace("MainScreen", { screen: "Spending" });
+      if (response.status === 200) {
+        const access_token = response.data.data.accessToken;
+        const refresh_token = response.data.data.refreshToken;
+        await AsyncStorage.setItem("access_token", access_token);
+        await AsyncStorage.setItem("refresh_token", refresh_token);
+
+        if (response.data.data.isUserRegistered) {
+          navigation.replace("MainScreen", { screen: "Spending" });
+        } else {
+          navigation.replace("SignUpScreen", { screen: "SignUp" });
+        }
       } else {
-        navigation.replace("SignUpScreen", { screen: "SignUp" });
+        Alert.alert(
+          "error",
+          `로그인 중 에러가 발생했습니다.\n관리자에게 문의 바랍니다.`
+        );
       }
     } catch (error) {
       console.log("errorMessage:::", error);
+      Alert.alert(
+        "error",
+        `로그인 중 에러가 발생했습니다.\n관리자에게 문의 바랍니다.`
+      );
       if (error.response) {
         console.error("서버 응답 오류:", error.response);
       } else {
