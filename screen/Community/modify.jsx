@@ -39,6 +39,10 @@ const Modify = () => {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    setCategory(selectedCategory);
+  }, [selectedCategory]);
+
   const handleTitleChange = (text) => {
     setTitle(text);
   };
