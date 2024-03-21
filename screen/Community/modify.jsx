@@ -115,6 +115,8 @@ const Modify = () => {
         modifiedData.contents = content;
       }
 
+      console.log(modifiedData);
+
       // 변경된 데이터가 없으면 early return
       if (Object.keys(modifiedData).length === 0) {
         Alert.alert("변경사항 없음", "변경된 내용이 없습니다.");
@@ -160,10 +162,12 @@ const Modify = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      if (response.status === 200) {
+      if (postResponse.status === 200) {
         Alert.alert("게시글 수정", "게시글을 수정하였습니다.");
         fetchData();
         navigation.navigate("Community", { screen: "Community" });
+      } else {
+        Alert.alert("게시글 수정", "게시글을 수정에 실패했습니다.");
       }
     } catch (error) {
       console.error(error);
