@@ -38,7 +38,8 @@ const MyPage = () => {
   };
 
   const handleConfirm = () => {
-    leaveData();
+    handleAppleCode();
+    // leaveData();
     setModalVisible(false);
   };
 
@@ -149,10 +150,42 @@ const MyPage = () => {
   //   }
   // };
 
+  // apple idToken 발급
+  async function handleAppleCode() {
+    try {
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+      });
+      if (credential.authorizationCode) {
+        // 서버로 인증 코드 전송
+        leaveData(credential.authorizationCode);
+      }
+      // 서버로 인증 코드 전송 및 사용자 정보 처리 로직 구현
+    } catch (e) {
+      if (e.code === "ERR_CANCELED") {
+        showAlert({
+          title: "탈퇴에 실패했습니다.",
+          content: "잠시 후 다시 시도하세요.",
+          buttons: [
+            {
+              text: "확인",
+              color: "black",
+              onPress: (id) => closeAlert(id),
+            },
+          ],
+        });
+      } else {
+        console.error("Apple 코드 오류:", e);
+      }
+    }
+  }
+
   // 회원 탈퇴
-  const leaveData = async () => {
+  const leaveData = async (authorizationCode) => {
     const secession_url = "http://43.201.176.22:8080/apple/auth/leave";
-    const authorizationCode = await AsyncStorage.getItem("authorizationCode");
     try {
       const response = await apiClient.get(secession_url, {
         headers: {
@@ -164,6 +197,11 @@ const MyPage = () => {
       if (response.data === 200) {
         Alert.alert("회원 탈퇴", "탈퇴 되었습니다.");
         navigation.navigate("KakaoScreen", { screen: "Login" });
+      } else {
+        Alert.alert(
+          "error",
+          `탈퇴 중 에러가 발생했습니다.\n관리자에게 문의 바랍니다.`
+        );
       }
     } catch (error) {
       if (error.response) {
@@ -209,7 +247,6 @@ const MyPage = () => {
   const handleTestClick = () => {
     navigation.navigate("MainScreen", { screen: "TestScreen" });
     // navigation.navigate("MainScreen", { screen: "BattleStatus" });
-    // navigation.navigate("KakaoScreen", { screen: "AppleLogin" });
   };
 
   return (
