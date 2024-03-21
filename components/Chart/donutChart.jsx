@@ -155,7 +155,9 @@ const DonutChart = ({ data, noData, onCategorySelect }) => {
             >
               <View
                 style={[styles.imageContainer, { backgroundColor: item.color }]}
-              />
+              >
+                <Image source={item.url} style={styles.image} />
+              </View>
               <Text style={[styles.text, { fontSize: 12 }]}>{item.title}</Text>
               {item.allZero ? (
                 <Text style={[styles.text, { fontSize: 16 }]}>%</Text>
