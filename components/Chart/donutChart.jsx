@@ -19,10 +19,20 @@ const DonutChart = ({ data, noData, onCategorySelect }) => {
   let prevTextX = 0;
 
   const allZero = data.every((item) => item.value === 0);
-  console.log(allZero);
-  // const adjustedData = allZero
-  //   ? data.map((item) => ({ ...item, value: 100 / data.length }))
-  //   : data;
+  // value가 0보다 큰 항목만 필터링
+  const adjustedData = data.filter((item) => item.value > 0);
+  // 단일 항목이 전체를 차지하는지 확인
+  const singleFullValueItem =
+    adjustedData.length === 1 && adjustedData[0].value === 100;
+
+  console.log("단일 항목", singleFullValueItem);
+
+  const singleDataPath = `
+      M ${centerX},${centerY}
+      m -${radius}, 0
+      a ${radius},${radius} 0 1,0 ${radius * 2},0
+      a ${radius},${radius} 0 1,0 -${radius * 2},0
+    `;
 
   //   <Circle
   //   cx={centerX}
@@ -82,8 +92,8 @@ const DonutChart = ({ data, noData, onCategorySelect }) => {
           return [
             <Path
               key={`${index}_path`}
-              d={path}
-              fill={allZero ? "#FFFBF6" : item.color}
+              d={singleFullValueItem ? singleDataPath : path}
+              fill={singleFullValueItem ? "#007560" : item.color}
               stroke="black"
               strokeWidth="1.5"
               onPress={() => onCategorySelect(item.category)}
