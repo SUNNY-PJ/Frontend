@@ -157,9 +157,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   };
 
   const handleRemoveClick = () => {
-    // console.log(commentId);
     deleteData();
-    데이;
     setActionSheetVisible(false);
   };
 
