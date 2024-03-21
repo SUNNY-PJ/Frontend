@@ -60,7 +60,7 @@ const AppleLogin = () => {
         const refresh_token = response.data.data.refreshToken;
         await AsyncStorage.setItem("access_token", access_token);
         await AsyncStorage.setItem("refresh_token", refresh_token);
-
+        console.log("토큰:::", access_token);
         if (response.data.data.isUserRegistered) {
           navigation.replace("MainScreen", { screen: "Spending" });
         } else {
