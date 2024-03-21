@@ -14,6 +14,7 @@ import {
   ScrollView,
   Dimensions,
   PanResponder,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
@@ -37,6 +38,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const [parentWriter, setParentWriter] = useState("");
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const [isOpenOptionModal, setIsOpenOptionModal] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [editComment, setEditComment] = useState("");
   const [isActionSheetVisible, setActionSheetVisible] = useState(false);
   const [isActionSheetViewerVisible, setActionSheetViewerVisible] =
     useState(false);
@@ -85,6 +88,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
       const ResCommentData = response.data.data;
       setCommentData(ResCommentData);
+      setEditComment();
       console.log("댓글 데이터", ResCommentData);
     } catch (error) {
       console.error("에러:", error);
@@ -117,6 +121,41 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     }
   };
 
+  // 댓글 수정
+  const patchData = async () => {
+    const inputURL = `/comment/${commentId}`;
+    bodyData = {
+      content: comment,
+      parent_id: parentId ? parentId : null,
+      is_privated: secret,
+    };
+
+    try {
+      const response = await apiClient.patch(inputURL, bodyData, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      });
+      console.log(response.data);
+      console.log(bodyData);
+      if (response.status === 200) {
+        if (response.data.status === 200) {
+          Alert.alert("댓글 수정", "댓글을 수정하였습니다.");
+          fetchData();
+          setComment("");
+          setParentId();
+          setIsEdit(false);
+        } else {
+          Alert.alert("댓글 수정", "댓글 수정에 실패했습니다.");
+        }
+      } else {
+        Alert.alert("댓글 수정", "댓글 수정에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
   // 댓글 삭제
   const deleteData = async () => {
     const inputURL = `/comment/${commentId}`;
@@ -137,7 +176,11 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   };
 
   const handlePostComment = () => {
-    postData();
+    if (isEdit) {
+      patchData();
+    } else {
+      postData();
+    }
     setComment("");
   };
 
@@ -182,6 +225,15 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   };
 
   const handleModifyClick = () => {
+    const commentToEdit = commentData.find(
+      (comment) => comment.id === commentId
+    );
+    if (commentToEdit) {
+      setComment(commentToEdit.content);
+      setIsEdit(true);
+      setCommentId(commentId);
+      setSecret(commentToEdit.privated);
+    }
     setActionSheetVisible(false);
   };
 
@@ -471,7 +523,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
               onPress={handlePostComment}
               disabled={!comment}
             >
-              <Text style={styles.buttonText}>등록</Text>
+              <Text style={styles.buttonText}>{isEdit ? "수정" : "등록"}</Text>
             </TouchableOpacity>
           </View>
         </View>
