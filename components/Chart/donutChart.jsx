@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 
 const DonutChart = ({ data, noData, onCategorySelect }) => {
@@ -90,13 +97,25 @@ const DonutChart = ({ data, noData, onCategorySelect }) => {
           startAngle = endAngle;
 
           return [
+            // <Path
+            //   key={`${index}_path`}
+            //   d={singleFullValueItem ? singleDataPath : path}
+            //   fill={singleFullValueItem ? "#007560" : item.color}
+            //   stroke="black"
+            //   strokeWidth="1.5"
+            //   onPress={() => onCategorySelect(item.category)}
+            // />,
             <Path
               key={`${index}_path`}
               d={singleFullValueItem ? singleDataPath : path}
               fill={singleFullValueItem ? "#007560" : item.color}
               stroke="black"
               strokeWidth="1.5"
-              onPress={() => onCategorySelect(item.category)}
+              onPress={() =>
+                singleFullValueItem
+                  ? onCategorySelect(adjustedData[0].category)
+                  : onCategorySelect(item.category)
+              }
             />,
             ,
           ];
@@ -122,26 +141,31 @@ const DonutChart = ({ data, noData, onCategorySelect }) => {
       </Svg>
       <View style={{ flexDirection: "row", gap: 24 }}>
         {data.map((item) => (
-          <View
-            style={{
-              gap: 3,
-              marginTop: 10,
-              alignItems: "center",
-              width: 50,
-            }}
+          <TouchableOpacity
+            onPress={() => onCategorySelect(item.category)}
+            activeOpacity={0.8}
           >
             <View
-              style={[styles.imageContainer, { backgroundColor: item.color }]}
+              style={{
+                gap: 3,
+                marginTop: 10,
+                alignItems: "center",
+                width: 50,
+              }}
             >
-              <Image source={item.url} style={styles.image} />
+              <View
+                style={[styles.imageContainer, { backgroundColor: item.color }]}
+              />
+              <Text style={[styles.text, { fontSize: 12 }]}>{item.title}</Text>
+              {item.allZero ? (
+                <Text style={[styles.text, { fontSize: 16 }]}>%</Text>
+              ) : (
+                <Text style={[styles.text, { fontSize: 16 }]}>
+                  {item.value}%
+                </Text>
+              )}
             </View>
-            <Text style={[styles.text, { fontSize: 12 }]}>{item.title}</Text>
-            {item.allZero ? (
-              <Text style={[styles.text, { fontSize: 16 }]}>%</Text>
-            ) : (
-              <Text style={[styles.text, { fontSize: 16 }]}>{item.value}%</Text>
-            )}
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
     </View>
