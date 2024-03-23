@@ -431,6 +431,12 @@ const styles = StyleSheet.create({
     color: "#1F1F1F",
     fontFamily: "SUITE",
   },
+  contents: {
+    fontSize: 15,
+    fontWeight: 500,
+    color: "#1F1F1F",
+    fontFamily: "SUITE",
+  },
 });
 
 export default Detail;
