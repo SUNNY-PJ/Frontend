@@ -129,9 +129,9 @@ const Detail = () => {
     });
   };
 
-  const handleChat = () => {
-    console.log("대화하기 버튼 클릭");
-  };
+  // const handleChat = () => {
+  //   console.log("대화하기 버튼 클릭");
+  // };
 
   const handleMenuClick = () => {
     openOptionModal();
@@ -317,8 +317,6 @@ const Detail = () => {
                     style={{
                       width: 300,
                       height: 300,
-                      // paddingLeft: "20",
-                      // paddingRight: "20",
                       resizeMode: "contain",
                       marginTop: 14,
                     }}
