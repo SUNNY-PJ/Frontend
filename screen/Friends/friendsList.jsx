@@ -9,8 +9,11 @@ import {
 } from "react-native";
 import Line from "../../components/Line";
 import { useRoute } from "@react-navigation/native";
-import FriendsComponent from "./friendsComponent";
+import FriendsComponent from "./friendsComponent2";
 import apiClient from "../../api/apiClient";
+import FriendsComponent1 from "./friendsComponent1";
+import FriendsComponent2 from "./friendsComponent2";
+import FriendsComponent3 from "./friendsComponent3";
 
 function FriendsList() {
   const route = useRoute();
@@ -31,6 +34,7 @@ function FriendsList() {
     setIsFriendsComponentVisible3((prev) => !prev);
   };
 
+  const [competitionData, setCompetitionData] = useState([]);
   const [approveData, setApproveData] = useState([]);
   const [waitData, setWaitData] = useState([]);
 
@@ -43,12 +47,13 @@ function FriendsList() {
         },
       });
       const Data = response.data.data;
+      console.log("친구", Data);
+      const CompetitionFriendsData = Data.competitions;
       const ApproveFriendsData = Data.approveList;
       const WaitFriendsData = Data.waitList;
+      setCompetitionData(CompetitionFriendsData);
       setApproveData(ApproveFriendsData);
       setWaitData(WaitFriendsData);
-      console.log("친구 목록:::", Data.approveList);
-      console.log("친구 신청 목록:::", Data.waitList);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -60,6 +65,7 @@ function FriendsList() {
 
   const PostData = async (friendId) => {
     const inputURL = `/friends/approve/${friendId}`;
+    console.log(inputURL);
     try {
       const response = await apiClient.post(
         inputURL,
@@ -104,7 +110,7 @@ function FriendsList() {
     );
   };
 
-  const onRemoveFriend = (friendsId) => {
+  const onRemoveFriend = (friendId) => {
     Alert.alert(
       "친구 삭제",
       "친구를 삭제하시겠습니까?",
@@ -115,7 +121,7 @@ function FriendsList() {
         },
         {
           text: "확인",
-          onPress: () => deleteData(friendsId),
+          onPress: () => deleteData(friendId),
         },
       ],
       { cancelable: false }
@@ -123,8 +129,8 @@ function FriendsList() {
   };
 
   // 친구 삭제
-  const deleteData = async (friendsId) => {
-    const inputURL = `/friends/${friendsId}`;
+  const deleteData = async (friendId) => {
+    const inputURL = `/friends/${friendId}`;
     try {
       const response = await apiClient.delete(inputURL, {
         headers: {
@@ -188,7 +194,9 @@ function FriendsList() {
         ) : (
           <Line color={"#1F1F1F"} h={2} />
         )}
-        {isFriendsComponentVisible1 && <FriendsComponent Data={[]} />}
+        {isFriendsComponentVisible1 && (
+          <FriendsComponent1 Data={competitionData} />
+        )}
         {/* 친구 신청 목록 */}
         <TouchableOpacity onPress={toggleFriendsComponent2} activeOpacity={1}>
           <View style={{ ...styles.titleSection, paddingTop: 24 }}>
@@ -211,7 +219,7 @@ function FriendsList() {
           <Line color={"#1F1F1F"} h={2} />
         )}
         {isFriendsComponentVisible2 && (
-          <FriendsComponent Data={waitData} onAddFriend={AddFriendData} />
+          <FriendsComponent2 Data={waitData} onAddFriend={AddFriendData} />
         )}
         {/* {isFriendsComponentVisible2 && <FriendsComponent Data={waitData} />} */}
 
@@ -237,7 +245,7 @@ function FriendsList() {
           <Line color={"#1F1F1F"} h={2} />
         )}
         {isFriendsComponentVisible3 && (
-          <FriendsComponent
+          <FriendsComponent3
             Data={approveData}
             onRemoveFriend={onRemoveFriend}
           />
