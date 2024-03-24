@@ -4,10 +4,18 @@ import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 import Progress from "../../components/progress/progress";
 import apiClient from "../../api/apiClient";
+import { useRoute } from "@react-navigation/native";
 
-const BattleStatus = ({ friendId }) => {
+const BattleStatus = () => {
   const navigation = useNavigation();
-  const inputURL = `competition/status${friendId}`;
+  const route = useRoute();
+  const { friendId } = route.params;
+  const { nickname } = route.params;
+
+  const inputURL = `competition/status/${friendId}`;
+
+  console.log("nickname::", nickname);
+  console.log("friendId::", friendId);
 
   const [data, setData] = useState({});
 
@@ -69,7 +77,9 @@ const BattleStatus = ({ friendId }) => {
             marginBottom: 11,
           }}
         />
-        <Text style={[styles.boldText, { marginBottom: 10 }]}>민규는</Text>
+        <Text style={[styles.boldText, { marginBottom: 10 }]}>
+          {nickname}는
+        </Text>
         <Progress progress={30} color={"#FAC337"} />
         <Text style={[styles.boldText]}>
           NN% <Text style={[styles.text]}>남았어요</Text>
