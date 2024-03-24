@@ -22,11 +22,11 @@ function SendMatch() {
   const navigation = useNavigation();
   const inputURL = "/competition";
   const route = useRoute();
-  const { friendsId } = route.params;
+  const { friendId } = route.params;
   const { name } = route.params;
 
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
-  // const [date, setDate] = useState("");
+  const [date, setDate] = useState("");
   const [money, setMoney] = useState(0);
   const [message, setMessage] = useState("");
   // const [reward, setReward] = useState("");
@@ -38,41 +38,41 @@ function SendMatch() {
   const [endDate, setEndDate] = useState("");
   const [endDateVal, setEndDateVal] = useState("");
 
-  // const handleDateChange = (text) => {
-  //   setDate(text);
+  const handleDateChange = (text) => {
+    setDate(text);
+  };
+
+  // const handleStartDateChange = (formattedDate) => {
+  //   setStartDate(formattedDate);
   // };
 
-  const handleStartDateChange = (formattedDate) => {
-    setStartDate(formattedDate);
-  };
+  // const handleStartDateValChange = (formattedDate) => {
+  //   setStartDateVal(formattedDate);
+  // };
 
-  const handleStartDateValChange = (formattedDate) => {
-    setStartDateVal(formattedDate);
-  };
+  // const handleEndDateChange = (formattedDate) => {
+  //   setEndDate(formattedDate);
+  // };
 
-  const handleEndDateChange = (formattedDate) => {
-    setEndDate(formattedDate);
-  };
+  // const handleEndDateValChange = (formattedDate) => {
+  //   setEndDateVal(formattedDate);
+  // };
 
-  const handleEndDateValChange = (formattedDate) => {
-    setEndDateVal(formattedDate);
-  };
+  // const showStartDatePicker = () => {
+  //   setStartDatePickerVisibility(true);
+  // };
 
-  const showStartDatePicker = () => {
-    setStartDatePickerVisibility(true);
-  };
+  // const showEndDatePicker = () => {
+  //   setEndDatePickerVisibility(true);
+  // };
 
-  const showEndDatePicker = () => {
-    setEndDatePickerVisibility(true);
-  };
+  // const hideStartDatePicker = () => {
+  //   setStartDatePickerVisibility(false);
+  // };
 
-  const hideStartDatePicker = () => {
-    setStartDatePickerVisibility(false);
-  };
-
-  const hideEndDatePicker = () => {
-    setEndDatePickerVisibility(false);
-  };
+  // const hideEndDatePicker = () => {
+  //   setEndDatePickerVisibility(false);
+  // };
 
   const handleMessageChange = (text) => {
     setMessage(text);
@@ -97,7 +97,8 @@ function SendMatch() {
   };
 
   useEffect(() => {
-    if (message && money && startDate && endDate) {
+    // if (message && money && startDate && endDate) {
+    if (message && money && date) {
       setIsAllFieldsFilled(true);
     } else {
       setIsAllFieldsFilled(false);
@@ -108,9 +109,10 @@ function SendMatch() {
     try {
       const bodyData = {
         compensation: "없음",
-        startDate: startDateVal,
-        endDate: endDateVal,
-        friendsId: friendsId,
+        day: date,
+        // startDate: startDateVal,
+        // endDate: endDateVal,
+        friendsId: friendId,
         message: message,
         price: money.replace(/,/g, ""),
       };
@@ -119,7 +121,7 @@ function SendMatch() {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-      console.log(response.data.data);
+      console.log(response.data);
       if (response.status === 200) {
         if (response.data.status === 400) {
           Alert.alert(
@@ -162,14 +164,14 @@ function SendMatch() {
             inputValue={reward}
             handleInputChange={handleRewardChange}
           /> */}
-          {/* <Text style={styles.label}>대결 기간과 금액을 선택해주세요</Text> */}
-          {/* <Input
+          <Text style={styles.label}>대결 기간과 금액을 선택해주세요</Text>
+          <Input
             placeholder={"대결 기간"}
             inputValue={date}
             handleInputChange={handleDateChange}
-          /> */}
-          <Text style={styles.label}>대결 시작 일자를 선택해주세요</Text>
-          <TouchableOpacity onPress={showStartDatePicker}>
+          />
+          {/* <Text style={styles.label}>대결 시작 일자를 선택해주세요</Text> */}
+          {/* <TouchableOpacity onPress={showStartDatePicker}>
             <DatePicker2
               showDatePicker={showStartDatePicker}
               hideDatePicker={hideStartDatePicker}
@@ -193,7 +195,7 @@ function SendMatch() {
               inputText={"대결 종료 일자:"}
               showDayOfWeek={false}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <Text style={styles.subText}>
             * 상대가 승낙한 시점부터 대결이 시작됩니다
           </Text>
