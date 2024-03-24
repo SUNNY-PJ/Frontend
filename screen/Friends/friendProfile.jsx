@@ -67,18 +67,21 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-
-      // console.log("데이터:??", response.data.data);
-      const isFriendData = response.data.data.isFriend;
-      const statusData = response.data.data.status;
-      setIsFriend(isFriendData);
-      setStatus(statusData);
-      if (statusData === "WAIT") {
-        setStatus("대기중");
-      } else if (statusData === "APPROVE") {
-        setStatus("친구끊기");
-      } else {
-        setStatus("친구맺기");
+      if (response.data.status === 200) {
+        console.log("데이터:??", response.data);
+        const isFriendData = response.data.data.isFriend;
+        const statusData = response.data.data.friendStatus;
+        setIsFriend(isFriendData);
+        setStatus(statusData);
+        console.log("이게 뭐지???;", isFriendData);
+        console.log("이게 뭐지;", statusData);
+        if (statusData === "PENDING") {
+          setStatus("대기중");
+        } else if (statusData === "FRIEND") {
+          setStatus("친구끊기");
+        } else if (statusData === "NONE") {
+          setStatus("친구맺기");
+        }
       }
     } catch (error) {
       if (error.response) {
