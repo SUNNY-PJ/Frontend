@@ -44,15 +44,17 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
           userId: userId,
         },
       });
-      console.log("데이터1111:", response.data);
-      const ProfileData = response.data;
-      const ProfileId = [ProfileData].map((item) => item.id);
-      const ProfileName = [ProfileData].map((item) => item.name);
-      const ProfileOwner = [ProfileData].map((item) => item.owner);
-      setFriendId(ProfileId);
-      setFriendName(ProfileName);
-      setIsMine(ProfileOwner);
-      setData([ProfileData]);
+      if (response.status === 200) {
+        console.log("데이터1111:", response.data);
+        const ProfileData = response.data;
+        const ProfileId = ProfileData.id;
+        const ProfileName = ProfileData.name;
+        const ProfileOwner = ProfileData.owner;
+        setFriendId(ProfileId);
+        setFriendName(ProfileName);
+        setIsMine(ProfileOwner);
+        setData([ProfileData]);
+      }
     } catch (error) {
       console.error("에러:", error);
     }
