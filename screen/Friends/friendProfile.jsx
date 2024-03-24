@@ -98,9 +98,11 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
 
   useEffect(() => {
     if (friendId) {
-      confirmData();
+      if (!isMine) {
+        confirmData();
+      }
     }
-  }, [friendId]);
+  }, [friendId, isMine]);
 
   // 친구 신청
   const postData = async () => {
