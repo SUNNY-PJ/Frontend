@@ -116,39 +116,46 @@ const MyPage = () => {
   }, [navigation]);
 
   // 로그아웃
-  const logoutData = async () => {
-    await AsyncStorage.removeItem("access_token");
-    await AsyncStorage.removeItem("refresh_token");
-    navigation.replace("KakaoScreen", { screen: "Login" });
-  };
-
   // const logoutData = async () => {
-  //   const logout_url = "http://43.201.176.22:8080/apple/auth/callback";
-  //   const idToken = await AsyncStorage.getItem("idToken");
-
-  //   try {
-  //     const response = await apiClient.get(logout_url, {
-  //       headers: {
-  //         "Content-Type": "application/json; charset=utf-8",
-  //       },
-  //       params: { code: idToken },
-  //     });
-
-  //     if (response.status === 200) {
-  //       Alert.alert("로그아웃 되었습니다.");
-  //     }
-
-  //     navigation.navigate("KakaoScreen", { screen: "Login" });
-  //   } catch (error) {
-  //     if (error.response) {
-  //       console.error("서버 응답 오류:", error.response.data);
-  //       console.error("서버 응답 메세지:", error.message);
-  //       alert(error.message);
-  //     } else {
-  //       console.error("에러:", error);
-  //     }
-  //   }
+  //   await AsyncStorage.removeItem("access_token");
+  //   await AsyncStorage.removeItem("refresh_token");
+  //   navigation.replace("KakaoScreen", { screen: "Login" });
   // };
+
+  const logoutData = async () => {
+    const logout_url = "http://43.201.176.22:8080/apple/auth/logout";
+    const accessToken = await AsyncStorage.getItem("access_token");
+    const refreshToken = await AsyncStorage.getItem("refresh_token");
+
+    const bodyData = {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+    };
+
+    try {
+      const response = await apiClient.post(logout_url, bodyData, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      });
+      console.log(response.data);
+      await AsyncStorage.removeItem("access_token");
+      await AsyncStorage.removeItem("refresh_token");
+      if (response.data.status === 200) {
+        Alert.alert("로그아웃 되었습니다.");
+      }
+
+      navigation.navigate("KakaoScreen", { screen: "Login" });
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 메세지:", error.message);
+        alert(error.message);
+      } else {
+        console.error("에러:", error);
+      }
+    }
+  };
 
   // apple idToken 발급
   async function handleAppleCode() {
