@@ -17,8 +17,8 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
   const [userId, setUserId] = useState("");
   const [isOpenProfile, setIsOpenProfile] = useState(false);
 
-  const openProfile = (friendsId) => {
-    setUserId(friendsId);
+  const openProfile = (friendId) => {
+    setUserId(friendId);
     console.log("userId::::", userId);
     if (userId) {
       setIsOpenProfile(!isOpenProfile);
@@ -26,9 +26,9 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
   };
 
   // 삭제 버튼
-  const renderRightActions = (friendsId) => {
+  const renderRightActions = (friendId) => {
     return (
-      <TouchableOpacity onPress={() => onRemoveFriend(friendsId)}>
+      <TouchableOpacity onPress={() => onRemoveFriend(friendId)}>
         <View style={styles.deleteBox}>
           <Text style={styles.deleteButtonText}>삭제</Text>
         </View>
@@ -36,21 +36,21 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
     );
   };
 
-  const handleBattle = (friendsId, nickname) => {
+  const handleBattle = (friendId, nickname) => {
     navigation.navigate("MainScreen", {
       screen: "SendMatch",
       params: {
-        friendsId: friendsId,
+        friendId: friendId,
         name: nickname,
       },
     });
   };
 
-  const handleBattleStatus = (friendsId) => {
+  const handleBattleStatus = (friendId) => {
     navigation.navigate("MainScreen", {
       screen: "SendMatch",
       params: {
-        friendsId: friendsId,
+        friendId: friendId,
         name: nickname,
       },
     });
@@ -64,10 +64,10 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
     <ScrollView>
       {Data.map((item) => (
         <Swipeable
-          key={item.friendsId}
+          key={item.friendId}
           renderRightActions={() =>
-            item.friendStatus === "APPROVE"
-              ? renderRightActions(item.friendsId)
+            item.friendStatus === "FRIEND"
+              ? renderRightActions(item.friendId)
               : null
           }
         >
@@ -118,7 +118,7 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
                 <TouchableOpacity
                   activeOpacity={0.6}
                   onPress={() => {
-                    handleBattleStatus(item.friendsIdß);
+                    handleBattleStatus(item.friendId);
                   }}
                 >
                   <Image
@@ -128,11 +128,11 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
                 </TouchableOpacity>
               </View>
             )}
-            {item.friendStatus === "WAIT" && (
+            {item.friendStatus === "PENDING" && (
               <View style={{ flexDirection: "row", gap: 16 }}>
                 <TouchableOpacity
                   activeOpacity={0.6}
-                  onPress={() => onAddFriend(item.friendsId)}
+                  onPress={() => onAddFriend(item.friendId)}
                 >
                   <Image
                     source={require("../../assets/plusIcon.png")}
@@ -141,7 +141,7 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
                 </TouchableOpacity>
               </View>
             )}
-            {item.friendStatus === "APPROVE" && (
+            {item.friendStatus === "FRIEND" && (
               <View
                 style={{
                   flexDirection: "row",
@@ -157,7 +157,7 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
                 <TouchableOpacity
                   activeOpacity={0.6}
                   onPress={() => {
-                    handleBattle(item.friendsId, item.nickname);
+                    handleBattle(item.friendId, item.nickname);
                   }}
                 >
                   <Image
