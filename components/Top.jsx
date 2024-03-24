@@ -136,7 +136,7 @@ const Top = ({ navigation }) => {
                 style={{
                   marginLeft: -20,
                   fontSize: 16,
-                  fontFaily: "SUITE_Heavy",
+                  fontFamily: "SUITE_Heavy",
                   fontWeight: "900",
                   color: "#1F1F1F",
                   transform: [{ translateY: 0 }, { translateX: 90 }],
@@ -154,7 +154,7 @@ const Top = ({ navigation }) => {
                 <Text
                   style={{
                     fontSize: 15,
-                    fontFaily: "SUITE_Heavy",
+                    fontFamily: "SUITE_Heavy",
                     fontWeight: "900",
                     color: "#1F1F1F",
                   }}
