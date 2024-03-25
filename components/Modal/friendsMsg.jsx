@@ -10,7 +10,7 @@ import {
 import MiddleBtn from "../Btn/middleBtn";
 import MiddleBtnBlack from "../Btn/middleBtnBlack";
 
-const FriendsMsg = ({ isVisible, toggleModal }) => {
+const FriendsMsg = ({ isVisible, toggleModal, name, onAccept, onRefuse }) => {
   return (
     <Modal animationType="none" transparent={true} visible={isVisible}>
       <View
@@ -40,12 +40,12 @@ const FriendsMsg = ({ isVisible, toggleModal }) => {
             }}
           />
           <Text style={styles.title}>
-            @@님에게서
+            {name}님에게서
             {"\n"}친구 신청이 왔어요!
           </Text>
           <View style={styles.buttonContainer}>
-            <MiddleBtn text={"거절 "} />
-            <MiddleBtnBlack text={"승낙"} />
+            <MiddleBtn text={"거절 "} onPress={onRefuse} />
+            <MiddleBtnBlack text={"수락"} onPress={onAccept} />
           </View>
         </View>
       </View>
@@ -55,7 +55,7 @@ const FriendsMsg = ({ isVisible, toggleModal }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 335,
+    width: 315,
     // height: 480,
     borderRadius: 16,
     borderWidth: 1.5,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   title: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "700",
     textAlign: "center",
     color: "#000",
