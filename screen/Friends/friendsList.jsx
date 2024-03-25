@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import Line from "../../components/Line";
 import { useRoute } from "@react-navigation/native";
-import FriendsComponent from "./friendsComponent2";
 import apiClient from "../../api/apiClient";
 import FriendsComponent1 from "./friendsComponent1";
 import FriendsComponent2 from "./friendsComponent2";
@@ -63,6 +62,7 @@ function FriendsList() {
     fetchData();
   }, [route]);
 
+  // 친구 수락
   const PostData = async (friendId) => {
     const inputURL = `/friends/approve/${friendId}`;
     console.log(inputURL);
@@ -79,35 +79,65 @@ function FriendsList() {
       console.log("친구 수락함", response.data);
       if (response.status === 200) {
         if (response.data.status === 401) {
-          alert("에러가 발생했습니다. 관리자에게 문의 바랍니다.");
+          Alert.alert(
+            "error",
+            "에러가 발생했습니다.\n관리자에게 문의 바랍니다."
+          );
         } else {
-          alert("친구가 되었습니다!");
+          Alert.alert("", "친구가 되었습니다!");
           fetchData();
         }
       } else if (response.status === 500) {
         alert(response.message);
+      } else {
+        Alert.alert("error", "에러가 발생했습니다.\n관리자에게 문의 바랍니다.");
       }
     } catch (error) {
       console.error("에러:", error);
     }
   };
 
+  // 친구 거절
+  const RefuseData = async (friendId) => {
+    const inputURL = `/friends/approve/${friendId}`;
+    console.log(inputURL);
+    try {
+      const response = await apiClient.delete(
+        inputURL,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        }
+      );
+      console.log("친구 거절함", response.data);
+      if (response.status === 200) {
+        if (response.data.status === 401) {
+          Alert.alert(
+            "error",
+            "에러가 발생했습니다.\n관리자에게 문의 바랍니다."
+          );
+        } else {
+          Alert.alert("", "친구 신청을 거절했습니다.");
+          fetchData();
+        }
+      } else if (response.status === 500) {
+        alert(response.message);
+      } else {
+        Alert.alert("error", "에러가 발생했습니다.\n관리자에게 문의 바랍니다.");
+      }
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  const RefuseFriendData = (friendId) => {
+    RefuseData(friendId);
+  };
+
   const AddFriendData = (friendId) => {
-    Alert.alert(
-      "친구 수락",
-      "친구 신청을 수락하시겠습니까?",
-      [
-        {
-          text: "취소",
-          style: "cancel",
-        },
-        {
-          text: "확인",
-          onPress: () => PostData(friendId),
-        },
-      ],
-      { cancelable: false }
-    );
+    PostData(friendId);
   };
 
   const onRemoveFriend = (friendId) => {
@@ -219,7 +249,11 @@ function FriendsList() {
           <Line color={"#1F1F1F"} h={2} />
         )}
         {isFriendsComponentVisible2 && (
-          <FriendsComponent2 Data={waitData} onAddFriend={AddFriendData} />
+          <FriendsComponent2
+            Data={waitData}
+            onAddFriend={AddFriendData}
+            onRefuseFriend={RefuseFriendData}
+          />
         )}
         {/* {isFriendsComponentVisible2 && <FriendsComponent Data={waitData} />} */}
 
