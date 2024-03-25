@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     borderRadius: 8,
     borderWidth: 1.5,
-    borderColor: "#1F1F1F",
+    borderColor: "#C1C1C1",
     backgroundColor: "#fff",
     width: 120,
     alignItems: "center",
@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     fontFamily: "SUITE_Bold",
-
     color: "#1F1F1F",
   },
 });
