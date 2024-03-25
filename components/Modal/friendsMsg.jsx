@@ -44,8 +44,8 @@ const FriendsMsg = ({ isVisible, toggleModal, name, onAccept, onRefuse }) => {
             {"\n"}친구 신청이 왔어요!
           </Text>
           <View style={styles.buttonContainer}>
-            <MiddleBtn text={"거절 "} onPress={onRefuse} />
-            <MiddleBtnBlack text={"수락"} onPress={onAccept} />
+            <MiddleBtn text={"거절 "} onClick={onRefuse} />
+            <MiddleBtnBlack text={"수락"} onClick={onAccept} />
           </View>
         </View>
       </View>
