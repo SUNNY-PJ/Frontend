@@ -60,7 +60,12 @@ function FriendsList() {
 
   useEffect(() => {
     fetchData();
-  }, [route]);
+  }, [
+    route,
+    isFriendsComponentVisible1,
+    isFriendsComponentVisible2,
+    isFriendsComponentVisible3,
+  ]);
 
   // 친구 수락
   const PostData = async (friendId) => {
