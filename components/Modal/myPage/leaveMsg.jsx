@@ -43,7 +43,6 @@ const LeaveMsg = ({ isVisible, toggleModal, onDelete, onCancel }) => {
     </Modal>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     width: 315,
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   title: {
-    fontSize: 22,
+    fontSize: 16,
     fontWeight: "700",
     textAlign: "center",
     color: "#000",

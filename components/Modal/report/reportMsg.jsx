@@ -42,7 +42,7 @@ const ReportMsg = ({ isVisible, onSubmit, onCancel }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 335,
+    width: 315,
     borderRadius: 16,
     borderWidth: 1.5,
     borderColor: "#1F1F1F",
@@ -56,39 +56,18 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   title: {
-    fontSize: 22,
+    fontSize: 16,
     fontWeight: "700",
     textAlign: "center",
     color: "#000",
     fontFamily: "SUITE_Bold",
   },
-  textContainer: {
-    flexDirection: "cloumns",
-    gap: 24,
-    paddingLeft: 24,
-  },
-  textRow: {
-    flexDirection: "cloumns",
-    gap: 8,
-  },
-  textLabel: {
-    fontSize: 20,
-    fontWeight: "700",
-    color: "#000",
-    fontFamily: "SUITE_Bold",
-  },
-  textValue: {
-    fontSize: 16,
-    fontWeight: "500",
-    color: "#000",
-    fontFamily: "SUITE",
-  },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "center",
     gap: 15,
-    marginTop: 40,
-    marginBottom: 34,
+    marginTop: 32,
+    marginBottom: 32,
   },
 });
 

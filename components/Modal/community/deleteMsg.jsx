@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: 700,
-    fontFamily: "SUITE_Bold",
+    fontWeight: "700",
     textAlign: "center",
     color: "#000",
+    fontFamily: "SUITE_Bold",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -71,5 +71,4 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
 });
-
 export default DeleteMsg;
