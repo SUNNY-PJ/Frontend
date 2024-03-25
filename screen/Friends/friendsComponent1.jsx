@@ -87,7 +87,11 @@ const FriendsComponent1 = ({ Data, onAddFriend, onRemoveFriend }) => {
                 source={
                   item.output === "LOSE"
                     ? require("../../assets/VersusIconRed.png")
-                    : require("../../assets/VersusIcon.png")
+                    : item.output === "WIN"
+                    ? require("../../assets/VersusIcon.png")
+                    : item.output === "DRAW"
+                    ? require("../../assets/VersusIconBlack.png")
+                    : require("../../assets/VersusIconBlack.png")
                 }
                 style={styles.icon}
               />
