@@ -8,7 +8,6 @@ import {
   Modal,
   Alert,
 } from "react-native";
-import { useRoute } from "@react-navigation/native";
 import FriendWrite from "./friendWrite";
 import FriendComment from "./friendComment";
 import apiClient from "../../api/apiClient";
@@ -17,11 +16,10 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   const [comment, setComment] = useState(false);
   const [write, setWrite] = useState(true);
   const [data, setData] = useState([]);
-  const [isFriend, setIsFriend] = useState();
   const [status, setStatus] = useState();
   const [friendId, setFriendId] = useState(0);
+  const [userFriendId, setUserFriendId] = useState(0);
   const [friendName, setFriendName] = useState("");
-  const [isMine, setIsMine] = useState(false);
 
   const commentClick = () => {
     setComment(true);
@@ -44,39 +42,21 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
           userId: userId,
         },
       });
+      console.log("데이터1111:", response.data);
+
       if (response.status === 200) {
         console.log("데이터1111:", response.data);
         const ProfileData = response.data;
         const ProfileId = ProfileData.id;
+        const ProfileFriendId = ProfileData.friendId;
         const ProfileName = ProfileData.name;
         const ProfileOwner = ProfileData.owner;
+        const statusData = ProfileData.friendStatus;
+        setUserFriendId(ProfileFriendId);
         setFriendId(ProfileId);
         setFriendName(ProfileName);
-        setIsMine(ProfileOwner);
         setData([ProfileData]);
-      }
-    } catch (error) {
-      console.error("에러:", error);
-    }
-  };
-
-  // 친구인지 아닌지 확인
-  const confirmData = async () => {
-    const inputURL = `/friends/${friendId}`;
-    try {
-      const response = await apiClient.get(inputURL, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      });
-      if (response.data.status === 200) {
-        console.log("데이터:??", response.data);
-        const isFriendData = response.data.data.isFriend;
-        const statusData = response.data.data.friendStatus;
-        setIsFriend(isFriendData);
         setStatus(statusData);
-        console.log("이게 뭐지???;", isFriendData);
-        console.log("이게 뭐지;", statusData);
         if (statusData === "PENDING") {
           setStatus("대기중");
         } else if (statusData === "FRIEND") {
@@ -86,25 +66,13 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
         }
       }
     } catch (error) {
-      if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
-      } else {
-        console.error("에러:", error);
-      }
+      console.error("에러:", error);
     }
   };
 
   useEffect(() => {
     fetchData();
   }, [userId]);
-
-  useEffect(() => {
-    if (friendId) {
-      if (!isMine) {
-        confirmData();
-      }
-    }
-  }, [friendId, isMine]);
 
   // 친구 신청
   const postData = async () => {
@@ -138,7 +106,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
         if (error.response.data.status === 500) {
-          alert("이미 친구 신청을 한 사용자입니다.");
+          Alert.alert("친구 신청", "이미 친구 신청을 한 사용자입니다.");
         }
       } else {
         console.error("에러:", error);
@@ -147,16 +115,22 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   };
 
   const handleFriend = () => {
-    if (isFriend) {
-      deleteFriendData();
-    } else if (!isFriend) {
+    if (status === "친구끊기") {
+      onRemoveFriend();
+    } else if (status === "친구맺기") {
       postData();
+    } else if (status === "대기중") {
+      Alert.alert(
+        "친구 대기중",
+        `이미 친구 신청을 했거나 받은 사용자입니다.\n 친구 목록에서 확인해주세요.`
+      );
     }
   };
 
   // 친구 끊기
   const deleteFriendData = async () => {
-    const inputURL = `/friends/${friendId}`;
+    const inputURL = `/friends/${userFriendId}`;
+    console.log(inputURL);
     try {
       const response = await apiClient.delete(inputURL, {
         headers: {
@@ -179,10 +153,33 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
           );
           fetchData();
         }
+      } else {
+        Alert.alert(
+          "Error",
+          `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
+        );
       }
     } catch (error) {
       console.error("에러:", error);
     }
+  };
+
+  const onRemoveFriend = () => {
+    Alert.alert(
+      "친구 끊기",
+      "친구를 끊으시겠습니까??",
+      [
+        {
+          text: "취소",
+          style: "cancel",
+        },
+        {
+          text: "확인",
+          onPress: () => deleteFriendData(),
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
