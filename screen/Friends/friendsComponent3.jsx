@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import FriendProfile from "./friendProfile";
 
-const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
+const FriendsComponent3 = ({ Data, onAddFriend, onRemoveFriend }) => {
   const navigation = useNavigation();
   const [userId, setUserId] = useState("");
   const [isOpenProfile, setIsOpenProfile] = useState(false);
@@ -107,7 +107,7 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
                 {item.nickname}
               </Text>
             </View>
-            {item.friendStatus === "BATTLE" && (
+            {item.competitionStatus === "BATTLE" && (
               <View style={{ flexDirection: "row", gap: 16 }}>
                 {/* <TouchableOpacity activeOpacity={0.6}>
                 <Image
@@ -122,7 +122,7 @@ const FriendsComponent = ({ Data, onAddFriend, onRemoveFriend }) => {
                   }}
                 >
                   <Image
-                    source={require("../../assets/VersusIcon.png")}
+                    source={require("../../assets/VersusIconRed.png")}
                     style={styles.icon}
                   />
                 </TouchableOpacity>
@@ -229,4 +229,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FriendsComponent;
+export default FriendsComponent3;
