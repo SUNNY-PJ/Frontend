@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -11,8 +11,42 @@ import MiddleBtn from "../../Btn/middleBtn";
 import MiddleBtnBlack from "../../Btn/middleBtnBlack";
 import apiClient from "../../../api/apiClient";
 
-const MatchMsg = ({ isVisible, toggleModal, friendsId }) => {
+const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
   const inputURL = `/competition/approve/${friendsId}`;
+  console.log("friendsId??", friendsId);
+
+  // 대결 확인
+  const fetchData = async () => {
+    const inputURL = `/competition/`;
+    try {
+      const response = await apiClient.get(inputURL, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      });
+      console.log("대결 신청 조회", response.data);
+      if (response.status === 200) {
+        if (response.data.status === 400) {
+          Alert.alert(
+            "Error",
+            `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
+          );
+        } else {
+        }
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 메세지:", error.message);
+      } else {
+        console.error("에러:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   // 대결 신청 수락
   const approveMatch = async () => {
@@ -111,7 +145,7 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId }) => {
             </TouchableOpacity>
           </View>
           <Text style={styles.title}>
-            @@님에게서
+            {nickname}님에게서
             {"\n"}대결 신청이 왔어요!
           </Text>
           <View style={styles.textContainer}>
@@ -145,7 +179,7 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 335,
+    width: 315,
     // height: 480,
     borderRadius: 16,
     borderWidth: 1.5,
@@ -160,9 +194,9 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   title: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "700",
-    marginBottom: 24,
+    marginBottom: 30,
     textAlign: "center",
     color: "#000",
     fontFamily: "SUITE_Bold",
@@ -177,7 +211,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   textLabel: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "700",
     color: "#000",
     fontFamily: "SUITE_Bold",
@@ -192,8 +226,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     gap: 15,
-    marginTop: 40,
-    marginBottom: 39,
+    marginTop: 32,
+    marginBottom: 32,
   },
 });
 
