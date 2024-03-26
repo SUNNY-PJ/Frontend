@@ -24,9 +24,10 @@ export const SaveDataProvider = ({ children }) => {
       if (response.status === 200) {
         console.log("절약 목표", response.data);
         const SaveDataVal = response.data.data;
-
-        if (SaveDataVal && SaveDataVal.length > 0) {
-          const SaveData = SaveDataVal[0];
+        // date가 음수가 아닌 항목만 필터링
+        const validSaveData = SaveDataVal.filter((item) => item.date >= 0);
+        if (validSaveData.length > 0) {
+          const SaveData = validSaveData[0];
           console.log("절약 목표 조회::", SaveData);
           setSaveData({
             isLoaded: true,
@@ -63,9 +64,9 @@ export const SaveDataProvider = ({ children }) => {
     }
   };
 
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
+  //   useEffect(() => {
+  //     fetchData();
+  //   }, []);
 
   return (
     <SaveDataContext.Provider value={{ saveData, setSaveData, fetchData }}>
