@@ -6,36 +6,39 @@ import MainScreen from "./MainScreen";
 import SignUpScreen from "./SignUpScreen";
 import ChatScreen from "./ChatScreen";
 import KakaoScreen from "./KakaoScreen";
+import { SaveDataProvider } from "./context/saveDataContext";
 
 const Stack = createStackNavigator();
 
 function Navigation() {
   return (
     <CommunityProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="KakaoScreen"
-            component={KakaoScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="SignUpScreen"
-            component={SignUpScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="MainScreen"
-            component={MainScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ChatScreen"
-            component={ChatScreen}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <SaveDataProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="KakaoScreen"
+              component={KakaoScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="SignUpScreen"
+              component={SignUpScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="MainScreen"
+              component={MainScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ChatScreen"
+              component={ChatScreen}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SaveDataProvider>
     </CommunityProvider>
   );
 }
