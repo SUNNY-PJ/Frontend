@@ -57,12 +57,14 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
         setFriendName(ProfileName);
         setData([ProfileData]);
         setStatus(statusData);
-        if (statusData === "PENDING") {
-          setStatus("대기중");
+        if (statusData === "RECEIVE") {
+          setStatus("친구수락");
         } else if (statusData === "FRIEND") {
           setStatus("친구끊기");
         } else if (statusData === "NONE") {
           setStatus("친구맺기");
+        } else if (statusData === "SEND") {
+          setStatus("대기중");
         }
       }
     } catch (error) {
@@ -122,10 +124,44 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
     } else if (status === "친구맺기") {
       postData();
     } else if (status === "대기중") {
-      Alert.alert(
-        "친구 대기중",
-        `이미 친구 신청을 했거나 받은 사용자입니다.\n 친구 목록에서 확인해주세요.`
+      Alert.alert("친구 대기중", `이미 친구 신청을 했습니다.`);
+    } else if (status === "친구수락") {
+      onApproveFriend();
+    }
+  };
+
+  // 친구 수락
+  const approveData = async () => {
+    const inputURL = `/friends/approve/${friendId}`;
+    try {
+      const response = await apiClient.post(
+        inputURL,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        }
       );
+      if (response.status === 200) {
+        if (response.data.status === 401) {
+          Alert.alert(
+            "error",
+            "에러가 발생했습니다.\n관리자에게 문의 바랍니다."
+          );
+        } else if (response.data.status === 409) {
+          Alert.alert("친구", "이미 친구입니다.");
+        } else {
+          Alert.alert("", "친구가 되었습니다!");
+          fetchData();
+        }
+      } else if (response.status === 500) {
+        alert(response.message);
+      } else {
+        Alert.alert("error", "에러가 발생했습니다.\n관리자에게 문의 바랍니다.");
+      }
+    } catch (error) {
+      console.error("에러:", error);
     }
   };
 
@@ -164,6 +200,24 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
     } catch (error) {
       console.error("에러:", error);
     }
+  };
+
+  const onApproveFriend = () => {
+    Alert.alert(
+      "친구 수락",
+      "친구를 수락하시겠습니까??",
+      [
+        {
+          text: "취소",
+          style: "cancel",
+        },
+        {
+          text: "확인",
+          onPress: () => approveData(),
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   const onRemoveFriend = () => {
