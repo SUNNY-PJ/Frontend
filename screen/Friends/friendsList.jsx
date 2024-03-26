@@ -146,21 +146,22 @@ function FriendsList() {
   };
 
   const onRemoveFriend = (friendId) => {
-    Alert.alert(
-      "친구 삭제",
-      "친구를 삭제하시겠습니까?",
-      [
-        {
-          text: "취소",
-          style: "cancel",
-        },
-        {
-          text: "확인",
-          onPress: () => deleteData(friendId),
-        },
-      ],
-      { cancelable: false }
-    );
+    deleteData(friendId);
+    // Alert.alert(
+    //   "친구 삭제",
+    //   "친구를 삭제하시겠습니까?",
+    //   [
+    //     {
+    //       text: "취소",
+    //       style: "cancel",
+    //     },
+    //     {
+    //       text: "확인",
+    //       onPress: () => deleteData(friendId),
+    //     },
+    //   ],
+    //   { cancelable: false }
+    // );
   };
 
   // 친구 삭제

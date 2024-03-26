@@ -11,6 +11,7 @@ import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import FriendProfile from "./friendProfile";
+import MsgModal from "../../components/Modal/msg/msgModal";
 
 const FriendsComponent3 = ({ Data, onAddFriend, onRemoveFriend }) => {
   const navigation = useNavigation();
@@ -25,10 +26,30 @@ const FriendsComponent3 = ({ Data, onAddFriend, onRemoveFriend }) => {
     }
   };
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedFriendId, setSelectedFriendId] = useState(null);
+
+  const showModal = (friendId) => {
+    setSelectedFriendId(friendId);
+    setIsModalVisible(true);
+  };
+
+  const handleDeleteFriend = () => {
+    if (selectedFriendId) {
+      onRemoveFriend(selectedFriendId);
+      setIsModalVisible(false);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setIsModalVisible(false);
+  };
+
   // 삭제 버튼
   const renderRightActions = (friendId) => {
     return (
-      <TouchableOpacity onPress={() => onRemoveFriend(friendId)}>
+      <TouchableOpacity onPress={() => showModal(friendId)}>
+        {/* <TouchableOpacity onPress={() => onRemoveFriend(friendId)}> */}
         <View style={styles.deleteBox}>
           <Text style={styles.deleteButtonText}>삭제</Text>
         </View>
@@ -175,6 +196,13 @@ const FriendsComponent3 = ({ Data, onAddFriend, onRemoveFriend }) => {
         isOpenProfile={isOpenProfile}
         openProfile={openProfile}
         userId={userId}
+      />
+      <MsgModal
+        isVisible={isModalVisible}
+        toggleModal={handleCancelDelete}
+        onDelete={handleDeleteFriend}
+        onCancel={handleCancelDelete}
+        msgTitle="친구를 삭제하시겠습니까?"
       />
     </ScrollView>
   );
