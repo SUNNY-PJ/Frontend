@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -9,73 +9,31 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TopTooltip from "./Modal/topTooltip";
-import apiClient from "../api/apiClient";
+import { useSaveData } from "../context/saveDataContext";
 
 const Top = ({ navigation }) => {
-  const inputURL = "/save";
-  const [day, setDay] = useState(0);
-  const [progress, setProgress] = useState(0);
-  const [cost, setCost] = useState(0);
-  const progressAnim = useRef(new Animated.Value(0)).current; // 초기 값 0으로 설정
-  const [saveData, setSaveData] = useState(false);
+  const { saveData, fetchData } = useSaveData();
+  const progressAnim = useRef(new Animated.Value(0)).current;
   const [isOpenTopTooltip, setIsOpenTopTooltip] = useState(false);
 
-  // 절약 목표 조회
-  const fetchData = async () => {
-    try {
-      const response = await apiClient.get(inputURL, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      });
-      if (response.status === 200) {
-        console.log("절약 목표", response.data);
-        const SaveDataVal = response.data.data;
+  let backgroundColor = "#FFA851"; // 기본 색상
 
-        if (SaveDataVal && SaveDataVal.length > 0) {
-          const SaveData = SaveDataVal[0];
-          console.log("절약 목표 조회::", SaveData);
-          setSaveData(true);
-          setDay(SaveData.date);
-          setProgress(SaveData.savePercentage);
-          setCost(SaveData.cost);
-        } else {
-          console.log("절약 목표 조회::", SaveDataVal);
-          setSaveData(false);
-          setDay(0);
-          setProgress(0);
-          setCost(0);
-        }
-      } else if (response.status === 404) {
-        setSaveData(false);
-      }
-    } catch (error) {
-      console.error("에러:", error);
+  if (saveData.isLoaded) {
+    if (saveData.progress <= 20) {
+      backgroundColor = "#F97B7B"; // 20 이하일 때 색상
+    } else if (saveData.progress <= 49) {
+      backgroundColor = "#FAC337"; // 49 이하일 때 색상
+    } else if (saveData.progress <= 100) {
+      backgroundColor = "#6ADCA3"; // 100 이하일 때 색상
     }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [saveData, day, progress]);
-
-  // useEffect(() => {
-  //   if (!saveData) {
-  //     setIsOpenTopTooltip(true);
-  //   }
-  // }, [saveData]);
-
-  // const openTopTooltip = () => {
-  //   setIsOpenTopTooltip(false);
-  // };
+  }
 
   useEffect(() => {
     const checkTooltipShown = async () => {
       const hasShownTopTooltip = await AsyncStorage.getItem(
         "hasShownTopTooltip"
       );
-      if (hasShownTopTooltip === "true") {
-        setIsOpenTopTooltip(false);
-      }
+      setIsOpenTopTooltip(hasShownTopTooltip !== "true");
     };
 
     checkTooltipShown();
@@ -87,19 +45,21 @@ const Top = ({ navigation }) => {
   };
 
   useEffect(() => {
-    // progress 상태가 변경될 때마다 애니메이션을 실행
     Animated.timing(progressAnim, {
-      toValue: progress, // 최종 값은 progress 상태 값으로 설정
-      duration: 500, // 애니메이션 지속 시간
-      useNativeDriver: false, // width 속성을 애니메이션하기 때문에 false로 설정
+      toValue: saveData.progress,
+      duration: 500,
+      useNativeDriver: false,
     }).start();
-  }, [progress]); // progress 값이 바뀔 때마다 애니메이션을 실행
+  }, [saveData.progress]);
 
-  // progressAnim 값을 width 퍼센테이지로 변환
   const progressWidth = progressAnim.interpolate({
     inputRange: [0, 100],
     outputRange: ["0%", "100%"],
   });
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -107,7 +67,7 @@ const Top = ({ navigation }) => {
         <Text style={[styles.text]}>
           D -&nbsp;
           {saveData ? (
-            day
+            saveData.day
           ) : (
             <Text
               style={{
@@ -128,6 +88,7 @@ const Top = ({ navigation }) => {
                 styles.progressFill,
                 {
                   width: progressWidth,
+                  backgroundColor: backgroundColor,
                 },
               ]}
             />
@@ -142,7 +103,7 @@ const Top = ({ navigation }) => {
                   transform: [{ translateY: 0 }, { translateX: 90 }],
                 }}
               >
-                {progress}%
+                {saveData.progress}%
               </Text>
             ) : (
               <View
@@ -253,7 +214,6 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     height: "100%",
-    backgroundColor: "#FFA851",
     borderRadius: 29,
   },
   icon: {
