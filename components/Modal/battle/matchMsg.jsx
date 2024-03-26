@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,35 +14,63 @@ import apiClient from "../../../api/apiClient";
 const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
   const inputURL = `/competition/approve/${friendsId}`;
   console.log("friendsId??", friendsId);
+  const [matchInfo, setMatchInfo] = useState(null);
 
   // 대결 확인
   const fetchData = async () => {
-    const inputURL = `/competition/`;
     try {
-      const response = await apiClient.get(inputURL, {
+      const response = await apiClient.get("/competition", {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-      console.log("대결 신청 조회", response.data);
-      if (response.status === 200) {
-        if (response.data.status === 400) {
-          Alert.alert(
-            "Error",
-            `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
-          );
+      if (response.status === 200 && response.data.data) {
+        // friendsId와 userFriendId가 일치하는 객체 찾기
+        const foundMatch = response.data.data.find(
+          (item) => item.userFriendId === friendsId
+        );
+        if (foundMatch) {
+          setMatchInfo(foundMatch);
         } else {
+          console.log("해당 대결 정보가 없습니다.");
         }
       }
     } catch (error) {
-      if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
-        console.error("서버 응답 메세지:", error.message);
-      } else {
-        console.error("에러:", error);
-      }
+      console.error("대결 신청 조회 에러:", error);
     }
   };
+  // price 포맷 함수
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat("ko-KR").format(price);
+  };
+
+  // const fetchData = async () => {
+  //   const inputURL = `/competition`;
+  //   try {
+  //     const response = await apiClient.get(inputURL, {
+  //       headers: {
+  //         "Content-Type": "application/json; charset=utf-8",
+  //       },
+  //     });
+  //     console.log("대결 신청 조회", response.data);
+  //     if (response.status === 200) {
+  //       if (response.data.status === 400) {
+  //         Alert.alert(
+  //           "Error",
+  //           `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
+  //         );
+  //       } else {
+  //       }
+  //     }
+  //   } catch (error) {
+  //     if (error.response) {
+  //       console.error("서버 응답 오류:", error.response.data);
+  //       console.error("서버 응답 메세지:", error.message);
+  //     } else {
+  //       console.error("에러:", error);
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     fetchData();
@@ -150,8 +178,12 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
           </Text>
           <View style={styles.textContainer}>
             <View style={styles.textRow}>
-              <Text style={styles.textLabel}>도발 메세지</Text>
-              <Text style={styles.textValue}>도발 메세지</Text>
+              <View style={styles.textRow}>
+                <Text style={styles.textLabel}>도발 메세지</Text>
+                <Text style={styles.textValue}>
+                  {matchInfo?.message || "없음"}
+                </Text>
+              </View>
             </View>
             {/* <View style={styles.textRow}>
               <Text style={styles.textLabel}>대결 보상</Text>
@@ -160,7 +192,9 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
             <View style={styles.textRow}>
               <Text style={styles.textLabel}>대결 기간/금액</Text>
               <Text style={styles.textValue}>7일</Text>
-              <Text style={styles.textValue}>150,000원</Text>
+              <Text style={styles.textValue}>
+                {formatPrice(matchInfo?.price || 0)}원
+              </Text>
             </View>
           </View>
           <View style={styles.buttonContainer}>
