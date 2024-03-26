@@ -44,7 +44,6 @@ const FriendsComponent2 = ({ Data, onAddFriend, onRefuseFriend }) => {
   };
 
   const handleAccept = () => {
-    console.log("클릭함:::");
     onAddFriend(friendId);
     setIsVisible(false);
   };
