@@ -28,6 +28,7 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
     }
   };
 
+  const [nickname, setNickname] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedFriendId, setSelectedFriendId] = useState(null);
   const [isMatchModalVisible, setIsMatchModalVisible] = useState(false);
@@ -69,8 +70,9 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
   };
 
   const handleBattle = (friendId, nickname, competitionStatus) => {
+    setNickname(nickname);
     if (competitionStatus === "RECEIVE") {
-      showMatchModal(friendId);
+      showMatchModal();
     } else if (competitionStatus === "SEND") {
       Alert.alert("알림", "이미 대결을 신청했습니다.");
     } else if (competitionStatus === "NONE") {
@@ -187,6 +189,7 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
         isVisible={isMatchModalVisible}
         toggleModal={hideMatchModal}
         friendsId={userId}
+        nickname={nickname}
       />
     </ScrollView>
   );
