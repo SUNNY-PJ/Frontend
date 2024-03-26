@@ -105,7 +105,7 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId }) => {
           <View style={styles.closeButtonContainer}>
             <TouchableOpacity onPress={toggleModal}>
               <Image
-                source={require("../../assets/close.png")}
+                source={require("../../../assets/close.png")}
                 style={{ width: 16, height: 16 }}
               />
             </TouchableOpacity>
@@ -119,10 +119,10 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId }) => {
               <Text style={styles.textLabel}>도발 메세지</Text>
               <Text style={styles.textValue}>도발 메세지</Text>
             </View>
-            <View style={styles.textRow}>
+            {/* <View style={styles.textRow}>
               <Text style={styles.textLabel}>대결 보상</Text>
               <Text style={styles.textValue}>맘스터치 기프티콘</Text>
-            </View>
+            </View> */}
             <View style={styles.textRow}>
               <Text style={styles.textLabel}>대결 기간/금액</Text>
               <Text style={styles.textValue}>7일</Text>
