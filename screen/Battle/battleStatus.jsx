@@ -90,7 +90,9 @@ const BattleStatus = () => {
   return (
     <View style={styles.container}>
       <View style={styles.section}>
-        <Text style={[styles.boldText, { textAlign: "center", marginTop: -10 }]}>
+        <Text
+          style={[styles.boldText, { textAlign: "center", marginTop: -10 }]}
+        >
           {/* oo <Text style={[styles.text]}>을 걸고</Text> */}
           {"\n"}MM월 DD일
           <Text style={[styles.text]}>까지</Text> NNN,NNN원
@@ -105,7 +107,7 @@ const BattleStatus = () => {
           나는
         </Text>
         <Progress progress={80} color={"#6ADCA3"} />
-        <Text style={[styles.boldText]}>
+        <Text style={[styles.boldText, { marginTop: 35 }]}>
           NN% <Text style={[styles.text]}>남았어요</Text>
         </Text>
         <Image

@@ -62,7 +62,7 @@ const BattleStatusDisable = () => {
           나는
         </Text>
         <Progress progress={50} color={"#C1C1C1"} />
-        <Text style={[styles.boldText]}>
+        <Text style={[styles.boldText, { marginTop: 35 }]}>
           NN% <Text style={[styles.text]}>남았어요</Text>
         </Text>
         <Image
