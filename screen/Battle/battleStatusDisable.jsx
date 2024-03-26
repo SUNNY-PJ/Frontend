@@ -41,8 +41,10 @@ const BattleStatusDisable = () => {
   return (
     <View style={styles.container}>
       <View style={styles.section}>
-        <Text style={[styles.boldText, { textAlign: "center" }]}>
-          oo <Text style={[styles.text]}>을 걸고</Text>
+        <Text
+          style={[styles.boldText, { textAlign: "center", marginTop: -10 }]}
+        >
+          {/* oo <Text style={[styles.text]}>을 걸고</Text> */}
           {"\n"}MM월 DD일
           <Text style={[styles.text]}>까지</Text> NNN,NNN원
           <Text style={[styles.text]}>&nbsp;쓰기</Text>

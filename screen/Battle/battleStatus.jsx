@@ -33,8 +33,8 @@ const BattleStatus = () => {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-      const StatusData = response.data;
-      console.log(StatusData);
+      const StatusData = response.data.data;
+      console.log("StatusData:::", StatusData);
       if (response.status === 200) {
         setData(StatusData);
         // navigation.navigate("MainScreen", { screen: "FriendsList" });
@@ -71,6 +71,7 @@ const BattleStatus = () => {
       if (response.status === 200) {
         Alert.alert("대결 포기", "대결을 포기하시겠습니까?");
         // navigation.navigate("MainScreen", { screen: "FriendsList" });
+        navigation.navigate("MainScreen", { screen: "FriendsListDisable" });
       }
     } catch (error) {
       if (error.response) {
@@ -89,8 +90,8 @@ const BattleStatus = () => {
   return (
     <View style={styles.container}>
       <View style={styles.section}>
-        <Text style={[styles.boldText, { textAlign: "center" }]}>
-          oo <Text style={[styles.text]}>을 걸고</Text>
+        <Text style={[styles.boldText, { textAlign: "center", marginTop: -10 }]}>
+          {/* oo <Text style={[styles.text]}>을 걸고</Text> */}
           {"\n"}MM월 DD일
           <Text style={[styles.text]}>까지</Text> NNN,NNN원
           <Text style={[styles.text]}>&nbsp;쓰기</Text>
