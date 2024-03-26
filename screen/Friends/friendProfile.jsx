@@ -71,7 +71,9 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   };
 
   useEffect(() => {
-    fetchData();
+    if (userId) {
+      fetchData();
+    }
   }, [userId]);
 
   // 친구 신청
