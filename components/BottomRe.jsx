@@ -10,16 +10,25 @@ import {
   Dimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useSaveData } from "../context/saveDataContext";
 
 const BottomRe = () => {
+  const { saveData } = useSaveData();
   const windowWidth = Dimensions.get("window").width;
   const navigation = useNavigation();
   const [selectedIcon, setSelectedIcon] = useState("Spending");
 
-  const homeImageSource =
-    selectedIcon === "Spending"
-      ? require("../assets/logo/default.png")
-      : require("../assets/logo/default.png");
+  let homeImageSource = require("../assets/logo/default.png");
+
+  if (saveData.isLoaded) {
+    if (saveData.progress <= 20) {
+      homeImageSource = require("../assets/logo/bad.png");
+    } else if (saveData.progress <= 49) {
+      homeImageSource = require("../assets/logo/moderate.png");
+    } else if (saveData.progress <= 100) {
+      homeImageSource = require("../assets/logo/good.png");
+    }
+  }
 
   const friendsImageSource =
     selectedIcon === "FriendsList"
