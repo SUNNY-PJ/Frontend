@@ -150,7 +150,7 @@ const DonutChart = ({ data, noData, onCategorySelect }) => {
                 gap: 3,
                 marginTop: 10,
                 alignItems: "center",
-                width: 50,
+                width: 53,
               }}
             >
               <View
