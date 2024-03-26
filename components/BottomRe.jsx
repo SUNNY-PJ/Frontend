@@ -18,8 +18,8 @@ const BottomRe = () => {
 
   const homeImageSource =
     selectedIcon === "Spending"
-      ? require("../assets/bottomHome.png")
-      : require("../assets/bottomHome.png");
+      ? require("../assets/logo/default.png")
+      : require("../assets/logo/default.png");
 
   const friendsImageSource =
     selectedIcon === "FriendsList"
@@ -150,97 +150,6 @@ const BottomRe = () => {
         </View>
       </View>
     </>
-    // <View style={styles.bottomContainer}>
-    //   <View style={{ flexDirection: "row" }}>
-    //     <TouchableOpacity
-    //       activeOpacity={1}
-    //       style={[styles.menuItem]}
-    //       onPress={() => {
-    //         toggleIcons("Community");
-    //         navigation.navigate("Community");
-    //       }}
-    //     >
-    //       <View
-    //         style={[
-    //           styles.iconBg,
-    //           selectedIcon === "Community" && styles.selectedIconContainer,
-    //         ]}
-    //       >
-    //         <Image style={styles.icon} source={communityImageSource} />
-    //       </View>
-    //       <Text style={styles.menuText}>커뮤니티</Text>
-    //     </TouchableOpacity>
-    //     <TouchableOpacity
-    //       activeOpacity={1}
-    //       style={[styles.menuItem]}
-    //       onPress={() => {
-    //         toggleIcons("Message");
-    //         navigation.navigate("ChatList");
-    //       }}
-    //     >
-    //       <View
-    //         style={[
-    //           styles.iconBg,
-    //           selectedIcon === "Message" && styles.selectedIconContainer,
-    //         ]}
-    //       >
-    //         <Image style={styles.icon} source={messageImageSource} />
-    //       </View>
-    //       <Text style={styles.menuText}>대화</Text>
-    //     </TouchableOpacity>
-    //     {/* 중앙 아이콘 */}
-    //     {/* <TouchableOpacity
-    //       activeOpacity={1}
-    //       style={styles.menuItem}
-    //       // onPress={handleMainIcon}
-    //       onPress={() => {
-    //         setSelectedIcon(null);
-    //         navigation.navigate("Spending");
-    //       }}
-    //     >
-    //       <Image
-    //         source={require("../assets/bottomIcon.png")}
-    //         style={{ width: 64, height: 64, top: -40, left: 5 }}
-    //       />
-    //     </TouchableOpacity> */}
-    //     <TouchableOpacity
-    //       activeOpacity={1}
-    //       style={[styles.menuItem]}
-    //       onPress={() => {
-    //         toggleIcons("FriendsList");
-    //         navigation.navigate("FriendsList");
-    //       }}
-    //     >
-    //       <View
-    //         style={[
-    //           styles.iconBg,
-    //           selectedIcon === "FriendsList" && styles.selectedIconContainer,
-    //         ]}
-    //       >
-    //         <Image style={styles.icon} source={friendsImageSource} />
-    //       </View>
-    //       <Text style={styles.menuText}>친구</Text>
-    //     </TouchableOpacity>
-    //     <TouchableOpacity
-    //       activeOpacity={1}
-    //       style={[styles.menuItem]}
-    //       onPress={() => {
-    //         toggleIcons("MyPage");
-    //         navigation.navigate("MyPage");
-    //       }}
-    //     >
-    //       <View
-    //         style={[
-    //           styles.iconBg,
-    //           selectedIcon === "MyPage" && styles.selectedIconContainer,
-    //         ]}
-    //       >
-    //         <Image style={styles.icon} source={imageSource} />
-    //       </View>
-    //       <Text style={styles.menuText}>마이페이지</Text>
-    //     </TouchableOpacity>
-    //   </View>
-    // </View>
   );
 };
 
