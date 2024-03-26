@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     gap: 15,
-    marginTop: 40,
-    marginBottom: 34,
+    marginTop: 26,
+    marginBottom: 32,
   },
 });
 
