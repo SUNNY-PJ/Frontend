@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import FriendProfile from "./friendProfile";
 import MsgModal from "../../components/Modal/msg/msgModal";
+import MatchMsg from "../../components/Modal/battle/matchMsg";
 
 const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
   const navigation = useNavigation();
@@ -29,6 +30,15 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedFriendId, setSelectedFriendId] = useState(null);
+  const [isMatchModalVisible, setIsMatchModalVisible] = useState(false);
+
+  const showMatchModal = () => {
+    setIsMatchModalVisible(true);
+  };
+
+  const hideMatchModal = () => {
+    setIsMatchModalVisible(false);
+  };
 
   const showModal = (friendId) => {
     setSelectedFriendId(friendId);
@@ -59,43 +69,20 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
   };
 
   const handleBattle = (friendId, nickname, competitionStatus) => {
-    switch (competitionStatus) {
-      case "NONE":
-        // 신청할 수 있는 상태
-        navigation.navigate("MainScreen", {
-          screen: "SendMatch",
-          params: {
-            friendId: friendId,
-            name: nickname,
-          },
-        });
-        break;
-      case "SEND":
-        // 이미 대결을 신청한 상태
-        Alert.alert("알림", "이미 대결을 신청했습니다.");
-        break;
-      case "RECEIVE":
-        // 대결을 받은 상태, 수락 여부를 물어봄
-        Alert.alert(
-          "대결 수락",
-          `${nickname}님으로부터 대결 요청을 받았습니다. 수락하시겠습니까?`,
-          [
-            {
-              text: "거절",
-              onPress: () => console.log("대결 요청 거절"),
-              style: "cancel",
-            },
-            {
-              text: "수락",
-              onPress: () => console.log("대결 요청 수락"),
-            },
-          ],
-          { cancelable: false }
-        );
-        break;
-      default:
-        // 기타 상황
-        console.log("대결 상태를 확인할 수 없습니다.");
+    if (competitionStatus === "RECEIVE") {
+      showMatchModal(friendId);
+    } else if (competitionStatus === "SEND") {
+      Alert.alert("알림", "이미 대결을 신청했습니다.");
+    } else if (competitionStatus === "NONE") {
+      navigation.navigate("MainScreen", {
+        screen: "SendMatch",
+        params: {
+          friendId: friendId,
+          name: nickname,
+        },
+      });
+    } else {
+      Alert.alert("error", "대결 상태를 확인할 수 없습니다.");
     }
   };
 
@@ -195,6 +182,11 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
         onDelete={handleDeleteFriend}
         onCancel={handleCancelDelete}
         msgTitle="친구를 삭제하시겠습니까?"
+      />
+      <MatchMsg
+        isVisible={isMatchModalVisible}
+        toggleModal={hideMatchModal}
+        friendsId={userId}
       />
     </ScrollView>
   );
