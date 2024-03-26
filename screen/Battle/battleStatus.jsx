@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 import Progress from "../../components/progress/progress";
@@ -46,6 +53,39 @@ const BattleStatus = () => {
     fetchData();
   }, [friendId]);
 
+  // 대결 포기
+  const giveUpData = async () => {
+    const url = `competition/give-up/${friendId}`;
+    try {
+      const response = await apiClient.delete(
+        url,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+        }
+      );
+      const Data = response.data;
+      console.log(Data);
+      if (response.status === 200) {
+        Alert.alert("대결 포기", "대결을 포기하시겠습니까?");
+        // navigation.navigate("MainScreen", { screen: "FriendsList" });
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 메세지:", error.message);
+      } else {
+        console.error("에러:", error);
+      }
+    }
+  };
+
+  const handleGiveUp = () => {
+    giveUpData();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.section}>
@@ -84,14 +124,16 @@ const BattleStatus = () => {
         <Text style={[styles.boldText]}>
           NN% <Text style={[styles.text]}>남았어요</Text>
         </Text>
-        <Text
-          style={[
-            styles.subText,
-            { textDecorationLine: "underline", marginTop: 40 },
-          ]}
-        >
-          포기하기
-        </Text>
+        <TouchableOpacity onPress={handleGiveUp}>
+          <Text
+            style={[
+              styles.subText,
+              { textDecorationLine: "underline", marginTop: 40 },
+            ]}
+          >
+            포기하기
+          </Text>
+        </TouchableOpacity>
       </View>
       {/* </ScrollView> */}
     </View>
