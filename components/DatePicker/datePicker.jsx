@@ -17,7 +17,7 @@ const DatePicker = ({
   //   resetDate,
 }) => {
   const [selectedDate, setSelectedDate] = useState();
-  console.log(selectedDate);
+  // console.log(selectedDate);
 
   const [isInputFocused, setInputFocused] = useState(false);
 
