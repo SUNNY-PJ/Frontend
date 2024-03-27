@@ -205,7 +205,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   const onApproveFriend = () => {
     Alert.alert(
       "친구 수락",
-      "친구를 수락하시겠습니까??",
+      "친구를 수락하시겠습니까?",
       [
         {
           text: "취소",
