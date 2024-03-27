@@ -125,7 +125,8 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
                 }}
               >
                 <Image
-                  source={require("../../assets/Avatar.png")}
+                  source={{ uri: item.profile }}
+                  // source={require("../../assets/Avatar.png")}
                   style={styles.icon}
                 />
               </TouchableOpacity>
@@ -226,6 +227,7 @@ const styles = StyleSheet.create({
   icon: {
     height: 40,
     width: 40,
+    borderRadius: 50,
   },
   deleteBox: {
     backgroundColor: "#5C5C5C",

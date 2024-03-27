@@ -57,10 +57,7 @@ const FriendsComponent1 = ({ Data, onAddFriend, onRemoveFriend }) => {
                 openProfile(item.userFriendId);
               }}
             >
-              <Image
-                source={require("../../assets/Avatar.png")}
-                style={styles.icon}
-              />
+              <Image source={{ uri: item.profile }} style={styles.icon} />
             </TouchableOpacity>
             <Text
               style={{
@@ -138,6 +135,7 @@ const styles = StyleSheet.create({
   icon: {
     height: 40,
     width: 40,
+    borderRadius: 50,
   },
   deleteBox: {
     backgroundColor: "#5C5C5C",

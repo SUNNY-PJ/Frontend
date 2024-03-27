@@ -77,7 +77,7 @@ const FriendsComponent2 = ({ Data, onAddFriend, onRefuseFriend }) => {
             borderBottomColor: "#C1C1C1",
             borderBottomWidth: 1,
           }}
-          key={item.friendId} 
+          key={item.friendId}
         >
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
@@ -87,7 +87,8 @@ const FriendsComponent2 = ({ Data, onAddFriend, onRefuseFriend }) => {
               }}
             >
               <Image
-                source={require("../../assets/Avatar.png")}
+                // source={require("../../assets/Avatar.png")}
+                source={{ uri: item.profile }}
                 style={styles.icon}
               />
             </TouchableOpacity>
@@ -165,6 +166,7 @@ const styles = StyleSheet.create({
   icon: {
     height: 40,
     width: 40,
+    borderRadius: 50,
   },
   deleteBox: {
     backgroundColor: "#5C5C5C",
