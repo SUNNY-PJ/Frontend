@@ -26,6 +26,7 @@ function Note({ navigation }) {
   const [place, setPlace] = useState("의류");
   const [name, setName] = useState("");
   const [money, setMoney] = useState("");
+  const [moneyNumeric, setMoneyNumeric] = useState(0);
 
   const handleRadioClick = (value) => {
     setPlace(value);
@@ -55,23 +56,14 @@ function Note({ navigation }) {
     setDatePickerVisibility(false);
   };
 
-  // 콤마(,)를 제거하고 숫자 형태로 파싱
-  const formattedMoney = (value) => {
-    const parsedValue = parseFloat(value.replace(/,/g, ""));
-
-    // 숫자가 유효하면 포맷팅된 문자열 반환, 그렇지 않으면 빈 문자열 반환
-    if (!isNaN(parsedValue)) {
-      return parsedValue.toLocaleString();
-    } else {
-      return "";
-    }
-  };
-
   // money 상태 변수 업데이트
   const handleMoneyChange = (text) => {
-    const cleanedText = text.replace(/[^0-9,]/g, "");
-    const formattedValue = formattedMoney(cleanedText);
+    const cleanedText = text.replace(/[^0-9]/g, "");
+    const numericValue = parseInt(cleanedText, 10) || 0;
+
+    const formattedValue = numericValue.toLocaleString();
     setMoney(formattedValue);
+    setMoneyNumeric(numericValue);
   };
 
   useEffect(() => {
@@ -86,11 +78,11 @@ function Note({ navigation }) {
     try {
       const bodyData = {
         date_field: date,
-        money: money.replace(/,/g, ""),
+        money: moneyNumeric,
         name: name,
         category: place,
       };
-
+      console.log(bodyData);
       const response = await apiClient.post(inputURL, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
