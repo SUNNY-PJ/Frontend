@@ -77,7 +77,7 @@ const FriendsComponent2 = ({ Data, onAddFriend, onRefuseFriend }) => {
             borderBottomColor: "#C1C1C1",
             borderBottomWidth: 1,
           }}
-          key={item.friendId} // Add key prop for optimization
+          key={item.friendId} 
         >
           <View style={{ flexDirection: "row" }}>
             <TouchableOpacity
@@ -103,20 +103,20 @@ const FriendsComponent2 = ({ Data, onAddFriend, onRefuseFriend }) => {
               {item.nickname}
             </Text>
           </View>
-          {item.friendStatus === "PENDING" && (
-            <View style={{ flexDirection: "row", gap: 16 }}>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                // onPress={() => onAddFriend(item.friendId)}
-                onPress={() => handleApprove(item.friendId, item.nickname)}
-              >
-                <Image
-                  source={require("../../assets/plusIcon.png")}
-                  style={styles.icon}
-                />
-              </TouchableOpacity>
-            </View>
-          )}
+          {/* {item.friendStatus === "PENDING" && ( */}
+          <View style={{ flexDirection: "row", gap: 16 }}>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              // onPress={() => onAddFriend(item.friendId)}
+              onPress={() => handleApprove(item.friendId, item.nickname)}
+            >
+              <Image
+                source={require("../../assets/plusIcon.png")}
+                style={styles.icon}
+              />
+            </TouchableOpacity>
+          </View>
+          {/* )} */}
         </View>
       ))}
       <Line color={"#C1C1C1"} h={2} />
