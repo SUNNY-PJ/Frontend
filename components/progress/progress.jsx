@@ -5,9 +5,19 @@ import { LinearGradient } from "expo-linear-gradient";
 const Progress = ({ progress, color }) => {
   const progressAnim = useRef(new Animated.Value(0)).current;
 
+  let backgroundColor = "#FFA851"; // 기본값 설정
+
+  if (progress <= 20) {
+    backgroundColor = "#F97B7B"; // 20 이하일 때 색상
+  } else if (progress <= 49) {
+    backgroundColor = "#FAC337"; // 49 이하일 때 색상
+  } else if (progress <= 100) {
+    backgroundColor = "#6ADCA3"; // 100 이하일 때 색상
+  }
+
   useEffect(() => {
     Animated.timing(progressAnim, {
-      toValue: progress,
+      toValue: Math.abs(progress), // 절대값 사용
       duration: 500,
       useNativeDriver: false,
     }).start();
@@ -42,7 +52,7 @@ const Progress = ({ progress, color }) => {
         }}
       >
         <LinearGradient
-          colors={["#fff", color]}
+          colors={["#fff", color || backgroundColor]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={{
