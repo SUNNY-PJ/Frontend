@@ -92,7 +92,7 @@ const Alarm = () => {
         알림
       </Text>
       <ScrollView
-        style={{ height: windowHeight - 125 - 88 }}
+        style={{ marginBottom: 200 }}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
@@ -136,6 +136,7 @@ const Alarm = () => {
                 <View style={styles.section}>
                   <Image
                     source={require("../../assets/myPage_profile.png")}
+                    // source={{ uri: item.profile }}
                     style={{ width: 60, height: 60 }}
                   />
                   <View>

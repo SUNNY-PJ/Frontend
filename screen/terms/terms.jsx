@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
   section: {
     paddingRight: 20,
     paddingLeft: 20,
+    paddingBottom: 20,
     gap: 3,
   },
   termsTitle: {
