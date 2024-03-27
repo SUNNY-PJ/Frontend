@@ -19,11 +19,16 @@ const Top = ({ navigation }) => {
   let backgroundColor = "#FFA851"; // 기본 색상
 
   if (saveData.isLoaded) {
-    if (saveData.progress <= 20) {
+    // 절대값 사용
+    const progress = Math.abs(saveData.progress);
+
+    if (saveData.progress <= 0) {
+      backgroundColor = "#F97B7B"; // 음수일 때 색상
+    } else if (progress <= 20) {
       backgroundColor = "#F97B7B"; // 20 이하일 때 색상
-    } else if (saveData.progress <= 49) {
+    } else if (progress <= 49) {
       backgroundColor = "#FAC337"; // 49 이하일 때 색상
-    } else if (saveData.progress <= 100) {
+    } else if (progress <= 100) {
       backgroundColor = "#6ADCA3"; // 100 이하일 때 색상
     }
   }
@@ -46,7 +51,7 @@ const Top = ({ navigation }) => {
 
   useEffect(() => {
     Animated.timing(progressAnim, {
-      toValue: saveData.progress,
+      toValue: Math.abs(saveData.progress),
       duration: 500,
       useNativeDriver: false,
     }).start();
