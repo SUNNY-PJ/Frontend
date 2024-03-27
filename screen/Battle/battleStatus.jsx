@@ -21,6 +21,7 @@ const BattleStatus = () => {
 
   const inputURL = `competition/status/${friendId}`;
   const [data, setData] = useState({});
+  const [price, setPrice] = useState("");
 
   const formatStatusData = (data) => {
     const formattedData = { ...data };
@@ -29,6 +30,11 @@ const BattleStatus = () => {
       endDate.getMonth() + 1
     }월 ${endDate.getDate()}일`;
     return formattedData;
+  };
+
+  const formatPriceData = (price) => {
+    const formatter = new Intl.NumberFormat("ko-KR");
+    return formatter.format(price);
   };
 
   const fetchData = async () => {
@@ -43,6 +49,7 @@ const BattleStatus = () => {
       if (response.status === 200) {
         const formattedData = formatStatusData(StatusData);
         setData(formattedData);
+        setPrice(formatPriceData(StatusData.price));
       }
     } catch (error) {
       if (error.response) {
@@ -110,7 +117,7 @@ const BattleStatus = () => {
       <View style={styles.section}>
         <Text style={[styles.boldText, { textAlign: "center", marginTop: 16 }]}>
           {/* {data.compensation}을 걸고 {"\n"} */}
-          {data.end_date}까지 {data.price}원 쓰기
+          {data.end_date}까지 {price}원 쓰기
         </Text>
       </View>
       <Line h={2} color={"#1F1F1F"} />
