@@ -20,11 +20,16 @@ const BattleStatus = () => {
   const { nickname } = route.params;
 
   const inputURL = `competition/status/${friendId}`;
-
-  console.log("nickname::", nickname);
-  console.log("friendId::", friendId);
-
   const [data, setData] = useState({});
+
+  const formatStatusData = (data) => {
+    const formattedData = { ...data };
+    const endDate = new Date(data.end_date);
+    formattedData.end_date = `${
+      endDate.getMonth() + 1
+    }월 ${endDate.getDate()}일`;
+    return formattedData;
+  };
 
   const fetchData = async () => {
     try {
@@ -36,8 +41,8 @@ const BattleStatus = () => {
       const StatusData = response.data.data;
       console.log("StatusData:::", StatusData);
       if (response.status === 200) {
-        setData(StatusData);
-        // navigation.navigate("MainScreen", { screen: "FriendsList" });
+        const formattedData = formatStatusData(StatusData);
+        setData(formattedData);
       }
     } catch (error) {
       if (error.response) {
@@ -69,7 +74,6 @@ const BattleStatus = () => {
       const Data = response.data;
       console.log(Data);
       if (response.status === 200) {
-        Alert.alert("대결 포기", "대결을 포기하시겠습니까?");
         // navigation.navigate("MainScreen", { screen: "FriendsList" });
         navigation.navigate("MainScreen", { screen: "FriendsListDisable" });
       }
@@ -104,25 +108,21 @@ const BattleStatus = () => {
   return (
     <View style={styles.container}>
       <View style={styles.section}>
-        <Text
-          style={[styles.boldText, { textAlign: "center", marginTop: -10 }]}
-        >
-          {/* oo <Text style={[styles.text]}>을 걸고</Text> */}
-          {"\n"}MM월 DD일
-          <Text style={[styles.text]}>까지</Text> NNN,NNN원
-          <Text style={[styles.text]}>&nbsp;쓰기</Text>
+        <Text style={[styles.boldText, { textAlign: "center", marginTop: 16 }]}>
+          {/* {data.compensation}을 걸고 {"\n"} */}
+          {data.end_date}까지 {data.price}원 쓰기
         </Text>
       </View>
       <Line h={2} color={"#1F1F1F"} />
       {/* <ScrollView> */}
       <View style={{ alignItems: "center" }}>
-        <Text style={[styles.boldText]}>D - NN</Text>
+        <Text style={[styles.boldText, { marginTop: 49 }]}>D - {data.day}</Text>
         <Text style={[styles.boldText, { marginTop: 13, marginBottom: 10 }]}>
           나는
         </Text>
-        <Progress progress={80} color={"#6ADCA3"} />
-        <Text style={[styles.boldText, { marginTop: 35 }]}>
-          NN% <Text style={[styles.text]}>남았어요</Text>
+        <Progress progress={data.user_percent} />
+        <Text style={[styles.boldText, { marginTop: 24 }]}>
+          {data.user_percent}% <Text style={[styles.text]}>남았어요</Text>
         </Text>
         <Image
           source={require("../../assets/VSIcon.png")}
@@ -134,12 +134,12 @@ const BattleStatus = () => {
             marginBottom: 11,
           }}
         />
-        <Text style={[styles.boldText, { marginBottom: 10 }]}>
-          {nickname}는
+        <Text style={[styles.boldText, { marginBottom: 10, marginTop: 28 }]}>
+          {nickname}님은
         </Text>
-        <Progress progress={30} color={"#FAC337"} />
-        <Text style={[styles.boldText]}>
-          NN% <Text style={[styles.text]}>남았어요</Text>
+        <Progress progress={data.friends_percent} />
+        <Text style={[styles.boldText, { marginTop: 24 }]}>
+          {data.friends_percent}% <Text style={[styles.text]}>남았어요</Text>
         </Text>
         <TouchableOpacity onPress={handleGiveUp}>
           <Text
@@ -172,7 +172,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 900,
     color: "#1F1F1F",
-    marginTop: 14,
     fontFamily: "SUITE_ExtraBold",
   },
   text: {
