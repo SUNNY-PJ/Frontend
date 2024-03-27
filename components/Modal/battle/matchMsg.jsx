@@ -6,6 +6,7 @@ import {
   Image,
   Modal,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import MiddleBtn from "../../Btn/middleBtn";
 import MiddleBtnBlack from "../../Btn/middleBtnBlack";
@@ -13,6 +14,7 @@ import apiClient from "../../../api/apiClient";
 
 const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
   const inputURL = `/competition/approve/${friendsId}`;
+  console.log("inputURL??", inputURL);
   console.log("friendsId??", friendsId);
   const [matchInfo, setMatchInfo] = useState(null);
 
@@ -198,12 +200,8 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
             </View>
           </View>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleRefuse}>
-              <MiddleBtn text={"거절"} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleApprove}>
-              <MiddleBtnBlack text={"승낙"} />
-            </TouchableOpacity>
+            <MiddleBtn text={"거절"} onClick={handleRefuse} />
+            <MiddleBtnBlack text={"승낙"} onClick={handleApprove} />
           </View>
         </View>
       </View>
