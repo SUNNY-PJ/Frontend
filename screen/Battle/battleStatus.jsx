@@ -84,7 +84,21 @@ const BattleStatus = () => {
   };
 
   const handleGiveUp = () => {
-    giveUpData();
+    Alert.alert(
+      "포기",
+      "대결을 포기하시겠습니까?",
+      [
+        {
+          text: "취소",
+          style: "cancel",
+        },
+        {
+          text: "확인",
+          onPress: () => giveUpData(),
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
