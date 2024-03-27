@@ -39,7 +39,7 @@ export const SaveDataProvider = ({ children }) => {
           console.log("절약 목표 조회 없는 경우::", SaveDataVal);
           // 절약 목표가 없는 경우
           setSaveData({
-            isLoaded: true,
+            isLoaded: false,
             day: 0,
             progress: 0,
             cost: 0,
@@ -47,7 +47,7 @@ export const SaveDataProvider = ({ children }) => {
         }
       } else if (response.status === 404) {
         setSaveData({
-          isLoaded: true,
+          isLoaded: false,
           day: 0,
           progress: 0,
           cost: 0,
@@ -56,7 +56,7 @@ export const SaveDataProvider = ({ children }) => {
     } catch (error) {
       console.error("에러:", error);
       setSaveData({
-        isLoaded: true,
+        isLoaded: false,
         day: 0,
         progress: 0,
         cost: 0,

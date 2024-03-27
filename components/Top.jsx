@@ -71,7 +71,7 @@ const Top = ({ navigation }) => {
       <View style={styles.progressContainer}>
         <Text style={[styles.text]}>
           D -&nbsp;
-          {saveData ? (
+          {saveData.isLoaded ? (
             saveData.day
           ) : (
             <Text
@@ -97,7 +97,7 @@ const Top = ({ navigation }) => {
                 },
               ]}
             />
-            {saveData ? (
+            {saveData.isLoaded ? (
               <Text
                 style={{
                   marginLeft: -20,
