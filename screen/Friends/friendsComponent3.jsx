@@ -18,6 +18,7 @@ import MatchMsg from "../../components/Modal/battle/matchMsg";
 const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
   const navigation = useNavigation();
   const [userId, setUserId] = useState("");
+  const [friendId, setFriendId] = useState("");
   const [isOpenProfile, setIsOpenProfile] = useState(false);
 
   const openProfile = (friendId) => {
@@ -71,6 +72,7 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
 
   const handleBattle = (friendId, nickname, competitionStatus) => {
     setNickname(nickname);
+    setFriendId(friendId);
     if (competitionStatus === "RECEIVE") {
       showMatchModal();
     } else if (competitionStatus === "SEND") {
@@ -188,7 +190,7 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
       <MatchMsg
         isVisible={isMatchModalVisible}
         toggleModal={hideMatchModal}
-        friendsId={userId}
+        friendsId={friendId}
         nickname={nickname}
       />
     </ScrollView>
