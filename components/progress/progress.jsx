@@ -33,6 +33,16 @@ const Progress = ({ progress, color }) => {
     outputRange: [0, 268], // 전체 너비에서 이미지 너비를 뺀 값
   });
 
+  useEffect(() => {
+    // progress 값이 숫자인지 확인
+    const numericProgress = Number.isFinite(progress) ? progress : 0;
+    Animated.timing(progressAnim, {
+      toValue: numericProgress,
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+  }, [progress]);
+
   return (
     <View
       style={{
