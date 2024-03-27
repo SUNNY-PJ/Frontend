@@ -12,8 +12,7 @@ import {
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
-import { proxyUrl } from "../../constant/common";
+import * as AppleAuthentication from "expo-apple-authentication";
 import LoseModal from "../../components/Modal/battle/lose";
 import LeaveMsg from "../../components/Modal/myPage/leaveMsg";
 import ToggleBtn from "../../components/Btn/toggleBtn";
@@ -157,10 +156,10 @@ const MyPage = () => {
     }
   };
 
-  // apple idToken 발급
+  // apple authorizationCode 발급
   async function handleAppleCode() {
     try {
-      const credential = await AppleAuthentication.signInAsync({
+      const credential = await AppleAuthentication.refreshAsync({
         requestedScopes: [
           AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
           AppleAuthentication.AppleAuthenticationScope.EMAIL,
@@ -169,6 +168,7 @@ const MyPage = () => {
       if (credential.authorizationCode) {
         // 서버로 인증 코드 전송
         leaveData(credential.authorizationCode);
+        // console.log(credential.authorizationCode);
       }
       // 서버로 인증 코드 전송 및 사용자 정보 처리 로직 구현
     } catch (e) {
