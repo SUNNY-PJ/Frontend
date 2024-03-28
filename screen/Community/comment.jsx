@@ -89,6 +89,10 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       const ResCommentData = response.data.data;
       setCommentData(ResCommentData);
       setEditComment();
+      console.log(
+        "댓글 데이터",
+        ResCommentData.map((item) => item.children)
+      );
       console.log("댓글 데이터", ResCommentData);
     } catch (error) {
       console.error("에러:", error);
@@ -300,9 +304,14 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                     }}
                   >
                     <Image
-                      source={require("../../assets/myPage_profile.png")}
-                      style={{ width: 32, height: 32 }}
+                      source={
+                        item.profileImg
+                          ? { uri: item.profileImg }
+                          : require("../../assets/myPage_profile.png")
+                      }
+                      style={{ width: 32, height: 32, borderRadius: 50 }}
                     />
+
                     <Text
                       style={{
                         fontSize: 15,
@@ -410,7 +419,12 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                           >
                             <Image
                               source={require("../../assets/myPage_profile.png")}
-                              style={{ width: 32, height: 32 }}
+                              // source={{ uri: item.profileImg }}
+                              style={{
+                                width: 32,
+                                height: 32,
+                                borderRadius: 50,
+                              }}
                             />
                             <Text
                               style={[styles.comment, { alignSelf: "center" }]}
