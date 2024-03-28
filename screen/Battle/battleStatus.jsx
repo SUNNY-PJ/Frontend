@@ -87,6 +87,10 @@ const BattleStatus = () => {
           params: {
             friendId: friendId,
             nickname: nickname,
+            end_date: data.end_date,
+            price: data.price,
+            user_percent: data.user_percent,
+            friends_percent: data.friends_percent,
           },
         });
       }
