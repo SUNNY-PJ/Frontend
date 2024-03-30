@@ -106,8 +106,13 @@ const Alarm = () => {
               {recentData.map((item, index) => (
                 <View style={styles.section}>
                   <Image
-                    source={require("../../assets/myPage_profile.png")}
-                    style={{ width: 60, height: 60 }}
+                    source={
+                      item.profileImg
+                        ? { uri: item.profileImg }
+                        : require("../../assets/myPage_profile.png")
+                    }
+                    // source={require("../../assets/myPage_profile.png")}
+                    style={{ width: 60, height: 60, borderRadius: 50 }}
                   />
                   <View>
                     <Text style={styles.titleText}>{item.title}</Text>
@@ -135,8 +140,8 @@ const Alarm = () => {
               {pastData.map((item, index) => (
                 <View style={styles.section}>
                   <Image
-                    source={require("../../assets/myPage_profile.png")}
-                    // source={{ uri: item.profile }}
+                    // source={require("../../assets/myPage_profile.png")}
+                    source={{ uri: item.profile }}
                     style={{ width: 60, height: 60 }}
                   />
                   <View>
