@@ -418,8 +418,12 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                             }}
                           >
                             <Image
-                              source={require("../../assets/myPage_profile.png")}
-                              // source={{ uri: item.profileImg }}
+                              // source={require("../../assets/myPage_profile.png")}
+                              source={
+                                item.profileImg
+                                  ? { uri: item.profileImg }
+                                  : require("../../assets/myPage_profile.png")
+                              }
                               style={{
                                 width: 32,
                                 height: 32,
