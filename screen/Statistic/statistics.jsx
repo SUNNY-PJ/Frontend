@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -8,6 +9,7 @@ import {
   ScrollView,
   Dimensions,
   Alert,
+  SafeAreaView,
 } from "react-native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { useNavigation } from "@react-navigation/native";
@@ -113,7 +115,16 @@ const Statistics = ({ year, month }) => {
     setSelectedCategory(null);
     fetchData();
     fetchCategoryData();
-  }, [year, month]);
+  }, [year, month, noData]);
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) {
+      fetchData();
+      fetchCategoryData();
+    }
+  }, [isFocused]);
 
   const translateY = new Animated.Value(0);
 
@@ -128,7 +139,7 @@ const Statistics = ({ year, month }) => {
         }),
         // 원래 위치로 이동
         Animated.timing(translateY, {
-          toValue: 0,
+          toValue: 10,
           duration: 500,
           useNativeDriver: true,
         }),
@@ -223,7 +234,7 @@ const Statistics = ({ year, month }) => {
         />
       </View>
       <Line h={4} color={"#C1C1C1"} />
-      <View style={styles.bottomSection}>
+      <SafeAreaView style={styles.bottomSection}>
         <ScrollView style={{ height: windowHeight - 500 - 250, flex: 1 }}>
           {Array.isArray(categoryData) &&
             categoryData.map((item, index) => (
@@ -251,7 +262,7 @@ const Statistics = ({ year, month }) => {
               </Swipeable>
             ))}
         </ScrollView>
-      </View>
+      </SafeAreaView>
       <TouchableOpacity
         activeOpacity={1}
         style={styles.addItem}
@@ -307,8 +318,8 @@ const styles = StyleSheet.create({
   },
   bottomSection: {
     flexDirection: "row",
-    paddingLeft: 20,
-    paddingRight: 20,
+    marginLeft: 20,
+    marginRight: 20,
     marginBottom: 16,
     marginTop: 16,
   },
