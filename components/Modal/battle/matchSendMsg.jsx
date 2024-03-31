@@ -118,7 +118,7 @@ const MatchSendMsg = ({ isMatchModal, matchModal }) => {
             handleInputChange={handleDateChange}
           />
           <Text style={styles.subText}>
-            * 상대가 승낙한 시점부터 대결이 시작됩니다
+            * 상대가 승낙한 다음 날부터 대결이 시작됩니다
           </Text>
           <Input
             placeholder={"대결 금액"}
