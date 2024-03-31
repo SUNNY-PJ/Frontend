@@ -82,7 +82,7 @@ const BattleStatus = () => {
       console.log(Data);
       if (response.status === 200) {
         // navigation.navigate("MainScreen", { screen: "FriendsList" });
-        navigation.navigate("MainScreen", {
+        navigation.replace("MainScreen", {
           screen: "BattleStatusDisable",
           params: {
             friendId: friendId,

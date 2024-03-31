@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 import Progress from "../../components/progress/progress";
@@ -15,6 +15,10 @@ const BattleStatusDisable = () => {
   const { price } = route.params;
   const { user_percent } = route.params;
   const { friends_percent } = route.params;
+
+  const handleGoBack = () => {
+    navigation.navigate("MainScreen", { screen: "FriendsList" });
+  };
 
   return (
     <View style={styles.container}>
@@ -56,14 +60,16 @@ const BattleStatusDisable = () => {
         <Text style={[styles.boldText]}>
           {friends_percent}% <Text style={[styles.text]}>남았어요</Text>
         </Text>
-        <Text
-          style={[
-            styles.subText,
-            { textDecorationLine: "underline", marginTop: 40 },
-          ]}
-        >
-          포기하기
-        </Text>
+        <TouchableOpacity onPress={handleGoBack}>
+          <Text
+            style={[
+              styles.subText,
+              { textDecorationLine: "underline", marginTop: 40 },
+            ]}
+          >
+            돌아가기
+          </Text>
+        </TouchableOpacity>
       </View>
       {/* </ScrollView> */}
     </View>
