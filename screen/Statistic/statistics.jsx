@@ -133,13 +133,13 @@ const Statistics = ({ year, month }) => {
       Animated.sequence([
         // 위로 10픽셀 이동
         Animated.timing(translateY, {
-          toValue: -10,
+          toValue: -20,
           duration: 500,
           useNativeDriver: true,
         }),
         // 원래 위치로 이동
         Animated.timing(translateY, {
-          toValue: 10,
+          toValue: 0,
           duration: 500,
           useNativeDriver: true,
         }),
@@ -235,7 +235,7 @@ const Statistics = ({ year, month }) => {
       </View>
       <Line h={4} color={"#C1C1C1"} />
       <SafeAreaView style={styles.bottomSection}>
-        <ScrollView style={{ height: windowHeight - 500 - 250, flex: 1 }}>
+        <ScrollView style={{ height: windowHeight - 700, flex: 1 }}>
           {Array.isArray(categoryData) &&
             categoryData.map((item, index) => (
               <Swipeable
@@ -270,7 +270,12 @@ const Statistics = ({ year, month }) => {
       >
         <Animated.Image
           source={require("../../assets/add.png")}
-          style={{ width: 52, height: 52, transform: [{ translateY }] }}
+          style={{
+            width: 52,
+            height: 52,
+            transform: [{ translateY }],
+            marginBottom: 15,
+          }}
         />
       </TouchableOpacity>
     </View>
