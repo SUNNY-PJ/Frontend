@@ -12,11 +12,14 @@ import {
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import CalendarComponent from "../../components/Calendar/calendar";
 import { useEffect } from "react";
+import apiClient from "../../api/apiClient";
 
 const History = () => {
   const windowHeight = Dimensions.get("window").height;
 
   const [data, setData] = useState([]);
+  const [markedDates, setMarkedDates] = useState({});
+
   // 숫자에 세 자리마다 쉼표를 추가하는 함수
   const formatNumberWithCommas = (number) => {
     return new Intl.NumberFormat().format(number);
@@ -78,10 +81,51 @@ const History = () => {
     }
   };
 
+  // 지출 기록 조회
+  const fetchData = async () => {
+    const inputURL = `/consumption`;
+    try {
+      const response = await apiClient.get(inputURL, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      });
+      // 가져온 데이터로 상태 업데이트
+      const fetchedData = response.data.data;
+      setData(fetchedData);
+      // 마킹 정보 업데이트
+      updateMarkedDates(fetchedData);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  // useEffect 내에서 fetchData 호출
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const updateMarkedDates = (fetchedData) => {
+    let newMarkedDates = {};
+
+    fetchedData.forEach((item) => {
+      const date = item.dateField.replace(/\./g, "-");
+      newMarkedDates[date] = {
+        marked: true,
+        dotColor: "#FFA851",
+      };
+    });
+
+    setMarkedDates(newMarkedDates);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <CalendarComponent onDataFetched={onDataFetched} />
+        <CalendarComponent
+          onDataFetched={onDataFetched}
+          markedDates={markedDates}
+        />
         {/* <RangeCalendar /> */}
       </View>
       {/* {data.map((item, index) => ( */}

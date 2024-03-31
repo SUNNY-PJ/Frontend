@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Button, Platform } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import apiClient from "../../api/apiClient";
 
-const CalendarComponent = ({ onDataFetched }) => {
+const CalendarComponent = ({ onDataFetched, markedDates }) => {
   const [selected, setSelected] = useState("");
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState(
@@ -138,6 +138,7 @@ const CalendarComponent = ({ onDataFetched }) => {
         setSelectedDate(day.dateString);
       }}
       markedDates={{
+        ...markedDates,
         [selectedDate]: {
           selected: true,
           selectedColor: "#B9F4D6",
