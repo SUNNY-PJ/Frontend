@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
 import {
   View,
   Text,
@@ -62,9 +63,13 @@ const Top = ({ navigation }) => {
     outputRange: ["0%", "100%"],
   });
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (isFocused) {
+      fetchData();
+    }
+  }, [isFocused]);
 
   return (
     <View style={styles.container}>
