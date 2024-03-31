@@ -63,6 +63,18 @@ const Alarm = () => {
     fetchData();
   }, []);
 
+  const navigateToScreen = (title) => {
+    // 친구와 대결이 포함된 타이틀 처리
+    if (title.includes("친구") || title.includes("대결")) {
+      navigation.navigate("FriendsList");
+    }
+    // 댓글, 답글이 포함된 타이틀 처리
+    else if (title.includes("댓글") || title.includes("답글")) {
+      navigation.navigate("Community");
+    }
+    // 추가적인 타이틀 조건에 따른 네비게이션을 여기에 구현할 수 있습니다.
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ paddingLeft: 20 }}>
@@ -104,7 +116,12 @@ const Alarm = () => {
             </View>
             <View style={{ backgroundColor: "#fff" }}>
               {recentData.map((item, index) => (
-                <View style={styles.section}>
+                <TouchableOpacity
+                  key={index}
+                  style={styles.section}
+                  activeOpacity={0.8}
+                  onPress={() => navigateToScreen(item.title)}
+                >
                   <Image
                     source={
                       item.profileImg
@@ -124,7 +141,7 @@ const Alarm = () => {
                       <Text style={styles.dateText}>{item.createdAt}</Text>
                     </View>
                   </View>
-                </View>
+                </TouchableOpacity>
               ))}
               <Line h={1} color={"#C1C1C1"} />
             </View>
@@ -138,7 +155,12 @@ const Alarm = () => {
             </View>
             <View style={{ backgroundColor: "#fff" }}>
               {pastData.map((item, index) => (
-                <View style={styles.section}>
+                <TouchableOpacity
+                  key={index}
+                  style={styles.section}
+                  activeOpacity={0.8}
+                  onPress={() => navigateToScreen(item.title)}
+                >
                   <Image
                     // source={require("../../assets/myPage_profile.png")}
                     source={{ uri: item.profile }}
@@ -154,7 +176,7 @@ const Alarm = () => {
                       <Text style={styles.dateText}>{item.createdAt}</Text>
                     </View>
                   </View>
-                </View>
+                </TouchableOpacity>
               ))}
               <Line h={1} color={"#C1C1C1"} />
             </View>
