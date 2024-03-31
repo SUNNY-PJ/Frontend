@@ -231,6 +231,8 @@ const Statistics = ({ year, month }) => {
           data={data}
           noData={noData}
           onCategorySelect={handleCategoryClick}
+          year={year}
+          month={month}
         />
       </View>
       <Line h={4} color={"#C1C1C1"} />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,9 +8,25 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
+import { useIsFocused } from "@react-navigation/native";
 
-const DonutChart = ({ data, noData, onCategorySelect }) => {
+const DonutChart = ({ data, noData, onCategorySelect, year, month }) => {
   const windowWidth = Dimensions.get("window").width;
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) {
+      setSelectedCategory(null);
+      onCategorySelect(null);
+    }
+  }, [isFocused, year, month]);
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+    onCategorySelect(category);
+  };
 
   // 도넛 차트의 중심 좌표 및 반지름 설정
   const centerX = 110; // 중앙 X 좌표를 수정
@@ -142,7 +158,7 @@ const DonutChart = ({ data, noData, onCategorySelect }) => {
       <View style={{ flexDirection: "row", gap: 24 }}>
         {data.map((item) => (
           <TouchableOpacity
-            onPress={() => onCategorySelect(item.category)}
+            onPress={() => handleCategorySelect(item.category)}
             activeOpacity={0.8}
           >
             <View
@@ -154,7 +170,11 @@ const DonutChart = ({ data, noData, onCategorySelect }) => {
               }}
             >
               <View
-                style={[styles.imageContainer, { backgroundColor: item.color }]}
+                style={[
+                  styles.imageContainer,
+                  { backgroundColor: item.color },
+                  selectedCategory === item.category && styles.selectedCategory,
+                ]}
               >
                 <Image source={item.url} style={styles.image} />
               </View>
@@ -199,6 +219,11 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "SUITE_Bold",
     color: "#1F1F1F",
+  },
+  selectedCategory: {
+    // transform: [{ scale: 1.1 }],
+    width: 40,
+    height: 40,
   },
 });
 
