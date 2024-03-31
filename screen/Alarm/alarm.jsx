@@ -12,6 +12,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 import apiClient from "../../api/apiClient";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -23,6 +24,48 @@ const Alarm = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [pastData, setPastData] = useState([]);
   const [recentData, setRecentData] = useState([]);
+  const [clickedItemIds, setClickedItemIds] = useState([]);
+
+  const handleItemClick = async (uniqueIdentifier, title) => {
+    let updatedClickedItemIds = [...clickedItemIds];
+    if (updatedClickedItemIds.includes(uniqueIdentifier)) {
+      // 이미 클릭된 항목이면 제거
+      updatedClickedItemIds = updatedClickedItemIds.filter(
+        (id) => id !== uniqueIdentifier
+      );
+    } else {
+      // 새로 클릭된 항목이면 추가
+      updatedClickedItemIds.push(uniqueIdentifier);
+    }
+
+    try {
+      // AsyncStorage에 JSON 문자열로 저장
+      await AsyncStorage.setItem(
+        "clickedItemIds",
+        JSON.stringify(updatedClickedItemIds)
+      );
+      setClickedItemIds(updatedClickedItemIds);
+      navigateToScreen(title);
+    } catch (error) {
+      console.error("AsyncStorage 저장 오류:", error);
+    }
+  };
+
+  useEffect(() => {
+    const loadClickedItemIds = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem("clickedItemIds");
+        const loadedClickedItemIds =
+          jsonValue != null ? JSON.parse(jsonValue) : [];
+        setClickedItemIds(loadedClickedItemIds);
+      } catch (error) {
+        console.error("AsyncStorage 로딩 오류:", error);
+      }
+    };
+
+    fetchData();
+    loadClickedItemIds();
+  }, []);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -115,34 +158,44 @@ const Alarm = () => {
               <Text style={styles.dayText}>오늘</Text>
             </View>
             <View style={{ backgroundColor: "#fff" }}>
-              {recentData.map((item, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.section}
-                  activeOpacity={0.8}
-                  onPress={() => navigateToScreen(item.title)}
-                >
-                  <Image
-                    source={
-                      item.profileImg
-                        ? { uri: item.profileImg }
-                        : require("../../assets/myPage_profile.png")
+              {recentData.map((item, index) => {
+                const uniqueIdentifier = `${item.id}-${item.createdAt}`;
+                return (
+                  <TouchableOpacity
+                    key={uniqueIdentifier} // 고유한 key로 uniqueIdentifier 사용
+                    style={[
+                      styles.section,
+                      clickedItemIds.includes(uniqueIdentifier) &&
+                        styles.clickedItemStyle,
+                    ]}
+                    activeOpacity={0.8}
+                    onPress={() =>
+                      handleItemClick(uniqueIdentifier, item.title)
                     }
-                    // source={require("../../assets/myPage_profile.png")}
-                    style={{ width: 60, height: 60, borderRadius: 50 }}
-                  />
-                  <View>
-                    <Text style={styles.titleText}>{item.title}</Text>
-                    <Text style={styles.contentText}>
-                      {item.notificationContent}
-                    </Text>
-                    <View style={styles.bottomSection}>
-                      <Text style={styles.nameText}>{item.postAuthor}</Text>
-                      <Text style={styles.dateText}>{item.createdAt}</Text>
+                  >
+                    <Image
+                      source={
+                        item.profileImg
+                          ? { uri: item.profileImg }
+                          : require("../../assets/myPage_profile.png")
+                      }
+                      // source={require("../../assets/myPage_profile.png")}
+                      style={{ width: 60, height: 60, borderRadius: 50 }}
+                    />
+                    <View>
+                      <Text style={styles.titleText}>{item.title}</Text>
+                      <Text style={styles.contentText}>
+                        {item.notificationContent}
+                      </Text>
+                      <View style={styles.bottomSection}>
+                        <Text style={styles.nameText}>{item.postAuthor}</Text>
+                        <Text style={styles.dateText}>{item.createdAt}</Text>
+                      </View>
                     </View>
-                  </View>
-                </TouchableOpacity>
-              ))}
+                  </TouchableOpacity>
+                );
+              })}
+
               <Line h={1} color={"#C1C1C1"} />
             </View>
           </View>
@@ -154,30 +207,40 @@ const Alarm = () => {
               <Text style={styles.dayText}>지난 30일</Text>
             </View>
             <View style={{ backgroundColor: "#fff" }}>
-              {pastData.map((item, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.section}
-                  activeOpacity={0.8}
-                  onPress={() => navigateToScreen(item.title)}
-                >
-                  <Image
-                    // source={require("../../assets/myPage_profile.png")}
-                    source={{ uri: item.profile }}
-                    style={{ width: 60, height: 60 }}
-                  />
-                  <View>
-                    <Text style={styles.titleText}>{item.title}</Text>
-                    <Text style={styles.contentText}>
-                      {item.notificationContent}
-                    </Text>
-                    <View style={styles.bottomSection}>
-                      <Text style={styles.nameText}>{item.postAuthor}</Text>
-                      <Text style={styles.dateText}>{item.createdAt}</Text>
+              {pastData.map((item, index) => {
+                const uniqueIdentifier = `${item.id}-${item.createdAt}`;
+                return (
+                  <TouchableOpacity
+                    key={uniqueIdentifier} // 고유한 key로 uniqueIdentifier 사용
+                    style={[
+                      styles.section,
+                      clickedItemIds.includes(uniqueIdentifier) &&
+                        styles.clickedItemStyle,
+                    ]}
+                    activeOpacity={0.8}
+                    onPress={() =>
+                      handleItemClick(uniqueIdentifier, item.title)
+                    }
+                  >
+                    <Image
+                      // source={require("../../assets/myPage_profile.png")}
+                      source={{ uri: item.profile }}
+                      style={{ width: 60, height: 60 }}
+                    />
+                    <View>
+                      <Text style={styles.titleText}>{item.title}</Text>
+                      <Text style={styles.contentText}>
+                        {item.notificationContent}
+                      </Text>
+                      <View style={styles.bottomSection}>
+                        <Text style={styles.nameText}>{item.postAuthor}</Text>
+                        <Text style={styles.dateText}>{item.createdAt}</Text>
+                      </View>
                     </View>
-                  </View>
-                </TouchableOpacity>
-              ))}
+                  </TouchableOpacity>
+                );
+              })}
+
               <Line h={1} color={"#C1C1C1"} />
             </View>
           </View>
@@ -238,6 +301,9 @@ const styles = StyleSheet.create({
     color: "#5C5C5C",
   },
   bottomSection: { flexDirection: "row", gap: 8, marginTop: 6 },
+  clickedItemStyle: {
+    opacity: 0.5,
+  },
 });
 
 export default Alarm;
