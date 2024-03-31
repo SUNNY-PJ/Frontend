@@ -88,6 +88,8 @@ function FriendsList() {
             "error",
             "에러가 발생했습니다.\n관리자에게 문의 바랍니다."
           );
+        } else if (response.data.status === 409) {
+          Alert.alert("친구", "이미 친구입니다.");
         } else {
           Alert.alert("", "친구가 되었습니다!");
           fetchData();
