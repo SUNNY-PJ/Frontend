@@ -169,8 +169,9 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
+      console.log(response.data);
       if (response.status === 200) {
-        alert("댓글을 삭제하였습니다.");
+        Alert.alert("", "댓글을 삭제하였습니다.");
         fetchData(); // 댓글 목록을 다시 불러옵니다.
       }
       // console.log("데이터:", response.data);
@@ -303,15 +304,18 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                       marginTop: 9,
                     }}
                   >
-                    <Image
-                      source={
-                        item.profileImg
-                          ? { uri: item.profileImg }
-                          : require("../../assets/myPage_profile.png")
-                      }
-                      style={{ width: 32, height: 32, borderRadius: 50 }}
-                    />
-
+                    {item.deleted === false ? (
+                      <Image
+                        source={
+                          item.profileImg
+                            ? { uri: item.profileImg }
+                            : require("../../assets/myPage_profile.png")
+                        }
+                        style={{ width: 32, height: 32, borderRadius: 50 }}
+                      />
+                    ) : (
+                      <></>
+                    )}
                     <Text
                       style={{
                         fontSize: 15,
@@ -323,7 +327,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                     >
                       {item.writer}
                     </Text>
-                    {item.author === true ? (
+                    {item.deleted === false && item.author === true ? (
                       <View
                         style={{
                           backgroundColor: "#6ADCA3",
@@ -374,7 +378,11 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                     </View>
                   ) : null}
                 </View>
-                <Text style={[styles.comment, { paddingLeft: 40 }]}>
+                <Text
+                  style={[
+                    item.deleted ? styles.deletedComment : styles.comment,
+                  ]}
+                >
                   {item.content}
                 </Text>
                 {item.deleted === true ? (
@@ -423,25 +431,30 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                               // marginTop: 9,
                             }}
                           >
-                            <Image
-                              // source={require("../../assets/myPage_profile.png")}
-                              source={
-                                item.profileImg
-                                  ? { uri: item.profileImg }
-                                  : require("../../assets/myPage_profile.png")
-                              }
-                              style={{
-                                width: 32,
-                                height: 32,
-                                borderRadius: 50,
-                              }}
-                            />
+                            {childItem.deleted === false ? (
+                              <Image
+                                // source={require("../../assets/myPage_profile.png")}
+                                source={
+                                  item.profileImg
+                                    ? { uri: item.profileImg }
+                                    : require("../../assets/myPage_profile.png")
+                                }
+                                style={{
+                                  width: 32,
+                                  height: 32,
+                                  borderRadius: 50,
+                                }}
+                              />
+                            ) : (
+                              <></>
+                            )}
                             <Text
                               style={[styles.comment, { alignSelf: "center" }]}
                             >
                               {childItem.writer}
                             </Text>
-                            {childItem.author === true ? (
+                            {childItem.deleted === false &&
+                            childItem.author === true ? (
                               <View
                                 style={{
                                   backgroundColor: "#6ADCA3",
@@ -458,12 +471,22 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                                     paddingLeft: 5,
                                     paddingTop: 4,
                                     paddingBottom: 4,
-                                    fontFamily: "SUITE_Medium",
                                   }}
                                 >
                                   작성자
                                 </Text>
                               </View>
+                            ) : null}
+                            {childItem.deleted === false &&
+                            childItem.privated === true ? (
+                              <Image
+                                source={require("../../assets/lock.png")}
+                                style={{
+                                  alignSelf: "center",
+                                  width: 16,
+                                  height: 16,
+                                }}
+                              />
                             ) : null}
                           </View>
                           {childItem.deleted === false ? (
@@ -487,7 +510,15 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                             </View>
                           ) : null}
                         </View>
-                        <Text style={[styles.comment, { paddingLeft: 80 }]}>
+                        <Text
+                          style={[
+                            childItem.deleted
+                              ? styles.deletedComment
+                              : styles.comment,
+                            ,
+                            { paddingLeft: 40 },
+                          ]}
+                        >
                           {childItem.content}
                         </Text>
                         {childItem.deleted === false ? (
@@ -633,6 +664,14 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     color: "#1F1F1F",
     fontFamily: "SUITE_Medium",
+    paddingLeft: 40,
+  },
+  deletedComment: {
+    fontSize: 15,
+    fontWeight: 500,
+    color: "#C1C1C1",
+    fontFamily: "SUITE_Medium",
+    marginBottom: 5,
   },
   subComment: {
     fontSize: 10,
