@@ -346,6 +346,12 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                         </Text>
                       </View>
                     ) : null}
+                    {item.privated === true ? (
+                      <Image
+                        source={require("../../assets/lock.png")}
+                        style={{ alignSelf: "center", width: 16, height: 16 }}
+                      />
+                    ) : null}
                   </View>
                   {item.deleted === false ? (
                     <View>
