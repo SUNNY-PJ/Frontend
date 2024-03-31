@@ -132,7 +132,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
 
   // 친구 수락
   const approveData = async () => {
-    const inputURL = `/friends/approve/${friendId}`;
+    const inputURL = `/friends/approve/${userFriendId}`;
     try {
       const response = await apiClient.post(
         inputURL,
@@ -185,10 +185,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
         } else if (response.data.status === 500) {
           Alert.alert("친구 삭제", ``);
         } else {
-          Alert.alert(
-            "친구 삭제",
-            `${friendName}를 친구 리스트에서 삭제하시겠습니까?`
-          );
+          Alert.alert("", `${friendName}를 친구 리스트에서 삭제했습니다.`);
           fetchData();
         }
       } else {
