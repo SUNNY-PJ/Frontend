@@ -374,7 +374,15 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                     </View>
                   ) : null}
                 </View>
-                <Text style={[styles.comment, { paddingLeft: 40 }]}>
+                <Text
+                  style={[
+                    styles.comment,
+                    { paddingLeft: 40 },
+                    (item.revokeUser || item.deleted) && {
+                      color: "#C1C1C1",
+                    },
+                  ]}
+                >
                   {item.content}
                 </Text>
                 {item.deleted === true ? (
@@ -393,13 +401,19 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                       marginBottom: 15,
                     }}
                   >
-                    <Text style={styles.subComment}>{item.createdDate}</Text>
-                    <Text
-                      style={styles.subComment}
-                      onPress={() => handleReCommentClick(item.id, item.writer)}
-                    >
-                      답글 쓰기
-                    </Text>
+                    {item.revokeUser === false ? (
+                      <Text style={styles.subComment}>{item.createdDate}</Text>
+                    ) : null}
+                    {item.revokeUser === false ? (
+                      <Text
+                        style={styles.subComment}
+                        onPress={() =>
+                          handleReCommentClick(item.id, item.writer)
+                        }
+                      >
+                        답글 쓰기
+                      </Text>
+                    ) : null}
                   </View>
                 )}
                 <Line color={"#E8E9E8"} h={1} />
@@ -426,8 +440,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                             <Image
                               // source={require("../../assets/myPage_profile.png")}
                               source={
-                                item.profileImg
-                                  ? { uri: item.profileImg }
+                                childItem.profileImg
+                                  ? { uri: childItem.profileImg }
                                   : require("../../assets/myPage_profile.png")
                               }
                               style={{
@@ -487,9 +501,18 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                             </View>
                           ) : null}
                         </View>
-                        <Text style={[styles.comment, { paddingLeft: 80 }]}>
+                        <Text
+                          style={[
+                            styles.comment,
+                            { paddingLeft: 80 },
+                            (childItem.revokeUser || childItem.deleted) && {
+                              color: "#C1C1C1",
+                            },
+                          ]}
+                        >
                           {childItem.content}
                         </Text>
+
                         {childItem.deleted === false ? (
                           <View
                             style={{
