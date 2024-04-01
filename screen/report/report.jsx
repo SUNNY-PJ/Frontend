@@ -9,6 +9,7 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import InputMax from "../../components/Input/inputMax";
 import LargeBtn from "../../components/Btn/largeBtn";
 import LargeBtnDisable from "../../components/Btn/largeBtnDisable";
@@ -17,7 +18,11 @@ import ReportResult from "../../components/Modal/report/reportResult";
 import ReportMsg from "../../components/Modal/report/reportMsg";
 import apiClient from "../../api/apiClient";
 
-const Report = ({ id, status }) => {
+const Report = () => {
+  const route = useRoute();
+
+  const { itemId } = route.params;
+  const { reportType } = route.params;
   const [reason, setReason] = useState("");
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
   const [result, setResult] = useState(false);
@@ -31,16 +36,18 @@ const Report = ({ id, status }) => {
     const inputURL = "/users/report";
     try {
       const bodyData = {
-        id: id,
+        id: itemId,
         reason: reason,
-        status: status,
+        status: reportType,
       };
       const response = await apiClient.post(inputURL, bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-      console.log("신고 제출출");
+      console.log("신고 제출::::");
+      console.log(bodyData);
+      console.log(response.data);
       if (response.status === 200) {
         Alert.alert("신고", "신고를 정상적으로 처리했습니다.");
       } else {
