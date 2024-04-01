@@ -196,10 +196,11 @@ function SendMatch() {
               showDayOfWeek={false}
             />
           </TouchableOpacity> */}
-          <Text style={styles.subText}>
+          <Text style={[styles.subText]}>
             * 상대가 승낙한 다음 날부터 대결이 시작됩니다
           </Text>
           {/* <Text style={styles.label}>대결 금액을 입력해주세요</Text> */}
+          <View style={{ marginTop: 24 }} />
           <Input
             placeholder={"지출 금액"}
             inputValue={money}
@@ -247,7 +248,7 @@ const styles = StyleSheet.create({
   },
 
   buttonContainer: {
-    marginTop: 40,
+    marginTop: 140,
   },
   subText: {
     fontSize: 12,
