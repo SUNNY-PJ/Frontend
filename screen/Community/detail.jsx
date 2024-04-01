@@ -14,6 +14,8 @@ import { useRoute } from "@react-navigation/native";
 import Line from "../../components/Line";
 import Comment from "./comment";
 import OptionModal from "../../components/Modal/community/optionModal";
+import CommunityAuthorSheet from "../../components/BottomSheet/communityAuthorSheet";
+import CommunitySheet from "../../components/BottomSheet/communitySheet";
 import DeleteMsg from "../../components/Modal/community/deleteMsg";
 import FriendProfile from "../Friends/friendProfile";
 import ModifyMsg from "../../components/Modal/community/modifyMsg";
@@ -28,10 +30,12 @@ const Detail = () => {
   // 화면의 전체 높이
   const windowHeight = Dimensions.get("window").height;
   const [data, setData] = useState([]);
+  const [author, setAuthor] = useState(false);
+  const [noAuthorModalVisible, setNoAuthorModalVisible] = useState(false);
+  const [authorModalVisible, setAuthorModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [modifyModalVisible, setModifyModalVisible] = useState(false);
   const [isCommentModal, setIsCommentModal] = useState(false);
-  const [isOpenOptionModal, setIsOpenOptionModal] = useState(false);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const [isScrap, setIsScrap] = useState(false);
 
@@ -41,9 +45,7 @@ const Detail = () => {
   const openProfile = () => {
     setIsOpenProfile(!isOpenProfile);
   };
-  const openOptionModal = () => {
-    setIsOpenOptionModal(!isOpenOptionModal);
-  };
+
   const handleScrapClick = () => {
     setIsScrap(!isScrap);
     if (isScrap) {
@@ -129,12 +131,13 @@ const Detail = () => {
     });
   };
 
-  // const handleChat = () => {
-  //   console.log("대화하기 버튼 클릭");
-  // };
-
-  const handleMenuClick = () => {
-    openOptionModal();
+  const handleMenuClick = (authorVal) => {
+    setAuthor(authorVal);
+    if (authorVal) {
+      setAuthorModalVisible(true);
+    } else {
+      setNoAuthorModalVisible(true);
+    }
   };
 
   const handleProfileClick = () => {
@@ -162,10 +165,17 @@ const Detail = () => {
 
   const handleDeletePost = () => {
     setDeleteModalVisible(true);
+    setAuthorModalVisible(false);
   };
 
   const handlePutPost = () => {
     setModifyModalVisible(true);
+    setAuthorModalVisible(false);
+  };
+
+  const handleReport = () => {
+    setNoAuthorModalVisible(false);
+    navigation.navigate("MainScreen", { screen: "Report" });
   };
 
   return (
@@ -227,22 +237,22 @@ const Detail = () => {
                   }}
                 />
               </TouchableOpacity>
-              {item.isAuthor === true && (
-                <TouchableOpacity
-                  onPress={handleMenuClick}
+              {/* {item.isAuthor === true && ( */}
+              <TouchableOpacity
+                onPress={handleMenuClick(item.isAuthor)}
+                style={{
+                  alignSelf: "center",
+                }}
+              >
+                <Image
+                  source={require("../../assets/menu.png")}
                   style={{
-                    alignSelf: "center",
+                    width: 20,
+                    height: 4,
                   }}
-                >
-                  <Image
-                    source={require("../../assets/menu.png")}
-                    style={{
-                      width: 20,
-                      height: 4,
-                    }}
-                  />
-                </TouchableOpacity>
-              )}
+                />
+              </TouchableOpacity>
+              {/* )} */}
             </View>
           </View>
         </View>
@@ -370,11 +380,17 @@ const Detail = () => {
         commentModal={commentModal}
         communityId={itemId}
       />
-      <OptionModal
-        isOpenOptionModal={isOpenOptionModal}
-        openOptionModal={openOptionModal}
-        onDeletePress={handleDeletePost}
-        onPutPress={handlePutPost}
+      <CommunityAuthorSheet
+        isVisible={authorModalVisible}
+        onClose={() => setAuthorModalVisible(false)}
+        onRemove={handleDeletePost}
+        onModify={handlePutPost}
+      />
+      <CommunitySheet
+        isVisible={authorModalVisible}
+        onClose={() => setNoAuthorModalVisible(false)}
+        onProfile={openProfile}
+        onReport={handleReport}
       />
       <DeleteMsg
         isVisible={deleteModalVisible}
