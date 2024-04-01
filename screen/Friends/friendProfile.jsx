@@ -42,8 +42,6 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
           userId: userId,
         },
       });
-      console.log("데이터1111:", response.data);
-
       if (response.status === 200) {
         console.log("데이터1111:", response.data);
         const ProfileData = response.data;
@@ -250,11 +248,10 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
           <View style={styles.contentContainer} key={item.id}>
             <View style={{ alignSelf: "center", gap: 5 }}>
               <Image
-                // source={require("../../assets/friend_profile.png")}
                 source={{ uri: item.profile }}
-                style={{ width: 92, height: 92, borderRadius: 50 }}
+                style={{ width: 92, height: 92, borderRadius: 50, left: 10 }}
               />
-              <Text style={styles.name}>{item.name}</Text>
+              <Text style={[styles.name]}>{item.name}</Text>
             </View>
             <View
               style={{
@@ -284,12 +281,25 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
                     styles.button,
                     {
                       backgroundColor:
-                        status === "대기중" ? "#F1F1F1" : "#FFC891",
+                        status === "대기중"
+                          ? "#F1F1F1"
+                          : status === "친구끊기"
+                          ? "#5C5C5C"
+                          : "#FFC891",
                     },
                   ]}
                   onPress={handleFriend}
                 >
-                  <Text style={styles.btnText}>{status}</Text>
+                  <Text
+                    style={[
+                      styles.btnText,
+                      {
+                        color: status === "친구끊기" ? "#fff" : "#000",
+                      },
+                    ]}
+                  >
+                    {status}
+                  </Text>
                 </TouchableOpacity>
               )}
             </View>
@@ -412,7 +422,6 @@ const styles = StyleSheet.create({
     borderColor: "#1F1F1F",
   },
   btnText: {
-    color: "#000 ",
     fontSize: 15,
     fontWeight: 700,
     alignSelf: "center",
