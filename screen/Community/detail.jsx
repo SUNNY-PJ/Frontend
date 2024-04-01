@@ -327,7 +327,7 @@ const Detail = () => {
       {data.map((item) => (
         <View key={item.id}>
           <ScrollView style={{ height: windowHeight - 259 - 140 }}>
-            <View style={styles.contentContainer}>
+            <View style={[styles.contentContainer, { paddingRight: 20 }]}>
               <View style={{ marginTop: 24, marginBottom: 70 }}>
                 <Text>{item.contents}</Text>
                 {item.photoList.map((photo, index) => (
@@ -431,7 +431,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingLeft: 20,
-    paddingRight: 0,
   },
   image: {
     width: 32,
