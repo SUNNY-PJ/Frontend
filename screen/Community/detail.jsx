@@ -140,6 +140,7 @@ const Detail = () => {
 
   const handleProfileClick = () => {
     openProfile();
+    setNoAuthorModalVisible(false);
   };
 
   const handleDeleteConfirm = () => {
@@ -392,7 +393,7 @@ const Detail = () => {
       <CommunitySheet
         isVisible={noAuthorModalVisible}
         onClose={() => setNoAuthorModalVisible(false)}
-        onProfile={openProfile}
+        onProfile={handleProfileClick}
         onReport={handleReport}
       />
       <DeleteMsg
