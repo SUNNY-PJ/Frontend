@@ -79,7 +79,8 @@ const Report = () => {
 
   const handleCloseClick = () => {
     // setMsg(false);
-    setResult(false);
+    // setResult(false);
+    navigation.goBack();
   };
 
   useEffect(() => {
@@ -111,7 +112,12 @@ const Report = () => {
             {writer}
           </Text>
           <Text style={[styles.mainText]}>내용</Text>
-          <Text style={[styles.text, { marginBottom: 18 }]}>
+
+          <Text
+            style={[styles.text, { marginBottom: 18 }]}
+            numberOfLines={2}
+            ellipsizeMode="tail"
+          >
             {/* 게시글/댓글/답글 내용 */}
             {content}
           </Text>
