@@ -30,7 +30,6 @@ const Detail = () => {
   // 화면의 전체 높이
   const windowHeight = Dimensions.get("window").height;
   const [data, setData] = useState([]);
-  const [author, setAuthor] = useState(false);
   const [noAuthorModalVisible, setNoAuthorModalVisible] = useState(false);
   const [authorModalVisible, setAuthorModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
@@ -74,7 +73,7 @@ const Detail = () => {
 
   useEffect(() => {
     fetchData();
-  }, [itemId]);
+  }, []);
 
   // 게시글 삭제
   const deleteData = async () => {
@@ -132,7 +131,6 @@ const Detail = () => {
   };
 
   const handleMenuClick = (authorVal) => {
-    setAuthor(authorVal);
     if (authorVal) {
       setAuthorModalVisible(true);
     } else {
@@ -237,12 +235,12 @@ const Detail = () => {
                   }}
                 />
               </TouchableOpacity>
-              {/* {item.isAuthor === true && ( */}
               <TouchableOpacity
-                onPress={handleMenuClick(item.isAuthor)}
+                onPress={() => handleMenuClick(item.isAuthor)}
                 style={{
                   alignSelf: "center",
                 }}
+                hitSlop={{ top: 20, bottom: 20, left: 10, right: 10 }}
               >
                 <Image
                   source={require("../../assets/menu.png")}
@@ -252,7 +250,6 @@ const Detail = () => {
                   }}
                 />
               </TouchableOpacity>
-              {/* )} */}
             </View>
           </View>
         </View>
@@ -387,7 +384,7 @@ const Detail = () => {
         onModify={handlePutPost}
       />
       <CommunitySheet
-        isVisible={authorModalVisible}
+        isVisible={noAuthorModalVisible}
         onClose={() => setNoAuthorModalVisible(false)}
         onProfile={openProfile}
         onReport={handleReport}
