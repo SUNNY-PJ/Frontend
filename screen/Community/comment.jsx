@@ -29,6 +29,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const navigation = useNavigation();
 
   const inputURL = `/comment/${communityId}`;
+  const [content, setContent] = useState("");
   const [userId, setUserId] = useState(0);
   const [comment, setComment] = useState("");
   const [commentId, setCommentId] = useState("");
@@ -43,7 +44,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const [isActionSheetVisible, setActionSheetVisible] = useState(false);
   const [isActionSheetViewerVisible, setActionSheetViewerVisible] =
     useState(false);
-
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
@@ -89,10 +89,10 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       const ResCommentData = response.data.data;
       setCommentData(ResCommentData);
       setEditComment();
-      console.log(
-        "댓글 데이터",
-        ResCommentData.map((item) => item.children)
-      );
+      // console.log(
+      //   "댓글 데이터",
+      //   ResCommentData.map((item) => item.children)
+      // );
       console.log("댓글 데이터", ResCommentData);
     } catch (error) {
       console.error("에러:", error);
@@ -188,12 +188,13 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     setComment("");
   };
 
-  const handleMenuClick = (id, writer, author, userId) => {
+  const handleMenuClick = (id, writer, author, userId, content) => {
     console.log(userId);
     openOptionModal();
     setUserId(userId);
     setCommentId(id);
     setParentWriter(writer);
+    setContent(content);
     if (author === true) {
       setActionSheetVisible(true);
       setActionSheetViewerVisible(false);
@@ -243,19 +244,25 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
   const handleReportClick = () => {
     setActionSheetVisible(false);
-    navigation.navigate("MainScreen", { screen: "Report" });
+    setActionSheetViewerVisible(false);
+    commentModal();
+    navigation.navigate("MainScreen", {
+      screen: "Report",
+      params: {
+        itemId: communityId,
+        reportType: "COMMENT",
+        writer: parentWriter,
+        content: content,
+      },
+    });
   };
 
   useEffect(() => {
     fetchData();
   }, [commentId]);
 
-  const [slide, setSlide] = useState(false);
-
   const handleSlideDown = () => {
-    setSlide(true);
     commentModal();
-    setSlide(false);
   };
 
   return (
@@ -362,7 +369,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                             item.id,
                             item.writer,
                             item.commentAuthor,
-                            item.userId
+                            item.userId,
+                            item.content
                           )
                         }
                       >
@@ -489,7 +497,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                                     childItem.id,
                                     childItem.writer,
                                     childItem.commentAuthor,
-                                    childItem.userId
+                                    childItem.userId,
+                                    childItem.content
                                   )
                                 }
                               >
