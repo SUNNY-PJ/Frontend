@@ -30,6 +30,8 @@ const Detail = () => {
   // 화면의 전체 높이
   const windowHeight = Dimensions.get("window").height;
   const [data, setData] = useState([]);
+  const [writer, setWriter] = useState("");
+  const [content, setContent] = useState("");
   const [noAuthorModalVisible, setNoAuthorModalVisible] = useState(false);
   const [authorModalVisible, setAuthorModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
@@ -66,6 +68,8 @@ const Detail = () => {
       const DetailData = response.data.data;
       setData([DetailData]);
       setIsScrap(DetailData.isScraped);
+      setWriter(DetailData.writer);
+      setContent(DetailData.contents);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -179,6 +183,8 @@ const Detail = () => {
       params: {
         itemId: itemId,
         reportType: "COMMUNITY",
+        writer: writer,
+        content: content,
       },
     });
   };
