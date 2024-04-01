@@ -17,6 +17,7 @@ const ReportMsg = ({ isVisible, onSubmit, onCancel }) => {
         style={{
           justifyContent: "center",
           alignItems: "center",
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
           height: "100%",
         }}
       >
