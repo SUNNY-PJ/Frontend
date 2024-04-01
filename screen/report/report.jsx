@@ -23,6 +23,8 @@ const Report = () => {
 
   const { itemId } = route.params;
   const { reportType } = route.params;
+  const { writer } = route.params;
+  const { content } = route.params;
   const [reason, setReason] = useState("");
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
   const [result, setResult] = useState(false);
@@ -103,14 +105,15 @@ const Report = () => {
               onPress={() => {}}
             />
           </TouchableOpacity>
-
           <Text style={[styles.mainText]}>작성자</Text>
           <Text style={[styles.text, { marginBottom: 20 }]}>
-            게시글/댓글/답글 작성자 닉네임
+            {/* 게시글/댓글/답글 작성자 닉네임 */}
+            {writer}
           </Text>
           <Text style={[styles.mainText]}>내용</Text>
           <Text style={[styles.text, { marginBottom: 18 }]}>
-            게시글/댓글/답글 내용
+            {/* 게시글/댓글/답글 내용 */}
+            {content}
           </Text>
         </View>
         <Line h={4} color={"#C1C1C1"} />
