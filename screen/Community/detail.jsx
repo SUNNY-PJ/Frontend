@@ -173,7 +173,13 @@ const Detail = () => {
 
   const handleReport = () => {
     setNoAuthorModalVisible(false);
-    navigation.navigate("MainScreen", { screen: "Report" });
+    navigation.navigate("MainScreen", {
+      screen: "Report",
+      params: {
+        itemId: itemId,
+        reportType: "COMMUNITY",
+      },
+    });
   };
 
   return (
