@@ -17,9 +17,11 @@ import Line from "../../components/Line";
 import ReportResult from "../../components/Modal/report/reportResult";
 import ReportMsg from "../../components/Modal/report/reportMsg";
 import apiClient from "../../api/apiClient";
+import { useNavigation } from "@react-navigation/native";
 
 const Report = () => {
   const route = useRoute();
+  const navigation = useNavigation();
 
   const { itemId } = route.params;
   const { reportType } = route.params;
@@ -52,6 +54,7 @@ const Report = () => {
       console.log(response.data);
       if (response.status === 200) {
         Alert.alert("신고", "신고를 정상적으로 처리했습니다.");
+        navigation.goBack();
       } else {
         Alert.alert(
           "error",
