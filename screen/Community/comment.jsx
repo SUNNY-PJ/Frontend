@@ -189,7 +189,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   };
 
   const handleMenuClick = (id, writer, author, userId, content) => {
-    console.log(userId);
     openOptionModal();
     setUserId(userId);
     setCommentId(id);
@@ -373,6 +372,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                             item.content
                           )
                         }
+                        hitSlop={{ top: 20, bottom: 20, left: 10, right: 10 }}
                       >
                         <Image
                           source={require("../../assets/commentDotMenu.png")}
@@ -511,6 +511,12 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                                     childItem.content
                                   )
                                 }
+                                hitSlop={{
+                                  top: 20,
+                                  bottom: 20,
+                                  left: 10,
+                                  right: 10,
+                                }}
                               >
                                 <Image
                                   source={require("../../assets/commentDotMenu.png")}
