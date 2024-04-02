@@ -72,7 +72,6 @@ const Alarm = () => {
     wait(700).then(() => {
       console.log(refreshing);
       setRefreshing(false);
-      // 데이터를 새로고침
       fetchData();
     });
   }, []);
@@ -90,8 +89,8 @@ const Alarm = () => {
         console.log("알림 데이터:", AlarmData);
         const todayData = AlarmData.filter((item) => item.isToday);
         const pastData = AlarmData.filter((item) => !item.isToday);
-        setRecentData(todayData); // 오늘 날짜 데이터
-        setPastData(pastData); // 과거 날짜 데이터
+        setRecentData(todayData);
+        setPastData(pastData);
       }
     } catch (error) {
       if (error.response) {
@@ -115,7 +114,6 @@ const Alarm = () => {
     else if (title.includes("댓글") || title.includes("답글")) {
       navigation.navigate("Community");
     }
-    // 추가적인 타이틀 조건에 따른 네비게이션을 여기에 구현할 수 있습니다.
   };
 
   return (
@@ -159,10 +157,10 @@ const Alarm = () => {
             </View>
             <View style={{ backgroundColor: "#fff" }}>
               {recentData.map((item, index) => {
-                const uniqueIdentifier = `${item.id}-${item.createdAt}`;
+                const uniqueIdentifier = `${item.alarmId}`;
                 return (
                   <TouchableOpacity
-                    key={uniqueIdentifier} // 고유한 key로 uniqueIdentifier 사용
+                    key={uniqueIdentifier}
                     style={[
                       styles.section,
                       clickedItemIds.includes(uniqueIdentifier) &&
@@ -208,10 +206,10 @@ const Alarm = () => {
             </View>
             <View style={{ backgroundColor: "#fff" }}>
               {pastData.map((item, index) => {
-                const uniqueIdentifier = `${item.id}-${item.createdAt}`;
+                const uniqueIdentifier = `${item.alarmId}`;
                 return (
                   <TouchableOpacity
-                    key={uniqueIdentifier} // 고유한 key로 uniqueIdentifier 사용
+                    key={uniqueIdentifier}
                     style={[
                       styles.section,
                       clickedItemIds.includes(uniqueIdentifier) &&
@@ -223,7 +221,6 @@ const Alarm = () => {
                     }
                   >
                     <Image
-                      // source={require("../../assets/myPage_profile.png")}
                       source={
                         item.profileImg
                           ? { uri: item.profileImg }
@@ -233,7 +230,11 @@ const Alarm = () => {
                     />
                     <View>
                       <Text style={styles.titleText}>{item.title}</Text>
-                      <Text style={styles.contentText}>
+                      <Text
+                        style={styles.contentText}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                      >
                         {item.notificationContent}
                       </Text>
                       <View style={styles.bottomSection}>
