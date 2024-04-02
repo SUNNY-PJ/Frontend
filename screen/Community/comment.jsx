@@ -40,7 +40,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const [isOpenOptionModal, setIsOpenOptionModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  const [editComment, setEditComment] = useState("");
+  const [isChildComment, setIsChildComment] = useState(true);
   const [isActionSheetVisible, setActionSheetVisible] = useState(false);
   const [isActionSheetViewerVisible, setActionSheetViewerVisible] =
     useState(false);
@@ -88,7 +88,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
       const ResCommentData = response.data.data;
       setCommentData(ResCommentData);
-      setEditComment();
       // console.log(
       //   "댓글 데이터",
       //   ResCommentData.map((item) => item.children)
@@ -188,12 +187,13 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     setComment("");
   };
 
-  const handleMenuClick = (id, writer, author, userId, content) => {
+  const handleMenuClick = (id, writer, author, userId, content, boolean) => {
     openOptionModal();
     setUserId(userId);
     setCommentId(id);
     setParentWriter(writer);
     setContent(content);
+    setIsChildComment(boolean);
     if (author === true) {
       setActionSheetVisible(true);
       setActionSheetViewerVisible(false);
@@ -369,7 +369,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                             item.writer,
                             item.commentAuthor,
                             item.userId,
-                            item.content
+                            item.content,
+                            true
                           )
                         }
                         hitSlop={{ top: 20, bottom: 20, left: 10, right: 10 }}
@@ -508,7 +509,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                                     childItem.writer,
                                     childItem.commentAuthor,
                                     childItem.userId,
-                                    childItem.content
+                                    childItem.content,
+                                    false
                                   )
                                 }
                                 hitSlop={{
@@ -607,6 +609,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
         onComment={handleCommentClick}
         onModify={handleModifyClick}
         onProfile={handleProfileClick}
+        isChildComment={isChildComment}
       />
       <CommentViewerActionSheet
         isVisible={isActionSheetViewerVisible}
@@ -614,6 +617,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
         onReport={handleReportClick}
         onComment={handleCommentClick}
         onProfile={handleProfileClick}
+        isChildComment={isChildComment}
       />
       <FriendProfile
         isOpenProfile={isOpenProfile}

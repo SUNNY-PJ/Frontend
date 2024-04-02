@@ -9,6 +9,7 @@ const CommentActionSheet = ({
   onComment,
   onProfile,
   onModify,
+  isChildComment,
 }) => {
   return (
     <Modal
@@ -20,9 +21,14 @@ const CommentActionSheet = ({
       <TouchableOpacity style={styles.overlay} onPress={onClose}>
         <View style={{ padding: 17 }}>
           <View style={styles.actionSheet}>
-            <TouchableOpacity style={styles.actionItem} onPress={onComment}>
-              <Text style={styles.actionText}>댓글 답글 쓰기</Text>
-            </TouchableOpacity>
+            {isChildComment && (
+              <>
+                <TouchableOpacity style={styles.actionItem} onPress={onComment}>
+                  <Text style={styles.actionText}>댓글 답글 쓰기</Text>
+                </TouchableOpacity>
+                <Line h={1} color={"#C1C1C1"} />
+              </>
+            )}
             {/* <Line h={1} color={"#C1C1C1"} /> */}
             {/* <TouchableOpacity style={styles.actionItem} onPress={onProfile}>
               <Text style={styles.actionText}>작성자 프로필 보기</Text>
