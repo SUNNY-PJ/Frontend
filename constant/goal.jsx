@@ -191,7 +191,7 @@ function Goal({ navigation }) {
             )}
           </View>
           <Text style={[styles.subText, { marginTop: 8 }]}>
-            절약 목표는 사용자당 한 번에 하나씩만 등록 및 진행 가능하며,{"\n"}
+            절약 목표는 사용자당 한 번에 하나 씩만 등록 및 진행 가능하며,{"\n"}
             종료 일자 자정 이후 자동으로 초기화됩니다.
           </Text>
         </View>
