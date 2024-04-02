@@ -40,7 +40,7 @@ const Report = () => {
       const bodyData = {
         id: itemId,
         reason: reason,
-        status: reportType,
+        reportType: reportType,
       };
       const response = await apiClient.post(inputURL, bodyData, {
         headers: {
