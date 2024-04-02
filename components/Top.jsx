@@ -11,11 +11,45 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TopTooltip from "./Modal/topTooltip";
 import { useSaveData } from "../context/saveDataContext";
+import GoalMsg from "./Modal/goal/goalMsg";
 
 const Top = ({ navigation }) => {
   const { saveData, fetchData } = useSaveData();
   const progressAnim = useRef(new Animated.Value(0)).current;
   const [isOpenTopTooltip, setIsOpenTopTooltip] = useState(false);
+  const [fail, setFail] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const percentage = saveData.progress;
+  const cost = saveData.cost;
+
+  useEffect(() => {
+    // 모달 상태를 조건에 따라 업데이트
+    const showModalBasedOnProgress = () => {
+      const progress = Math.abs(saveData.progress);
+      let showModalCondition = false;
+
+      if (saveData.isLoaded) {
+        if (saveData.progress <= 0) {
+          showModalCondition = true; // 음수일 때 모달 조건
+          setFail(true);
+        } else if (progress <= 20) {
+          showModalCondition = true; // 20 이하일 때 모달 조건
+        } else if (progress <= 49) {
+          showModalCondition = true; // 49 이하일 때 모달 조건
+        } else if (progress <= 100) {
+          showModalCondition = true; // 100 이하일 때 모달 조건
+        }
+      }
+
+      setShowModal(showModalCondition);
+    };
+
+    showModalBasedOnProgress();
+  }, [saveData]);
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
 
   let backgroundColor = "#FFA851"; // 기본 색상
 
@@ -178,6 +212,15 @@ const Top = ({ navigation }) => {
       <View>
         {isOpenTopTooltip && <TopTooltip openTopTooltip={openTopTooltip} />}
       </View>
+      {/* {showModal && (
+        <GoalMsg
+          isOpenGoalMessage={showModal}
+          openGoalMessage={handleModalClose}
+          percentage={percentage}
+          cost={cost}
+          fail={fail}
+        />
+      )} */}
     </View>
   );
 };
