@@ -39,6 +39,7 @@ const MyScrap = () => {
         },
       });
       console.log(response.data);
+      fetchData();
     } catch (error) {
       console.error("에러:", error);
     }
@@ -57,6 +58,7 @@ const MyScrap = () => {
           },
         }
       );
+      fetchData();
     } catch (error) {
       console.error("에러:", error);
     }
