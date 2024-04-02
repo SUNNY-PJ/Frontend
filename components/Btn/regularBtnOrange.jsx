@@ -11,7 +11,7 @@ const RegularBtnOrange = ({ text }) => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    width: 160,
+    width: 140,
     backgroundColor: "#FFC891",
     alignSelf: "center",
     borderRadius: 24,
