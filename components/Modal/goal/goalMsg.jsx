@@ -10,7 +10,13 @@ import {
 import RegularBtnOrange from "../../Btn/regularBtnOrange";
 import Progress2 from "../../progress/progress2";
 
-const GoalMsg = ({ isOpenGoalMessage, openGoalMessage, percentage, cost }) => {
+const GoalMsg = ({
+  isOpenGoalMessage,
+  openGoalMessage,
+  percentage,
+  cost,
+  fail,
+}) => {
   return (
     <Modal animationType="none" transparent={true} visible={isOpenGoalMessage}>
       <View
@@ -23,7 +29,14 @@ const GoalMsg = ({ isOpenGoalMessage, openGoalMessage, percentage, cost }) => {
       >
         <View style={styles.container}>
           <View style={styles.content}>
-            <Progress2 progress={percentage} color={""} />
+            {fail ? (
+              <Image
+                source={require("../../../assets/logo/bad.png")}
+                style={{ width: 120, height: 120, alignSelf: "center" }}
+              />
+            ) : (
+              <Progress2 progress={percentage} color={""} />
+            )}
             <Text style={styles.title}>
               목표금액 {cost}원까지 {"\n"}
               벌써 {percentage}%에 도달 했어요!
