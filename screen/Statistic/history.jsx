@@ -92,7 +92,7 @@ const History = () => {
       });
       // 가져온 데이터로 상태 업데이트
       const fetchedData = response.data.data;
-      setData(fetchedData);
+      // setData(fetchedData);
       // 마킹 정보 업데이트
       updateMarkedDates(fetchedData);
     } catch (error) {

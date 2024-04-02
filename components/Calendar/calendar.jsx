@@ -92,7 +92,7 @@ const CalendarComponent = ({ onDataFetched, markedDates }) => {
     <Calendar
       style={styles.calendar}
       renderHeader={(date) => {
-        // date는 현재 달력이 보여주는 월의 첫 날을 나타내는 Date 객체입니다.
+        // date는 현재 달력이 보여주는 월의 첫 날을 나타내는 Date 객체
         const headerDate = new Date(date);
         const year = headerDate.getFullYear() + "년";
         const month = headerDate.getMonth() + 1 + "월";
@@ -102,7 +102,6 @@ const CalendarComponent = ({ onDataFetched, markedDates }) => {
             <Text style={styles.headerText}>
               {year} {month}
             </Text>
-            {/* 여기에 필요한 경우 왼쪽/오른쪽 화살표 버튼 등을 추가할 수 있습니다. */}
           </View>
         );
       }}
@@ -174,13 +173,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 10,
-    // ...기타 스타일
   },
   headerText: {
     // 헤더 텍스트 스타일
     fontSize: 16,
     fontWeight: "bold",
-    // ...기타 스타일
   },
   calendar: {
     borderTopWidth: 0,
