@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import RegularBtnOrange from "../../Btn/regularBtnOrange";
-import Progress from "../../progress/progress";
+import Progress2 from "../../progress/progress2";
 
 const GoalMsg = ({ isOpenGoalMessage, openGoalMessage, percentage, cost }) => {
   return (
@@ -23,7 +23,7 @@ const GoalMsg = ({ isOpenGoalMessage, openGoalMessage, percentage, cost }) => {
       >
         <View style={styles.container}>
           <View style={styles.content}>
-            <Progress progress={percentage} color={""} />
+            <Progress2 progress={percentage} color={""} />
             <Text style={styles.title}>
               목표금액 {cost}원까지 {"\n"}
               벌써 {percentage}%에 도달 했어요!
@@ -40,7 +40,7 @@ const GoalMsg = ({ isOpenGoalMessage, openGoalMessage, percentage, cost }) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 335,
+    width: 315,
     borderRadius: 16,
     borderWidth: 1.5,
     borderColor: "#1F1F1F",
@@ -53,13 +53,13 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     textAlign: "center",
     color: "#000",
-    marginBottom: 22,
+    marginBottom: 10,
     fontFamily: "SUITE",
   },
   content: {
-    gap: 32,
-    paddingTop: 75,
-    paddingBottom: 32,
+    gap: 26,
+    paddingTop: 55,
+    paddingBottom: 26,
   },
   progressFill: {
     position: "absolute",
