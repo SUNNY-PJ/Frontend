@@ -12,6 +12,7 @@ import LargeBtnDisable from "../components/Btn/largeBtnDisable";
 import LargeBtn from "../components/Btn/largeBtn";
 import DatePicker2 from "../components/DatePicker/datePicker2";
 import apiClient from "../api/apiClient";
+import moment from "moment";
 
 function Goal({ navigation }) {
   const inputURL = "/save";
@@ -160,15 +161,23 @@ function Goal({ navigation }) {
   // 절약 목표 수정
   const updateData = async () => {
     try {
+      const formattedStartDateVal = moment(
+        startDateVal,
+        "YYYY.MM.DD dddd"
+      ).format("YYYY.MM.DD");
+      const formattedEndDateVal = moment(endDateVal, "YYYY.MM.DD dddd").format(
+        "YYYY.MM.DD"
+      );
+
       const bodyData = {
-        start_date: startDateVal,
-        end_date: endDateVal,
+        start_date: formattedStartDateVal,
+        end_date: formattedEndDateVal,
         cost: cost.replace(/,/g, ""),
       };
-
       const response = await apiClient.patch(inputURL, bodyData, {
         headers: { "Content-Type": "application/json; charset=utf-8" },
       });
+      console.log("절약 목표 수정", bodyData);
       console.log("절약 목표 수정", response.data);
       if (response.status === 200) {
         Alert.alert("절약 목표 수정", "절약 목표가 수정되었습니다.");
@@ -180,6 +189,8 @@ function Goal({ navigation }) {
       console.error("Update error:", error);
     }
   };
+
+  console.log("startDateVal", startDateVal);
 
   return (
     <View style={styles.container}>
