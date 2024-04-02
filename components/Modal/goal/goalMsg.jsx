@@ -31,16 +31,24 @@ const GoalMsg = ({
           <View style={styles.content}>
             {fail ? (
               <Image
-                source={require("../../../assets/logo/bad.png")}
+                source={require("../../../assets/logo/bad_large.png")}
                 style={{ width: 120, height: 120, alignSelf: "center" }}
               />
             ) : (
               <Progress2 progress={percentage} color={""} />
             )}
-            <Text style={styles.title}>
-              목표금액 {cost}원까지 {"\n"}
-              벌써 {percentage}%에 도달 했어요!
-            </Text>
+            {fail ? (
+              <Text style={styles.title}>
+                목표 금액 {cost}원을 {"\n"}다 썼어요... {"\n"}그렇다고 마음껏
+                낭비하시면 안 돼요!
+              </Text>
+            ) : (
+              <Text style={styles.title}>
+                목표금액 {cost}원까지 {"\n"}
+                벌써 {percentage}%에 도달 했어요!
+              </Text>
+            )}
+
             <TouchableOpacity onPress={openGoalMessage} activeOpacity={0.6}>
               <RegularBtnOrange text={"확인"} />
             </TouchableOpacity>
@@ -67,11 +75,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#000",
     marginBottom: 10,
-    fontFamily: "SUITE",
+    fontFamily: "SUITE_Medium",
   },
   content: {
     gap: 26,
-    paddingTop: 55,
+    paddingTop: 35,
     paddingBottom: 26,
   },
   progressFill: {
