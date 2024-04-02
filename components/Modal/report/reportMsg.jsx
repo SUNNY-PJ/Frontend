@@ -9,10 +9,13 @@ import {
 } from "react-native";
 import MiddleBtn from "../../Btn/middleBtn";
 import MiddleBtnBlack from "../../Btn/middleBtnBlack";
+import { useNavigation } from "@react-navigation/native";
 
 const ReportMsg = ({ isVisible, onSubmit, onCancel }) => {
+  const navigation = useNavigation();
+
   return (
-    <Modal animationType="slide" transparent={true} visible={isVisible}>
+    <Modal animationType="none" transparent={true} visible={isVisible}>
       <View
         style={{
           justifyContent: "center",
