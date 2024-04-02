@@ -25,6 +25,8 @@ function Goal({ navigation }) {
   const [endDate, setEndDate] = useState("");
   const [endDateVal, setEndDateVal] = useState("");
   const [cost, setCost] = useState(0);
+  const [goalExists, setGoalExists] = useState(false);
+  const [buttonText, setButtonText] = useState("등록하기");
 
   const handleStartDateChange = (formattedDate) => {
     setStartDate(formattedDate);
@@ -110,7 +112,11 @@ function Goal({ navigation }) {
   };
 
   const handlePost = () => {
-    postData();
+    if (goalExists) {
+      updateData();
+    } else {
+      postData();
+    }
   };
 
   // 절약 목표 세부 조회
@@ -122,16 +128,22 @@ function Goal({ navigation }) {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-
       if (response.status === 200) {
-        const Data = response.data.data[0];
+        const Data = response.data.data;
         console.log("절약 목표 세부 조회", Data);
-        // expire 필드가 false일 때만 상태 업데이트
-        if (!Data.expire) {
-          const formattedCost = Data.cost.toLocaleString("ko-KR");
+
+        const activeGoals = Data.filter((item) => !item.expire);
+
+        if (activeGoals.length > 0) {
+          const firstActiveGoal = activeGoals[0];
+          const formattedCost = firstActiveGoal.cost.toLocaleString("ko-KR");
+          setGoalExists(true);
+          setButtonText("수정하기");
           setCost(formattedCost);
-          setStartDate(Data.startDate);
-          setEndDate(Data.endDate);
+          setStartDate(firstActiveGoal.startDate);
+          setEndDate(firstActiveGoal.endDate);
+          setStartDateVal(firstActiveGoal.startDate);
+          setEndDateVal(firstActiveGoal.endDate);
         }
       } else {
         Alert.alert("error", "서버에 장애가 발생하였습니다.");
@@ -144,6 +156,30 @@ function Goal({ navigation }) {
   useEffect(() => {
     fetchData();
   }, []);
+
+  // 절약 목표 수정
+  const updateData = async () => {
+    try {
+      const bodyData = {
+        start_date: startDateVal,
+        end_date: endDateVal,
+        cost: cost.replace(/,/g, ""),
+      };
+
+      const response = await apiClient.patch(inputURL, bodyData, {
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+      });
+      console.log("절약 목표 수정", response.data);
+      if (response.status === 200) {
+        Alert.alert("절약 목표 수정", "절약 목표가 수정되었습니다.");
+        navigation.goBack();
+      } else {
+        alert("An error occurred on the server.");
+      }
+    } catch (error) {
+      console.error("Update error:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -167,6 +203,7 @@ function Goal({ navigation }) {
               inputText={"시작 일자:"}
               title={"시작 일자"}
               showDayOfWeek={true}
+              initialDate={startDate}
             />
           </TouchableOpacity>
           <Text style={styles.label}>절약 종료 일자를 선택해주세요</Text>
@@ -180,12 +217,13 @@ function Goal({ navigation }) {
               title={"종료 일자"}
               inputText={"종료 일자:"}
               showDayOfWeek={true}
+              initialDate={endDate}
             />
           </TouchableOpacity>
 
           <View style={styles.buttonContainer}>
             {isAllFieldsFilled ? (
-              <LargeBtn text={"등록하기"} onClick={handlePost} />
+              <LargeBtn text={buttonText} onClick={handlePost} />
             ) : (
               <LargeBtnDisable text={"등록하기"} />
             )}

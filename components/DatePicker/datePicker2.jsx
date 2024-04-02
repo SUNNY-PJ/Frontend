@@ -15,10 +15,13 @@ const DatePicker2 = ({
   title,
   inputText,
   showDayOfWeek,
-  //   resetDate,
+  initialDate,
 }) => {
-  const [selectedDate, setSelectedDate] = useState();
-  console.log(selectedDate);
+  const [selectedDate, setSelectedDate] = useState(initialDate || "");
+  console.log("selectedDate", selectedDate);
+  useEffect(() => {
+    setSelectedDate(initialDate || "");
+  }, [initialDate]);
 
   const [isInputFocused, setInputFocused] = useState(false);
 
