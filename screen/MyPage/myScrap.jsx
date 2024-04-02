@@ -19,18 +19,23 @@ const MyScrap = () => {
 
   const [data, setData] = useState([]);
   const [isScrap, setIsScrap] = useState(true);
+  const [scrapStates, setScrapStates] = useState({});
 
-  const handleScrapClick = () => {
-    setIsScrap(!isScrap);
-    if (isScrap) {
-      deleteScrapData();
+  const handleScrapClick = (itemId) => {
+    setScrapStates((prevStates) => ({
+      ...prevStates,
+      [itemId]: !prevStates[itemId],
+    }));
+
+    if (scrapStates[itemId]) {
+      deleteScrapData(itemId);
     } else {
-      postScrapData();
+      postScrapData(itemId);
     }
   };
 
   // 스크랩 삭제
-  const deleteScrapData = async () => {
+  const deleteScrapData = async (itemId) => {
     const inputURL = `/scrap/${itemId}`;
     try {
       const response = await apiClient.delete(inputURL, {
@@ -46,7 +51,7 @@ const MyScrap = () => {
   };
 
   // 스크랩 등록
-  const postScrapData = async () => {
+  const postScrapData = async (itemId) => {
     const inputURL = `/scrap/${itemId}`;
     try {
       const response = await apiClient.post(
@@ -66,15 +71,21 @@ const MyScrap = () => {
 
   // 스크랩 조회
   const fetchData = async () => {
-    const inputURL = "/users/scrap";
     try {
-      const response = await apiClient.get(inputURL, {
+      const response = await apiClient.get("/users/scrap", {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
       const myScrapData = response.data;
       setData(myScrapData);
+
+      // 스크랩 상태 초기화
+      const newScrapStates = {};
+      myScrapData.forEach((item) => {
+        newScrapStates[item.communityId] = true;
+      });
+      setScrapStates(newScrapStates);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -119,12 +130,12 @@ const MyScrap = () => {
                   </View>
                 </View>
                 <TouchableOpacity
-                  onPress={handleScrapClick}
+                  onPress={() => handleScrapClick(item.communityId)}
                   style={{ alignSelf: "center" }}
                 >
                   <Image
                     source={
-                      isScrap
+                      scrapStates[item.communityId]
                         ? require("../../assets/myPage_scrap_active.png")
                         : require("../../assets/myPage_scrap_inactive.png")
                     }
