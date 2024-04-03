@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
@@ -118,16 +119,15 @@ const Post = () => {
   });
 
   const postData = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     // 유효성 검사
     if (title.trim() === "") {
-      alert("제목을 입력해주세요.");
+      Alert.alert("", "제목을 입력해주세요.");
       return;
     } else if (content.trim() === "") {
-      alert("내용을 입력해주세요.");
+      Alert.alert("", "내용을 입력해주세요.");
       return;
     } else if (title.length > 35) {
-      alert("제목은 35자 이하로 입력해주세요.");
+      Alert.alert("", "제목은 35자 이하로 입력해주세요.");
       return;
     }
 
@@ -140,7 +140,7 @@ const Post = () => {
 
       console.log("데이터:", response.data);
       if (response.status === 200) {
-        alert("게시글을 등록하였습니다.");
+        Alert.alert("", "게시글을 등록하였습니다.");
         fetchData();
         navigation.navigate("Community", { screen: "Community" });
       }
@@ -148,10 +148,11 @@ const Post = () => {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.status);
         if (error.response.status === 400) {
-          alert("카테고리를 선택해주세요.");
+          Alert.alert("", "카테고리를 선택해주세요.");
         }
       } else {
         console.error("에러:", error);
+        Alert.alert("error", "서버에 장애가 발생하였습니다.");
       }
     }
   };

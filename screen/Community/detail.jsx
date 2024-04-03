@@ -72,6 +72,7 @@ const Detail = () => {
       setContent(DetailData.contents);
     } catch (error) {
       console.error("에러:", error);
+      Alert.alert("error", "서버에 장애가 발생하였습니다.");
     }
   };
 
@@ -87,9 +88,14 @@ const Detail = () => {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-      Alert.alert("게시글 삭제", "게시글이 삭제되었습니다.");
+      if (response.status === 200) {
+        Alert.alert("", "게시글이 삭제되었습니다.");
+      } else {
+        Alert.alert("", "게시글 삭제에 실패하였습니다.");
+      }
     } catch (error) {
       console.error("에러:", error);
+      Alert.alert("error", "서버에 장애가 발생하였습니다.");
     }
   };
 

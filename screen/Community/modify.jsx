@@ -121,7 +121,7 @@ const Modify = () => {
 
       // 변경된 데이터가 없으면 early return
       if (Object.keys(modifiedData).length === 0) {
-        Alert.alert("변경사항 없음", "변경된 내용이 없습니다.");
+        Alert.alert("", "변경된 내용이 없습니다.");
         return;
       }
 
@@ -133,13 +133,13 @@ const Modify = () => {
 
       // 유효성 검사
       if (modifiedData.title.trim() === "") {
-        alert("제목을 입력해주세요.");
+        Alert.alert("", "제목을 입력해주세요.");
         return;
       } else if (modifiedData.contents.trim() === "") {
-        alert("내용을 입력해주세요.");
+        Alert.alert("", "내용을 입력해주세요.");
         return;
       } else if (modifiedData.title.length > 35) {
-        alert("제목은 35자 이하로 입력해주세요.");
+        Alert.alert("", "제목은 35자 이하로 입력해주세요.");
         return;
       }
 
@@ -165,14 +165,15 @@ const Modify = () => {
         },
       });
       if (postResponse.status === 200) {
-        Alert.alert("게시글 수정", "게시글을 수정하였습니다.");
+        Alert.alert("", "게시글을 수정하였습니다.");
         fetchData();
         navigation.navigate("Community", { screen: "Community" });
       } else {
-        Alert.alert("게시글 수정", "게시글을 수정에 실패했습니다.");
+        Alert.alert("", "게시글을 수정에 실패했습니다.");
       }
     } catch (error) {
       console.error(error);
+      Alert.alert("error", "서버에 장애가 발생하였습니다.");
     }
   };
 

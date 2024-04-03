@@ -114,13 +114,16 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
         },
       });
       if (response.status === 200) {
-        alert("댓글을 등록하였습니다.");
+        Alert.alert("", "댓글을 등록하였습니다.");
         fetchData();
         setComment("");
         setParentId();
+      } else {
+        Alert.alert("", "댓글을 등록에 실패했습니다.");
       }
     } catch (error) {
       console.error("에러:", error);
+      Alert.alert("error", "서버에 장애가 발생하였습니다.");
     }
   };
 
@@ -143,19 +146,19 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       console.log(bodyData);
       if (response.status === 200) {
         if (response.data.status === 200) {
-          Alert.alert("댓글 수정", "댓글을 수정하였습니다.");
+          Alert.alert("", "댓글을 수정하였습니다.");
           fetchData();
           setComment("");
           setParentId();
           setIsEdit(false);
         } else {
-          Alert.alert("댓글 수정", "댓글 수정에 실패했습니다.");
+          Alert.alert("", "댓글 수정에 실패했습니다.");
         }
       } else {
-        Alert.alert("댓글 수정", "댓글 수정에 실패했습니다.");
+        Alert.alert("", "댓글 수정에 실패했습니다.");
       }
     } catch (error) {
-      console.error("에러:", error);
+      Alert.alert("error", "서버에 장애가 발생하였습니다.");
     }
   };
 
@@ -169,12 +172,11 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
         },
       });
       if (response.status === 200) {
-        alert("댓글을 삭제하였습니다.");
+        Alert.alert("", "댓글을 삭제하였습니다.");
         fetchData(); // 댓글 목록을 다시 불러옵니다.
       }
-      // console.log("데이터:", response.data);
     } catch (error) {
-      console.error("에러:", error);
+      Alert.alert("error", "서버에 장애가 발생하였습니다.");
     }
   };
 
