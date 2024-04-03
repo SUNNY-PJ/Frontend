@@ -49,11 +49,8 @@ const Report = () => {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-      console.log("신고 제출::::");
-      console.log(bodyData);
-      console.log(response.data);
       if (response.status === 200) {
-        Alert.alert("신고", "신고를 정상적으로 처리했습니다.");
+        Alert.alert("", "신고를 정상적으로 처리했습니다.");
         navigation.goBack();
       } else {
         Alert.alert(
