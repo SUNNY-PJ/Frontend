@@ -141,17 +141,17 @@ const MyPage = () => {
       await AsyncStorage.removeItem("access_token");
       await AsyncStorage.removeItem("refresh_token");
       if (response.data.status === 200) {
-        Alert.alert("로그아웃 되었습니다.");
+        Alert.alert("", "로그아웃 되었습니다.");
       }
 
       navigation.navigate("KakaoScreen", { screen: "Login" });
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
-        console.error("서버 응답 메세지:", error.message);
-        alert(error.message);
+        Alert.alert("error", "서버에 장애가 발생하였습니다.");
       } else {
         console.error("에러:", error);
+        Alert.alert("error", "서버에 장애가 발생하였습니다.");
       }
     }
   };
@@ -213,8 +213,7 @@ const MyPage = () => {
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
-        console.error("서버 응답 메세지:", error.message);
-        alert(error.message);
+        Alert.alert("error", "서버에 장애가 발생하였습니다.");
       } else {
         console.error("에러:", error);
       }
@@ -229,7 +228,7 @@ const MyPage = () => {
 
   const handleLogoutClick = () => {
     Alert.alert(
-      "로그아웃",
+      "",
       "로그아웃 하시겠습니까?",
       [
         {

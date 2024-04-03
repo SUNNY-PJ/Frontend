@@ -6,10 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Pressable,
+  Alert,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
-import { proxyUrl } from "../../constant/common";
 import InputNickName from "../../components/Input/inputNickname";
 import LargeBtn from "../../components/Btn/largeBtn";
 import LargeBtnDisable from "../../components/Btn/largeBtnDisable";
@@ -60,7 +58,7 @@ const SettingProfile = () => {
       permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (!permission.granted) {
         // 사용자가 권한을 거부한 경우
-        alert("갤러리 접근 권한이 필요합니다.");
+        Alert.alert("", "갤러리 접근 권한이 필요합니다.");
         return;
       }
     }
@@ -168,7 +166,7 @@ const SettingProfile = () => {
     } catch (error) {
       console.error("서버 응답 오류:", error.response.data);
       if (error.response.status === 403) {
-        alert("이미 사용중인 닉네임입니다.");
+        Alert.alert("", "이미 사용중인 닉네임입니다.");
       }
     }
   };
@@ -177,13 +175,13 @@ const SettingProfile = () => {
     if (profileImageChanged && profileNicknameChanged) {
       postImageData();
       postNicknameData();
-      alert("프로필을 변경했습니다.");
+      Alert.alert("", "프로필을 변경했습니다.");
     } else if (profileImageChanged) {
       postImageData();
-      alert("프로필 사진을 변경했습니다.");
+      Alert.alert("", "프로필 사진을 변경했습니다.");
     } else if (profileNicknameChanged) {
       postNicknameData();
-      alert("닉네임을 변경했습니다.");
+      Alert.alert("", "닉네임을 변경했습니다.");
     }
   };
 
