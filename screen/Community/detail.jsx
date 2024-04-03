@@ -326,10 +326,10 @@ const Detail = () => {
       <Line color={"#E8E9E8"} h={2} />
       {data.map((item) => (
         <View key={item.id}>
-          <ScrollView style={{ height: windowHeight - 259 - 140 }}>
+          <ScrollView style={{ height: windowHeight - 259 - 135 }}>
             <View style={[styles.contentContainer, { paddingRight: 20 }]}>
               <View style={{ marginTop: 24, marginBottom: 70 }}>
-                <Text>{item.contents}</Text>
+                <Text style={styles.contents}>{item.contents}</Text>
                 {item.photoList.map((photo, index) => (
                   <Image
                     key={index}
@@ -353,6 +353,7 @@ const Detail = () => {
                     alignItems: "center",
                     gap: 5,
                     marginTop: 20,
+                    paddingBottom: 20,
                   }}
                 >
                   <Image
