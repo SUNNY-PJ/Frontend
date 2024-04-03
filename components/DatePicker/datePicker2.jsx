@@ -52,10 +52,7 @@ const DatePicker2 = ({
       handleDateValueChange(formattedNoDayDate);
     } else {
       // 현재 날짜 이후의 날짜를 선택한 경우
-      Alert.alert(
-        "잘못된 날짜 선택",
-        "과거의 날짜는 선택할 수 없습니다.\n다시 선택해주세요."
-      );
+      Alert.alert("", "과거의 날짜는 선택할 수 없습니다.\n다시 선택해주세요.");
       hideDatePicker();
     }
   };

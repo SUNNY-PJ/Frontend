@@ -35,10 +35,7 @@ const DatePicker = ({
 
     if (selectedDate > currentDate) {
       // 현재 날짜 이후의 날짜를 선택한 경우
-      Alert.alert(
-        "잘못된 날짜 선택",
-        "지출 일자가 올바르지 않습니다.\n 다시 선택해주세요."
-      );
+      Alert.alert("", "지출 일자가 올바르지 않습니다.\n 다시 선택해주세요.");
       hideDatePicker();
     } else {
       // 올바른 날짜를 선택한 경우
