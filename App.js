@@ -146,6 +146,27 @@ export default function App() {
     await schedulePushNotification(notificationData);
   };
 
+  const [isSignedIn, setIsSignedIn] = useState(null);
+
+  // 로그인 상태 확인
+  const checkSignInStatus = async () => {
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      setIsSignedIn(!!token);
+    } catch (e) {
+      // 에러 처리
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    checkSignInStatus();
+  }, []);
+
   // return <Navigation handleScheduleNotification={handleScheduleNotification} />;
-  return <Navigation />;
+  if (isSignedIn === null) {
+    return null; // 로딩 화면 표시
+  }
+
+  return <Navigation isSignedIn={isSignedIn} />;
 }
