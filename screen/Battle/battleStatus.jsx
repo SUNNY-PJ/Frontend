@@ -106,7 +106,7 @@ const BattleStatus = () => {
 
   const handleGiveUp = () => {
     Alert.alert(
-      "포기",
+      "",
       "대결을 포기하시겠습니까?",
       [
         {
