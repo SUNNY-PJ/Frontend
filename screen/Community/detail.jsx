@@ -294,16 +294,18 @@ const Detail = () => {
               marginBottom: 28,
             }}
           >
-            <Image
-              source={{ uri: item.profileImg }}
-              style={{ width: 40, height: 40, borderRadius: 50 }}
-            />
+            <TouchableOpacity activeOpacity={0.8} onPress={handleProfileClick}>
+              <Image
+                source={{ uri: item.profileImg }}
+                style={{ width: 40, height: 40, borderRadius: 50 }}
+              />
+            </TouchableOpacity>
             <View style={{ gap: 4 }}>
               <View
                 style={{ flexDirection: "row", alignItems: "center", gap: 7 }}
               >
                 <TouchableOpacity
-                  activeOpacity={0.6}
+                  activeOpacity={0.8}
                   onPress={handleProfileClick}
                 >
                   <Text
