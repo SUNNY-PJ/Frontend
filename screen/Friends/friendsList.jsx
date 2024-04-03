@@ -89,18 +89,19 @@ function FriendsList() {
             "에러가 발생했습니다.\n관리자에게 문의 바랍니다."
           );
         } else if (response.data.status === 409) {
-          Alert.alert("친구", "이미 친구입니다.");
+          Alert.alert("", "이미 친구입니다.");
         } else {
           Alert.alert("", "친구가 되었습니다!");
           fetchData();
         }
       } else if (response.status === 500) {
-        alert(response.message);
+        Alert.alert(response.message);
       } else {
         Alert.alert("error", "에러가 발생했습니다.\n관리자에게 문의 바랍니다.");
       }
     } catch (error) {
       console.error("에러:", error);
+      Alert.alert("error", "에러가 발생했습니다.\n관리자에게 문의 바랍니다.");
     }
   };
 
@@ -130,7 +131,7 @@ function FriendsList() {
           fetchData();
         }
       } else if (response.status === 500) {
-        alert(response.message);
+        Alert.alert(response.message);
       } else {
         Alert.alert("error", "에러가 발생했습니다.\n관리자에게 문의 바랍니다.");
       }
@@ -149,21 +150,6 @@ function FriendsList() {
 
   const onRemoveFriend = (friendId) => {
     deleteData(friendId);
-    // Alert.alert(
-    //   "친구 삭제",
-    //   "친구를 삭제하시겠습니까?",
-    //   [
-    //     {
-    //       text: "취소",
-    //       style: "cancel",
-    //     },
-    //     {
-    //       text: "확인",
-    //       onPress: () => deleteData(friendId),
-    //     },
-    //   ],
-    //   { cancelable: false }
-    // );
   };
 
   // 친구 삭제
@@ -176,7 +162,6 @@ function FriendsList() {
         },
       });
 
-      console.log("친구 삭제함", response.data);
       if (response.status === 200) {
         if (response.data.status === 401) {
           Alert.alert(
@@ -184,11 +169,11 @@ function FriendsList() {
             "에러가 발생했습니다. 관리자에게 문의 바랍니다."
           );
         } else {
-          Alert.alert("친구 삭제", "친구를 삭제했습니다");
+          Alert.alert("", "친구를 삭제했습니다");
           fetchData();
         }
       } else if (response.status === 500) {
-        alert(response.message);
+        Alert.alert(response.message);
       }
     } catch (error) {
       console.error("에러:", error);

@@ -94,13 +94,13 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
       if (response.status === 200) {
         if (response.data.status === 400) {
           Alert.alert(
-            "Error",
+            "error",
             `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
           );
         } else if (response.data.status === 500) {
-          Alert.alert("친구 신청", `이미 친구 신청을 했습니다.`);
+          Alert.alert("", `이미 친구 신청을 했습니다.`);
         } else {
-          Alert.alert("친구 신청", `${friendName}에게 친구 신청을 했습니다.`);
+          Alert.alert("", `${friendName}에게 친구 신청을 했습니다.`);
           fetchData();
         }
       }
@@ -108,10 +108,11 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
         if (error.response.data.status === 500) {
-          Alert.alert("친구 신청", "이미 친구 신청을 한 사용자입니다.");
+          Alert.alert("", "이미 친구 신청을 한 사용자입니다.");
         }
       } else {
         console.error("에러:", error);
+        Alert.alert("error", "서버에 장애가 발생하였습니다.");
       }
     }
   };
@@ -122,7 +123,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
     } else if (status === "친구맺기") {
       postData();
     } else if (status === "대기중") {
-      Alert.alert("친구 대기중", `이미 친구 신청을 했습니다.`);
+      Alert.alert("", `이미 친구 신청을 했습니다.`);
     } else if (status === "친구수락") {
       onApproveFriend();
     }
@@ -148,18 +149,19 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
             "에러가 발생했습니다.\n관리자에게 문의 바랍니다."
           );
         } else if (response.data.status === 409) {
-          Alert.alert("친구", "이미 친구입니다.");
+          Alert.alert("", "이미 친구입니다.");
         } else {
           Alert.alert("", "친구가 되었습니다!");
           fetchData();
         }
       } else if (response.status === 500) {
-        alert(response.message);
+        Alert.alert(response.message);
       } else {
         Alert.alert("error", "에러가 발생했습니다.\n관리자에게 문의 바랍니다.");
       }
     } catch (error) {
       console.error("에러:", error);
+      Alert.alert("error", "서버에 장애가 발생하였습니다.");
     }
   };
 
@@ -177,18 +179,18 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
       if (response.status === 200) {
         if (response.data.status === 400) {
           Alert.alert(
-            "Error",
+            "error",
             `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
           );
         } else if (response.data.status === 500) {
-          Alert.alert("친구 삭제", ``);
+          Alert.alert("", response.message);
         } else {
           Alert.alert("", `${friendName}를 친구 리스트에서 삭제했습니다.`);
           fetchData();
         }
       } else {
         Alert.alert(
-          "Error",
+          "error",
           `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
         );
       }
@@ -199,7 +201,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
 
   const onApproveFriend = () => {
     Alert.alert(
-      "친구 수락",
+      "",
       "친구를 수락하시겠습니까?",
       [
         {
@@ -217,7 +219,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
 
   const onRemoveFriend = () => {
     Alert.alert(
-      "친구 끊기",
+      "",
       "친구를 끊으시겠습니까??",
       [
         {
