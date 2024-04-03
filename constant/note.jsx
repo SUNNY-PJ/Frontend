@@ -93,11 +93,11 @@ function Note({ navigation }) {
       if (response.status === 200) {
         if (response.data.status === 400) {
           Alert.alert(
-            "Error",
+            "error",
             `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
           );
         } else {
-          Alert.alert("지출 내역", `지출을 등록하였습니다.`);
+          Alert.alert("", `지출을 등록하였습니다.`);
           setMoney("");
           setDate("");
           setName("");
@@ -108,8 +108,10 @@ function Note({ navigation }) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
         console.error("서버 응답 메세지:", error.message);
+        Alert.alert("error", "서버에 장애가 발생하였습니다.");
       } else {
         console.error("에러:", error);
+        Alert.alert("error", "서버에 장애가 발생하였습니다.");
       }
     }
   };

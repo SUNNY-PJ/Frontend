@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
-import { proxyUrl } from "./common";
 import { useNavigation } from "@react-navigation/native";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
 import InputNickName from "../components/Input/inputNickname";
@@ -42,16 +40,18 @@ const SignUp = () => {
       });
 
       if (response.data.status === 200) {
-        alert("별명을 등록했습니다.");
+        Alert.alert("", "별명을 등록했습니다.");
         postDeviceData();
         navigation.replace("MainScreen", { screen: "Spending" });
       } else if (response.data.status === 403) {
-        alert("이미 사용중인 닉네임입니다.");
+        Alert.alert("", "이미 사용중인 닉네임입니다.");
       }
     } catch (error) {
       console.error("서버 응답 오류:", error.response.data);
+      Alert.alert("error", "서버에 장애가 발생하였습니다.");
+
       if (error.response.status === 403) {
-        alert("이미 사용중인 닉네임입니다.");
+        Alert.alert("", "이미 사용중인 닉네임입니다.");
       }
     }
   };
