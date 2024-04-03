@@ -5,6 +5,7 @@ import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 import * as Font from "expo-font";
 import Navigation from "./Navigation";
+import { Alert } from "react-native";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -72,7 +73,10 @@ export default function App() {
       }
 
       if (finalStatus !== "granted") {
-        alert("알림을 거부하였습니다. 앱에 대한 알림을 받을 수 없습니다.");
+        Alert.alert(
+          "",
+          "알림을 거부하였습니다. 앱에 대한 알림을 받을 수 없습니다."
+        );
         return;
       }
 

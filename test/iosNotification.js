@@ -2,7 +2,7 @@ import * as React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
-
+import { Alert } from "react-native";
 import Navigation from "./Navigation";
 
 const Stack = createNativeStackNavigator();
@@ -100,7 +100,7 @@ async function registerForPushNotificationsAsync() {
     finalStatus = status;
   }
   if (finalStatus !== "granted") {
-    alert("Failed to get push token for push notification!");
+    Alert.alert("Failed to get push token for push notification!");
     return;
   }
 
