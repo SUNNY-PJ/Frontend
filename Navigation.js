@@ -38,6 +38,11 @@ function Navigation({ isSignedIn }) {
                   component={SignUpScreen}
                   options={{ headerShown: false }}
                 />
+                <Stack.Screen
+                  name="MainScreen"
+                  component={MainScreen}
+                  options={{ headerShown: false }}
+                />
               </>
             )}
             {/* <Stack.Screen
