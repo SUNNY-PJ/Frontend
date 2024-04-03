@@ -359,7 +359,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                       />
                     ) : null}
                   </View>
-                  {item.deleted === false ? (
+                  {item.deleted === false || item.deleted === false ? (
                     <View>
                       <TouchableOpacity
                         activeOpacity={0.6}
@@ -499,7 +499,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                               />
                             ) : null}
                           </View>
-                          {childItem.deleted === false ? (
+                          {childItem.deleted === false ||
+                          childItem.revokeUser === false ? (
                             <View>
                               <TouchableOpacity
                                 activeOpacity={0.6}
