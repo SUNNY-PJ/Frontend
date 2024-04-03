@@ -45,7 +45,7 @@ const History = () => {
 
   const handleChatRoomDelete = (consumptionId) => {
     Alert.alert(
-      "지출",
+      "",
       "지출 기록을 삭제하시겠습니까?\n다시 되돌릴 수 없습니다.",
       [
         {
