@@ -201,7 +201,7 @@ const MyPage = () => {
         params: { code: authorizationCode },
       });
       console.log("데이터:", response.data);
-      if (response.data === 200) {
+      if (response.data.status === 200) {
         Alert.alert("회원 탈퇴", "탈퇴 되었습니다.");
         navigation.navigate("KakaoScreen", { screen: "Login" });
       } else {
