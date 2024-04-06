@@ -56,3 +56,6 @@ yarn-error.*
 *.tsbuildinfo
 
 # @end expo-cli
+
+
+constant/common.js
