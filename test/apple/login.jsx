@@ -3,8 +3,10 @@ import { View, StyleSheet, Alert } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { proxyUrl } from "../../constant/common";
 
 const AppleLogin = () => {
+  const url = proxyUrl;
   const navigation = useNavigation();
 
   async function handleAppleLogin() {
@@ -45,7 +47,7 @@ const AppleLogin = () => {
   }
 
   const fetchData = async (idToken) => {
-    const apple_url = `http://43.201.176.22:8080/apple/auth/callback`;
+    const apple_url = `${url}/apple/auth/callback`;
     try {
       const response = await axios.get(apple_url, {
         headers: {

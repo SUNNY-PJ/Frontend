@@ -17,8 +17,11 @@ import LoseModal from "../../components/Modal/battle/lose";
 import LeaveMsg from "../../components/Modal/myPage/leaveMsg";
 import ToggleBtn from "../../components/Btn/toggleBtn";
 import apiClient from "../../api/apiClient";
+import { proxyUrl } from "../../constant/common";
 
 const MyPage = () => {
+  const url = proxyUrl;
+
   const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();
   const handleTabClick = (tab) => {
@@ -122,7 +125,7 @@ const MyPage = () => {
   // };
 
   const logoutData = async () => {
-    const logout_url = "http://43.201.176.22:8080/apple/auth/logout";
+    const logout_url = `${url}/apple/auth/logout`;
     const accessToken = await AsyncStorage.getItem("access_token");
     const refreshToken = await AsyncStorage.getItem("refresh_token");
 
@@ -192,7 +195,7 @@ const MyPage = () => {
 
   // 회원 탈퇴
   const leaveData = async (authorizationCode) => {
-    const secession_url = "http://43.201.176.22:8080/apple/auth/leave";
+    const secession_url = `${url}/apple/auth/leave`;
     try {
       const response = await apiClient.get(secession_url, {
         headers: {
@@ -347,9 +350,9 @@ const MyPage = () => {
           </TouchableOpacity>
           <Line color={"#C1C1C1"} h={1} />
           {/* 테스트 */}
-          {/* <TouchableOpacity activeOpacity={1} onPress={handleTestClick}>
+          <TouchableOpacity activeOpacity={1} onPress={handleTestClick}>
             <Text style={styles.description}>테스트용</Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
         {/* <View
           style={{
