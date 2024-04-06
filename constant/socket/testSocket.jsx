@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { proxy_url } from "../common";
 
 const WebSocketComponent = () => {
+  const proxy = proxy_url;
+
   useEffect(() => {
     const userId = 15;
-    const ws = new WebSocket(`ws://43.201.176.22:8080/sub/user/${userId}`);
+    const ws = new WebSocket(`ws://${proxy}/sub/user/${userId}`);
 
     ws.onopen = () => {
       console.log("Connected to the server");

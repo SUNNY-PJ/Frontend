@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { proxy_url } from "../common";
 
 const StompClientComponent = () => {
+  const proxy = proxy_url;
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     // WebSocket 연결 열기
-    const ws = new WebSocket("ws://43.201.176.22:8080/ws");
+    const ws = new WebSocket(`ws://${proxy}/ws`);
     ws.onopen = () => {
       // STOMP 프레임을 사용하여 SUBSCRIBE
       const msg = JSON.stringify({
