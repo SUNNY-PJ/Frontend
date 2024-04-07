@@ -43,7 +43,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
         },
       });
       if (response.status === 200) {
-        console.log("데이터1111:", response.data);
+        // console.log("데이터1111:", response.data);
         const ProfileData = response.data;
         const ProfileId = ProfileData.id;
         const ProfileFriendId = ProfileData.friendId;
