@@ -42,37 +42,37 @@ function SendMatch() {
     setDate(text);
   };
 
-  // const handleStartDateChange = (formattedDate) => {
-  //   setStartDate(formattedDate);
-  // };
+  const handleStartDateChange = (formattedDate) => {
+    setStartDate(formattedDate);
+  };
 
-  // const handleStartDateValChange = (formattedDate) => {
-  //   setStartDateVal(formattedDate);
-  // };
+  const handleStartDateValChange = (formattedDate) => {
+    setStartDateVal(formattedDate);
+  };
 
-  // const handleEndDateChange = (formattedDate) => {
-  //   setEndDate(formattedDate);
-  // };
+  const handleEndDateChange = (formattedDate) => {
+    setEndDate(formattedDate);
+  };
 
-  // const handleEndDateValChange = (formattedDate) => {
-  //   setEndDateVal(formattedDate);
-  // };
+  const handleEndDateValChange = (formattedDate) => {
+    setEndDateVal(formattedDate);
+  };
 
-  // const showStartDatePicker = () => {
-  //   setStartDatePickerVisibility(true);
-  // };
+  const showStartDatePicker = () => {
+    setStartDatePickerVisibility(true);
+  };
 
-  // const showEndDatePicker = () => {
-  //   setEndDatePickerVisibility(true);
-  // };
+  const showEndDatePicker = () => {
+    setEndDatePickerVisibility(true);
+  };
 
-  // const hideStartDatePicker = () => {
-  //   setStartDatePickerVisibility(false);
-  // };
+  const hideStartDatePicker = () => {
+    setStartDatePickerVisibility(false);
+  };
 
-  // const hideEndDatePicker = () => {
-  //   setEndDatePickerVisibility(false);
-  // };
+  const hideEndDatePicker = () => {
+    setEndDatePickerVisibility(false);
+  };
 
   const handleMessageChange = (text) => {
     setMessage(text);
@@ -166,14 +166,14 @@ function SendMatch() {
             inputValue={reward}
             handleInputChange={handleRewardChange}
           /> */}
-          <Text style={styles.label}>대결 기간과 금액을 선택해주세요</Text>
+          {/* <Text style={styles.label}>대결 기간과 금액을 선택해주세요</Text>
           <Input
             placeholder={"대결 기간"}
             inputValue={date}
             handleInputChange={handleDateChange}
-          />
-          {/* <Text style={styles.label}>대결 시작 일자를 선택해주세요</Text> */}
-          {/* <TouchableOpacity onPress={showStartDatePicker}>
+          /> */}
+          <Text style={styles.label}>대결 시작 일자를 선택해주세요</Text>
+          <TouchableOpacity onPress={showStartDatePicker}>
             <DatePicker2
               showDatePicker={showStartDatePicker}
               hideDatePicker={hideStartDatePicker}
@@ -197,12 +197,11 @@ function SendMatch() {
               inputText={"대결 종료 일자:"}
               showDayOfWeek={false}
             />
-          </TouchableOpacity> */}
-          <Text style={[styles.subText]}>
-            * 상대가 승낙한 다음 날부터 대결이 시작됩니다
-          </Text>
-          {/* <Text style={styles.label}>대결 금액을 입력해주세요</Text> */}
-          <View style={{ marginTop: 24 }} />
+          </TouchableOpacity>
+          {/* <Text style={[styles.subText]}>
+             * 상대가 승낙한 시점부터 대결이 시작됩니다 
+          </Text> */}
+          <Text style={styles.label}>대결 금액을 입력해주세요</Text>
           <Input
             placeholder={"지출 금액"}
             inputValue={money}
