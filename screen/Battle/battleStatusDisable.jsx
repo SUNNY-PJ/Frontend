@@ -34,7 +34,7 @@ const BattleStatusDisable = () => {
         <Text
           style={[styles.boldSmallText, { marginBottom: 16, marginTop: 52 }]}
         >
-          친구의 탈퇴로 대결이 자동 종료되었어요
+          친구의 포기로 대결이 자동 종료되었어요
         </Text>
         <Text style={[styles.boldText, { marginTop: 13, marginBottom: 10 }]}>
           나는
