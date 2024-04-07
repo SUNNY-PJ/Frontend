@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
   },
 
   buttonContainer: {
-    marginTop: 140,
+    marginTop: 120,
   },
   subText: {
     fontSize: 12,
