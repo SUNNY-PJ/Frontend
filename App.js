@@ -5,7 +5,7 @@ import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 import * as Font from "expo-font";
 import Navigation from "./Navigation";
-import { Alert } from "react-native";
+import { Alert, ActivityIndicator } from "react-native";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -31,6 +31,7 @@ export default function App() {
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   // 폰트 적용
   const customFonts = {
@@ -55,6 +56,7 @@ export default function App() {
   };
   async function loadFonts() {
     await Font.loadAsync(customFonts);
+    setFontsLoaded(true);
   }
 
   useEffect(() => {
@@ -168,5 +170,13 @@ export default function App() {
     return null; // 로딩 화면 표시
   }
 
-  return <Navigation isSignedIn={isSignedIn} />;
+  return (
+    <>
+      {fontsLoaded ? (
+        <Navigation isSignedIn={isSignedIn} />
+      ) : (
+        <ActivityIndicator size="large" color="#000" />
+      )}
+    </>
+  );
 }
