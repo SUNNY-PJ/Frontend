@@ -1,39 +1,59 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { proxy_url } from "../common";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { proxy_url } from "../../api/common";
 
 const StompClientComponent = () => {
   const proxy = proxy_url;
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    // WebSocket 연결 열기
-    const ws = new WebSocket(`ws://${proxy}/ws`);
-    ws.onopen = () => {
-      // STOMP 프레임을 사용하여 SUBSCRIBE
-      const msg = JSON.stringify({
-        type: "SUBSCRIBE",
-        destination: "/sub/user/15", // 구독할 대상 주소
-        id: "unique-id-1", // 구독 ID
-        ack: "auto",
-      });
-      ws.send(msg);
+    const connectWebSocket = async () => {
+      const accessToken = await AsyncStorage.getItem("access_token");
+
+      const ws = new WebSocket(`ws://${proxy}/stomp`);
+      console.log("???", ws);
+
+      ws.onopen = () => {
+        console.log("socket open");
+        // 인증 토큰을 포함한 CONNECT 프레임 전송
+        const connectFrame = JSON.stringify({
+          type: "CONNECT",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        ws.send(connectFrame);
+        console.log(connectFrame);
+
+        // SUBSCRIBE 프레임 전송
+        const subscribeFrame = JSON.stringify({
+          type: "SUBSCRIBE",
+          destination: "/sub/user/15",
+          id: "unique-id-1",
+          ack: "auto",
+        });
+        ws.send(subscribeFrame);
+        console.log(subscribeFrame);
+      };
+
+      ws.onmessage = (e) => {
+        const receivedMsg = JSON.parse(e.data);
+        setMessages((prevMessages) => [...prevMessages, receivedMsg.body]);
+        console.log("메세지 받았다!!!", receivedMsg);
+      };
+
+      ws.onerror = (e) => {
+        console.error(e.message);
+      };
+
+      return () => {
+        ws.close();
+        console.log("socket close:::");
+      };
     };
 
-    ws.onmessage = (e) => {
-      // 메시지 받기
-      const receivedMsg = JSON.parse(e.data);
-      setMessages((prevMessages) => [...prevMessages, receivedMsg.body]);
-    };
-
-    ws.onerror = (e) => {
-      // 에러 처리
-      console.error(e.message);
-    };
-
-    return () => {
-      ws.close();
-    };
+    connectWebSocket();
   }, []);
 
   return (
