@@ -1,39 +1,34 @@
-import React, { useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import * as StompJs from "@stomp/stompjs";
-import { TextEncoder, TextDecoder } from "text-encoding";
-import { proxyUrl } from "../../api/common";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as StompJs from "@stomp/stompjs";
+import { proxyUrl } from "../../api/common";
+import GoalMsg from "../../components/Modal/goal/goalMsg";
 
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
 const StompWebSocketComponent = () => {
+  const [isOpenGoalMessage, setIsOpenGoalMessage] = useState(false);
+  const [messageData, setMessageData] = useState({});
+
   useEffect(() => {
     const initializeWebSocket = async () => {
       const accessToken = await AsyncStorage.getItem("access_token");
-
-      console.log("accessToken:", accessToken);
-
-      const connectHeaders = {
-        Authorization: `${accessToken}`,
-      };
-
-      console.log("connectHeaders:", connectHeaders);
-
-      console.log(
-        "stomp socket 실행함:::",
-        `${proxyUrl.replace("http", "ws")}/stomp`
-      );
       const client = new StompJs.Client({
         webSocketFactory: () =>
           new WebSocket(`${proxyUrl.replace("http", "ws")}/stomp`),
-        connectHeaders: connectHeaders,
+        connectHeaders: {
+          Authorization: `${accessToken}`,
+        },
         onConnect: () => {
           console.log("Connected to the server");
           const userId = 15;
           client.subscribe(`/sub/user/${userId}`, (message) => {
             console.log("Received message:", message.body);
+            const parsedMessage = JSON.parse(message.body);
+            setMessageData(parsedMessage);
+            setIsOpenGoalMessage(true);
           });
         },
         onStompError: (frame) => {
@@ -43,8 +38,6 @@ const StompWebSocketComponent = () => {
       });
 
       client.activate();
-
-      return () => client.deactivate();
     };
 
     initializeWebSocket();
@@ -53,6 +46,15 @@ const StompWebSocketComponent = () => {
   return (
     <View style={styles.container}>
       <Text>STOMP WebSocket Example</Text>
+      {isOpenGoalMessage && (
+        <GoalMsg
+          isOpenGoalMessage={isOpenGoalMessage}
+          openGoalMessage={() => setIsOpenGoalMessage(false)}
+          percentage={messageData.percentage}
+          cost={messageData.goalSave}
+          fail={messageData.percentage < 0}
+        />
+      )}
     </View>
   );
 };

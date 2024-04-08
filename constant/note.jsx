@@ -88,6 +88,7 @@ function Note({ navigation }) {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
+      console.log(response.data);
 
       // 성공 시 메시지 표시 및 데이터 초기화
       if (response.status === 200) {
