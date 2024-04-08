@@ -160,6 +160,9 @@ function SendMatch() {
             inputValue={message}
             handleInputChange={handleMessageChange}
           />
+          <Text style={[styles.subText]}>
+            * 최대 20자
+          </Text>
           {/* <Text style={styles.label}>무엇을 걸고 대결할까요?</Text>
           <Input
             placeholder={"대결 보상"}
@@ -198,10 +201,10 @@ function SendMatch() {
               showDayOfWeek={false}
             />
           </TouchableOpacity>
-          {/* <Text style={[styles.subText]}>
-             * 상대가 승낙한 시점부터 대결이 시작됩니다 
-          </Text> */}
-          <Text style={styles.label}>대결 금액을 입력해주세요</Text>
+          <Text style={[styles.subText]}>
+            * 시작 일자가 지나도 상대가 수락하지 않을 경우, 대결은 무효화됩니다.
+          </Text>
+          <Text style={styles.label}>대결 금액을 설정해 주세요</Text>
           <Input
             placeholder={"지출 금액"}
             inputValue={money}

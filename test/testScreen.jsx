@@ -4,6 +4,7 @@ import PieChartComponent from "../components/Chart/pieChartComponent";
 import WebSocketComponent from "../constant/socket/testSocket";
 import StompClientComponent from "../constant/socket/testSocket2";
 import StompWebSocketComponent from "../constant/socket/testSocket3";
+import StompWebSocketComponent2 from "../constant/socket/testSocket4";
 
 const TestScreen = () => {
   return (
@@ -12,6 +13,7 @@ const TestScreen = () => {
         {/* <WebSocketComponent /> */}
         {/* <StompClientComponent /> */}
         <StompWebSocketComponent />
+        {/* <StompWebSocketComponent2 /> */}
       </ScrollView>
     </>
   );
