@@ -72,9 +72,10 @@ const History = () => {
       });
 
       const consumptionDeleteData = response.data;
+      console.log(consumptionDeleteData);
       if (consumptionDeleteData.status === 200) {
-        fetchData();
-        fetchCategoryData();
+        Alert.alert("", "지출 기록을 삭제했습니다.");
+        onDataFetched();
       }
     } catch (error) {
       console.error("에러:", error);
