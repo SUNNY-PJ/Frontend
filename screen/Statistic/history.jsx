@@ -9,6 +9,7 @@ import {
   Alert,
   SafeAreaView,
 } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import CalendarComponent from "../../components/Calendar/calendar";
 import { useEffect } from "react";
@@ -122,8 +123,16 @@ const History = () => {
     setMarkedDates(newMarkedDates);
   };
 
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) {
+      fetchData();
+    }
+  }, [isFocused]);
+
   const handleModify = (consumptionId) => {
-    console.log(consumptionId);
+    // navigation.replace("Note", {
     navigation.navigate("Note", {
       screen: "Note",
       params: {
