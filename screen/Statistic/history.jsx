@@ -47,21 +47,7 @@ const History = () => {
   };
 
   const handleChatRoomDelete = (consumptionId) => {
-    Alert.alert(
-      "",
-      "지출 기록을 삭제하시겠습니까?\n다시 되돌릴 수 없습니다.",
-      [
-        {
-          text: "취소",
-          style: "cancel",
-        },
-        {
-          text: "확인",
-          onPress: () => deleteData(consumptionId),
-        },
-      ],
-      { cancelable: false }
-    );
+    deleteData(consumptionId);
   };
 
   // 지출 기록 삭제
@@ -162,6 +148,7 @@ const History = () => {
               >
                 <Swipeable
                   renderRightActions={() => renderRightActions(item.id)}
+                  onSwipeableOpen={() => handleChatRoomDelete(item.id)}
                   key={item.id}
                 >
                   <View
