@@ -21,7 +21,9 @@ const Note = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { consumptionId } = route.params?.params ?? {};
+  const { screen } = route.params?.params ?? {};
   console.log(consumptionId);
+  console.log(screen);
   const inputURL = "/consumption";
   const [exists, setExists] = useState(false);
   const [buttonText, setButtonText] = useState("등록하기");
@@ -177,12 +179,16 @@ const Note = () => {
       if (response.status === 200 || response.status === 204) {
         Alert.alert("", "지출 내역이 수정되었습니다.");
         // navigation.goBack();
-        navigation.replace("Spending", {
-          screen: "Spending",
-          params: {
-            historyVal: true,
-          },
-        });
+        if (screen === "history") {
+          navigation.replace("Spending", {
+            screen: "Spending",
+            params: {
+              historyVal: true,
+            },
+          });
+        } else {
+          navigation.replace("Spending");
+        }
       } else {
         Alert.alert("error", "서버에 장애가 발생하였습니다.");
       }

@@ -137,6 +137,7 @@ const History = () => {
       screen: "Note",
       params: {
         consumptionId: consumptionId,
+        screen: "history",
       },
     });
   };
@@ -156,7 +157,7 @@ const History = () => {
           {Array.isArray(data) &&
             data.map((item, index) => (
               <TouchableOpacity
-                activeOpacity={0.5}
+                activeOpacity={0.6}
                 onPress={() => handleModify(item.id)}
               >
                 <Swipeable
