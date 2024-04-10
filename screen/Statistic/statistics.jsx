@@ -226,7 +226,7 @@ const Statistics = ({ year, month }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ marginTop: 24, marginBottom: 27 }}>
+      <View style={{ marginTop: 24, marginBottom: 30 }}>
         <DonutChart
           data={data}
           noData={noData}

@@ -57,7 +57,7 @@ const MyInfo = () => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "scrap", title: "스크랩" },
-    { key: "write", title: "작성글" },
+    { key: "write", title: "작성 글" },
     { key: "comment", title: "작성 댓글" },
   ]);
 
@@ -86,7 +86,6 @@ const MyInfo = () => {
           style={{
             fontSize: 16,
             color: "#1F1F1F",
-            fontWeight: 700,
             alignSelf: "center",
             bottom: 20,
             fontFamily: "SUITE_Bold",
@@ -119,6 +118,7 @@ const MyInfo = () => {
               style={[
                 styles.tabText,
                 activeTab === "scrap" && styles.activeTabText,
+                { left: 4 },
               ]}
             >
               스크랩
@@ -132,9 +132,10 @@ const MyInfo = () => {
               style={[
                 styles.tabText,
                 activeTab === "write" && styles.activeTabText,
+                { left: 8 },
               ]}
             >
-              작성글
+              작성 글
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -196,7 +197,6 @@ const styles = StyleSheet.create({
   },
   tabText: {
     fontSize: 20,
-    fontWeight: "700",
     color: "#C1C1C1",
     fontFamily: "SUITE_Bold",
   },

@@ -306,7 +306,7 @@ const MyPage = () => {
             onPress={() => handleTabClick("scrap")}
           >
             <Text style={styles.description}>
-              스크랩, 작성글, 작성 댓글 보기
+              스크랩, 작성 글, 작성 댓글 보기
             </Text>
           </TouchableOpacity>
           {/* <Line color={"#C1C1C1"} h={1} />

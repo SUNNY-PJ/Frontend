@@ -118,6 +118,7 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
               paddingTop: 20,
               borderBottomColor: "#C1C1C1",
               borderBottomWidth: 1,
+              backgroundColor: "#FFFBF6",
             }}
           >
             <View style={{ flexDirection: "row" }}>

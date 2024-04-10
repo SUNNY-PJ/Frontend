@@ -228,7 +228,8 @@ const Detail = () => {
               style={{
                 fontSize: 16,
                 color: "#1F1F1F",
-                fontWeight: "700",
+                fontFamily: "SUITE_Bold",
+                left: 12,
               }}
             >
               {item.type}

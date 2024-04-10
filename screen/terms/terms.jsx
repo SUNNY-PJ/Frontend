@@ -15,7 +15,7 @@ const Terms = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.section}>
+      <View style={{}}>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("MyPage", {
@@ -25,7 +25,7 @@ const Terms = () => {
         >
           <Image
             source={require("../../assets/prevBtn.png")}
-            style={{ width: 24, height: 24, marginTop: 16 }}
+            style={{ width: 24, height: 24, marginTop: 16, marginLeft: 20 }}
           />
         </TouchableOpacity>
       </View>
