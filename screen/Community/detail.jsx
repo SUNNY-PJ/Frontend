@@ -64,8 +64,8 @@ const Detail = () => {
         },
       });
 
-      // console.log("데이터:", response.data);
-      const DetailData = response.data.data;
+      const DetailData = response.data;
+      console.log("데이터:::", DetailData);
       setData([DetailData]);
       setIsScrap(DetailData.isScraped);
       setWriter(DetailData.writer);

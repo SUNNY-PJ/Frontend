@@ -32,7 +32,7 @@ export const CommunityProvider = ({ children }) => {
       console.log("데이터:111", response.data);
       console.log("데이터:222", paramsData);
 
-      setData(response.data.data);
+      setData(response.data);
     } catch (error) {
       console.error("에러:", error);
     }

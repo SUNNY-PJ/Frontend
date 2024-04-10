@@ -88,8 +88,8 @@ const Search = () => {
 
       console.log(response.data);
 
-      if (response.data && Array.isArray(response.data.data)) {
-        setData(response.data.data);
+      if (response.data && Array.isArray(response.data)) {
+        setData(response.data);
       } else {
         setData([]);
       }

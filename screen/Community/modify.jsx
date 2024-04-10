@@ -189,7 +189,7 @@ const Modify = () => {
         },
       });
       console.log("데이터:", response.data);
-      const DetailData = response.data.data;
+      const DetailData = response.data;
       setTitle(DetailData.title);
       setContent(DetailData.contents);
       setSelectedCategory(DetailData.type);
@@ -246,7 +246,7 @@ const Modify = () => {
                     })
                   }
                 />
-                <SmallBtn title={"등록"} onClick={handlePost} />
+                <SmallBtn title={"수정"} onClick={handlePost} />
               </View>
               {/* 카테고리 선택 */}
               <TouchableOpacity onPress={handleCategoryClick}>
