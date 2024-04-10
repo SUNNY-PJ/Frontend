@@ -11,7 +11,6 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TopTooltip from "./Modal/topTooltip";
 import { useSaveData } from "../context/saveDataContext";
-import GoalMsg from "./Modal/goal/goalMsg";
 import StompWebSocketComponent from "../constant/socket/testSocket3";
 
 const Top = ({ navigation }) => {
