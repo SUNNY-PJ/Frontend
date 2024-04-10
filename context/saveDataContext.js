@@ -23,7 +23,7 @@ export const SaveDataProvider = ({ children }) => {
       });
       if (response.status === 200) {
         console.log("절약 목표", response.data);
-        const SaveDataVal = response.data.data;
+        const SaveDataVal = response.data;
         // date가 음수가 아닌 항목만 필터링
         const validSaveData = SaveDataVal.filter((item) => item.date >= 0);
         if (validSaveData.length > 0) {
