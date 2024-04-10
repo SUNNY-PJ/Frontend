@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Statistics from "./statistics";
 import History from "./history";
+import { useRoute } from "@react-navigation/native";
 
 const Spending = () => {
+  const route = useRoute();
+  const { historyVal } = route.params?.params ?? {};
   const [history, setHistory] = useState(false);
   const [statistics, setStatistics] = useState(true);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -39,8 +42,11 @@ const Spending = () => {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth() + 1;
 
-  // console.log(year);
-  // console.log(month);
+  useEffect(() => {
+    if (historyVal) {
+      historyClick();
+    }
+  }, [historyVal]);
 
   return (
     <View style={styles.container}>
