@@ -89,7 +89,7 @@ const BottomRe = () => {
             style={[styles.menuItem]}
             onPress={() => {
               toggleIcons("Spending");
-              navigation.navigate("Spending");
+              navigation.replace("Spending");
             }}
           >
             <View
@@ -107,7 +107,7 @@ const BottomRe = () => {
             style={[styles.menuItem]}
             onPress={() => {
               toggleIcons("Community");
-              navigation.navigate("Community");
+              navigation.replace("Community");
             }}
           >
             <View
@@ -125,7 +125,7 @@ const BottomRe = () => {
             style={[styles.menuItem]}
             onPress={() => {
               toggleIcons("FriendsList");
-              navigation.navigate("FriendsList");
+              navigation.replace("FriendsList");
             }}
           >
             <View
@@ -143,7 +143,7 @@ const BottomRe = () => {
             style={[styles.menuItem]}
             onPress={() => {
               toggleIcons("MyPage");
-              navigation.navigate("MyPage");
+              navigation.replace("MyPage");
             }}
           >
             <View
