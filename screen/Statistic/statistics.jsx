@@ -224,6 +224,17 @@ const Statistics = ({ year, month }) => {
     }
   };
 
+  const handleModify = (consumptionId) => {
+    // navigation.replace("Note", {
+    navigation.navigate("Note", {
+      screen: "Note",
+      params: {
+        consumptionId: consumptionId,
+        screen: "statistics",
+      },
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={{ marginTop: 24, marginBottom: 30 }}>
@@ -240,29 +251,34 @@ const Statistics = ({ year, month }) => {
         <ScrollView style={{ height: windowHeight - 700, flex: 1 }}>
           {Array.isArray(categoryData) &&
             categoryData.map((item, index) => (
-              <Swipeable
-                renderRightActions={() => renderRightActions(item.id)}
-                key={item.id}
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => handleModify(item.id)}
               >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    width: "100%",
-                    paddingTop: 10,
-                    paddingBottom: 10,
-                    backgroundColor: "#FFFBF6",
-                  }}
+                <Swipeable
+                  renderRightActions={() => renderRightActions(item.id)}
+                  key={item.id}
                 >
-                  <View style={{ flexDirection: "row" }}>
-                    <View style={styles.bottomBar} />
-                    <Text style={styles.bottomText}>{item.name}</Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      width: "100%",
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                      backgroundColor: "#FFFBF6",
+                    }}
+                  >
+                    <View style={{ flexDirection: "row" }}>
+                      <View style={styles.bottomBar} />
+                      <Text style={styles.bottomText}>{item.name}</Text>
+                    </View>
+                    <Text style={styles.bottomPriceText}>
+                      {formatNumberWithCommas(item.money)}원
+                    </Text>
                   </View>
-                  <Text style={styles.bottomPriceText}>
-                    {formatNumberWithCommas(item.money)}원
-                  </Text>
-                </View>
-              </Swipeable>
+                </Swipeable>
+              </TouchableOpacity>
             ))}
         </ScrollView>
       </SafeAreaView>
