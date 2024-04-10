@@ -23,6 +23,7 @@ const Statistics = ({ year, month }) => {
 
   const [data, setData] = useState([]);
   const [noData, setNoData] = useState(false);
+  const [categoryParamVal, setCategoryParamVal] = useState("");
   const [categoryData, setCategoryData] = useState([]);
   const formatNumberWithCommas = (number) => {
     return new Intl.NumberFormat().format(number);
@@ -171,6 +172,7 @@ const Statistics = ({ year, month }) => {
     console.log("Selected category:", category);
     setSelectedCategory(category);
     const categoryParam = categoryParams[category];
+    setCategoryParamVal(categoryParam);
     if (categoryParam) {
       fetchCategoryData(categoryParam);
     }
@@ -187,21 +189,22 @@ const Statistics = ({ year, month }) => {
   };
 
   const handleChatRoomDelete = (consumptionId) => {
-    Alert.alert(
-      "",
-      "지출 기록을 삭제하시겠습니까?\n다시 되돌릴 수 없습니다.",
-      [
-        {
-          text: "취소",
-          style: "cancel",
-        },
-        {
-          text: "확인",
-          onPress: () => deleteData(consumptionId),
-        },
-      ],
-      { cancelable: false }
-    );
+    deleteData(consumptionId);
+    // Alert.alert(
+    //   "",
+    //   "지출 기록을 삭제하시겠습니까?\n다시 되돌릴 수 없습니다.",
+    //   [
+    //     {
+    //       text: "취소",
+    //       style: "cancel",
+    //     },
+    //     {
+    //       text: "확인",
+    //       onPress: () => deleteData(consumptionId),
+    //     },
+    //   ],
+    //   { cancelable: false }
+    // );
   };
 
   // 지출 기록 삭제
@@ -217,7 +220,7 @@ const Statistics = ({ year, month }) => {
       const consumptionDeleteData = response.data;
       if (consumptionDeleteData.status === 200) {
         fetchData();
-        fetchCategoryData();
+        fetchCategoryData(categoryParamVal);
       }
     } catch (error) {
       console.error("에러:", error);
@@ -257,6 +260,7 @@ const Statistics = ({ year, month }) => {
               >
                 <Swipeable
                   renderRightActions={() => renderRightActions(item.id)}
+                  onSwipeableOpen={() => handleChatRoomDelete(item.id)}
                   key={item.id}
                 >
                   <View
