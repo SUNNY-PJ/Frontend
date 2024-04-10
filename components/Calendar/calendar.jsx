@@ -15,8 +15,8 @@ const CalendarComponent = ({ onDataFetched, markedDates }) => {
     return `${year}.${month}.${day}`;
   };
 
-  console.log("1212", selected);
-  console.log("3434", selectedDate);
+  // console.log("1212", selected);
+  // console.log("3434", selectedDate);
 
   // 한국어 설정
   LocaleConfig.locales["kr"] = {
