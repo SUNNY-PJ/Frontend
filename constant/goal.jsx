@@ -175,10 +175,9 @@ function Goal({ navigation }) {
         end_date: formattedEndDateVal,
         cost: cost.replace(/,/g, ""),
       };
-      const response = await apiClient.patch(inputURL, bodyData, {
+      const response = await apiClient.put(inputURL, bodyData, {
         headers: { "Content-Type": "application/json; charset=utf-8" },
       });
-      console.log("절약 목표 수정", bodyData);
       console.log("절약 목표 수정", response.data);
       if (response.status === 200) {
         Alert.alert("", "절약 목표가 수정되었습니다.");
