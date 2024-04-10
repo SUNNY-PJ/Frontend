@@ -129,6 +129,7 @@ function Goal({ navigation }) {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
+      console.log(response.data);
       if (response.status === 200) {
         const Data = response.data.data;
         console.log("절약 목표 세부 조회", Data);
@@ -175,10 +176,12 @@ function Goal({ navigation }) {
         end_date: formattedEndDateVal,
         cost: cost.replace(/,/g, ""),
       };
-      const response = await apiClient.put(inputURL, bodyData, {
+
+      const response = await apiClient.patch(inputURL, bodyData, {
         headers: { "Content-Type": "application/json; charset=utf-8" },
       });
       console.log("절약 목표 수정", response.data);
+      console.log(response);
       if (response.status === 200) {
         Alert.alert("", "절약 목표가 수정되었습니다.");
         navigation.goBack();
@@ -190,8 +193,6 @@ function Goal({ navigation }) {
       Alert.alert("error", "서버에 장애가 발생하였습니다.");
     }
   };
-
-  console.log("startDateVal", startDateVal);
 
   return (
     <View style={styles.container}>
