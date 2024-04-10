@@ -8,6 +8,8 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
+import { useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import Input from "../components/Input/input";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
 import Notice from "../components/Modal/notice";
@@ -15,9 +17,13 @@ import DatePicker from "../components/DatePicker/datePicker";
 import LargeBtn from "../components/Btn/largeBtn";
 import apiClient from "../api/apiClient";
 
-function Note({ navigation }) {
+const Note = () => {
+  const route = useRoute();
+  const navigation = useNavigation();
+  const { consumptionId } = route.params?.params ?? {};
   const inputURL = "/consumption";
-
+  const [exists, setExists] = useState(false);
+  const [buttonText, setButtonText] = useState("등록하기");
   const [isOpenNoticeMsg, setIsOpenNoticeMsg] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
@@ -74,6 +80,42 @@ function Note({ navigation }) {
     }
   }, [name, money, date]);
 
+  // 절약 목표 세부 조회
+  const fetchData = async () => {
+    try {
+      const response = await apiClient.get(inputURL, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        params: {
+          consumptionId: consumptionId,
+        },
+      });
+      if (response.status === 200) {
+        const Data = response.data.data[0];
+        console.log("절약 목표 세부 조회", Data);
+        const formattedValue = Data.money.toLocaleString();
+        setExists(true);
+        setButtonText("수정하기");
+        setMoney(formattedValue);
+        setDate(Data.dateField);
+        setPlace(Data.category);
+        setName(Data.name);
+      } else {
+        Alert.alert("error", "서버에 장애가 발생하였습니다.");
+      }
+    } catch (error) {
+      console.error("에러:", error);
+      Alert.alert("error", "서버에 장애가 발생하였습니다.");
+    }
+  };
+
+  useEffect(() => {
+    if (consumptionId) {
+      fetchData();
+    }
+  }, []);
+
   const postData = async () => {
     try {
       const bodyData = {
@@ -117,8 +159,39 @@ function Note({ navigation }) {
     }
   };
 
-  const handlePostApiTestStart = () => {
-    postData();
+  // 지출 내역 수정
+  const updateData = async () => {
+    const url = `/consumption/${consumptionId}`;
+    try {
+      const bodyData = {
+        date_field: date,
+        money: moneyNumeric,
+        name: name,
+        category: place,
+      };
+
+      const response = await apiClient.patch(url, bodyData, {
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+      });
+      console.log("지출 수정", response.data);
+      if (response.status === 200 || response.status === 204) {
+        Alert.alert("", "지출 내역이 수정되었습니다.");
+        navigation.goBack();
+      } else {
+        Alert.alert("error", "서버에 장애가 발생하였습니다.");
+      }
+    } catch (error) {
+      console.error("Update error:", error);
+      Alert.alert("error", "서버에 장애가 발생하였습니다.");
+    }
+  };
+
+  const handlePost = () => {
+    if (exists && consumptionId) {
+      updateData();
+    } else {
+      postData();
+    }
   };
 
   return (
@@ -225,14 +298,15 @@ function Note({ navigation }) {
                 isDatePickerVisible={isDatePickerVisible}
                 handleDateChange={handleDateChange}
                 title={"지출 일자"}
+                initialDate={date}
                 showDayOfWeek={false}
               />
             </TouchableOpacity>
             <View style={styles.buttonContainer}>
               {isAllFieldsFilled ? (
-                <LargeBtn text={"등록하기"} onClick={handlePostApiTestStart} />
+                <LargeBtn text={buttonText} onClick={handlePost} />
               ) : (
-                <LargeBtnDisable text={"등록하기"} />
+                <LargeBtnDisable text={buttonText} />
               )}
             </View>
           </View>
@@ -240,7 +314,7 @@ function Note({ navigation }) {
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
