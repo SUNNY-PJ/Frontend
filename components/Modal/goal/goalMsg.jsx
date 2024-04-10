@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -17,6 +17,20 @@ const GoalMsg = ({
   cost,
   fail,
 }) => {
+  let backgroundColor = "#FFA851";
+
+  useEffect(() => {
+    if (percentage <= 0) {
+      backgroundColor = "#F97B7B"; // 음수일 때 색상
+    } else if (percentage <= 20) {
+      backgroundColor = "#F97B7B"; // 20 이하일 때 색상
+    } else if (percentage <= 49) {
+      backgroundColor = "#FAC337"; // 49 이하일 때 색상
+    } else if (percentage <= 100) {
+      backgroundColor = "#6ADCA3"; // 100 이하일 때 색상
+    }
+  }, []);
+
   return (
     <Modal animationType="none" transparent={true} visible={isOpenGoalMessage}>
       <View
@@ -35,7 +49,7 @@ const GoalMsg = ({
                 style={{ width: 120, height: 120, alignSelf: "center" }}
               />
             ) : (
-              <Progress2 progress={percentage} color={""} />
+              <Progress2 progress={percentage} color={backgroundColor} />
             )}
             {fail ? (
               <Text style={styles.title}>
@@ -48,7 +62,6 @@ const GoalMsg = ({
                 벌써 {percentage}%에 도달 했어요!
               </Text>
             )}
-
             <TouchableOpacity onPress={openGoalMessage} activeOpacity={0.6}>
               <RegularBtnOrange text={"확인"} />
             </TouchableOpacity>
