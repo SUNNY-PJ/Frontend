@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Dimensions,
 } from "react-native";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
@@ -16,6 +17,8 @@ import MsgModal from "../../components/Modal/msg/msgModal";
 import MatchMsg from "../../components/Modal/battle/matchMsg";
 
 const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
+  const windowHeight = Dimensions.get("window").height;
+
   const navigation = useNavigation();
   const [userId, setUserId] = useState("");
   const [friendId, setFriendId] = useState("");
@@ -95,7 +98,7 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
   }, [userId]);
 
   return (
-    <ScrollView>
+    <ScrollView style={{ height: windowHeight - 300 }}>
       {Data.map((item) => (
         <Swipeable
           key={item.friendId}
