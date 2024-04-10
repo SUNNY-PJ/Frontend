@@ -177,12 +177,11 @@ function Goal({ navigation }) {
         cost: cost.replace(/,/g, ""),
       };
 
-      const response = await apiClient.patch(inputURL, bodyData, {
+      const response = await apiClient.put(inputURL, bodyData, {
         headers: { "Content-Type": "application/json; charset=utf-8" },
       });
       console.log("절약 목표 수정", response.data);
-      console.log(response);
-      if (response.status === 200) {
+      if (response.status === 200 || response.status === 204) {
         Alert.alert("", "절약 목표가 수정되었습니다.");
         navigation.goBack();
       } else {
