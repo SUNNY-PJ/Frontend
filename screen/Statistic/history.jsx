@@ -145,6 +145,7 @@ const History = () => {
                     width: "100%",
                     paddingTop: 10,
                     paddingBottom: 10,
+                    backgroundColor: "#FFFBF6",
                   }}
                 >
                   <View style={{ flexDirection: "row" }}>
@@ -195,14 +196,12 @@ const styles = StyleSheet.create({
     color: "#1F1F1F",
     fontSize: 16,
     fontFamily: "SUITE_Bold",
-    fontWeight: 700,
     marginLeft: 16,
     alignSelf: "center",
   },
   bottomPriceText: {
     color: "#1F1F1F",
     fontSize: 16,
-    fontWeight: 500,
     fontFamily: "SUITE_Medium",
     alignSelf: "center",
   },
@@ -210,7 +209,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#5C5C5C",
     justifyContent: "center",
     alignItems: "center",
-    // width: "100%",
     width: 50,
     height: "100%",
     marginLeft: 10,
