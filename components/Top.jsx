@@ -12,6 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import TopTooltip from "./Modal/topTooltip";
 import { useSaveData } from "../context/saveDataContext";
 import GoalMsg from "./Modal/goal/goalMsg";
+import StompWebSocketComponent from "../constant/socket/testSocket3";
 
 const Top = ({ navigation }) => {
   const { saveData, fetchData } = useSaveData();
@@ -212,15 +213,6 @@ const Top = ({ navigation }) => {
       <View>
         {isOpenTopTooltip && <TopTooltip openTopTooltip={openTopTooltip} />}
       </View>
-      {/* {showModal && (
-        <GoalMsg
-          isOpenGoalMessage={showModal}
-          openGoalMessage={handleModalClose}
-          percentage={percentage}
-          cost={cost}
-          fail={fail}
-        />
-      )} */}
     </View>
   );
 };
