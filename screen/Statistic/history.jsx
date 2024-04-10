@@ -148,7 +148,7 @@ const History = () => {
               >
                 <Swipeable
                   renderRightActions={() => renderRightActions(item.id)}
-                  onSwipeableOpen={() => handleChatRoomDelete(item.id)}
+                  // onSwipeableOpen={() => handleChatRoomDelete(item.id)}
                   key={item.id}
                 >
                   <View
@@ -159,6 +159,8 @@ const History = () => {
                       paddingTop: 10,
                       paddingBottom: 10,
                       backgroundColor: "#FFFBF6",
+                      paddingRight: 20,
+                      marginLeft: 10,
                     }}
                   >
                     <View style={{ flexDirection: "row" }}>
@@ -195,8 +197,8 @@ const styles = StyleSheet.create({
   },
   bottomSection: {
     flexDirection: "row",
-    marginLeft: 20,
-    marginRight: 20,
+    paddingLeft: 20,
+    // marginRight: 20,
     marginBottom: 16,
     marginTop: 16,
   },
