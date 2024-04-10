@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as StompJs from "@stomp/stompjs";
 import { proxyUrl } from "../../api/common";
 import GoalMsg from "../../components/Modal/goal/goalMsg";
+import { TextEncoder, TextDecoder } from "text-encoding";
 
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
