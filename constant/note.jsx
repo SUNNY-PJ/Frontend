@@ -21,6 +21,7 @@ const Note = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { consumptionId } = route.params?.params ?? {};
+  console.log(consumptionId);
   const inputURL = "/consumption";
   const [exists, setExists] = useState(false);
   const [buttonText, setButtonText] = useState("등록하기");
@@ -114,7 +115,7 @@ const Note = () => {
     if (consumptionId) {
       fetchData();
     }
-  }, []);
+  }, [consumptionId]);
 
   const postData = async () => {
     try {
@@ -173,10 +174,15 @@ const Note = () => {
       const response = await apiClient.patch(url, bodyData, {
         headers: { "Content-Type": "application/json; charset=utf-8" },
       });
-      console.log("지출 수정", response.data);
       if (response.status === 200 || response.status === 204) {
         Alert.alert("", "지출 내역이 수정되었습니다.");
-        navigation.goBack();
+        // navigation.goBack();
+        navigation.replace("Spending", {
+          screen: "Spending",
+          params: {
+            historyVal: true,
+          },
+        });
       } else {
         Alert.alert("error", "서버에 장애가 발생하였습니다.");
       }
@@ -199,7 +205,11 @@ const Note = () => {
       <TouchableOpacity onPress={closeNoticeMsg} activeOpacity={1}>
         <ScrollView>
           <View style={styles.contentContainer}>
-            <Text style={styles.headerText}>지출 내역 추가</Text>
+            {exists ? (
+              <Text style={styles.headerText}>지출 내역 수정</Text>
+            ) : (
+              <Text style={styles.headerText}>지출 내역 추가</Text>
+            )}
             <Text style={styles.label}>어떤 이름으로 기록할까요?</Text>
             <Input
               placeholder={"지출 내용"}
