@@ -13,9 +13,11 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 import CalendarComponent from "../../components/Calendar/calendar";
 import { useEffect } from "react";
 import apiClient from "../../api/apiClient";
+import { useNavigation } from "@react-navigation/native";
 
 const History = () => {
   const windowHeight = Dimensions.get("window").height;
+  const navigation = useNavigation();
 
   const [data, setData] = useState([]);
   const [markedDates, setMarkedDates] = useState({});
@@ -120,6 +122,16 @@ const History = () => {
     setMarkedDates(newMarkedDates);
   };
 
+  const handleModify = (consumptionId) => {
+    console.log(consumptionId);
+    navigation.navigate("Note", {
+      screen: "Note",
+      params: {
+        consumptionId: consumptionId,
+      },
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
@@ -134,29 +146,34 @@ const History = () => {
         <ScrollView style={{ height: windowHeight - 700, flex: 1 }}>
           {Array.isArray(data) &&
             data.map((item, index) => (
-              <Swipeable
-                renderRightActions={() => renderRightActions(item.id)}
-                key={item.id}
+              <TouchableOpacity
+                activeOpacity={0.5}
+                onPress={() => handleModify(item.id)}
               >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    width: "100%",
-                    paddingTop: 10,
-                    paddingBottom: 10,
-                    backgroundColor: "#FFFBF6",
-                  }}
+                <Swipeable
+                  renderRightActions={() => renderRightActions(item.id)}
+                  key={item.id}
                 >
-                  <View style={{ flexDirection: "row" }}>
-                    <View style={styles.bottomBar} />
-                    <Text style={styles.bottomText}>{item.name}</Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      width: "100%",
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                      backgroundColor: "#FFFBF6",
+                    }}
+                  >
+                    <View style={{ flexDirection: "row" }}>
+                      <View style={styles.bottomBar} />
+                      <Text style={styles.bottomText}>{item.name}</Text>
+                    </View>
+                    <Text style={styles.bottomPriceText}>
+                      {formatNumberWithCommas(item.money)}원
+                    </Text>
                   </View>
-                  <Text style={styles.bottomPriceText}>
-                    {formatNumberWithCommas(item.money)}원
-                  </Text>
-                </View>
-              </Swipeable>
+                </Swipeable>
+              </TouchableOpacity>
             ))}
         </ScrollView>
       </SafeAreaView>
