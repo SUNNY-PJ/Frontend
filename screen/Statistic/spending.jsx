@@ -96,7 +96,6 @@ const Spending = () => {
             <Text
               style={{
                 fontSize: 22,
-                fontWeight: 700,
                 color: "#1F1F1F",
                 fontFamily: "SUITE_Bold",
               }}

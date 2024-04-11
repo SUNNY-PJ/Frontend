@@ -166,7 +166,6 @@ const ChatRoom2 = () => {
                 style={{
                   flex: 1,
                   fontSize: 12,
-                  fontWeight: 700,
                   color: "#5C5C5C",
                   textAlign: "center",
                 }}

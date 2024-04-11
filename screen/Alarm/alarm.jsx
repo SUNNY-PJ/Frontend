@@ -136,7 +136,6 @@ const Alarm = () => {
         style={{
           fontSize: 22,
           color: "#1F1F1F",
-          fontWeight: 700,
           alignSelf: "center",
           bottom: 22,
           fontFamily: "SUITE_Bold",
@@ -273,7 +272,6 @@ const styles = StyleSheet.create({
   },
   dayText: {
     fontSize: 20,
-    fontWeight: 700,
     color: "#1F1F1F",
     paddingRight: 20,
     paddingLeft: 20,
@@ -283,25 +281,21 @@ const styles = StyleSheet.create({
   },
   dateText: {
     fontSize: 12,
-    fontWeight: 500,
     fontFamily: "SUITE",
     color: "#1F1F1F",
   },
   nameText: {
     fontSize: 12,
-    fontWeight: 500,
     fontFamily: "SUITE",
     color: "#1F1F1F",
   },
   contentText: {
     fontSize: 16,
-    fontWeight: 500,
     fontFamily: "SUITE",
     color: "#1F1F1F",
   },
   titleText: {
     fontSize: 12,
-    fontWeight: 700,
     fontFamily: "SUITE_Bold",
     color: "#5C5C5C",
   },
