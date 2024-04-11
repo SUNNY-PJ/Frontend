@@ -20,6 +20,7 @@ import DonutChart from "../../components/Chart/donutChart";
 const Statistics = ({ year, month }) => {
   const navigation = useNavigation();
   const windowHeight = Dimensions.get("window").height;
+  const windowWidth = Dimensions.get("window").width;
 
   const [data, setData] = useState([]);
   const [noData, setNoData] = useState(false);
@@ -180,8 +181,11 @@ const Statistics = ({ year, month }) => {
 
   const renderRightActions = (consumptionId) => {
     return (
-      <TouchableOpacity onPress={() => handleChatRoomDelete(consumptionId)}>
-        <View style={styles.deleteBox}>
+      <TouchableOpacity
+        onPress={() => handleChatRoomDelete(consumptionId)}
+        activeOpacity={0.6}
+      >
+        <View style={[styles.deleteBox]}>
           <Text style={styles.deleteText}>삭제</Text>
         </View>
       </TouchableOpacity>
@@ -260,8 +264,9 @@ const Statistics = ({ year, month }) => {
               >
                 <Swipeable
                   renderRightActions={() => renderRightActions(item.id)}
-                  // onSwipeableOpen={() => handleChatRoomDelete(item.id)}
+                  onSwipeableOpen={() => handleChatRoomDelete(item.id)}
                   key={item.id}
+                  overshootRight={false}
                 >
                   <View
                     style={{

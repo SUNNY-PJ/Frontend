@@ -38,7 +38,10 @@ const History = () => {
 
   const renderRightActions = (consumptionId) => {
     return (
-      <TouchableOpacity onPress={() => handleChatRoomDelete(consumptionId)}>
+      <TouchableOpacity
+        onPress={() => handleChatRoomDelete(consumptionId)}
+        activeOpacity={0.6}
+      >
         <View style={styles.deleteBox}>
           <Text style={styles.deleteText}>삭제</Text>
         </View>
@@ -148,8 +151,9 @@ const History = () => {
               >
                 <Swipeable
                   renderRightActions={() => renderRightActions(item.id)}
-                  // onSwipeableOpen={() => handleChatRoomDelete(item.id)}
+                  onSwipeableOpen={() => handleChatRoomDelete(item.id)}
                   key={item.id}
+                  overshootRight={false}
                 >
                   <View
                     style={{
