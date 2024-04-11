@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
     marginTop: 9,
     marginBottom: 6,
     fontFamily: "SUITE_Bold",
-    fontWeight: 700,
   },
 });
 
