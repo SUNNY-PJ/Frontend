@@ -148,11 +148,11 @@ const History = () => {
               <TouchableOpacity
                 activeOpacity={0.6}
                 onPress={() => handleModify(item.id)}
+                key={item.id}
               >
                 <Swipeable
                   renderRightActions={() => renderRightActions(item.id)}
                   onSwipeableOpen={() => handleChatRoomDelete(item.id)}
-                  key={item.id}
                   overshootRight={false}
                 >
                   <View

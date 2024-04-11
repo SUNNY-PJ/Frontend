@@ -37,8 +37,9 @@ const FriendsComponent1 = ({ Data, onAddFriend, onRemoveFriend }) => {
 
   return (
     <ScrollView>
-      {Data.map((item) => (
+      {Data.map((item, index) => (
         <View
+          key={index}
           style={{
             flexDirection: "row",
             justifyContent: "space-between",

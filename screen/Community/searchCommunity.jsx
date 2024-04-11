@@ -74,6 +74,7 @@ const SearchCommunity = ({ searchTerms }) => {
               style={{
                 backgroundColor: "#fff",
               }}
+              key={item.title}
             >
               <View
                 style={{

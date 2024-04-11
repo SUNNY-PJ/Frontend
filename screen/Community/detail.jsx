@@ -197,8 +197,8 @@ const Detail = () => {
 
   return (
     <View style={styles.container}>
-      {data.map((item) => (
-        <View style={styles.contentContainer}>
+      {data.map((item, index) => (
+        <View style={styles.contentContainer} key={index}>
           <View
             style={{
               flexDirection: "row",

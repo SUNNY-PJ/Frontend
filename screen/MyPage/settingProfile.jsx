@@ -249,7 +249,7 @@ const SettingProfile = () => {
         프로필 설정
       </Text>
       {profile.map((item, index) => (
-        <Pressable onPress={() => handleImagePress(index)}>
+        <Pressable onPress={() => handleImagePress(index)} key={index}>
           {selectedImage ? (
             <Image
               source={{ uri: selectedImage }}
