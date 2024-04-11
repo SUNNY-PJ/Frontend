@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
   },
   actionText: {
     fontSize: 20,
-    fontWeight: 500,
     color: "#1F1F1F",
     paddingTop: 10,
     paddingBottom: 10,

@@ -154,13 +154,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 500,
     color: "#1F1F1F",
     fontFamily: "SUITE",
   },
   text: {
     fontSize: 15,
-    fontWeight: 700,
     color: "#1F1F1F",
     fontFamily: "SUITE_Bold",
   },
@@ -176,7 +174,7 @@ const styles = StyleSheet.create({
   },
   closeButtonText: {
     fontSize: 16,
-    fontWeight: "SUITE_Bold",
+    fontFamily: "SUITE_Bold",
   },
   item: {
     width: "100%", // 항목들이 전체 너비를 차지하도록 설정합니다.
