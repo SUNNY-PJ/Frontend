@@ -160,9 +160,7 @@ function SendMatch() {
             inputValue={message}
             handleInputChange={handleMessageChange}
           />
-          <Text style={[styles.subText]}>
-            * 최대 20자
-          </Text>
+          <Text style={[styles.subText]}>* 최대 20자</Text>
           {/* <Text style={styles.label}>무엇을 걸고 대결할까요?</Text>
           <Input
             placeholder={"대결 보상"}
@@ -236,14 +234,12 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 22,
-    fontWeight: "700",
     color: "#1F1F1F",
     textAlign: "center",
     fontFamily: "SUITE_Bold",
   },
   label: {
     fontSize: 16,
-    fontWeight: "500",
     color: "#1F1F1F",
     marginBottom: 8,
     marginTop: 32,
@@ -256,7 +252,6 @@ const styles = StyleSheet.create({
   },
   subText: {
     fontSize: 12,
-    fontWeight: 500,
     color: "#5C5C5C",
     paddingLeft: 10,
     fontFamily: "SUITE",

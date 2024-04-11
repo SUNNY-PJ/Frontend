@@ -32,7 +32,6 @@ const Winner = () => {
         <Text
           style={{
             fontSize: 20,
-            fontWeight: 700,
             color: "#1F1F1F",
             textAlign: "center",
             marginBottom: 24,
