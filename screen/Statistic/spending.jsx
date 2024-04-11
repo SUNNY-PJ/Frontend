@@ -54,8 +54,7 @@ const Spending = () => {
         <View
           style={{
             flexDirection: "row",
-            justifyContent: "center",
-            gap: 116,
+            justifyContent: "space-around",
             marginTop: 15,
           }}
         >
@@ -131,7 +130,6 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: 20,
     fontFamily: "SUITE_Bold",
-    fontWeight: "700",
     color: "#C1C1C1",
     paddingTop: 9,
     paddingBottom: 6,
