@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: "700",
     textAlign: "center",
     color: "#000",
     fontFamily: "SUITE_Bold",
