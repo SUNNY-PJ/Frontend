@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    fontWeight: "500",
     color: "#5C5C5C",
     fontFamily: "SUITE",
   },

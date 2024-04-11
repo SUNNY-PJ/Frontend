@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
   },
   button: {
     fontSize: 16,
-    fontWeight: "700",
     textAlign: "center",
     color: "#1F1F1F",
     fontFamily: "SUITE_Bold",

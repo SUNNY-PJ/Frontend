@@ -20,7 +20,6 @@ const SmallBtn = ({ onClick, title, color, border }) => {
               paddingTop: 4,
               paddingBottom: 4,
               fontSize: 12,
-              fontWeight: 500,
               borderColor: "#1F1F1F",
               fontFamily: "SUITE",
               color: "#1F1F1F",
