@@ -98,7 +98,7 @@ function SendMatch() {
 
   useEffect(() => {
     // if (message && money && startDate && endDate) {
-    if (message && money && date) {
+    if (message && money && startDate && endDate) {
       setIsAllFieldsFilled(true);
     } else {
       setIsAllFieldsFilled(false);
@@ -154,7 +154,9 @@ function SendMatch() {
       <ScrollView>
         <View style={styles.contentContainer}>
           <Text style={styles.headerText}>{name}에게 대결 신청</Text>
-          <Text style={styles.label}>친구를 도발해보세요!</Text>
+          <Text style={[styles.label, { marginTop: 8 }]}>
+            친구를 도발해보세요!
+          </Text>
           <Input
             placeholder={"도발 메시지"}
             inputValue={message}
@@ -242,13 +244,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#1F1F1F",
     marginBottom: 8,
-    marginTop: 32,
+    marginTop: 24,
     paddingLeft: 10,
     fontFamily: "SUITE_Medium",
   },
 
   buttonContainer: {
-    marginTop: 120,
+    marginTop: 80,
   },
   subText: {
     fontSize: 12,
