@@ -30,7 +30,6 @@ const TopTooltip = ({ openTopTooltip }) => {
           <Text
             style={{
               fontSize: 12,
-              fontWeight: 500,
               fontFamily: "SUITE",
               color: "#1F1F1F",
               marginLeft: 12,

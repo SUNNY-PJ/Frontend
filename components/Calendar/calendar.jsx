@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   headerText: {
     // 헤더 텍스트 스타일
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: "SUITE_Bold",
   },
   calendar: {
     borderTopWidth: 0,

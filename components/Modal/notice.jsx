@@ -31,7 +31,6 @@ const Notice = ({ openNoticeMsg }) => {
         <Text
           style={{
             fontSize: 12,
-            fontWeight: 500,
             fontFamily: "SUITE",
             marginLeft: 16,
             marginTop: 6,
