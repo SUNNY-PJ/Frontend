@@ -293,7 +293,6 @@ const styles = StyleSheet.create({
   mainTitle: {
     fontSize: 22,
     fontFamily: "SUITE_Bold",
-    fontWeight: 700,
     color: "#1F1F1F",
     textAlign: "center",
     marginBottom: 24,

@@ -402,14 +402,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     color: "#000",
-    fontWeight: 500,
     padding: 4,
     fontFamily: "SUITE",
   },
   description: {
     fontSize: 12,
     color: "#000",
-    fontWeight: 500,
     padding: 4,
     fontFamily: "SUITE",
     gap: 8,
@@ -425,7 +423,6 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontSize: 15,
-    fontWeight: 700,
     alignSelf: "center",
     fontFamily: "SUITE_Bold",
   },
