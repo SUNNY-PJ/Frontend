@@ -452,23 +452,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#1F1F1F",
     fontFamily: "SUITE",
-    fontWeight: 500,
   },
   setting: {
     fontSize: 16,
     color: "#5C5C5C",
-    fontWeight: 600,
     fontFamily: "SUITE_Medium",
   },
   subDescription: {
     fontSize: 10,
-    fontWeight: 500,
     color: "#1F1F1F",
     fontFamily: "SUITE",
   },
   contents: {
     fontSize: 15,
-    fontWeight: 500,
     color: "#1F1F1F",
     fontFamily: "SUITE",
   },

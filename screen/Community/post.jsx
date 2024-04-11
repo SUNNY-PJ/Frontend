@@ -204,7 +204,6 @@ const Post = () => {
                 <Text
                   style={{
                     fontSize: 15,
-                    fontWeight: 700,
                     borderColor: "#1F1F1F",
                     fontFamily: "SUITE_Bold",
                   }}
@@ -225,7 +224,6 @@ const Post = () => {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: 500,
                 color: "#1F1F1F",
                 marginBottom: 8,
                 marginTop: 16,
@@ -243,7 +241,6 @@ const Post = () => {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: 500,
                 color: "#1F1F1F",
                 marginBottom: 8,
                 marginTop: 10,
@@ -261,7 +258,6 @@ const Post = () => {
             <Text
               style={{
                 fontSize: 16,
-                fontWeight: 500,
                 color: "#1F1F1F",
                 marginBottom: 8,
                 marginTop: 10,
@@ -316,7 +312,6 @@ const Post = () => {
             <Text
               style={{
                 fontSize: 10,
-                fontWeight: 500,
                 color: "#5C5C5C",
                 marginTop: 8,
                 fontFamily: "SUITE_Medium",
@@ -356,8 +351,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    fontWeight: 500,
     color: "#1F1F1F",
+    fontFamily: "SUITE",
   },
 });
 

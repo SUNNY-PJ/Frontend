@@ -206,7 +206,6 @@ const styles = StyleSheet.create({
   tipText: {
     color: "#262626",
     fontSize: 15,
-    fontWeight: 500,
     alignSelf: "center",
     fontFamily: "SUITE",
   },

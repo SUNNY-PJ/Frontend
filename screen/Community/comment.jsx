@@ -323,7 +323,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                     <Text
                       style={{
                         fontSize: 15,
-                        fontWeight: 500,
                         color: "#1F1F1F",
                         fontFamily: "SUITE_Medium",
                         alignSelf: "center",
@@ -342,8 +341,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                         <Text
                           style={{
                             color: "#1F1F1F",
+                            fontFamily: "SUITE",
                             fontSize: 10,
-                            fontWeight: 500,
                             paddingRight: 5,
                             paddingLeft: 5,
                             paddingTop: 4,
@@ -478,7 +477,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                                   style={{
                                     color: "#1F1F1F",
                                     fontSize: 10,
-                                    fontWeight: 500,
                                     paddingRight: 5,
                                     paddingLeft: 5,
                                     paddingTop: 4,
@@ -680,18 +678,15 @@ const styles = StyleSheet.create({
     paddingBottom: 6,
     fontSize: 12,
     fontFamily: "SUITE_Bold",
-    fontWeight: 700,
     color: "#1F1F1F",
   },
   comment: {
     fontSize: 15,
-    fontWeight: 500,
     color: "#1F1F1F",
     fontFamily: "SUITE_Medium",
   },
   subComment: {
     fontSize: 10,
-    fontWeight: 500,
     color: "#C1C1C1",
     fontFamily: "SUITE",
   },
@@ -703,7 +698,6 @@ const styles = StyleSheet.create({
   secretComment: {
     color: "#5C5C5C",
     fontSize: 10,
-    fontWeight: 700,
     fontFamily: "SUITE_Bold",
   },
 });

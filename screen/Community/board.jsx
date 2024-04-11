@@ -129,7 +129,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     color: "#000",
-    fontWeight: 500,
     padding: 4,
     fontFamily: "SUITE",
   },
@@ -137,7 +136,6 @@ const styles = StyleSheet.create({
     fontFamily: "SUITE",
     fontSize: 12,
     color: "#000",
-    fontWeight: 500,
     padding: 3,
     gap: 8,
   },
@@ -145,7 +143,6 @@ const styles = StyleSheet.create({
     fontFamily: "SUITE",
     fontSize: 10,
     color: "#000",
-    fontWeight: 500,
     padding: 4,
     gap: 8,
   },
