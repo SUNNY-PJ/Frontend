@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1059837020999",
+    "project_id": "sunny-f9515",
+    "storage_bucket": "sunny-f9515.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059837020999:android:a711677e32738235a85a62",
+        "android_client_info": {
+          "package_name": "com.sunny.inout_webview"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRaVa3wRTSUL1ZpaM-d0PYsAuVyXY3nTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
