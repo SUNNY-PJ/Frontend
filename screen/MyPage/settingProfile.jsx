@@ -240,7 +240,6 @@ const SettingProfile = () => {
         style={{
           fontSize: 16,
           color: "#1F1F1F",
-          fontWeight: 700,
           alignSelf: "center",
           bottom: 17,
           fontFamily: "SUITE_Bold",
@@ -272,7 +271,6 @@ const SettingProfile = () => {
               paddingLeft: 12,
               fontSize: 16,
               color: "#1F1F1F",
-              fontWeight: 500,
               marginBottom: 16,
               fontFamily: "SUITE",
             }}
@@ -289,7 +287,6 @@ const SettingProfile = () => {
             style={{
               marginTop: 8,
               fontSize: 12,
-              fontWeight: 500,
               color: "#5C5C5C",
               textAlign: "left",
               paddingLeft: 12,
@@ -345,19 +342,16 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 20,
     color: "#1F1F1F",
-    fontWeight: 500,
     fontFamily: "SUITE",
   },
   setting: {
     fontSize: 16,
     color: "#5C5C5C",
-    fontWeight: 600,
     fontFamily: "SUITE_Medium",
   },
   title: {
     fontSize: 16,
     color: "#1F1F1F",
-    fontWeight: 900,
     paddingLeft: 20,
     paddingTop: 16,
     marginBottom: 8,

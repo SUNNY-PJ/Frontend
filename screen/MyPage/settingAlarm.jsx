@@ -42,7 +42,6 @@ const SettingAlarm = () => {
           style={{
             fontSize: 16,
             color: "#1F1F1F",
-            fontWeight: 700,
             alignSelf: "center",
             fontFamily: "SUITE_Bold",
             bottom: 20,
