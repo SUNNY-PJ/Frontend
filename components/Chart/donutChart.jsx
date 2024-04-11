@@ -156,9 +156,9 @@ const DonutChart = ({ data, noData, onCategorySelect, year, month }) => {
         )}
       </Svg>
       <View style={{ flexDirection: "row", gap: 24 }}>
-        {data.map((item) => (
+        {data.map((item, index) => (
           <TouchableOpacity
-            key={item.value}
+            key={index}
             onPress={() => handleCategorySelect(item.category)}
             activeOpacity={0.8}
           >
