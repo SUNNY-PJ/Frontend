@@ -207,7 +207,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "700",
     marginBottom: 30,
     textAlign: "center",
     color: "#000",
@@ -224,13 +223,11 @@ const styles = StyleSheet.create({
   },
   textLabel: {
     fontSize: 16,
-    fontWeight: "700",
     color: "#000",
     fontFamily: "SUITE_Bold",
   },
   textValue: {
     fontSize: 16,
-    fontWeight: "500",
     color: "#000",
     fontFamily: "SUITE_Medium",
   },
