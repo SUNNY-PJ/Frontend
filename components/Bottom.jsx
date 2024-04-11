@@ -174,7 +174,6 @@ const styles = StyleSheet.create({
   },
   menuText: {
     fontSize: 10,
-    fontWeight: "500",
     color: "#1F1F1F",
     textAlign: "center",
     marginTop: 4,

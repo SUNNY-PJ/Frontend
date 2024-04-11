@@ -102,7 +102,6 @@ const SignUp = () => {
       <Text
         style={{
           fontSize: 16,
-          fontWeight: 500,
           color: "#1F1F1F",
           fontFamily: "SUITE_Medium",
           marginTop: 40,
@@ -122,7 +121,6 @@ const SignUp = () => {
         style={{
           marginTop: 8,
           fontSize: 12,
-          fontWeight: 500,
           fontFamily: "SUITE_Medium",
           color: "#5C5C5C",
           textAlign: "left",

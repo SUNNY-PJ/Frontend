@@ -95,9 +95,8 @@ const styles = StyleSheet.create({
     // marginLeft: -20,
     left: 120,
     fontSize: 16,
-    fontWeight: "900",
     color: "#1F1F1F",
-    fontFamily: "SUITE_ExtraBold"
+    fontFamily: "SUITE_ExtraBold",
   },
 });
 

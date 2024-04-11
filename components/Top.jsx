@@ -116,7 +116,6 @@ const Top = ({ navigation }) => {
             <Text
               style={{
                 fontFamily: "SUITE_Bold",
-                fontWeight: "700",
                 color: "#1F1F1F",
                 fontSize: 16,
               }}
@@ -142,7 +141,6 @@ const Top = ({ navigation }) => {
                   marginLeft: -20,
                   fontSize: 16,
                   fontFamily: "SUITE_Heavy",
-                  fontWeight: "900",
                   color: "#1F1F1F",
                   transform: [{ translateY: 0 }, { translateX: 90 }],
                 }}
@@ -160,7 +158,6 @@ const Top = ({ navigation }) => {
                   style={{
                     fontSize: 15,
                     fontFamily: "SUITE_Heavy",
-                    fontWeight: "900",
                     color: "#1F1F1F",
                   }}
                 >
@@ -169,7 +166,6 @@ const Top = ({ navigation }) => {
                     style={{
                       fontSize: 15,
                       fontFamily: "SUITE",
-                      fontWeight: 500,
                       color: "#1F1F1F",
                       alignSelf: "center",
                       marginTop: 1,
@@ -239,7 +235,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    fontWeight: 700,
     fontFamily: "SUITE_Bold",
     color: "#1F1F1F",
   },

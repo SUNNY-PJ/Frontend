@@ -346,14 +346,12 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 22,
     fontFamily: "SUITE_Bold",
-    fontWeight: "700",
     color: "#1F1F1F",
     textAlign: "center",
   },
   label: {
     fontSize: 16,
     fontFamily: "SUITE_Medium",
-    fontWeight: "500",
     color: "#1F1F1F",
     marginBottom: 8,
     marginTop: 32,
@@ -377,7 +375,6 @@ const styles = StyleSheet.create({
   },
   noticeText: {
     fontSize: 12,
-    fontWeight: "400",
     fontFamily: "SUITE",
     color: "#5C5C5C",
   },
@@ -388,7 +385,6 @@ const styles = StyleSheet.create({
   },
   radioText: {
     fontSize: 16,
-    fontWeight: "500",
     color: "#5C5C5C",
     fontFamily: "SUITE_Medium",
   },
