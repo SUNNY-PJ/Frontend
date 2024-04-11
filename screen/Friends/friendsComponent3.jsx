@@ -107,6 +107,7 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
               ? renderRightActions(item.friendId)
               : null
           }
+          overshootRight={false}
         >
           <View
             style={{
@@ -241,7 +242,7 @@ const styles = StyleSheet.create({
     height: "100%",
     paddingLeft: 20,
     paddingRight: 20,
-    marginLeft: 10,
+    // marginLeft: 10,
     marginRight: 10,
     borderBottomColor: "#C1C1C1",
     borderBottomWidth: 1,
