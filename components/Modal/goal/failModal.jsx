@@ -111,28 +111,24 @@ const styles = StyleSheet.create({
   resultText: {
     textAlign: "center",
     fontSize: 22,
-    fontWeight: 700,
     color: "#1F1F1F",
     fontFamily: "SUITE_Bold",
   },
   text: {
     textAlign: "center",
     fontSize: 16,
-    fontWeight: 700,
     color: "#1F1F1F",
     fontFamily: "SUITE_Bold",
   },
   topText: {
     textAlign: "center",
     fontSize: 20,
-    fontWeight: 900,
     color: "#1F1F1F",
     fontFamily: "SUITE_ExtraBold",
   },
   buttonText: {
     textAlign: "center",
     fontSize: 20,
-    fontWeight: 700,
     color: "#1F1F1F",
     fontFamily: "SUITE_Bold",
   },
