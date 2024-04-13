@@ -79,19 +79,14 @@ const FriendsComponent2 = ({ Data, onAddFriend, onRefuseFriend }) => {
           }}
           key={item.friendId}
         >
-          <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => {
-                openProfile(item.userFriendId);
-              }}
-            >
-              <Image
-                // source={require("../../assets/Avatar.png")}
-                source={{ uri: item.profile }}
-                style={styles.icon}
-              />
-            </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            onPress={() => {
+              openProfile(item.userFriendId);
+            }}
+            style={{ flexDirection: "row" }}
+          >
+            <Image source={{ uri: item.profile }} style={styles.icon} />
             <Text
               style={{
                 marginLeft: 8,
@@ -103,7 +98,7 @@ const FriendsComponent2 = ({ Data, onAddFriend, onRefuseFriend }) => {
             >
               {item.nickname}
             </Text>
-          </View>
+          </TouchableOpacity>
           {/* {item.friendStatus === "PENDING" && ( */}
           <View style={{ flexDirection: "row", gap: 16 }}>
             <TouchableOpacity

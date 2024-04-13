@@ -51,15 +51,14 @@ const FriendsComponent1 = ({ Data, onAddFriend, onRemoveFriend }) => {
             borderBottomWidth: 1,
           }}
         >
-          <View style={{ flexDirection: "row" }}>
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => {
-                openProfile(item.userFriendId);
-              }}
-            >
-              <Image source={{ uri: item.profile }} style={styles.icon} />
-            </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            style={{ flexDirection: "row" }}
+            onPress={() => {
+              openProfile(item.userFriendId);
+            }}
+          >
+            <Image source={{ uri: item.profile }} style={styles.icon} />
             <Text
               style={{
                 marginLeft: 8,
@@ -71,7 +70,7 @@ const FriendsComponent1 = ({ Data, onAddFriend, onRemoveFriend }) => {
             >
               {item.nickname}
             </Text>
-          </View>
+          </TouchableOpacity>
           {/* //     NONE, PENDING, PROCEEDING, GIVE_UP, COMPLETE; */}
           {/* //   WIN("승리"), LOSE("패배"),DRAW("무승부"); */}
           <View style={{ flexDirection: "row", gap: 16 }}>

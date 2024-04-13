@@ -122,19 +122,18 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
               backgroundColor: "#FFFBF6",
             }}
           >
-            <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity
-                activeOpacity={0.6}
-                onPress={() => {
-                  openProfile(item.userFriendId);
-                }}
-              >
-                <Image
-                  source={{ uri: item.profile }}
-                  // source={require("../../assets/Avatar.png")}
-                  style={styles.icon}
-                />
-              </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.6}
+              onPress={() => {
+                openProfile(item.userFriendId);
+              }}
+              style={{ flexDirection: "row" }}
+            >
+              <Image
+                source={{ uri: item.profile }}
+                // source={require("../../assets/Avatar.png")}
+                style={styles.icon}
+              />
               <Text
                 style={{
                   marginLeft: 8,
@@ -146,7 +145,7 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
               >
                 {item.nickname}
               </Text>
-            </View>
+            </TouchableOpacity>
             {item.friendStatus === "FRIEND" && (
               <View
                 style={{
