@@ -1,7 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { proxyUrl } from "../../constant/common";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
 import {
   View,
   Text,
@@ -89,7 +86,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       const ResCommentData = response.data.data;
       setCommentData(ResCommentData);
       // console.log(
-      //   "댓글 데이터",
       //   ResCommentData.map((item) => item.children)
       // );
       console.log("댓글 데이터", ResCommentData);
@@ -143,17 +139,12 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
         },
       });
       console.log(response.data);
-      console.log(bodyData);
       if (response.status === 200 || response.status === 204) {
-        if (response.data.status === 200) {
-          Alert.alert("", "댓글을 수정하였습니다.");
-          fetchData();
-          setComment("");
-          setParentId();
-          setIsEdit(false);
-        } else {
-          Alert.alert("", "댓글 수정에 실패했습니다.");
-        }
+        Alert.alert("", "댓글을 수정하였습니다.");
+        fetchData();
+        setComment("");
+        setParentId();
+        setIsEdit(false);
       } else {
         Alert.alert("", "댓글 수정에 실패했습니다.");
       }
