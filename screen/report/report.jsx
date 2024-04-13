@@ -97,6 +97,7 @@ const Report = () => {
           <TouchableOpacity activeOpacity={1} onPress={handleCloseClick}>
             <Image
               source={require("../../assets/close.png")}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               style={{
                 width: 16,
                 height: 16,
