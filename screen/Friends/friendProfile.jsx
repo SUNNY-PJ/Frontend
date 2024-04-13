@@ -251,7 +251,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
             <View style={{ alignSelf: "center", gap: 5 }}>
               <Image
                 source={{ uri: item.profile }}
-                style={{ width: 92, height: 92, borderRadius: 50, left: 10 }}
+                style={{ width: 92, height: 92, borderRadius: 50 }}
               />
               <Text style={[styles.name]}>{item.name}</Text>
             </View>
