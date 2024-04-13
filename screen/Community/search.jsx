@@ -211,6 +211,7 @@ const Search = () => {
                     <Image
                       source={require("../../assets/grayClose.png")}
                       style={{ width: 24, height: 24 }}
+                      hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                     />
                   </TouchableOpacity>
                 </View>

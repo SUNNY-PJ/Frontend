@@ -259,7 +259,7 @@ const Detail = () => {
                 style={{
                   alignSelf: "center",
                 }}
-                hitSlop={{ top: 20, bottom: 20, left: 10, right: 10 }}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               >
                 <Image
                   source={require("../../assets/menu.png")}

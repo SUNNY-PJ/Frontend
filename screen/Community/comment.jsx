@@ -365,7 +365,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                             true
                           )
                         }
-                        hitSlop={{ top: 20, bottom: 20, left: 10, right: 10 }}
+                        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                       >
                         <Image
                           source={require("../../assets/commentDotMenu.png")}
