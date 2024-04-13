@@ -32,6 +32,7 @@ const OptionModal = ({
           <Image
             source={require("../../../assets/close.png")}
             style={styles.closeImage}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           />
         </TouchableOpacity>
         <Line color={"#C1C1C1"} h={1} />
