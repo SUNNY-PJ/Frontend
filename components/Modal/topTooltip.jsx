@@ -26,6 +26,7 @@ const TopTooltip = ({ openTopTooltip }) => {
               marginRight: 12,
               top: 12,
             }}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
           />
           <Text
             style={{

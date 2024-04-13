@@ -16,7 +16,10 @@ const Notice = ({ openNoticeMsg }) => {
         source={require("../../assets/noticeBackground.png")}
         style={{ width: 176, height: 91 }}
       >
-        <TouchableOpacity onPress={openNoticeMsg}>
+        <TouchableOpacity
+          onPress={openNoticeMsg}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
           <Image
             source={require("../../assets/close.png")}
             style={{
