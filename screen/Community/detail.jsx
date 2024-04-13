@@ -13,7 +13,6 @@ import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import Line from "../../components/Line";
 import Comment from "./comment";
-import OptionModal from "../../components/Modal/community/optionModal";
 import CommunityAuthorSheet from "../../components/BottomSheet/communityAuthorSheet";
 import CommunitySheet from "../../components/BottomSheet/communitySheet";
 import DeleteMsg from "../../components/Modal/community/deleteMsg";
@@ -78,7 +77,7 @@ const Detail = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [userId, itemId]);
 
   // 게시글 삭제
   const deleteData = async () => {
