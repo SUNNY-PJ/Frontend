@@ -243,6 +243,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
             <Image
               source={require("../../assets/close.png")}
               style={{ width: 14, height: 14 }}
+              hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
             />
           </TouchableOpacity>
         </View>
