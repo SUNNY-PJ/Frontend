@@ -29,6 +29,7 @@ const LoseModal = ({ isOpenProfile, openProfile }) => {
               <Image
                 source={require("../../../assets/close.png")}
                 style={{ width: 14, height: 14 }}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               />
             </View>
           </TouchableOpacity>
