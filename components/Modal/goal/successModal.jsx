@@ -27,6 +27,7 @@ const SuccessModal = ({ isOpenSuccess, openSuccess }) => {
               <Image
                 source={require("../../../assets/close.png")}
                 style={{ width: 16, height: 16 }}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               />
             </View>
           </TouchableOpacity>
