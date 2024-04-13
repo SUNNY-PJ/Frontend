@@ -144,7 +144,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       });
       console.log(response.data);
       console.log(bodyData);
-      if (response.status === 200) {
+      if (response.status === 200 || response.status === 204) {
         if (response.data.status === 200) {
           Alert.alert("", "댓글을 수정하였습니다.");
           fetchData();

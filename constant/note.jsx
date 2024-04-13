@@ -136,7 +136,7 @@ const Note = () => {
       console.log(response.data);
 
       // 성공 시 메시지 표시 및 데이터 초기화
-      if (response.status === 200) {
+      if (response.status === 200 || response.status === 204) {
         if (response.data.status === 400) {
           Alert.alert(
             "error",

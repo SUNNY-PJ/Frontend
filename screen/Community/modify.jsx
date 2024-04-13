@@ -164,7 +164,7 @@ const Modify = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      if (postResponse.status === 200) {
+      if (postResponse.status === 200 || response.status === 204) {
         Alert.alert("", "게시글을 수정하였습니다.");
         fetchData();
         navigation.navigate("Community", { screen: "Community" });

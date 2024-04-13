@@ -100,7 +100,7 @@ function Goal({ navigation }) {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-      if (response.status === 200) {
+      if (response.status === 200 || response.status === 204) {
         Alert.alert("", "절약 목표를 등록하였습니다.");
         navigation.goBack();
         console.log(response.data.data);
