@@ -20,6 +20,11 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
     return new Intl.NumberFormat("ko-KR").format(price);
   };
 
+  // 날짜 형식 변환 함수
+  const formatDate = (dateString) => {
+    return dateString.replace(/-/g, ".");
+  };
+
   // 대결 확인
   const fetchData = async () => {
     const inputURL = `/competition/${friendsId}`;
@@ -28,17 +33,15 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
+        // params: {
+        //   competitionId: { competitionId },
+        // },
       });
-      console.log("대결 신청 조회", response.data);
+      console.log("대결 신청 조회", response.data.data);
       if (response.status === 200) {
-        if (response.data.status === 400) {
-          Alert.alert(
-            "error",
-            `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
-          );
-        } else {
-          setMatchInfo(response.data.data);
-        }
+        setMatchInfo(response.data.data[0]);
+      } else {
+        console.error("에러:", error);
       }
     } catch (error) {
       if (error.response) {
@@ -174,7 +177,10 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
             </View> */}
             <View style={styles.textRow}>
               <Text style={styles.textLabel}>대결 기간/금액</Text>
-              <Text style={styles.textValue}>{matchInfo?.period}일</Text>
+              <Text style={styles.textValue}>
+                {formatDate(matchInfo?.startDate || "")} ~{" "}
+                {formatDate(matchInfo?.endDate || "")}
+              </Text>
               <Text style={styles.textValue}>
                 {formatPrice(matchInfo?.price || 0)}원
               </Text>
