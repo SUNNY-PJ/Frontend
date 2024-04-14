@@ -38,6 +38,7 @@ const Detail = () => {
   const [isCommentModal, setIsCommentModal] = useState(false);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const [isScrap, setIsScrap] = useState(false);
+  const [writerId, setWriterId] = useState(0);
 
   const commentModal = () => {
     setIsCommentModal(!isCommentModal);
@@ -77,7 +78,7 @@ const Detail = () => {
 
   useEffect(() => {
     fetchData();
-  }, [userId, itemId]);
+  }, [userId, itemId, writerId]);
 
   // 게시글 삭제
   const deleteData = async () => {
@@ -147,7 +148,8 @@ const Detail = () => {
     }
   };
 
-  const handleProfileClick = () => {
+  const handleProfileClick = (id) => {
+    setWriterId(id);
     openProfile();
     setNoAuthorModalVisible(false);
   };
@@ -294,7 +296,12 @@ const Detail = () => {
               marginBottom: 28,
             }}
           >
-            <TouchableOpacity activeOpacity={0.8} onPress={handleProfileClick}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => {
+                handleProfileClick(item.userId);
+              }}
+            >
               <Image
                 source={{ uri: item.profileImg }}
                 style={{ width: 40, height: 40, borderRadius: 50 }}
@@ -306,7 +313,9 @@ const Detail = () => {
               >
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={handleProfileClick}
+                  onPress={() => {
+                    handleProfileClick(item.userId);
+                  }}
                 >
                   <Text
                     style={{
@@ -408,7 +417,7 @@ const Detail = () => {
       <CommunitySheet
         isVisible={noAuthorModalVisible}
         onClose={() => setNoAuthorModalVisible(false)}
-        onProfile={handleProfileClick}
+        onProfile={() => handleProfileClick(writerId)}
         onReport={handleReport}
       />
       <DeleteMsg
@@ -426,7 +435,7 @@ const Detail = () => {
       <FriendProfile
         isOpenProfile={isOpenProfile}
         openProfile={openProfile}
-        userId={userId}
+        userId={writerId}
       />
     </View>
   );
