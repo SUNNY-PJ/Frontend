@@ -109,9 +109,9 @@ function SendMatch() {
     try {
       const bodyData = {
         compensation: "없음",
-        day: date,
-        // startDate: startDateVal,
-        // endDate: endDateVal,
+        // day: date,
+        startDate: startDateVal,
+        endDate: endDateVal,
         friendsId: friendId,
         message: message,
         price: money.replace(/,/g, ""),
