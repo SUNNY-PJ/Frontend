@@ -100,13 +100,9 @@ function Goal({ navigation }) {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-      if (response.status === 200 || response.status === 204) {
-        Alert.alert("", "절약 목표를 등록하였습니다.");
-        navigation.goBack();
-        console.log(response.data.data);
-      } else {
-        Alert.alert("error", "서버에 장애가 발생하였습니다.");
-      }
+      Alert.alert("", "절약 목표를 등록하였습니다.");
+      navigation.goBack();
+      console.log(response.data.data);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -181,12 +177,8 @@ function Goal({ navigation }) {
         headers: { "Content-Type": "application/json; charset=utf-8" },
       });
       console.log("절약 목표 수정", response.data);
-      if (response.status === 200 || response.status === 204) {
-        Alert.alert("", "절약 목표가 수정되었습니다.");
-        navigation.goBack();
-      } else {
-        Alert.alert("error", "서버에 장애가 발생하였습니다.");
-      }
+      Alert.alert("", "절약 목표가 수정되었습니다.");
+      navigation.goBack();
     } catch (error) {
       console.error("Update error:", error);
       Alert.alert("error", "서버에 장애가 발생하였습니다.");
