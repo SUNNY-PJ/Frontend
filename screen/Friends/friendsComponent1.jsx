@@ -23,12 +23,13 @@ const FriendsComponent1 = ({ Data, onAddFriend, onRemoveFriend }) => {
     }
   };
 
-  const handleBattleStatus = (friendId, nickname) => {
+  const handleBattleStatus = (friendId, nickname, competitionId) => {
     navigation.navigate("MainScreen", {
       screen: "BattleStatus",
       params: {
         friendId: friendId,
         nickname: nickname,
+        competitionId: competitionId,
       },
     });
   };
@@ -77,7 +78,11 @@ const FriendsComponent1 = ({ Data, onAddFriend, onRemoveFriend }) => {
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() => {
-                handleBattleStatus(item.friendId, item.nickname);
+                handleBattleStatus(
+                  item.friendId,
+                  item.nickname,
+                  item.competitionId
+                );
               }}
             >
               <Image
