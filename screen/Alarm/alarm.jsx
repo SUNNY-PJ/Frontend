@@ -26,7 +26,7 @@ const Alarm = () => {
   const [recentData, setRecentData] = useState([]);
   const [clickedItemIds, setClickedItemIds] = useState([]);
 
-  const handleItemClick = async (alarmId, title) => {
+  const handleItemClick = async (alarmId, type, id, userId) => {
     setClickedItemIds((prevClickedItemIds) => {
       const updatedClickedItemIds = prevClickedItemIds.includes(alarmId)
         ? prevClickedItemIds.filter((id) => id !== alarmId)
@@ -37,7 +37,7 @@ const Alarm = () => {
         "clickedItemIds",
         JSON.stringify(updatedClickedItemIds)
       )
-        .then(() => navigateToScreen(title))
+        .then(() => navigateToScreen(type, id, userId))
         .catch((error) => console.error("AsyncStorage 저장 오류:", error));
 
       return updatedClickedItemIds;
@@ -99,16 +99,29 @@ const Alarm = () => {
     fetchData();
   }, []);
 
-  const navigateToScreen = (title) => {
-    // 친구와 대결이 포함된 타이틀 처리
-    if (title.includes("친구") || title.includes("대결")) {
+  const navigateToScreen = (type, itemId, userId) => {
+    // 친구
+    if (type === "친구") {
       navigation.navigate("FriendsList");
     }
-    // 댓글, 답글이 포함된 타이틀 처리
-    else if (title.includes("댓글") || title.includes("답글")) {
-      navigation.navigate("Community");
+    // 댓글
+    else if (type === "댓글") {
+      // navigation.navigate("Community");
+      navigation.navigate("Detail", {
+        screen: "Detail",
+        params: {
+          itemId: itemId,
+          userId: userId,
+        },
+      });
+    }
+    // 대결
+    else if (type === "대결") {
+      navigation.navigate("FriendsList");
     }
   };
+
+  // 댓글 친구 대결
 
   return (
     <View style={styles.container}>
@@ -159,7 +172,14 @@ const Alarm = () => {
                         styles.clickedItemStyle,
                     ]}
                     activeOpacity={0.8}
-                    onPress={() => handleItemClick(item.alarmId, item.title)}
+                    onPress={() =>
+                      handleItemClick(
+                        item.alarmId,
+                        item.notificationType,
+                        item.id,
+                        item.userId
+                      )
+                    }
                   >
                     <Image
                       source={
