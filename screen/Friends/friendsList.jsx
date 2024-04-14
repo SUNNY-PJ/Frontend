@@ -55,6 +55,7 @@ function FriendsList() {
       setWaitData(WaitFriendsData);
     } catch (error) {
       console.error("에러:", error);
+      Alert.alert("", error);
     }
   };
 
