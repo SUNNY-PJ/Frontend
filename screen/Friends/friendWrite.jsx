@@ -42,7 +42,7 @@ const FriendWrite = ({ userId, closeProfile }) => {
       });
       console.log("데이터:", response.data);
       const myWriteData = response.data;
-      setData(myWriteData);
+      setData(Array.isArray(myWriteData) ? myWriteData : []);
     } catch (error) {
       console.error("에러:", error);
     }
