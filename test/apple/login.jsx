@@ -42,6 +42,7 @@ const AppleLogin = () => {
         });
       } else {
         console.error("Apple 로그인 오류:", e);
+        alert(e);
       }
     }
   }
