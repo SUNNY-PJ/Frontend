@@ -39,7 +39,7 @@ const BattleStatusDisable = () => {
         <Text style={[styles.boldText, { marginTop: 13, marginBottom: 10 }]}>
           나는
         </Text>
-        <Progress progress={50} color={"#C1C1C1"} />
+        <Progress progress={user_percent} color={"#C1C1C1"} />
         <Text style={[styles.boldText]}>
           {user_percent}%<Text style={[styles.text]}>남았어요</Text>
         </Text>
@@ -56,7 +56,7 @@ const BattleStatusDisable = () => {
         <Text style={[styles.boldText, { marginBottom: 10 }]}>
           {nickname}님은
         </Text>
-        <Progress progress={50} color={"#C1C1C1"} />
+        <Progress progress={friends_percent} color={"#C1C1C1"} />
         <Text style={[styles.boldText]}>
           {friends_percent}% <Text style={[styles.text]}>남았어요</Text>
         </Text>
