@@ -7,7 +7,6 @@ import {
   Dimensions,
   ScrollView,
 } from "react-native";
-import { proxyUrl } from "../../constant/common";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import { formatDate } from "../../constant/formatData/format";
@@ -30,8 +29,7 @@ const MyWrite = () => {
       });
 
       const myWriteData = response.data;
-      console.log(myWriteData);
-      setData(myWriteData);
+      setData(Array.isArray(myWriteData) ? myWriteData : []);
     } catch (error) {
       console.error("에러:", error);
     }
