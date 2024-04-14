@@ -11,11 +11,13 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSaveData } from "../context/saveDataContext";
+import { useRoute } from "@react-navigation/native";
 
 const BottomRe = () => {
   const { saveData } = useSaveData();
   const windowWidth = Dimensions.get("window").width;
   const navigation = useNavigation();
+  const route = useRoute(); // 현재 라우트 정보를 가져옴
   const [selectedIcon, setSelectedIcon] = useState("Spending");
 
   let homeImageSource = require("../assets/logo/default.png");
@@ -30,16 +32,15 @@ const BottomRe = () => {
     }
   }
 
+  // 아이콘 이미지 소스 설정
   const friendsImageSource =
     selectedIcon === "FriendsList"
       ? require("../assets/friendsClick.png")
       : require("../assets/friends.png");
-
   const communityImageSource =
     selectedIcon === "Community"
       ? require("../assets/communityClick.png")
       : require("../assets/community.png");
-
   const imageSource =
     selectedIcon === "MyPage"
       ? require("../assets/profileClick.png")
@@ -48,6 +49,10 @@ const BottomRe = () => {
   const toggleIcons = (iconName) => {
     if (selectedIcon !== iconName) {
       setSelectedIcon(iconName);
+      // 현재 화면과 다르면 네비게이션 실행
+      if (route.name !== iconName) {
+        navigation.replace(iconName);
+      }
     }
   };
 
@@ -60,102 +65,47 @@ const BottomRe = () => {
 
   return (
     <>
-      <View
-        style={{
-          borderTopColor: "#fff",
-          backgroundColor: "#FFF",
-          // backgroundColor: "#FFFBF6",
-          derTopLeftRadius: 24,
-          borderTopRightRadius: 24,
-          bottom: 0,
-          position: "absolute",
-          width: "100%",
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            borderTopLeftRadius: 24,
-            borderTopRightRadius: 24,
-            borderWidth: 1.5,
-            borderColor: "#1F1F1F",
-            justifyContent: "space-around",
-            paddingBottom: 24,
-            paddingTop: 16,
-          }}
-        >
-          <TouchableOpacity
-            activeOpacity={1}
-            style={[styles.menuItem]}
-            onPress={() => {
-              toggleIcons("Spending");
-              navigation.replace("Spending");
-            }}
-          >
-            <View
-              style={[
-                styles.iconBg,
-                selectedIcon === "Spending" && styles.selectedIconContainer,
-              ]}
-            >
-              <Image style={styles.icon} source={homeImageSource} />
-            </View>
-            <Text style={styles.menuText}>홈</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={[styles.menuItem]}
-            onPress={() => {
-              toggleIcons("Community");
-              navigation.replace("Community");
-            }}
-          >
-            <View
-              style={[
-                styles.iconBg,
-                selectedIcon === "Community" && styles.selectedIconContainer,
-              ]}
-            >
-              <Image style={styles.icon} source={communityImageSource} />
-            </View>
-            <Text style={styles.menuText}>커뮤니티</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={[styles.menuItem]}
-            onPress={() => {
-              toggleIcons("FriendsList");
-              navigation.replace("FriendsList");
-            }}
-          >
-            <View
-              style={[
-                styles.iconBg,
-                selectedIcon === "FriendsList" && styles.selectedIconContainer,
-              ]}
-            >
-              <Image style={styles.icon} source={friendsImageSource} />
-            </View>
-            <Text style={styles.menuText}>친구</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={[styles.menuItem]}
-            onPress={() => {
-              toggleIcons("MyPage");
-              navigation.replace("MyPage");
-            }}
-          >
-            <View
-              style={[
-                styles.iconBg,
-                selectedIcon === "MyPage" && styles.selectedIconContainer,
-              ]}
-            >
-              <Image style={styles.icon} source={imageSource} />
-            </View>
-            <Text style={styles.menuText}>마이페이지</Text>
-          </TouchableOpacity>
+      <View style={styles.container}>
+        <View style={styles.menuContainer}>
+          {["Spending", "Community", "FriendsList", "MyPage"].map(
+            (iconName, index) => (
+              <TouchableOpacity
+                key={index}
+                activeOpacity={1}
+                style={styles.menuItem}
+                onPress={() => toggleIcons(iconName)}
+              >
+                <View
+                  style={[
+                    styles.iconBg,
+                    selectedIcon === iconName && styles.selectedIconContainer,
+                  ]}
+                >
+                  <Image
+                    style={styles.icon}
+                    source={
+                      iconName === "Spending"
+                        ? homeImageSource
+                        : iconName === "Community"
+                        ? communityImageSource
+                        : iconName === "FriendsList"
+                        ? friendsImageSource
+                        : imageSource
+                    }
+                  />
+                </View>
+                <Text style={styles.menuText}>
+                  {iconName === "Spending"
+                    ? "홈"
+                    : iconName === "Community"
+                    ? "커뮤니티"
+                    : iconName === "FriendsList"
+                    ? "친구"
+                    : "마이페이지"}
+                </Text>
+              </TouchableOpacity>
+            )
+          )}
         </View>
       </View>
     </>
@@ -164,20 +114,24 @@ const BottomRe = () => {
 
 const styles = StyleSheet.create({
   container: {
+    borderTopColor: "#fff",
+    backgroundColor: "#FFF",
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    bottom: 0,
     position: "absolute",
-    bottom: -10,
-    // right: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: "#FFFBF6",
-    height: 110,
+    width: "100%",
   },
-  menuItem: {
-    // flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 11,
+  menuContainer: {
+    flexDirection: "row",
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    borderWidth: 1.5,
+    borderColor: "#1F1F1F",
+    justifyContent: "space-around",
+    paddingBottom: 24,
+    paddingTop: 16,
+    height: 100,
   },
   menuText: {
     fontSize: 10,
