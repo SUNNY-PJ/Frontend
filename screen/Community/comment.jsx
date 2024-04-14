@@ -251,7 +251,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
   useEffect(() => {
     fetchData();
-  }, [commentId]);
+  }, [commentId, communityId]);
 
   const handleSlideDown = () => {
     commentModal();
