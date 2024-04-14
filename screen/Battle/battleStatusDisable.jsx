@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 import Progress from "../../components/progress/progress";
-import apiClient from "../../api/apiClient";
 import { useRoute } from "@react-navigation/native";
 
 const BattleStatusDisable = () => {
