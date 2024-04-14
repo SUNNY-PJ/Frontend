@@ -92,6 +92,10 @@ const MyPage = () => {
     }
   };
 
+  useEffect(() => {
+    alarmData();
+  }, [isEnabled]);
+
   // 알림 허용 여부
   const alarmFetchData = async () => {
     const inputURL = `/alarm/permission/allow`;
