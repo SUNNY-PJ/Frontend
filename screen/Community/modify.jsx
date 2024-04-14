@@ -87,7 +87,6 @@ const Modify = () => {
 
   const handleCategoryClick = () => {
     setOpen(!open);
-    console.log("카테고리 클릭");
   };
 
   const handleCategorySelect = (data) => {
