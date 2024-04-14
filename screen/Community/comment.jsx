@@ -222,15 +222,27 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   };
 
   const handleModifyClick = () => {
-    const commentToEdit = commentData.find(
-      (comment) => comment.id === commentId
-    );
-    if (commentToEdit) {
-      setComment(commentToEdit.content);
+    // 전체 댓글에서 찾기
+    let foundComment = commentData.find((comment) => comment.id === commentId);
+
+    // 대댓글을 포함하여 찾기
+    if (!foundComment) {
+      commentData.some((comment) => {
+        foundComment = comment.children.find((child) => child.id === commentId);
+        return foundComment !== undefined;
+      });
+    }
+
+    if (foundComment) {
+      setComment(foundComment.content);
+      setParentId(foundComment.parentId || "");
       setIsEdit(true);
       setCommentId(commentId);
-      setSecret(commentToEdit.privated);
+      setSecret(foundComment.privated);
+    } else {
+      console.error("댓글을 찾을 수 없습니다.");
     }
+
     setActionSheetVisible(false);
   };
 
