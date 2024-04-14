@@ -26,43 +26,36 @@ const Alarm = () => {
   const [recentData, setRecentData] = useState([]);
   const [clickedItemIds, setClickedItemIds] = useState([]);
 
-  const handleItemClick = async (uniqueIdentifier, title) => {
-    let updatedClickedItemIds = [...clickedItemIds];
-    if (updatedClickedItemIds.includes(uniqueIdentifier)) {
-      // 이미 클릭된 항목이면 제거
-      updatedClickedItemIds = updatedClickedItemIds.filter(
-        (id) => id !== uniqueIdentifier
-      );
-    } else {
-      // 새로 클릭된 항목이면 추가
-      updatedClickedItemIds.push(uniqueIdentifier);
-    }
+  const handleItemClick = async (alarmId, title) => {
+    setClickedItemIds((prevClickedItemIds) => {
+      const updatedClickedItemIds = prevClickedItemIds.includes(alarmId)
+        ? prevClickedItemIds.filter((id) => id !== alarmId)
+        : [...prevClickedItemIds, alarmId];
 
-    try {
       // AsyncStorage에 JSON 문자열로 저장
-      await AsyncStorage.setItem(
+      AsyncStorage.setItem(
         "clickedItemIds",
         JSON.stringify(updatedClickedItemIds)
-      );
-      setClickedItemIds(updatedClickedItemIds);
-      navigateToScreen(title);
+      )
+        .then(() => navigateToScreen(title))
+        .catch((error) => console.error("AsyncStorage 저장 오류:", error));
+
+      return updatedClickedItemIds;
+    });
+  };
+
+  const loadClickedItemIds = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem("clickedItemIds");
+      const loadedClickedItemIds =
+        jsonValue != null ? JSON.parse(jsonValue) : [];
+      setClickedItemIds(loadedClickedItemIds);
     } catch (error) {
-      console.error("AsyncStorage 저장 오류:", error);
+      console.error("AsyncStorage 로딩 오류:", error);
     }
   };
 
   useEffect(() => {
-    const loadClickedItemIds = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem("clickedItemIds");
-        const loadedClickedItemIds =
-          jsonValue != null ? JSON.parse(jsonValue) : [];
-        setClickedItemIds(loadedClickedItemIds);
-      } catch (error) {
-        console.error("AsyncStorage 로딩 오류:", error);
-      }
-    };
-
     fetchData();
     loadClickedItemIds();
   }, []);
@@ -73,6 +66,7 @@ const Alarm = () => {
       console.log(refreshing);
       setRefreshing(false);
       fetchData();
+      loadClickedItemIds();
     });
   }, []);
 
@@ -156,19 +150,16 @@ const Alarm = () => {
             </View>
             <View style={{ backgroundColor: "#fff" }}>
               {recentData.map((item, index) => {
-                const uniqueIdentifier = `${item.alarmId}`;
                 return (
                   <TouchableOpacity
-                    key={uniqueIdentifier}
+                    key={item.alarmId}
                     style={[
                       styles.section,
-                      clickedItemIds.includes(uniqueIdentifier) &&
+                      clickedItemIds.includes(item.alarmId) &&
                         styles.clickedItemStyle,
                     ]}
                     activeOpacity={0.8}
-                    onPress={() =>
-                      handleItemClick(uniqueIdentifier, item.title)
-                    }
+                    onPress={() => handleItemClick(item.alarmId, item.title)}
                   >
                     <Image
                       source={
@@ -205,19 +196,16 @@ const Alarm = () => {
             </View>
             <View style={{ backgroundColor: "#fff" }}>
               {pastData.map((item, index) => {
-                const uniqueIdentifier = `${item.alarmId}`;
                 return (
                   <TouchableOpacity
-                    key={uniqueIdentifier}
+                    key={item.alarmId}
                     style={[
                       styles.section,
-                      clickedItemIds.includes(uniqueIdentifier) &&
+                      clickedItemIds.includes(item.alarmId) &&
                         styles.clickedItemStyle,
                     ]}
                     activeOpacity={0.8}
-                    onPress={() =>
-                      handleItemClick(uniqueIdentifier, item.title)
-                    }
+                    onPress={() => handleItemClick(item.alarmId, item.title)}
                   >
                     <Image
                       source={
