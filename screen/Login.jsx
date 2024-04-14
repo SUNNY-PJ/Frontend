@@ -34,6 +34,7 @@ const Login = () => {
           color: "#1F1F1F",
           marginTop: 48,
           textAlign: "center",
+          fontSize: 20,
         }}
       >
         간편하게 로그인하고 {"\n"}
