@@ -154,9 +154,7 @@ function SendMatch() {
       <ScrollView>
         <View style={styles.contentContainer}>
           <Text style={styles.headerText}>{name}에게 대결 신청</Text>
-          <Text style={[styles.label, { marginTop: 8 }]}>
-            친구를 도발해보세요!
-          </Text>
+          <Text style={[styles.label]}>친구를 도발해보세요!</Text>
           <Input
             placeholder={"도발 메시지"}
             inputValue={message}
@@ -239,6 +237,7 @@ const styles = StyleSheet.create({
     color: "#1F1F1F",
     textAlign: "center",
     fontFamily: "SUITE_Bold",
+    marginBottom: 8,
   },
   label: {
     fontSize: 16,
