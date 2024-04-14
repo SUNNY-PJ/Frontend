@@ -18,6 +18,7 @@ const BattleStatus = () => {
   const route = useRoute();
   const { friendId } = route.params;
   const { nickname } = route.params;
+  const { competitionId } = route.params;
 
   const inputURL = `competition/status/${friendId}`;
   const [data, setData] = useState({});
@@ -43,6 +44,7 @@ const BattleStatus = () => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
+        params: { competitionId: competitionId },
       });
       const StatusData = response.data.data;
       console.log("StatusData:::", StatusData);
