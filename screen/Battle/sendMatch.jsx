@@ -5,15 +5,13 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
   Alert,
 } from "react-native";
 import LargeBtnDisable from "../../components/Btn/largeBtnDisable";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import LargeBtn from "../../components/Btn/largeBtn";
 import Input from "../../components/Input/input";
 import { useNavigation } from "@react-navigation/native";
-import { proxyUrl } from "../../constant/common";
 import { useRoute } from "@react-navigation/native";
 import DatePicker2 from "../../components/DatePicker/datePicker2";
 import apiClient from "../../api/apiClient";
@@ -24,6 +22,7 @@ function SendMatch() {
   const route = useRoute();
   const { friendId } = route.params;
   const { name } = route.params;
+  const windowHeight = Dimensions.get("window").height;
 
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
   const [date, setDate] = useState("");
@@ -151,7 +150,7 @@ function SendMatch() {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView style={{ marginBottom: 100 }}>
         <View style={styles.contentContainer}>
           <Text style={styles.headerText}>{name}에게 대결 신청</Text>
           <Text style={[styles.label]}>친구를 도발해보세요!</Text>
