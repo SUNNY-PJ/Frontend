@@ -180,15 +180,15 @@ function FriendsList() {
         minHeight: "100%",
       }}
     >
-      <ScrollView style={{ marginBottom: 100 }}>
-        <View
-          style={{
-            flexDirection: "column",
-            marginTop: 25,
-            marginBottom: 40,
-          }}
-        >
-          <Text style={styles.mainTitle}>친구 목록</Text>
+      <View
+        style={{
+          flexDirection: "column",
+          marginTop: 25,
+          marginBottom: 40,
+        }}
+      >
+        <Text style={styles.mainTitle}>친구 목록</Text>
+        <ScrollView style={{ marginBottom: 100 }}>
           {/* 대결 중인 친구 목록 */}
           <TouchableOpacity onPress={toggleFriendsComponent1} activeOpacity={1}>
             <View style={styles.titleSection}>
@@ -270,8 +270,8 @@ function FriendsList() {
               onRemoveFriend={onRemoveFriend}
             />
           )}
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </View>
   );
 }
