@@ -163,21 +163,11 @@ function FriendsList() {
         },
       });
 
-      if (response.status === 200) {
-        if (response.data.status === 401) {
-          Alert.alert(
-            "error",
-            "에러가 발생했습니다. 관리자에게 문의 바랍니다."
-          );
-        } else {
-          Alert.alert("", "친구를 삭제했습니다");
-          fetchData();
-        }
-      } else if (response.status === 500) {
-        Alert.alert(response.message);
-      }
+      Alert.alert("", "친구를 삭제했습니다");
+      fetchData();
     } catch (error) {
       console.error("에러:", error);
+      Alert.alert("error", error);
     }
   };
 
