@@ -158,18 +158,14 @@ const Modify = () => {
         }
       });
 
-      const postResponse = await apiClient.patch(inputURL, formData, {
+      const postResponse = await apiClient.put(inputURL, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      if (postResponse.status === 200 || response.status === 204) {
-        Alert.alert("", "게시글을 수정하였습니다.");
-        fetchData();
-        navigation.navigate("Community", { screen: "Community" });
-      } else {
-        Alert.alert("", "게시글을 수정에 실패했습니다.");
-      }
+      Alert.alert("", "게시글을 수정하였습니다.");
+      fetchData();
+      navigation.navigate("Community", { screen: "Community" });
     } catch (error) {
       console.error(error);
       Alert.alert("error", "서버에 장애가 발생하였습니다.");
