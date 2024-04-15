@@ -73,6 +73,10 @@ const MyPage = () => {
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   // 로그아웃
   // const logoutData = async () => {
   //   await AsyncStorage.removeItem("access_token");
