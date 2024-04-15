@@ -136,20 +136,11 @@ const Note = () => {
       console.log(response.data);
 
       // 성공 시 메시지 표시 및 데이터 초기화
-      if (response.status === 200 || response.status === 204) {
-        if (response.data.status === 400) {
-          Alert.alert(
-            "error",
-            `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
-          );
-        } else {
-          Alert.alert("", `지출을 등록하였습니다.`);
-          setMoney("");
-          setDate("");
-          setName("");
-          navigation.navigate("MainScreen", { screen: "Spending" });
-        }
-      }
+      Alert.alert("", `지출을 등록하였습니다.`);
+      setMoney("");
+      setDate("");
+      setName("");
+      navigation.navigate("MainScreen", { screen: "Spending" });
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
@@ -176,21 +167,17 @@ const Note = () => {
       const response = await apiClient.patch(url, bodyData, {
         headers: { "Content-Type": "application/json; charset=utf-8" },
       });
-      if (response.status === 200 || response.status === 204) {
-        Alert.alert("", "지출 내역이 수정되었습니다.");
-        // navigation.goBack();
-        if (screen === "history") {
-          navigation.replace("Spending", {
-            screen: "Spending",
-            params: {
-              historyVal: true,
-            },
-          });
-        } else {
-          navigation.replace("Spending");
-        }
+      Alert.alert("", "지출 내역이 수정되었습니다.");
+      // navigation.goBack();
+      if (screen === "history") {
+        navigation.replace("Spending", {
+          screen: "Spending",
+          params: {
+            historyVal: true,
+          },
+        });
       } else {
-        Alert.alert("error", "서버에 장애가 발생하였습니다.");
+        navigation.replace("Spending");
       }
     } catch (error) {
       console.error("Update error:", error);

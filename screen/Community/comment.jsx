@@ -139,15 +139,11 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
         },
       });
       console.log(response.data);
-      if (response.status === 200 || response.status === 204) {
-        Alert.alert("", "댓글을 수정하였습니다.");
-        fetchData();
-        setComment("");
-        setParentId();
-        setIsEdit(false);
-      } else {
-        Alert.alert("", "댓글 수정에 실패했습니다.");
-      }
+      Alert.alert("", "댓글을 수정하였습니다.");
+      fetchData();
+      setComment("");
+      setParentId();
+      setIsEdit(false);
     } catch (error) {
       Alert.alert("error", "서버에 장애가 발생하였습니다.");
     }
