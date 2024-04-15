@@ -145,12 +145,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bottomSheetContainer: {
-    height: 160,
+    height: 180,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
+    paddingBottom: 30,
   },
   title: {
     fontSize: 20,
