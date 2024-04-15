@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 import apiClient from "../../api/apiClient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CompetitionMsg from "../../components/Modal/battle/battleModal";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -25,8 +26,10 @@ const Alarm = () => {
   const [pastData, setPastData] = useState([]);
   const [recentData, setRecentData] = useState([]);
   const [clickedItemIds, setClickedItemIds] = useState([]);
+  const [isRefuseMsgOpen, setIsRefuseMsgOpen] = useState(false);
+  const [modalContent, setModalContent] = useState({ name: "", result: "" });
 
-  const handleItemClick = async (alarmId, type, id, userId) => {
+  const handleItemClick = async (alarmId, type, id, userId, content, name) => {
     setClickedItemIds((prevClickedItemIds) => {
       const updatedClickedItemIds = prevClickedItemIds.includes(alarmId)
         ? prevClickedItemIds.filter((id) => id !== alarmId)
@@ -37,7 +40,7 @@ const Alarm = () => {
         "clickedItemIds",
         JSON.stringify(updatedClickedItemIds)
       )
-        .then(() => navigateToScreen(type, id, userId))
+        .then(() => navigateToScreen(type, id, userId, content, name))
         .catch((error) => console.error("AsyncStorage 저장 오류:", error));
 
       return updatedClickedItemIds;
@@ -99,10 +102,17 @@ const Alarm = () => {
     fetchData();
   }, []);
 
-  const navigateToScreen = (type, itemId, userId) => {
+  const navigateToScreen = (type, itemId, userId, content, name) => {
     // 친구
     if (type === "친구") {
-      navigation.navigate("FriendsList");
+      if (content.includes("거절") || content.includes("승낙")) {
+        setModalContent({
+          name,
+          result: content.includes("거절") ? "거절" : "승낙",
+        });
+        setIsRefuseMsgOpen(true);
+        navigation.navigate("FriendsList");
+      }
     }
     // 댓글
     else if (type === "댓글") {
@@ -177,7 +187,9 @@ const Alarm = () => {
                         item.alarmId,
                         item.notificationType,
                         item.id,
-                        item.userId
+                        item.userId,
+                        item.notificationContent,
+                        item.postAuthor
                       )
                     }
                   >
@@ -225,7 +237,16 @@ const Alarm = () => {
                         styles.clickedItemStyle,
                     ]}
                     activeOpacity={0.8}
-                    onPress={() => handleItemClick(item.alarmId, item.title)}
+                    onPress={() =>
+                      handleItemClick(
+                        item.alarmId,
+                        item.notificationType,
+                        item.id,
+                        item.userId,
+                        item.notificationContent,
+                        item.postAuthor
+                      )
+                    }
                   >
                     <Image
                       source={
@@ -258,6 +279,12 @@ const Alarm = () => {
           </View>
         )}
       </ScrollView>
+      <CompetitionMsg
+        isOpenRefuseMessage={isRefuseMsgOpen}
+        openRefuseMessage={() => setIsRefuseMsgOpen(false)}
+        name={modalContent.name}
+        result={modalContent.result}
+      />
     </View>
   );
 };
