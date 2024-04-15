@@ -8,7 +8,12 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const RefuseMsg = ({ isOpenRefuseMessage, openRefuseMessage }) => {
+const CompetitionMsg = ({
+  isOpenRefuseMessage,
+  openRefuseMessage,
+  name,
+  result,
+}) => {
   return (
     <Modal
       animationType="none"
@@ -27,20 +32,32 @@ const RefuseMsg = ({ isOpenRefuseMessage, openRefuseMessage }) => {
           <View style={styles.closeButtonContainer}>
             <TouchableOpacity onPress={openRefuseMessage}>
               <Image
-                source={require("../../assets/close.png")}
+                source={require("../../../assets/close.png")}
                 style={{ width: 16, height: 16 }}
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               />
             </TouchableOpacity>
           </View>
           <View style={styles.content}>
-            <Image
-              source={require("../../assets/refuse.png")}
-              style={{ width: 120, height: 120, alignSelf: "center" }}
-            />
+            {result === "거절" ? (
+              <Image
+                source={require("../../../assets/refuse.png")}
+                style={{ width: 120, height: 120, alignSelf: "center" }}
+              />
+            ) : (
+              <Image
+                source={require("../../../assets/consent.png")}
+                style={{ width: 120, height: 120, alignSelf: "center" }}
+              />
+            )}
             <Text style={styles.title}>
-              수연님이 대결 신청을{" "}
-              <Text style={{ color: "#D32F2F" }}>거절</Text>했어요
+              {name}님이 대결 신청을{" "}
+              {result === "거절" ? (
+                <Text style={{ color: "#D32F2F" }}>거절</Text>
+              ) : (
+                <Text style={{ color: "#007560" }}>승낙</Text>
+              )}
+              했어요
             </Text>
           </View>
         </View>
@@ -76,4 +93,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RefuseMsg;
+export default CompetitionMsg;
