@@ -15,7 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as AppleAuthentication from "expo-apple-authentication";
 import LoseModal from "../../components/Modal/battle/lose";
 import LeaveMsg from "../../components/Modal/myPage/leaveMsg";
-import ToggleBtn from "../../components/Btn/toggleBtn";
+import * as Linking from "expo-linking";
 import apiClient from "../../api/apiClient";
 import { proxyUrl } from "../../constant/common";
 
@@ -30,13 +30,15 @@ const MyPage = () => {
   const [profile, setProfile] = useState([]);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [modal, setModal] = useState(false);
-  const [isEnabled, setIsEnabled] = useState(false);
-  const [alarmDataVal, setAlarmDataVal] = useState(true);
 
-  const toggleSwitch = () => {
-    setIsEnabled(!isEnabled);
-    alarmData();
+  const openSettings = () => {
+    if (Platform.OS === "ios") {
+      // iOS : 앱 설정 화면으로 직접 이동
+      Linking.openURL("app-settings:");
+    } else {
+      // Android : 시스템 설정 화면
+      Linking.openSettings();
+    }
   };
 
   const handleConfirm = () => {
@@ -70,56 +72,6 @@ const MyPage = () => {
       console.error("에러:", error);
     }
   };
-
-  // 알림 설정
-  const alarmData = async () => {
-    const inputURL = `/alarm/permission`;
-    const device_token = await AsyncStorage.getItem("device_token");
-    const bodyData = {
-      allow: isEnabled,
-      target_token: device_token,
-    };
-
-    try {
-      const response = await apiClient.post(inputURL, bodyData, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      });
-      alarmFetchData();
-    } catch (error) {
-      console.error("에러:", error);
-    }
-  };
-
-  useEffect(() => {
-    alarmData();
-  }, [isEnabled]);
-
-  // 알림 허용 여부
-  const alarmFetchData = async () => {
-    const inputURL = `/alarm/permission/allow`;
-    try {
-      const response = await apiClient.get(inputURL, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      });
-      const alarmPermission = response.data.data;
-      setAlarmDataVal(alarmPermission);
-    } catch (error) {
-      console.error("에러:", error);
-    }
-  };
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      fetchData();
-      alarmFetchData();
-    });
-
-    return unsubscribe;
-  }, [navigation]);
 
   // 로그아웃
   // const logoutData = async () => {
@@ -324,15 +276,21 @@ const MyPage = () => {
           */}
           <Line color={"#C1C1C1"} h={4} />
           <Text style={styles.alarmTitle}>알림</Text>
-          <View style={styles.section}>
-            <View style={styles.alarmSection}>
-              <Text style={styles.alarmDescription}>서비스 알림 설정</Text>
-              <Text style={styles.alarmSubDescription}>
-                커뮤니티, 대결, 대화, 친구 신청에 대한 전체 알림 설정
-              </Text>
+          <TouchableOpacity onPress={openSettings}>
+            <View style={styles.section}>
+              <View style={styles.alarmSection}>
+                <Text style={styles.alarmDescription}>서비스 알림 설정</Text>
+                <Text style={styles.alarmSubDescription}>
+                  커뮤니티, 대결, 대화, 친구 신청에 대한 전체 알림 설정
+                </Text>
+              </View>
+              <Image
+                source={require("../../assets/alarmArrow.png")}
+                style={{ height: 24, width: 24, top: 12 }}
+              />
+              {/* <ToggleBtn isEnabled={alarmDataVal} toggleSwitch={toggleSwitch} /> */}
             </View>
-            <ToggleBtn isEnabled={alarmDataVal} toggleSwitch={toggleSwitch} />
-          </View>
+          </TouchableOpacity>
           {/* <TouchableOpacity
             activeOpacity={0.6}
             onPress={handldSettingAlarmClick}
