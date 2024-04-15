@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  ScrollView,
 } from "react-native";
 import Line from "../../components/Line";
 import { useRoute } from "@react-navigation/native";
@@ -179,96 +180,98 @@ function FriendsList() {
         minHeight: "100%",
       }}
     >
-      <View
-        style={{
-          flexDirection: "column",
-          marginTop: 25,
-          marginBottom: 40,
-        }}
-      >
-        <Text style={styles.mainTitle}>친구 목록</Text>
-        {/* 대결 중인 친구 목록 */}
-        <TouchableOpacity onPress={toggleFriendsComponent1} activeOpacity={1}>
-          <View style={styles.titleSection}>
-            <Text style={styles.title}>대결 중인 친구</Text>
-            <Image
-              source={require("../../assets/arrowUp.png")}
-              style={{
-                width: 24,
-                height: 24,
-                transform: [
-                  { rotate: isFriendsComponentVisible1 ? "180deg" : "0deg" },
-                ],
-              }}
+      <ScrollView style={{ marginBottom: 100 }}>
+        <View
+          style={{
+            flexDirection: "column",
+            marginTop: 25,
+            marginBottom: 40,
+          }}
+        >
+          <Text style={styles.mainTitle}>친구 목록</Text>
+          {/* 대결 중인 친구 목록 */}
+          <TouchableOpacity onPress={toggleFriendsComponent1} activeOpacity={1}>
+            <View style={styles.titleSection}>
+              <Text style={styles.title}>대결 중인 친구</Text>
+              <Image
+                source={require("../../assets/arrowUp.png")}
+                style={{
+                  width: 24,
+                  height: 24,
+                  transform: [
+                    { rotate: isFriendsComponentVisible1 ? "180deg" : "0deg" },
+                  ],
+                }}
+              />
+            </View>
+          </TouchableOpacity>
+          {isFriendsComponentVisible1 ? (
+            <Line color={"#C1C1C1"} h={2} />
+          ) : (
+            <Line color={"#1F1F1F"} h={2} />
+          )}
+          {isFriendsComponentVisible1 && (
+            <FriendsComponent1 Data={competitionData} />
+          )}
+          {/* 친구 신청 목록 */}
+          <TouchableOpacity onPress={toggleFriendsComponent2} activeOpacity={1}>
+            <View style={{ ...styles.titleSection, paddingTop: 24 }}>
+              <Text style={styles.title}>친구 신청</Text>
+              <Image
+                source={require("../../assets/arrowUp.png")}
+                style={{
+                  width: 24,
+                  height: 24,
+                  transform: [
+                    { rotate: isFriendsComponentVisible2 ? "180deg" : "0deg" },
+                  ],
+                }}
+              />
+            </View>
+          </TouchableOpacity>
+          {isFriendsComponentVisible2 ? (
+            <Line color={"#C1C1C1"} h={2} />
+          ) : (
+            <Line color={"#1F1F1F"} h={2} />
+          )}
+          {isFriendsComponentVisible2 && (
+            <FriendsComponent2
+              Data={waitData}
+              onAddFriend={AddFriendData}
+              onRefuseFriend={RefuseFriendData}
             />
-          </View>
-        </TouchableOpacity>
-        {isFriendsComponentVisible1 ? (
-          <Line color={"#C1C1C1"} h={2} />
-        ) : (
-          <Line color={"#1F1F1F"} h={2} />
-        )}
-        {isFriendsComponentVisible1 && (
-          <FriendsComponent1 Data={competitionData} />
-        )}
-        {/* 친구 신청 목록 */}
-        <TouchableOpacity onPress={toggleFriendsComponent2} activeOpacity={1}>
-          <View style={{ ...styles.titleSection, paddingTop: 24 }}>
-            <Text style={styles.title}>친구 신청</Text>
-            <Image
-              source={require("../../assets/arrowUp.png")}
-              style={{
-                width: 24,
-                height: 24,
-                transform: [
-                  { rotate: isFriendsComponentVisible2 ? "180deg" : "0deg" },
-                ],
-              }}
-            />
-          </View>
-        </TouchableOpacity>
-        {isFriendsComponentVisible2 ? (
-          <Line color={"#C1C1C1"} h={2} />
-        ) : (
-          <Line color={"#1F1F1F"} h={2} />
-        )}
-        {isFriendsComponentVisible2 && (
-          <FriendsComponent2
-            Data={waitData}
-            onAddFriend={AddFriendData}
-            onRefuseFriend={RefuseFriendData}
-          />
-        )}
-        {/* {isFriendsComponentVisible2 && <FriendsComponent Data={waitData} />} */}
+          )}
+          {/* {isFriendsComponentVisible2 && <FriendsComponent Data={waitData} />} */}
 
-        {/* 친구 목록 */}
-        <TouchableOpacity onPress={toggleFriendsComponent3} activeOpacity={1}>
-          <View style={{ ...styles.titleSection, paddingTop: 24 }}>
-            <Text style={styles.title}>친구</Text>
-            <Image
-              source={require("../../assets/arrowUp.png")}
-              style={{
-                width: 24,
-                height: 24,
-                transform: [
-                  { rotate: isFriendsComponentVisible3 ? "180deg" : "0deg" },
-                ],
-              }}
+          {/* 친구 목록 */}
+          <TouchableOpacity onPress={toggleFriendsComponent3} activeOpacity={1}>
+            <View style={{ ...styles.titleSection, paddingTop: 24 }}>
+              <Text style={styles.title}>친구</Text>
+              <Image
+                source={require("../../assets/arrowUp.png")}
+                style={{
+                  width: 24,
+                  height: 24,
+                  transform: [
+                    { rotate: isFriendsComponentVisible3 ? "180deg" : "0deg" },
+                  ],
+                }}
+              />
+            </View>
+          </TouchableOpacity>
+          {isFriendsComponentVisible3 ? (
+            <Line color={"#C1C1C1"} h={2} />
+          ) : (
+            <Line color={"#1F1F1F"} h={2} />
+          )}
+          {isFriendsComponentVisible3 && (
+            <FriendsComponent3
+              Data={approveData}
+              onRemoveFriend={onRemoveFriend}
             />
-          </View>
-        </TouchableOpacity>
-        {isFriendsComponentVisible3 ? (
-          <Line color={"#C1C1C1"} h={2} />
-        ) : (
-          <Line color={"#1F1F1F"} h={2} />
-        )}
-        {isFriendsComponentVisible3 && (
-          <FriendsComponent3
-            Data={approveData}
-            onRemoveFriend={onRemoveFriend}
-          />
-        )}
-      </View>
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 }
