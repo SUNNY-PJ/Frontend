@@ -221,11 +221,9 @@ const Statistics = ({ year, month }) => {
         },
       });
 
-      const consumptionDeleteData = response.data;
-      if (consumptionDeleteData.status === 200) {
-        fetchData();
-        fetchCategoryData(categoryParamVal);
-      }
+      // const consumptionDeleteData = response.data;
+      fetchData();
+      fetchCategoryData(categoryParamVal);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -265,7 +263,7 @@ const Statistics = ({ year, month }) => {
               >
                 <Swipeable
                   renderRightActions={() => renderRightActions(item.id)}
-                  onSwipeableOpen={() => handleChatRoomDelete(item.id)}
+                  // onSwipeableOpen={() => handleChatRoomDelete(item.id)}
                   overshootRight={false}
                 >
                   <View

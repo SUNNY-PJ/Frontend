@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,12 +7,12 @@ import {
   ScrollView,
   Dimensions,
   Alert,
+  Animated,
   SafeAreaView,
 } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import CalendarComponent from "../../components/Calendar/calendar";
-import { useEffect } from "react";
 import apiClient from "../../api/apiClient";
 import { useNavigation } from "@react-navigation/native";
 
@@ -27,6 +27,8 @@ const History = () => {
   const formatNumberWithCommas = (number) => {
     return new Intl.NumberFormat().format(number);
   };
+
+  const translateY = new Animated.Value(0);
 
   const onDataFetched = (data) => {
     setData(data);
@@ -65,10 +67,8 @@ const History = () => {
 
       const consumptionDeleteData = response.data;
       console.log(consumptionDeleteData);
-      if (consumptionDeleteData.status === 200) {
-        Alert.alert("", "지출 기록을 삭제했습니다.");
-        onDataFetched();
-      }
+      Alert.alert("", "지출 기록을 삭제했습니다.");
+      onDataFetched();
     } catch (error) {
       console.error("에러:", error);
     }
@@ -152,7 +152,7 @@ const History = () => {
               >
                 <Swipeable
                   renderRightActions={() => renderRightActions(item.id)}
-                  onSwipeableOpen={() => handleChatRoomDelete(item.id)}
+                  // onSwipeableOpen={() => handleChatRoomDelete(item.id)}
                   overshootRight={false}
                 >
                   <View
@@ -180,6 +180,21 @@ const History = () => {
             ))}
         </ScrollView>
       </SafeAreaView>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={styles.addItem}
+        onPress={() => navigation.navigate("Note")}
+      >
+        <Animated.Image
+          source={require("../../assets/add.png")}
+          style={{
+            width: 52,
+            height: 52,
+            transform: [{ translateY }],
+            // marginBottom: 15,
+          }}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -236,6 +251,13 @@ const styles = StyleSheet.create({
   deleteText: {
     color: "#fff",
     fontFamily: "SUITE",
+  },
+  addItem: {
+    position: "absolute",
+    alignItems: "flex-end",
+    bottom: 295,
+    right: 21,
+    zIndex: 10,
   },
 });
 
