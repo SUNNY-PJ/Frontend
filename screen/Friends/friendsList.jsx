@@ -14,7 +14,7 @@ import apiClient from "../../api/apiClient";
 import FriendsComponent1 from "./friendsComponent1";
 import FriendsComponent2 from "./friendsComponent2";
 import FriendsComponent3 from "./friendsComponent3";
-import CompetitionMsg from "../../components/Modal/battle/battleModal";
+import CompetitionMsg from "../../components/Modal/battle/CompetitionMsg";
 import FriendsMsg from "../../components/Modal/friendsMsg";
 import MatchMsg from "../../components/Modal/battle/matchMsg";
 
@@ -161,6 +161,7 @@ function FriendsList() {
 
   const RefuseFriendData = (friendId) => {
     RefuseData(friendId);
+    setIsFriendMsgOpen(false);
   };
 
   const AddFriendData = (friendId) => {
@@ -170,7 +171,6 @@ function FriendsList() {
 
   const onRemoveFriend = (friendId) => {
     deleteData(friendId);
-    setIsFriendMsgOpen(false);
   };
 
   // 친구 삭제
@@ -293,8 +293,8 @@ function FriendsList() {
       </View>
       {resultModalContent !== undefined ? (
         <CompetitionMsg
-          isOpen={isRefuseMsgOpen}
-          closeRefuseMessage={() => setIsRefuseMsgOpen(false)}
+          isVisible={isRefuseMsgOpen}
+          toggleModal={() => setIsRefuseMsgOpen(false)}
           name={resultModalContent?.name || ""}
           result={resultModalContent?.result || ""}
         />
