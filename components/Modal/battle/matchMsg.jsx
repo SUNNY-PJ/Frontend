@@ -72,18 +72,8 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
         }
       );
       console.log(response.data);
-      if (response.status === 200) {
-        if (response.data.status === 400) {
-          Alert.alert(
-            "error",
-            `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
-          );
-        } else {
-          Alert.alert("", `대결 신청을 수락했습니다.\n내일 대결이 시작됩니다!`);
-          toggleModal();
-          // navigation.navigate("MainScreen", { screen: "FriendsList" });
-        }
-      }
+      Alert.alert("", `대결 신청을 수락했습니다.\n곧 대결이 시작됩니다!`);
+      toggleModal();
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
@@ -106,20 +96,8 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
           },
         }
       );
-
-      console.log(response.data);
-      if (response.status === 200) {
-        if (response.data.status === 400) {
-          Alert.alert(
-            "error",
-            `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
-          );
-        } else {
-          Alert.alert("", `대결 신청을 거절했습니다.`);
-          toggleModal();
-          // navigation.navigate("MainScreen", { screen: "FriendsList" });
-        }
-      }
+      Alert.alert("", `대결 신청을 거절했습니다.`);
+      toggleModal();
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
