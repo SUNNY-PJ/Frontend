@@ -101,26 +101,15 @@ function FriendsList() {
         }
       );
       console.log("친구 수락함", response.data);
-      if (response.status === 200) {
-        if (response.data.status === 401) {
-          Alert.alert(
-            "error",
-            "에러가 발생했습니다.\n관리자에게 문의 바랍니다."
-          );
-        } else if (response.data.status === 409) {
-          Alert.alert("", "이미 친구입니다.");
-        } else {
-          Alert.alert("", "친구가 되었습니다!");
-          fetchData();
-        }
-      } else if (response.status === 500) {
-        Alert.alert(response.message);
+      if (response.data.status === 409) {
+        Alert.alert("", "이미 친구입니다.");
       } else {
-        Alert.alert("error", "에러가 발생했습니다.\n관리자에게 문의 바랍니다.");
+        Alert.alert("", "친구가 되었습니다!");
+        fetchData();
       }
     } catch (error) {
+      Alert.alert("error", "유효하지 않은 친구 신청입니다.");
       console.error("에러:", error);
-      Alert.alert("error", "에러가 발생했습니다.\n관리자에게 문의 바랍니다.");
     }
   };
 
@@ -139,22 +128,15 @@ function FriendsList() {
         }
       );
       console.log("친구 거절함", response.data);
-      if (response.status === 200) {
-        if (response.data.status === 401) {
-          Alert.alert(
-            "error",
-            "에러가 발생했습니다.\n관리자에게 문의 바랍니다."
-          );
-        } else {
-          Alert.alert("", "친구 신청을 거절했습니다.");
-          fetchData();
-        }
-      } else if (response.status === 500) {
+      Alert.alert("", "친구 신청을 거절했습니다.");
+      fetchData();
+      if (response.status === 500) {
         Alert.alert(response.message);
       } else {
         Alert.alert("error", "에러가 발생했습니다.\n관리자에게 문의 바랍니다.");
       }
     } catch (error) {
+      Alert.alert("error", "유효하지 않은 친구 신청입니다.");
       console.error("에러:", error);
     }
   };
