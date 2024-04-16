@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 import apiClient from "../../api/apiClient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import CompetitionMsg from "../../components/Modal/battle/battleModal";
+import CompetitionMsg from "../../components/Modal/battle/CompetitionMsg";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -103,7 +103,7 @@ const Alarm = () => {
   const navigateToScreen = (type, itemId, userId, content, name) => {
     // 친구
     if (type === "친구") {
-      if (content.includes("거절") || content.includes("승낙")) {
+      if (content.includes("대결을 거절") || content.includes("대결을 수락")) {
         navigation.replace("MainScreen", {
           screen: "FriendsList",
           params: {
@@ -114,7 +114,7 @@ const Alarm = () => {
             },
           },
         });
-      } else if (content.includes("신청")) {
+      } else if (content.includes("친구를 신청했어요")) {
         navigation.replace("MainScreen", {
           screen: "FriendsList",
           params: {
