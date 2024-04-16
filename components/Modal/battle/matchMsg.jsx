@@ -75,6 +75,7 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
       Alert.alert("", `대결 신청을 수락했습니다.\n곧 대결이 시작됩니다!`);
       toggleModal();
     } catch (error) {
+      Alert.alert("error", "유효하지 않은 대결 신청입니다.");
       if (error.response) {
         console.error("서버 응답 오류:", error.response.data);
         console.error("서버 응답 메세지:", error.message);
@@ -100,6 +101,7 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
       toggleModal();
     } catch (error) {
       if (error.response) {
+        Alert.alert("error", "유효하지 않은 대결 신청입니다.");
         console.error("서버 응답 오류:", error.response.data);
         console.error("서버 응답 메세지:", error.message);
       } else {
