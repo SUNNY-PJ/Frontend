@@ -25,12 +25,13 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
   // const [competitionId, setCompetitionId] = useState(0);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
 
-  const openProfile = (friendId) => {
-    setUserId(friendId);
-    console.log("userId::::", userId);
-    if (userId) {
-      setIsOpenProfile(!isOpenProfile);
-    }
+  const handleProfileClick = (id) => {
+    setUserId(id);
+    openProfile();
+  };
+
+  const openProfile = () => {
+    setIsOpenProfile(!isOpenProfile);
   };
 
   const [nickname, setNickname] = useState("");
@@ -132,7 +133,7 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
             <TouchableOpacity
               activeOpacity={0.6}
               onPress={() => {
-                openProfile(item.userFriendId);
+                handleProfileClick(item.userFriendId);
               }}
               style={{ flexDirection: "row" }}
             >
