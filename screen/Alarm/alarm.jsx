@@ -26,8 +26,6 @@ const Alarm = () => {
   const [pastData, setPastData] = useState([]);
   const [recentData, setRecentData] = useState([]);
   const [clickedItemIds, setClickedItemIds] = useState([]);
-  const [isRefuseMsgOpen, setIsRefuseMsgOpen] = useState(false);
-  const [modalContent, setModalContent] = useState({ name: "", result: "" });
 
   const handleItemClick = async (alarmId, type, id, userId, content, name) => {
     setClickedItemIds((prevClickedItemIds) => {
@@ -106,11 +104,28 @@ const Alarm = () => {
     // 친구
     if (type === "친구") {
       if (content.includes("거절") || content.includes("승낙")) {
-        setModalContent({
-          name,
-          result: content.includes("거절") ? "거절" : "승낙",
+        navigation.replace("MainScreen", {
+          screen: "FriendsList",
+          params: {
+            resultModalContent: {
+              name: name,
+              result: content.includes("거절") ? "거절" : "승낙",
+              open: true,
+            },
+          },
         });
-        setIsRefuseMsgOpen(true);
+      } else if (content.includes("신청")) {
+        navigation.replace("MainScreen", {
+          screen: "FriendsList",
+          params: {
+            friendModalContent: {
+              name: name,
+              userId: itemId,
+              open: true,
+            },
+          },
+        });
+      } else {
         navigation.navigate("FriendsList");
       }
     }
@@ -127,7 +142,20 @@ const Alarm = () => {
     }
     // 대결
     else if (type === "대결") {
-      navigation.navigate("FriendsList");
+      if (content.includes("신청")) {
+        navigation.replace("MainScreen", {
+          screen: "FriendsList",
+          params: {
+            battleModalContent: {
+              name: name,
+              userId: userId,
+              open: true,
+            },
+          },
+        });
+      } else {
+        navigation.navigate("FriendsList");
+      }
     }
   };
 
@@ -279,12 +307,6 @@ const Alarm = () => {
           </View>
         )}
       </ScrollView>
-      <CompetitionMsg
-        isOpenRefuseMessage={isRefuseMsgOpen}
-        openRefuseMessage={() => setIsRefuseMsgOpen(false)}
-        name={modalContent.name}
-        result={modalContent.result}
-      />
     </View>
   );
 };
