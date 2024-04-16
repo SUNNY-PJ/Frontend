@@ -8,18 +8,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const CompetitionMsg = ({
-  isOpenRefuseMessage,
-  openRefuseMessage,
-  name,
-  result,
-}) => {
+const CompetitionMsg = ({ isVisible, toggleModal, name, result }) => {
   return (
-    <Modal
-      animationType="none"
-      transparent={true}
-      visible={isOpenRefuseMessage}
-    >
+    <Modal animationType="none" transparent={true} visible={isVisible}>
       <View
         style={{
           justifyContent: "center",
@@ -30,7 +21,7 @@ const CompetitionMsg = ({
       >
         <View style={styles.container}>
           <View style={styles.closeButtonContainer}>
-            <TouchableOpacity onPress={openRefuseMessage}>
+            <TouchableOpacity onPress={toggleModal}>
               <Image
                 source={require("../../../assets/close.png")}
                 style={{ width: 16, height: 16 }}
