@@ -14,9 +14,15 @@ import apiClient from "../../api/apiClient";
 import FriendsComponent1 from "./friendsComponent1";
 import FriendsComponent2 from "./friendsComponent2";
 import FriendsComponent3 from "./friendsComponent3";
+import CompetitionMsg from "../../components/Modal/battle/battleModal";
+import FriendsMsg from "../../components/Modal/friendsMsg";
+import MatchMsg from "../../components/Modal/battle/matchMsg";
 
 function FriendsList() {
   const route = useRoute();
+  const { resultModalContent } = route.params ?? {};
+  const { friendModalContent } = route.params ?? {};
+  const { battleModalContent } = route.params ?? {};
   const [isFriendsComponentVisible1, setIsFriendsComponentVisible1] =
     useState(true);
   const [isFriendsComponentVisible2, setIsFriendsComponentVisible2] =
@@ -33,10 +39,21 @@ function FriendsList() {
   const toggleFriendsComponent3 = () => {
     setIsFriendsComponentVisible3((prev) => !prev);
   };
-
+  console.log("resultModalContent::::", resultModalContent);
+  console.log("friendModalContent::::", friendModalContent);
+  console.log("battleModalContent::::", battleModalContent);
   const [competitionData, setCompetitionData] = useState([]);
   const [approveData, setApproveData] = useState([]);
   const [waitData, setWaitData] = useState([]);
+  const [isRefuseMsgOpen, setIsRefuseMsgOpen] = useState(
+    resultModalContent?.open || false
+  );
+  const [isFriendMsgOpen, setIsFriendMsgOpen] = useState(
+    friendModalContent?.open || false
+  );
+  const [isMatchModalVisible, setIsMatchModalVisible] = useState(
+    battleModalContent?.open || false
+  );
 
   const fetchData = async () => {
     const inputURL = `/friends`;
@@ -148,10 +165,12 @@ function FriendsList() {
 
   const AddFriendData = (friendId) => {
     PostData(friendId);
+    setIsFriendMsgOpen(false);
   };
 
   const onRemoveFriend = (friendId) => {
     deleteData(friendId);
+    setIsFriendMsgOpen(false);
   };
 
   // 친구 삭제
@@ -272,6 +291,37 @@ function FriendsList() {
           )}
         </ScrollView>
       </View>
+      {resultModalContent !== undefined ? (
+        <CompetitionMsg
+          isOpen={isRefuseMsgOpen}
+          closeRefuseMessage={() => setIsRefuseMsgOpen(false)}
+          name={resultModalContent?.name || ""}
+          result={resultModalContent?.result || ""}
+        />
+      ) : (
+        <></>
+      )}
+      {friendModalContent !== undefined ? (
+        <FriendsMsg
+          isVisible={isFriendMsgOpen}
+          toggleModal={() => setIsFriendMsgOpen(false)}
+          name={friendModalContent?.name || ""}
+          onAccept={() => AddFriendData(friendModalContent?.userId)}
+          onRefuse={() => RefuseFriendData(friendModalContent?.userId)}
+        />
+      ) : (
+        <></>
+      )}
+      {battleModalContent !== undefined ? (
+        <MatchMsg
+          isVisible={isMatchModalVisible}
+          toggleModal={() => setIsMatchModalVisible(false)}
+          friendsId={battleModalContent?.userId}
+          nickname={battleModalContent?.name}
+        />
+      ) : (
+        <></>
+      )}
     </View>
   );
 }
