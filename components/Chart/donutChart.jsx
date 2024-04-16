@@ -10,21 +10,28 @@ import {
 import Svg, { Circle, Path } from "react-native-svg";
 import { useIsFocused } from "@react-navigation/native";
 
-const DonutChart = ({ data, noData, onCategorySelect, year, month }) => {
+const DonutChart = ({
+  data,
+  noData,
+  onCategorySelect,
+  year,
+  month,
+  selectedCategory,
+}) => {
   const windowWidth = Dimensions.get("window").width;
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  // const [selectedCategory, setSelectedCategory] = useState(null);
 
   const isFocused = useIsFocused();
 
   useEffect(() => {
     if (isFocused) {
-      setSelectedCategory(null);
+      // setSelectedCategory(null);
       onCategorySelect(null);
     }
   }, [isFocused, year, month]);
 
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
+    // setSelectedCategory(category);
     onCategorySelect(category);
   };
 

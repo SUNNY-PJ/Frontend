@@ -30,6 +30,10 @@ const Statistics = ({ year, month }) => {
     return new Intl.NumberFormat().format(number);
   };
 
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
+  };
+
   const categoryImages = {
     의류: require("../../assets/clothes_chart.png"),
     식생활: require("../../assets/food_chart.png"),
@@ -246,6 +250,7 @@ const Statistics = ({ year, month }) => {
         <DonutChart
           data={data}
           noData={noData}
+          selectedCategory={selectedCategory}
           onCategorySelect={handleCategoryClick}
           year={year}
           month={month}
