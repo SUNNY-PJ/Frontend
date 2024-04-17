@@ -21,12 +21,13 @@ const FriendsComponent2 = ({ Data, onAddFriend, onRefuseFriend }) => {
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
-  const openProfile = (friendId) => {
-    setUserId(friendId);
-    console.log("userId::::", userId);
-    if (userId) {
-      setIsOpenProfile(!isOpenProfile);
-    }
+  const handleProfileClick = (id) => {
+    setUserId(id);
+    openProfile();
+  };
+
+  const openProfile = () => {
+    setIsOpenProfile(!isOpenProfile);
   };
 
   const openMsg = (nickName) => {
@@ -82,7 +83,7 @@ const FriendsComponent2 = ({ Data, onAddFriend, onRefuseFriend }) => {
           <TouchableOpacity
             activeOpacity={0.6}
             onPress={() => {
-              openProfile(item.userFriendId);
+              handleProfileClick(item.userFriendId);
             }}
             style={{ flexDirection: "row" }}
           >

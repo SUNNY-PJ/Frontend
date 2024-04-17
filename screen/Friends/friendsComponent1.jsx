@@ -16,11 +16,13 @@ const FriendsComponent1 = ({ Data, onAddFriend, onRemoveFriend }) => {
   const [userId, setUserId] = useState("");
   const [isOpenProfile, setIsOpenProfile] = useState(false);
 
-  const openProfile = (friendId) => {
-    setUserId(friendId);
-    if (userId) {
-      setIsOpenProfile(!isOpenProfile);
-    }
+  const handleProfileClick = (id) => {
+    setUserId(id);
+    openProfile();
+  };
+
+  const openProfile = () => {
+    setIsOpenProfile(!isOpenProfile);
   };
 
   const handleBattleStatus = (friendId, nickname, competitionId) => {
@@ -56,7 +58,7 @@ const FriendsComponent1 = ({ Data, onAddFriend, onRemoveFriend }) => {
             activeOpacity={0.6}
             style={{ flexDirection: "row" }}
             onPress={() => {
-              openProfile(item.userFriendId);
+              handleProfileClick(item.userFriendId);
             }}
           >
             <Image source={{ uri: item.profile }} style={styles.icon} />
