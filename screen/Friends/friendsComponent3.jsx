@@ -88,7 +88,12 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
       showMatchModal();
     } else if (competitionStatus === "SEND") {
       Alert.alert("", "이미 대결을 신청했습니다.");
-    } else if (competitionStatus === "NONE" || competitionStatus === "REFUSE") {
+    } else if (
+      competitionStatus === "NONE" ||
+      competitionStatus === "REFUSE" ||
+      competitionStatus === "GIVE_UP" ||
+      competitionStatus === undefined
+    ) {
       navigation.navigate("MainScreen", {
         screen: "SendMatch",
         params: {
