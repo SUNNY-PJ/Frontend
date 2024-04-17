@@ -27,7 +27,15 @@ const Alarm = () => {
   const [recentData, setRecentData] = useState([]);
   const [clickedItemIds, setClickedItemIds] = useState([]);
 
-  const handleItemClick = async (alarmId, type, id, userId, content, name) => {
+  const handleItemClick = async (
+    alarmId,
+    type,
+    id,
+    userId,
+    content,
+    name,
+    isFriend
+  ) => {
     setClickedItemIds((prevClickedItemIds) => {
       const updatedClickedItemIds = prevClickedItemIds.includes(alarmId)
         ? prevClickedItemIds.filter((id) => id !== alarmId)
@@ -38,7 +46,7 @@ const Alarm = () => {
         "clickedItemIds",
         JSON.stringify(updatedClickedItemIds)
       )
-        .then(() => navigateToScreen(type, id, userId, content, name))
+        .then(() => navigateToScreen(type, id, userId, content, name, isFriend))
         .catch((error) => console.error("AsyncStorage 저장 오류:", error));
 
       return updatedClickedItemIds;
@@ -100,7 +108,7 @@ const Alarm = () => {
     fetchData();
   }, []);
 
-  const navigateToScreen = (type, itemId, userId, content, name) => {
+  const navigateToScreen = (type, itemId, userId, content, name, isFriend) => {
     // 친구
     if (type === "친구") {
       if (content.includes("대결을 거절") || content.includes("대결을 수락")) {
@@ -114,7 +122,7 @@ const Alarm = () => {
             },
           },
         });
-      } else if (content.includes("친구를 신청했어요")) {
+      } else if (content.includes("친구를 신청했어요") && !isFriend) {
         navigation.replace("MainScreen", {
           screen: "FriendsList",
           params: {
@@ -217,7 +225,8 @@ const Alarm = () => {
                         item.id,
                         item.userId,
                         item.notificationContent,
-                        item.postAuthor
+                        item.postAuthor,
+                        item.isFriend || ""
                       )
                     }
                   >
