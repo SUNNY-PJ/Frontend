@@ -137,7 +137,8 @@ const Detail = () => {
     });
   };
 
-  const handleMenuClick = (authorVal) => {
+  const handleMenuClick = (authorVal, userId) => {
+    setWriterId(userId);
     if (authorVal) {
       setAuthorModalVisible(true);
     } else {
@@ -254,7 +255,7 @@ const Detail = () => {
                 />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => handleMenuClick(item.isAuthor)}
+                onPress={() => handleMenuClick(item.isAuthor, item.userId)}
                 style={{
                   alignSelf: "center",
                 }}
