@@ -164,7 +164,7 @@ const Note = () => {
         category: place,
       };
 
-      const response = await apiClient.patch(url, bodyData, {
+      const response = await apiClient.put(url, bodyData, {
         headers: { "Content-Type": "application/json; charset=utf-8" },
       });
       Alert.alert("", "지출 내역이 수정되었습니다.");
