@@ -101,6 +101,7 @@ const Note = () => {
         setExists(true);
         setButtonText("수정하기");
         setMoney(formattedValue);
+        setMoneyNumeric(Data.money);
         setDate(Data.dateField);
         setPlace(Data.category);
         setName(Data.name);
