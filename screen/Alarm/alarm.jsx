@@ -34,7 +34,8 @@ const Alarm = () => {
     userId,
     content,
     name,
-    isFriend
+    isFriend,
+    isRecieve
   ) => {
     setClickedItemIds((prevClickedItemIds) => {
       const updatedClickedItemIds = prevClickedItemIds.includes(alarmId)
@@ -46,7 +47,9 @@ const Alarm = () => {
         "clickedItemIds",
         JSON.stringify(updatedClickedItemIds)
       )
-        .then(() => navigateToScreen(type, id, userId, content, name, isFriend))
+        .then(() =>
+          navigateToScreen(type, id, userId, content, name, isFriend, isRecieve)
+        )
         .catch((error) => console.error("AsyncStorage 저장 오류:", error));
 
       return updatedClickedItemIds;
@@ -108,21 +111,18 @@ const Alarm = () => {
     fetchData();
   }, []);
 
-  const navigateToScreen = (type, itemId, userId, content, name, isFriend) => {
+  const navigateToScreen = (
+    type,
+    itemId,
+    userId,
+    content,
+    name,
+    isFriend,
+    isRecieve
+  ) => {
     // 친구
     if (type === "친구") {
-      if (content.includes("대결을 거절") || content.includes("대결을 수락")) {
-        navigation.replace("MainScreen", {
-          screen: "FriendsList",
-          params: {
-            resultModalContent: {
-              name: name,
-              result: content.includes("거절") ? "거절" : "승낙",
-              open: true,
-            },
-          },
-        });
-      } else if (content.includes("친구를 신청했어요") && !isFriend) {
+      if (content.includes("친구를 신청했어요") && !isFriend) {
         navigation.replace("MainScreen", {
           screen: "FriendsList",
           params: {
@@ -150,7 +150,7 @@ const Alarm = () => {
     }
     // 대결
     else if (type === "대결") {
-      if (content.includes("신청")) {
+      if (content.includes("신청") && isRecieve) {
         navigation.replace("MainScreen", {
           screen: "FriendsList",
           params: {
@@ -161,6 +161,22 @@ const Alarm = () => {
             },
           },
         });
+      }
+      if (content.includes("대결을 거절") || content.includes("대결을 수락")) {
+        if (isRecieve) {
+          navigation.replace("MainScreen", {
+            screen: "FriendsList",
+            params: {
+              resultModalContent: {
+                name: name,
+                result: content.includes("거절") ? "거절" : "승낙",
+                open: true,
+              },
+            },
+          });
+        } else {
+          navigation.navigate("FriendsList");
+        }
       } else {
         navigation.navigate("FriendsList");
       }
@@ -226,7 +242,8 @@ const Alarm = () => {
                         item.userId,
                         item.notificationContent,
                         item.postAuthor,
-                        item.isFriend || ""
+                        item.isFriend || "",
+                        item.isRecieveCompetition || ""
                       )
                     }
                   >
