@@ -17,7 +17,7 @@
     },
     "ios": {
       "usesAppleSignIn": true,
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.sunnymoney2024.SUNNY",
       "buildNumber": "1.1.6"
     },
