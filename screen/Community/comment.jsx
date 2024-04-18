@@ -265,6 +265,11 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     commentModal();
   };
 
+  const handleProfile = (id) => {
+    setUserId(id);
+    openProfile();
+  };
+
   return (
     <Modal
       isVisible={isCommentModal}
@@ -310,25 +315,29 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                       marginTop: 9,
                     }}
                   >
-                    <Image
-                      source={
-                        item.profileImg
-                          ? { uri: item.profileImg }
-                          : require("../../assets/myPage_profile.png")
-                      }
-                      style={{ width: 32, height: 32, borderRadius: 50 }}
-                    />
-
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        color: "#1F1F1F",
-                        fontFamily: "SUITE_Medium",
-                        alignSelf: "center",
-                      }}
+                    <TouchableOpacity
+                      onPress={() => handleProfile(item.userId)}
+                      style={{ flexDirection: "row", gap: 8 }}
                     >
-                      {item.writer}
-                    </Text>
+                      <Image
+                        source={
+                          item.profileImg
+                            ? { uri: item.profileImg }
+                            : require("../../assets/myPage_profile.png")
+                        }
+                        style={{ width: 32, height: 32, borderRadius: 50 }}
+                      />
+                      <Text
+                        style={{
+                          fontSize: 15,
+                          color: "#1F1F1F",
+                          fontFamily: "SUITE_Medium",
+                          alignSelf: "center",
+                        }}
+                      >
+                        {item.writer}
+                      </Text>
+                    </TouchableOpacity>
                     {item.author === true ? (
                       <View
                         style={{
@@ -446,24 +455,32 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                               // marginTop: 9,
                             }}
                           >
-                            <Image
-                              // source={require("../../assets/myPage_profile.png")}
-                              source={
-                                childItem.profileImg
-                                  ? { uri: childItem.profileImg }
-                                  : require("../../assets/myPage_profile.png")
-                              }
-                              style={{
-                                width: 32,
-                                height: 32,
-                                borderRadius: 50,
-                              }}
-                            />
-                            <Text
-                              style={[styles.comment, { alignSelf: "center" }]}
+                            <TouchableOpacity
+                              onPress={() => handleProfile(childItem.userId)}
+                              style={{ flexDirection: "row", gap: 8 }}
                             >
-                              {childItem.writer}
-                            </Text>
+                              <Image
+                                // source={require("../../assets/myPage_profile.png")}
+                                source={
+                                  childItem.profileImg
+                                    ? { uri: childItem.profileImg }
+                                    : require("../../assets/myPage_profile.png")
+                                }
+                                style={{
+                                  width: 32,
+                                  height: 32,
+                                  borderRadius: 50,
+                                }}
+                              />
+                              <Text
+                                style={[
+                                  styles.comment,
+                                  { alignSelf: "center" },
+                                ]}
+                              >
+                                {childItem.writer}
+                              </Text>
+                            </TouchableOpacity>
                             {childItem.author === true ? (
                               <View
                                 style={{
