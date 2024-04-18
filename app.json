@@ -19,7 +19,10 @@
       "usesAppleSignIn": true,
       "supportsTablet": false,
       "bundleIdentifier": "com.sunnymoney2024.SUNNY",
-      "buildNumber": "1.1.6"
+      "buildNumber": "1.1.6",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "sunny 앱에서는 프로필 사진을 설정하기 위해 사용자의 사진 라이브러리에 접근합니다. 사용자가 직접 선택한 사진만을 사용하여 프로필을 개선할 수 있습니다."
+      }
     },
     "android": {
       "adaptiveIcon": {
