@@ -19,6 +19,7 @@ import DeleteMsg from "../../components/Modal/community/deleteMsg";
 import FriendProfile from "../Friends/friendProfile";
 import ModifyMsg from "../../components/Modal/community/modifyMsg";
 import apiClient from "../../api/apiClient";
+import MsgModal from "../../components/Modal/msg/msgModal";
 
 const Detail = () => {
   const navigation = useNavigation();
@@ -39,6 +40,7 @@ const Detail = () => {
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const [isScrap, setIsScrap] = useState(false);
   const [writerId, setWriterId] = useState(0);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const commentModal = () => {
     setIsCommentModal(!isCommentModal);
@@ -192,6 +194,41 @@ const Detail = () => {
         content: content,
       },
     });
+  };
+
+  const blockUser = async () => {
+    const bodyData = {
+      userId: writerId,
+    };
+    try {
+      const response = await apiClient.post(inputURL, bodyData, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      });
+      console.log(response.data);
+      Alert.alert(
+        "",
+        `${writer}님을 차단했습니다.\n차단 목록에서 차단 해제할 수 있습니다.`
+      );
+    } catch (error) {
+      Alert.alert("error", error.response.data);
+    }
+  };
+
+  const handleBlockUser = () => {
+    console.log("차단", writer, writerId);
+    setNoAuthorModalVisible(false);
+    setIsModalVisible(true);
+  };
+
+  const handleCancelDelete = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleBlockFriend = () => {
+    // blockUser();
+    console.log(writer, writerId);
   };
 
   return (
@@ -417,6 +454,7 @@ const Detail = () => {
         onClose={() => setNoAuthorModalVisible(false)}
         onProfile={() => handleProfileClick(writerId)}
         onReport={handleReport}
+        onBlock={handleBlockUser}
       />
       <DeleteMsg
         isVisible={deleteModalVisible}
@@ -434,6 +472,14 @@ const Detail = () => {
         isOpenProfile={isOpenProfile}
         openProfile={openProfile}
         userId={writerId}
+      />
+      <MsgModal
+        isVisible={isModalVisible}
+        toggleModal={handleCancelDelete}
+        onDelete={handleBlockFriend}
+        onCancel={handleCancelDelete}
+        msgTitle="차단하시겠어요?"
+        msgContent="해당 사용자가 커뮤니티에서 작성한 글과 댓글, 답글을 볼 수 없습니다."
       />
     </View>
   );
