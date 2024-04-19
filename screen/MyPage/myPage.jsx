@@ -183,7 +183,7 @@ const MyPage = () => {
     }
   };
 
-  const  handleTermsClick = () => {
+  const handleTermsClick = () => {
     navigation.navigate("Terms", {
       screen: "Terms",
     });
@@ -324,9 +324,9 @@ const MyPage = () => {
           </TouchableOpacity>
           <Line color={"#C1C1C1"} h={1} />
           {/* 테스트 */}
-          <TouchableOpacity activeOpacity={1} onPress={handleTestClick}>
+          {/* <TouchableOpacity activeOpacity={1} onPress={handleTestClick}>
             <Text style={styles.description}>테스트용</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         {/* <View
           style={{
