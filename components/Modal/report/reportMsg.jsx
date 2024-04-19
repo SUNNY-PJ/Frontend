@@ -35,7 +35,8 @@ const ReportMsg = ({ isVisible, onSubmit, onCancel }) => {
             </TouchableOpacity>
           </View>
           <Text style={styles.title}>
-            신고를 진행할까요?{"\n"}신고 검토까지는 최대 24시간이 소요됩니다
+            신고를 진행할까요?{"\n"}신고 검토까지는 최대 24시간이 {"\n"}
+            소요됩니다.
           </Text>
           <View style={styles.buttonContainer}>
             <MiddleBtn text={"네"} onClick={onSubmit} />
