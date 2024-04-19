@@ -11,6 +11,7 @@ import {
 import FriendWrite from "./friendWrite";
 import FriendComment from "./friendComment";
 import apiClient from "../../api/apiClient";
+import MsgModal from "../../components/Modal/msg/msgModal";
 
 const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   const [comment, setComment] = useState(false);
@@ -20,6 +21,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   const [friendId, setFriendId] = useState(0);
   const [userFriendId, setUserFriendId] = useState(0);
   const [friendName, setFriendName] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const commentClick = () => {
     setComment(true);
@@ -235,6 +237,40 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
     );
   };
 
+  const blockUser = async () => {
+    const bodyData = {
+      userId: friendId,
+    };
+    try {
+      const response = await apiClient.post("/users/block", bodyData, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      });
+      console.log(response.data);
+      Alert.alert(
+        "",
+        `${friendName}님을 차단했습니다.\n마이페이지 차단 관리에서 차단 해제할 수 있습니다.`
+      );
+      openProfile();
+    } catch (error) {
+      Alert.alert("error", error.response.data);
+    }
+  };
+
+  const handleBlockUser = () => {
+    setIsModalVisible(true);
+    console.log("차단", friendId, friendName);
+  };
+
+  const handleCancelDelete = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleBlockFriend = () => {
+    blockUser();
+  };
+
   return (
     <Modal animationType="slide" transparent={true} visible={isOpenProfile}>
       <View style={styles.container}>
@@ -259,7 +295,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
             <View
               style={{
                 flexDirection: "row",
-                gap: 60,
+                gap: 40,
                 alignSelf: "center",
                 marginTop: 27,
               }}
@@ -267,7 +303,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
               {/* <TouchableOpacity style={styles.button}>
                 <Text
                   style={{
-                    color: "#000 ",
+                    color: "#1F1F1F ",
                     fontSize: 15,
                     fontWeight: 700,
                     alignSelf: "center",
@@ -297,7 +333,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
                     style={[
                       styles.btnText,
                       {
-                        color: status === "친구끊기" ? "#fff" : "#000",
+                        color: status === "친구끊기" ? "#fff" : "#1F1F1F",
                       },
                     ]}
                   >
@@ -305,6 +341,12 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
                   </Text>
                 </TouchableOpacity>
               )}
+              <TouchableOpacity
+                style={[styles.button]}
+                onPress={handleBlockUser}
+              >
+                <Text style={styles.btnText}>차단하기</Text>
+              </TouchableOpacity>
             </View>
             <View
               style={{
@@ -342,6 +384,14 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
           </View>
         ))}
       </View>
+      <MsgModal
+        isVisible={isModalVisible}
+        toggleModal={handleCancelDelete}
+        onDelete={handleBlockFriend}
+        onCancel={handleCancelDelete}
+        msgTitle="차단하시겠어요?"
+        msgContent="해당 사용자가 커뮤니티에서 작성한 글과 댓글, 답글을 볼 수 없습니다."
+      />
     </Modal>
   );
 };
@@ -402,13 +452,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: "#000",
+    color: "#1F1F1F",
     padding: 4,
     fontFamily: "SUITE",
   },
   description: {
     fontSize: 12,
-    color: "#000",
+    color: "#1F1F1F",
     padding: 4,
     fontFamily: "SUITE",
     gap: 8,
@@ -426,6 +476,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     alignSelf: "center",
     fontFamily: "SUITE_Bold",
+    textAlign: "center",
   },
 });
 
