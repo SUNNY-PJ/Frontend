@@ -209,8 +209,9 @@ const Detail = () => {
       console.log(response.data);
       Alert.alert(
         "",
-        `${writer}님을 차단했습니다.\n차단 목록에서 차단 해제할 수 있습니다.`
+        `${writer}님을 차단했습니다.\n마이페이지 차단 관리에서 차단 해제할 수 있습니다.`
       );
+      navigation.navigate("MainScreen", { screen: "Community" });
     } catch (error) {
       Alert.alert("error", error.response.data);
     }
