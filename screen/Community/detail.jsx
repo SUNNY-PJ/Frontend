@@ -201,7 +201,7 @@ const Detail = () => {
       userId: writerId,
     };
     try {
-      const response = await apiClient.post(inputURL, bodyData, {
+      const response = await apiClient.post("/users/block", bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
@@ -228,7 +228,7 @@ const Detail = () => {
   };
 
   const handleBlockFriend = () => {
-    // blockUser();
+    blockUser();
     console.log(writer, writerId);
   };
 

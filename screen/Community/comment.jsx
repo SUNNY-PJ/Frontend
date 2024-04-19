@@ -285,7 +285,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       userId: userId,
     };
     try {
-      const response = await apiClient.post(inputURL, bodyData, {
+      const response = await apiClient.post("/users/block", bodyData, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
