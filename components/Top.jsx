@@ -218,21 +218,28 @@ Top.navigationOptions = {
 
 const styles = StyleSheet.create({
   container: {
+    borderTopColor: "#fff",
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    top: 0,
+    position: "fixed",
+    width: "100%",
+  },
+  progressContainer: {
+    flexDirection: "row",
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
     borderWidth: 1.5,
     borderColor: "#1F1F1F",
-    borderTopColor: "#fff",
-    backgroundColor: "#FFF",
-  },
-  progressContainer: {
-    flexDirection: "row",
+    gap: 20,
     justifyContent: "center",
     paddingTop: 52,
     paddingBottom: 12,
     alignItems: "center",
-    gap: 20,
+    height: 100,
   },
+
   text: {
     fontSize: 16,
     fontFamily: "SUITE_Bold",
