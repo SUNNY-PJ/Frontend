@@ -20,6 +20,7 @@ import CommentActionSheet from "../../components/BottomSheet/commentActionSheet"
 import CommentViewerActionSheet from "../../components/BottomSheet/commentViewerActionSheet";
 import apiClient from "../../api/apiClient";
 import FriendProfile from "../Friends/friendProfile";
+import MsgModal from "../../components/Modal/msg/msgModal";
 
 const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const windowHeight = Dimensions.get("window").height;
@@ -37,6 +38,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const [isOpenOptionModal, setIsOpenOptionModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isChildComment, setIsChildComment] = useState(true);
   const [isActionSheetVisible, setActionSheetVisible] = useState(false);
   const [isActionSheetViewerVisible, setActionSheetViewerVisible] =
@@ -217,6 +219,14 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     openProfile();
   };
 
+  const handleBlockUser = () => {
+    console.log("차단", userId, parentWriter);
+    // commentModal();
+    setActionSheetVisible(false);
+    setActionSheetViewerVisible(false);
+    setIsModalVisible(true);
+  };
+
   const handleModifyClick = () => {
     // 전체 댓글에서 찾기
     let foundComment = commentData.find((comment) => comment.id === commentId);
@@ -268,6 +278,34 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const handleProfile = (id) => {
     setUserId(id);
     openProfile();
+  };
+
+  const blockUser = async () => {
+    const bodyData = {
+      userId: userId,
+    };
+    try {
+      const response = await apiClient.post(inputURL, bodyData, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      });
+      console.log(response.data);
+      Alert.alert(
+        "",
+        `${parentWriter}님을 차단했습니다.\n차단 목록에서 차단 해제할 수 있습니다.`
+      );
+    } catch (error) {
+      Alert.alert("error", error.response.data);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleBlockFriend = () => {
+    blockUser();
   };
 
   return (
@@ -561,7 +599,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                         >
                           {childItem.content}
                         </Text>
-                        {childItem.deleted === false ? (
+                        {!childItem.deleted ? (
                           <View
                             style={{
                               flexDirection: "row",
@@ -638,12 +676,21 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
         onReport={handleReportClick}
         onComment={handleCommentClick}
         onProfile={handleProfileClick}
+        onBlock={handleBlockUser}
         isChildComment={isChildComment}
       />
       <FriendProfile
         isOpenProfile={isOpenProfile}
         openProfile={openProfile}
         userId={userId}
+      />
+      <MsgModal
+        isVisible={isModalVisible}
+        toggleModal={handleCancelDelete}
+        onDelete={handleBlockFriend}
+        onCancel={handleCancelDelete}
+        msgTitle="차단하시겠어요?"
+        msgContent="해당 사용자가 커뮤니티에서 작성한 글과 댓글, 답글을 볼 수 없습니다."
       />
     </Modal>
   );
