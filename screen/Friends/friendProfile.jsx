@@ -342,10 +342,10 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
                 </TouchableOpacity>
               )}
               <TouchableOpacity
-                style={[styles.button]}
+                style={[styles.button, { backgroundColor: "#FFFFFF" }]}
                 onPress={handleBlockUser}
               >
-                <Text style={styles.btnText}>차단하기</Text>
+                <Text style={[styles.btnText]}>차단하기</Text>
               </TouchableOpacity>
             </View>
             <View
