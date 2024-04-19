@@ -40,6 +40,7 @@ import BattleStatus from "./screen/Battle/battleStatus";
 import BattleStatusDisable from "./screen/Battle/battleStatusDisable";
 import BottomRe from "./components/BottomRe";
 import TestScreen from "./test/testScreen";
+import BlockedListScreen from "./screen/MyPage/blockedList";
 // import ChatRoom from "./screen/Chat/chatRoom";
 
 const Stack = createStackNavigator();
@@ -113,6 +114,7 @@ function MainScreen() {
           component={BattleStatusDisable}
         />
         <Stack.Screen name="TestScreen" component={TestScreen} />
+        <Stack.Screen name="BlockedListScreen" component={BlockedListScreen} />
         {/* <Stack.Screen name="Winner" component={Winner} /> */}
       </Stack.Navigator>
       {/* <Bottom /> */}

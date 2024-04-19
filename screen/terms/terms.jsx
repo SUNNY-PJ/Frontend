@@ -38,7 +38,7 @@ const Terms = () => {
           bottom: 20,
         }}
       >
-        이용약관
+        이용 약관
       </Text>
       <ScrollView style={{ marginBottom: 200 }}>
         {TermsData.map((item, index) => (
