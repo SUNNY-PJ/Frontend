@@ -15,6 +15,7 @@ import apiClient from "../../api/apiClient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CompetitionMsg from "../../components/Modal/battle/CompetitionMsg";
 import ReportResult from "../../components/Modal/report/reportResult";
+import ReportReceive from "../../components/Modal/report/reportReceive";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -28,11 +29,13 @@ const Alarm = () => {
   const [recentData, setRecentData] = useState([]);
   const [clickedItemIds, setClickedItemIds] = useState([]);
   const [reportResultVisible, setReportResultVisible] = useState(false);
+  const [reportVisible, setReportVisible] = useState(false);
   const [reportResult, setReportResult] = useState("");
   const [reportReason, setReportReason] = useState("");
   const [reportDate, setReportDate] = useState("");
   const [reportUser, setReportUser] = useState("");
   const [reportContent, setReportContent] = useState("");
+  const [reportCount, setReportCount] = useState(0);
 
   console.log(reportResultVisible);
 
@@ -49,12 +52,14 @@ const Alarm = () => {
     reason,
     date,
     user,
-    reportContent
+    reportContent,
+    reportCount
   ) => {
     setReportReason(reason);
     setReportDate(date);
     setReportUser(user);
     setReportContent(reportContent);
+    setReportCount(reportCount);
     setClickedItemIds((prevClickedItemIds) => {
       const updatedClickedItemIds = prevClickedItemIds.includes(alarmId)
         ? prevClickedItemIds.filter((id) => id !== alarmId)
@@ -211,8 +216,12 @@ const Alarm = () => {
     }
     // 신고
     else if (type === "신고") {
-      setReportResult(subType);
-      setReportResultVisible(true);
+      if (subType === "경고") {
+        setReportVisible(true);
+      } else {
+        setReportResult(subType);
+        setReportResultVisible(true);
+      }
     }
   };
 
@@ -279,7 +288,8 @@ const Alarm = () => {
                         item.ReportReason || "",
                         item.reportCreatedAt || "",
                         item.reportUser || "",
-                        item.reportContent || ""
+                        item.reportContent || "",
+                        item.userReportCount || 0
                       )
                     }
                   >
@@ -337,7 +347,12 @@ const Alarm = () => {
                         item.postAuthor,
                         item.isFriend || "",
                         item.isRecieveCompetition || "",
-                        item.subType
+                        item.subType,
+                        item.ReportReason || "",
+                        item.reportCreatedAt || "",
+                        item.reportUser || "",
+                        item.reportContent || "",
+                        item.userReportCount || 0
                       )
                     }
                   >
@@ -380,6 +395,14 @@ const Alarm = () => {
         reportDate={reportDate}
         reportUser={reportUser}
         reportContent={reportContent}
+      />
+      <ReportReceive
+        isVisible={reportVisible}
+        onCancel={() => setReportVisible(false)}
+        count={reportCount}
+        date={reportDate}
+        content={reportContent}
+        reason={reportReason}
       />
     </View>
   );

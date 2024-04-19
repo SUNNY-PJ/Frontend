@@ -11,7 +11,7 @@ const ReportReceive = ({
   reason,
 }) => {
   return (
-    <Modal animationType="slide" transparent={true} visible={isVisible}>
+    <Modal animationType="none" transparent={true} visible={isVisible}>
       <View
         style={{
           justifyContent: "center",
@@ -53,11 +53,23 @@ const ReportReceive = ({
               </View>
               <View style={{ flexDirection: "column", gap: 5 }}>
                 <Text style={[styles.contentTitle]}>경고 해당 내용</Text>
-                <Text style={[styles.contentText]}>{content}</Text>
+                <Text
+                  style={[styles.contentText]}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {content}
+                </Text>
               </View>
               <View style={{ flexDirection: "column", gap: 5 }}>
                 <Text style={[styles.contentTitle]}>경고 사유</Text>
-                <Text style={[styles.contentText]}>{reason}</Text>
+                <Text
+                  style={[styles.contentText]}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {reason}
+                </Text>
               </View>
             </View>
             <View style={{ marginTop: 30, marginBottom: 30 }}>
