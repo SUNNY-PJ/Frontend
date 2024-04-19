@@ -14,6 +14,7 @@ import Line from "../../components/Line";
 import apiClient from "../../api/apiClient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CompetitionMsg from "../../components/Modal/battle/CompetitionMsg";
+import ReportResult from "../../components/Modal/report/reportResult";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -26,6 +27,14 @@ const Alarm = () => {
   const [pastData, setPastData] = useState([]);
   const [recentData, setRecentData] = useState([]);
   const [clickedItemIds, setClickedItemIds] = useState([]);
+  const [reportResultVisible, setReportResultVisible] = useState(false);
+  const [reportResult, setReportResult] = useState("");
+  const [reportReason, setReportReason] = useState("");
+  const [reportDate, setReportDate] = useState("");
+  const [reportUser, setReportUser] = useState("");
+  const [reportContent, setReportContent] = useState("");
+
+  console.log(reportResultVisible);
 
   const handleItemClick = async (
     alarmId,
@@ -35,8 +44,17 @@ const Alarm = () => {
     content,
     name,
     isFriend,
-    isRecieve
+    isRecieve,
+    subType,
+    reason,
+    date,
+    user,
+    reportContent
   ) => {
+    setReportReason(reason);
+    setReportDate(date);
+    setReportUser(user);
+    setReportContent(reportContent);
     setClickedItemIds((prevClickedItemIds) => {
       const updatedClickedItemIds = prevClickedItemIds.includes(alarmId)
         ? prevClickedItemIds.filter((id) => id !== alarmId)
@@ -48,7 +66,16 @@ const Alarm = () => {
         JSON.stringify(updatedClickedItemIds)
       )
         .then(() =>
-          navigateToScreen(type, id, userId, content, name, isFriend, isRecieve)
+          navigateToScreen(
+            type,
+            id,
+            userId,
+            content,
+            name,
+            isFriend,
+            isRecieve,
+            subType
+          )
         )
         .catch((error) => console.error("AsyncStorage 저장 오류:", error));
 
@@ -118,7 +145,8 @@ const Alarm = () => {
     content,
     name,
     isFriend,
-    isRecieve
+    isRecieve,
+    subType
   ) => {
     // 친구
     if (type === "친구") {
@@ -181,9 +209,12 @@ const Alarm = () => {
         navigation.navigate("FriendsList");
       }
     }
+    // 신고
+    else if (type === "신고") {
+      setReportResult(subType);
+      setReportResultVisible(true);
+    }
   };
-
-  // 댓글 친구 대결
 
   return (
     <View style={styles.container}>
@@ -243,7 +274,12 @@ const Alarm = () => {
                         item.notificationContent,
                         item.postAuthor,
                         item.isFriend || "",
-                        item.isRecieveCompetition || ""
+                        item.isRecieveCompetition || "",
+                        item.subType,
+                        item.ReportReason || "",
+                        item.reportCreatedAt || "",
+                        item.reportUser || "",
+                        item.reportContent || ""
                       )
                     }
                   >
@@ -298,7 +334,10 @@ const Alarm = () => {
                         item.id,
                         item.userId,
                         item.notificationContent,
-                        item.postAuthor
+                        item.postAuthor,
+                        item.isFriend || "",
+                        item.isRecieveCompetition || "",
+                        item.subType
                       )
                     }
                   >
@@ -333,6 +372,15 @@ const Alarm = () => {
           </View>
         )}
       </ScrollView>
+      <ReportResult
+        isVisible={reportResultVisible}
+        onCancel={() => setReportResultVisible(false)}
+        result={reportResult}
+        reportReason={reportReason}
+        reportDate={reportDate}
+        reportUser={reportUser}
+        reportContent={reportContent}
+      />
     </View>
   );
 };

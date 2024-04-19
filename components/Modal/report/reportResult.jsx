@@ -2,9 +2,17 @@ import React from "react";
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from "react-native";
 import RegularBtnOrange from "../../Btn/regularBtnOrange";
 
-const ReportResult = ({ isVisible, onCancel, result }) => {
+const ReportResult = ({
+  isVisible,
+  onCancel,
+  result,
+  reportReason,
+  reportDate,
+  reportUser,
+  reportContent,
+}) => {
   return (
-    <Modal animationType="slide" transparent={true} visible={isVisible}>
+    <Modal animationType="none" transparent={true} visible={isVisible}>
       <View
         style={{
           justifyContent: "center",
@@ -24,7 +32,7 @@ const ReportResult = ({ isVisible, onCancel, result }) => {
             <Text style={[styles.title, { marginTop: 30, marginBottom: 30 }]}>
               신고 결과
             </Text>
-            {result === "good" ? (
+            {result === "거절" ? (
               <Text style={[styles.text]}>
                 운영 원칙에 어긋나지 않는다고{"\n"}
                 판단되어 경고를 보내지 않았습니다.{"\n"}
@@ -51,21 +59,33 @@ const ReportResult = ({ isVisible, onCancel, result }) => {
             <View style={{ flexDirection: "column", gap: 15 }}>
               <View style={{ flexDirection: "column", gap: 5 }}>
                 <Text style={[styles.contentTitle]}>신고 일자</Text>
-                <Text style={[styles.contentText]}>0000-00-00</Text>
+                <Text style={[styles.contentText]}>{reportDate}</Text>
               </View>
               <View style={{ flexDirection: "column", gap: 5 }}>
                 <Text style={[styles.contentTitle]}>
                   신고 대상 (작성자 닉네임)
                 </Text>
-                <Text style={[styles.contentText]}>닉네임</Text>
+                <Text style={[styles.contentText]}>{reportUser}</Text>
               </View>
               <View style={{ flexDirection: "column", gap: 5 }}>
                 <Text style={[styles.contentTitle]}>신고 내용</Text>
-                <Text style={[styles.contentText]}>게시글/댓글/답글 내용</Text>
+                <Text
+                  style={[styles.contentText]}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {reportContent}
+                </Text>
               </View>
               <View style={{ flexDirection: "column", gap: 5 }}>
                 <Text style={[styles.contentTitle]}>신고 사유</Text>
-                <Text style={[styles.contentText]}>어쩌구저쩌구...</Text>
+                <Text
+                  style={[styles.contentText]}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {reportReason}
+                </Text>
               </View>
             </View>
             <View style={{ marginTop: 30, marginBottom: 30 }}>
