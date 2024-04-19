@@ -183,7 +183,7 @@ const MyPage = () => {
     }
   };
 
-  const handleTermsClick = () => {
+  const  handleTermsClick = () => {
     navigation.navigate("Terms", {
       screen: "Terms",
     });
@@ -216,6 +216,10 @@ const MyPage = () => {
   const handleTestClick = () => {
     navigation.navigate("MainScreen", { screen: "TestScreen" });
     // navigation.navigate("MainScreen", { screen: "BattleStatus" });
+  };
+
+  const handleBlockedClick = () => {
+    navigation.navigate("MainScreen", { screen: "BlockedListScreen" });
   };
 
   return (
@@ -269,6 +273,10 @@ const MyPage = () => {
               스크랩, 작성 글, 작성 댓글 보기
             </Text>
           </TouchableOpacity>
+          <Line color={"#C1C1C1"} h={1} />
+          <TouchableOpacity activeOpacity={0.6} onPress={handleBlockedClick}>
+            <Text style={styles.description}>차단 관리</Text>
+          </TouchableOpacity>
           {/* <Line color={"#C1C1C1"} h={1} />
           <TouchableOpacity
             activeOpacity={0.6}
@@ -316,9 +324,9 @@ const MyPage = () => {
           </TouchableOpacity>
           <Line color={"#C1C1C1"} h={1} />
           {/* 테스트 */}
-          {/* <TouchableOpacity activeOpacity={1} onPress={handleTestClick}>
+          <TouchableOpacity activeOpacity={1} onPress={handleTestClick}>
             <Text style={styles.description}>테스트용</Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
         {/* <View
           style={{
