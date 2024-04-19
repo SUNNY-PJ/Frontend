@@ -556,7 +556,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                         >
                           {childItem.content}
                         </Text>
-
                         {childItem.deleted === false ? (
                           <View
                             style={{
@@ -679,6 +678,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     paddingLeft: 16,
     paddingRight: 16,
+    marginBottom: 10,
   },
   button: {
     borderRadius: 8,
