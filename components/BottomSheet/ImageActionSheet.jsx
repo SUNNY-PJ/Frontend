@@ -11,7 +11,7 @@ const ImageActionSheet = ({ isVisible, onClose, onRemove, onSelect }) => {
       onRequestClose={onClose}
     >
       <TouchableOpacity style={styles.overlay} onPress={onClose}>
-        <View style={{ padding: 17 }}>
+        <View style={{ padding: 17, paddingBottom: 30 }}>
           <View style={styles.actionSheet}>
             <TouchableOpacity style={styles.actionItem} onPress={onSelect}>
               <Text style={styles.actionText}>사진 선택</Text>

@@ -18,7 +18,7 @@ const CommentViewerActionSheet = ({
       onRequestClose={onClose}
     >
       <TouchableOpacity style={styles.overlay} onPress={onClose}>
-        <View style={{ padding: 17 }}>
+        <View style={{ padding: 17, paddingBottom: 30 }}>
           <View style={styles.actionSheet}>
             {isChildComment && (
               <>

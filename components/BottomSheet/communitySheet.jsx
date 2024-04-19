@@ -11,7 +11,7 @@ const CommunitySheet = ({ isVisible, onClose, onProfile, onReport }) => {
       onRequestClose={onClose}
     >
       <TouchableOpacity style={styles.overlay} onPress={onClose}>
-        <View style={{ padding: 17 }}>
+        <View style={{ padding: 17, paddingBottom: 30 }}>
           <View style={styles.actionSheet}>
             <TouchableOpacity style={styles.actionItem} onPress={onProfile}>
               <Text style={styles.actionText}>작성자 프로필 보기</Text>
