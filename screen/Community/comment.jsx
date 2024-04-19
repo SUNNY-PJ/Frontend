@@ -368,7 +368,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                       />
                     ) : null}
                   </View>
-                  {item.deleted === false || item.deleted === false ? (
+                  {!item.deleted && !item.blockedUser && !item.revokeUser && (
                     <View>
                       <TouchableOpacity
                         activeOpacity={0.6}
@@ -390,20 +390,20 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                         />
                       </TouchableOpacity>
                     </View>
-                  ) : null}
+                  )}
                 </View>
                 <Text
                   style={[
                     styles.comment,
                     { paddingLeft: 40 },
-                    (item.revokeUser || item.deleted) && {
+                    (item.revokeUser || item.deleted || item.blockedUser) && {
                       color: "#C1C1C1",
                     },
                   ]}
                 >
                   {item.content}
                 </Text>
-                {item.deleted === true ? (
+                {item.deleted ? (
                   <View
                     style={{
                       marginBottom: 15,
@@ -419,10 +419,12 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                       marginBottom: 15,
                     }}
                   >
-                    {item.revokeUser === false ? (
+                    {!item.blockedUser && (
                       <Text style={styles.subComment}>{item.createdDate}</Text>
-                    ) : null}
-                    {item.revokeUser === false ? (
+                    )}
+                    {item.revokeUser ||
+                    item.blockedUser ||
+                    item.deleted ? null : (
                       <Text
                         style={styles.subComment}
                         onPress={() =>
@@ -431,7 +433,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                       >
                         답글 쓰기
                       </Text>
-                    ) : null}
+                    )}
                   </View>
                 )}
                 <Line color={"#E8E9E8"} h={1} />
@@ -515,41 +517,44 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                               />
                             ) : null}
                           </View>
-                          {childItem.deleted === false ||
-                          childItem.revokeUser === false ? (
-                            <View>
-                              <TouchableOpacity
-                                activeOpacity={0.6}
-                                onPress={() =>
-                                  handleMenuClick(
-                                    childItem.id,
-                                    childItem.writer,
-                                    childItem.commentAuthor,
-                                    childItem.userId,
-                                    childItem.content,
-                                    false
-                                  )
-                                }
-                                hitSlop={{
-                                  top: 20,
-                                  bottom: 20,
-                                  left: 20,
-                                  right: 20,
-                                }}
-                              >
-                                <Image
-                                  source={require("../../assets/commentDotMenu.png")}
-                                  style={{ width: 20, height: 4, top: 10 }}
-                                />
-                              </TouchableOpacity>
-                            </View>
-                          ) : null}
+                          {!childItem.deleted &&
+                            !childItem.blockedUser &&
+                            !childItem.revokeUser && (
+                              <View>
+                                <TouchableOpacity
+                                  activeOpacity={0.6}
+                                  onPress={() =>
+                                    handleMenuClick(
+                                      childItem.id,
+                                      childItem.writer,
+                                      childItem.commentAuthor,
+                                      childItem.userId,
+                                      childItem.content,
+                                      false
+                                    )
+                                  }
+                                  hitSlop={{
+                                    top: 20,
+                                    bottom: 20,
+                                    left: 20,
+                                    right: 20,
+                                  }}
+                                >
+                                  <Image
+                                    source={require("../../assets/commentDotMenu.png")}
+                                    style={{ width: 20, height: 4, top: 10 }}
+                                  />
+                                </TouchableOpacity>
+                              </View>
+                            )}
                         </View>
                         <Text
                           style={[
                             styles.comment,
                             { paddingLeft: 80 },
-                            (childItem.revokeUser || childItem.deleted) && {
+                            (childItem.revokeUser ||
+                              childItem.deleted ||
+                              childItem.blockedUser) && {
                               color: "#C1C1C1",
                             },
                           ]}
