@@ -10,7 +10,14 @@ import {
 import MiddleBtn from "../../Btn/middleBtn";
 import MiddleBtnBlack from "../../Btn/middleBtnBlack";
 
-const MsgModal = ({ isVisible, toggleModal, onDelete, onCancel, msgTitle }) => {
+const MsgModal = ({
+  isVisible,
+  toggleModal,
+  onDelete,
+  onCancel,
+  msgTitle,
+  msgContent,
+}) => {
   return (
     <Modal animationType="none" transparent={true} visible={isVisible}>
       <View
@@ -32,6 +39,7 @@ const MsgModal = ({ isVisible, toggleModal, onDelete, onCancel, msgTitle }) => {
             </TouchableOpacity>
           </View>
           <Text style={styles.title}>{msgTitle}</Text>
+          <Text style={styles.content}>{msgContent}</Text>
           <View style={styles.buttonContainer}>
             <MiddleBtn text={"네"} onClick={onDelete} />
             <MiddleBtnBlack text={"아니오"} onClick={onCancel} />
@@ -61,6 +69,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#000",
     fontFamily: "SUITE_Bold",
+  },
+  content: {
+    fontSize: 15,
+    textAlign: "center",
+    color: "#5C5C5C",
+    fontFamily: "SUITE_Medium",
+    marginTop: 8,
+    paddingLeft: 40,
+    paddingRight: 40,
   },
   buttonContainer: {
     flexDirection: "row",
