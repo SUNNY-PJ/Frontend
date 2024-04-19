@@ -8,6 +8,7 @@ const CommentViewerActionSheet = ({
   onComment,
   onProfile,
   onReport,
+  onBlock,
   isChildComment,
 }) => {
   return (
@@ -30,6 +31,10 @@ const CommentViewerActionSheet = ({
             )}
             <TouchableOpacity style={styles.actionItem} onPress={onProfile}>
               <Text style={styles.actionText}>작성자 프로필 보기</Text>
+            </TouchableOpacity>
+            <Line h={1} color={"#C1C1C1"} />
+            <TouchableOpacity style={styles.actionItem} onPress={onBlock}>
+              <Text style={styles.actionText}>작성자 차단하기</Text>
             </TouchableOpacity>
             <Line h={1} color={"#C1C1C1"} />
             <TouchableOpacity style={styles.actionItem} onPress={onReport}>
