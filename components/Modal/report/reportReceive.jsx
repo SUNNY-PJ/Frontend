@@ -5,7 +5,6 @@ import RegularBtnOrange from "../../Btn/regularBtnOrange";
 const ReportReceive = ({
   isVisible,
   onCancel,
-  result,
   count,
   date,
   content,
@@ -33,8 +32,8 @@ const ReportReceive = ({
               경고 안내
             </Text>
             <Text style={[styles.text]}>
-              N번째 경고를 받았습니다.{"\n"}
-              경고 {count}회 누적 시 탈퇴 처리됩니다.
+              {count}번째 경고를 받았습니다.{"\n"}
+              경고 5회 누적 시 탈퇴 처리됩니다.
             </Text>
 
             <View
