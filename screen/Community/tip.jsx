@@ -10,6 +10,7 @@ import {
 import { useCommunity } from "../../context/communityContext";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -33,6 +34,14 @@ const Tip = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) {
+      fetchData();
+    }
+  }, [isFocused]);
 
   return (
     <ScrollView
