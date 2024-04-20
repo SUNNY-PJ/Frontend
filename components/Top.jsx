@@ -7,7 +7,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
+  Dimensions,
 } from "react-native";
+import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TopTooltip from "./Modal/topTooltip";
 import { useSaveData } from "../context/saveDataContext";
@@ -113,15 +115,7 @@ const Top = ({ navigation }) => {
           {saveData.isLoaded ? (
             saveData.day
           ) : (
-            <Text
-              style={{
-                fontFamily: "SUITE_Bold",
-                color: "#1F1F1F",
-                fontSize: 16,
-              }}
-            >
-              ??
-            </Text>
+            <Text style={styles.day}>??</Text>
           )}
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate("Goal")}>
@@ -136,17 +130,7 @@ const Top = ({ navigation }) => {
               ]}
             />
             {saveData.isLoaded ? (
-              <Text
-                style={{
-                  marginLeft: -20,
-                  fontSize: 16,
-                  fontFamily: "SUITE_Heavy",
-                  color: "#1F1F1F",
-                  transform: [{ translateY: 0 }, { translateX: 90 }],
-                }}
-              >
-                {saveData.progress}%
-              </Text>
+              <Text style={styles.progressText}>{saveData.progress}%</Text>
             ) : (
               <View
                 style={{
@@ -154,25 +138,9 @@ const Top = ({ navigation }) => {
                   alignItems: "center",
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontFamily: "SUITE_Heavy",
-                    color: "#1F1F1F",
-                  }}
-                >
+                <Text style={styles.goalTitle}>
                   절약 목표
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontFamily: "SUITE",
-                      color: "#1F1F1F",
-                      alignSelf: "center",
-                      marginTop: 1,
-                    }}
-                  >
-                    를 설정해보세요!
-                  </Text>
+                  <Text style={styles.goalText}>를 설정해보세요!</Text>
                 </Text>
               </View>
             )}
@@ -202,6 +170,7 @@ const Top = ({ navigation }) => {
           <Image
             source={require("../assets/notification.png")}
             style={styles.icon}
+            resizeMode="contain"
           />
         </TouchableOpacity>
       </View>
@@ -215,6 +184,9 @@ const Top = ({ navigation }) => {
 Top.navigationOptions = {
   headerShown: false,
 };
+
+const { width } = Dimensions.get("window");
+const isLargeScreen = width >= 375;
 
 const styles = StyleSheet.create({
   container: {
@@ -265,6 +237,30 @@ const styles = StyleSheet.create({
   icon: {
     height: 24,
     width: 24,
+  },
+  progressText: {
+    marginLeft: -20,
+    fontSize: 16,
+    fontFamily: "SUITE_Heavy",
+    color: "#1F1F1F",
+    transform: [{ translateY: 0 }, { translateX: 90 }],
+  },
+  day: {
+    fontFamily: "SUITE_Bold",
+    color: "#1F1F1F",
+    fontSize: 16,
+  },
+  goalText: {
+    fontSize: 15,
+    fontFamily: "SUITE",
+    color: "#1F1F1F",
+    alignSelf: "center",
+    marginTop: 1,
+  },
+  goalTitle: {
+    fontSize: 15,
+    fontFamily: "SUITE_Heavy",
+    color: "#1F1F1F",
   },
 });
 
