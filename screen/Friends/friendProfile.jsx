@@ -315,38 +315,40 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
               {item.owner ? (
                 <View style={{ height: 12 }} />
               ) : (
-                <TouchableOpacity
-                  style={[
-                    styles.button,
-                    {
-                      backgroundColor:
-                        status === "대기중"
-                          ? "#F1F1F1"
-                          : status === "친구끊기"
-                          ? "#5C5C5C"
-                          : "#FFC891",
-                    },
-                  ]}
-                  onPress={handleFriend}
-                >
-                  <Text
+                <>
+                  <TouchableOpacity
                     style={[
-                      styles.btnText,
+                      styles.button,
                       {
-                        color: status === "친구끊기" ? "#fff" : "#1F1F1F",
+                        backgroundColor:
+                          status === "대기중"
+                            ? "#F1F1F1"
+                            : status === "친구끊기"
+                            ? "#5C5C5C"
+                            : "#FFC891",
                       },
                     ]}
+                    onPress={handleFriend}
                   >
-                    {status}
-                  </Text>
-                </TouchableOpacity>
+                    <Text
+                      style={[
+                        styles.btnText,
+                        {
+                          color: status === "친구끊기" ? "#fff" : "#1F1F1F",
+                        },
+                      ]}
+                    >
+                      {status}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.button, { backgroundColor: "#FFFFFF" }]}
+                    onPress={handleBlockUser}
+                  >
+                    <Text style={[styles.btnText]}>차단하기</Text>
+                  </TouchableOpacity>
+                </>
               )}
-              <TouchableOpacity
-                style={[styles.button, { backgroundColor: "#FFFFFF" }]}
-                onPress={handleBlockUser}
-              >
-                <Text style={[styles.btnText]}>차단하기</Text>
-              </TouchableOpacity>
             </View>
             <View
               style={{
