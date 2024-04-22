@@ -6,6 +6,11 @@ import { Platform } from "react-native";
 import * as Font from "expo-font";
 import Navigation from "./Navigation";
 import { Alert, ActivityIndicator } from "react-native";
+import { jwtDecode } from "jwt-decode";
+import { proxyUrl } from "./constant/common";
+import "core-js/stable/atob";
+// import { decode } from "base-64";
+// global.atob = decode;
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -29,6 +34,7 @@ async function schedulePushNotification(data) {
 export default function App() {
   const [pushToken, setPushToken] = useState("");
   const [notification, setNotification] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(null);
   const notificationListener = useRef();
   const responseListener = useRef();
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -148,22 +154,67 @@ export default function App() {
     await schedulePushNotification(notificationData);
   };
 
-  const [isSignedIn, setIsSignedIn] = useState(null);
+  const refreshToken = async () => {
+    console.log("리프레시 토큰 ");
+    const inputURL = proxyUrl + `/apple/auth/reissue`;
+    const refresh_token = await AsyncStorage.getItem("refresh_token");
 
-  // 로그인 상태 확인
-  const checkSignInStatus = async () => {
     try {
-      const token = await AsyncStorage.getItem("access_token");
-      setIsSignedIn(!!token);
-    } catch (e) {
-      // 에러 처리
-      console.error(e);
+      const response = await apiClient.get(inputURL, {
+        params: { refresh_token },
+      });
+
+      const access_token = response.data.data.accessToken;
+      const new_refresh_token = response.data.data.refreshToken;
+      await AsyncStorage.setItem("access_token", access_token);
+      await AsyncStorage.setItem("refresh_token", new_refresh_token);
+      console.log("새로운 토큰 저장:", access_token);
+      setIsSignedIn(!!access_token);
+      return access_token;
+    } catch (error) {
+      console.error("토큰 갱신 실패:", error);
+      setIsSignedIn(false); // 토큰 갱신 실패 시 로그아웃 처리
+      return null;
+    }
+  };
+
+  const checkTokenExpiry = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    console.log("1111");
+    if (access_token) {
+      console.log("222");
+      const decoded = jwtDecode(access_token);
+      console.log("decoded", decoded);
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
+        console.log("토큰 만료됨, 갱신 시도...");
+        await refreshToken(); // 토큰 갱신 시도 후 로그인 상태는 refreshToken 함수 내에서 설정
+      } else {
+        console.log("토큰 유효함");
+        setIsSignedIn(true);
+      }
+    } else {
+      setIsSignedIn(false); // 토큰이 없는 경우 로그아웃 처리
     }
   };
 
   useEffect(() => {
-    checkSignInStatus();
+    checkTokenExpiry();
   }, []);
+
+  // // 로그인 상태 확인
+  // const checkSignInStatus = async () => {
+  //   try {
+  //     const token = await AsyncStorage.getItem("access_token");
+  //   } catch (e) {
+  //     // 에러 처리
+  //     console.error(e);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   checkSignInStatus();
+  // }, []);
 
   // return <Navigation handleScheduleNotification={handleScheduleNotification} />;
   if (isSignedIn === null) {
