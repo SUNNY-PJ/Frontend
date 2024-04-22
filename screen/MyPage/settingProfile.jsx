@@ -264,8 +264,8 @@ const SettingProfile = () => {
           )}
         </Pressable>
       ))}
-      {profile.map((item) => (
-        <View style={styles.contentContainer}>
+      {profile.map((item, index) => (
+        <View style={styles.contentContainer} key={index}>
           <Text
             style={{
               paddingLeft: 12,
