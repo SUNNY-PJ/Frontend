@@ -153,7 +153,7 @@ export default function App() {
   // 로그인 상태 확인
   const checkSignInStatus = async () => {
     try {
-      const token = await AsyncStorage.getItem("userToken");
+      const token = await AsyncStorage.getItem("access_token");
       setIsSignedIn(!!token);
     } catch (e) {
       // 에러 처리
