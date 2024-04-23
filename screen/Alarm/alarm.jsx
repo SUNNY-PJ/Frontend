@@ -304,7 +304,11 @@ const Alarm = () => {
                     />
                     <View>
                       <Text style={styles.titleText}>{item.title}</Text>
-                      <Text style={styles.contentText}>
+                      <Text
+                        style={styles.contentText}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                      >
                         {item.notificationContent}
                       </Text>
                       <View style={styles.bottomSection}>
