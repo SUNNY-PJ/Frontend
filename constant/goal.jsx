@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Dimensions,
 } from "react-native";
 import Input from "../components/Input/input";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
@@ -16,6 +17,7 @@ import moment from "moment";
 
 function Goal({ navigation }) {
   const inputURL = "/save";
+  const windowHeight = Dimensions.get("window").height;
 
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
   const [isStartDatePickerVisible, setStartDatePickerVisibility] =
@@ -187,7 +189,7 @@ function Goal({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView style={{ marginBottom: 100 }}>
         <View style={styles.contentContainer}>
           <Text style={styles.headerText}>절약 목표 설정 </Text>
           <Text style={styles.label}>지출 목표 금액을 입력해주세요</Text>
@@ -251,6 +253,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
     paddingLeft: 28,
     paddingRight: 27,
+    paddingBottom: 20,
   },
   headerText: {
     fontSize: 22,
