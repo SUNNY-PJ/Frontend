@@ -186,14 +186,14 @@ Top.navigationOptions = {
 };
 
 const { width } = Dimensions.get("window");
-const isLargeScreen = width >= 375;
+const isLargeScreen = width > 375;
 
 const styles = StyleSheet.create({
   container: {
     borderTopColor: "#fff",
     backgroundColor: "#fff",
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
     top: 0,
     position: "fixed",
     width: "100%",
@@ -206,10 +206,10 @@ const styles = StyleSheet.create({
     borderColor: "#1F1F1F",
     gap: 20,
     justifyContent: "center",
-    paddingTop: 52,
+    paddingTop: isLargeScreen ? 52 : 37,
     paddingBottom: 12,
     alignItems: "center",
-    height: 100,
+    height: isLargeScreen ? 100 : 85,
   },
 
   text: {
@@ -219,8 +219,8 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     position: "relative",
-    width: 200,
-    height: 24,
+    width: isLargeScreen ? 200 : 180,
+    height: isLargeScreen ? 24 : 22,
     borderRadius: 29,
     borderWidth: 1.5,
     borderColor: "#1F1F1F",
