@@ -17,10 +17,13 @@ import apiClient from "../../api/apiClient";
 import Line from "../../components/Line";
 import DonutChart from "../../components/Chart/donutChart";
 
+const windowWidth = Dimensions.get("window").width;
+const baseWidth = 390;
+const isIphone7 = windowWidth < baseWidth;
+
 const Statistics = ({ year, month }) => {
   const navigation = useNavigation();
   const windowHeight = Dimensions.get("window").height;
-  const windowWidth = Dimensions.get("window").width;
 
   const [data, setData] = useState([]);
   const [noData, setNoData] = useState(false);
@@ -224,8 +227,6 @@ const Statistics = ({ year, month }) => {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-
-      // const consumptionDeleteData = response.data;
       fetchData();
       fetchCategoryData(categoryParamVal);
     } catch (error) {
@@ -234,7 +235,6 @@ const Statistics = ({ year, month }) => {
   };
 
   const handleModify = (consumptionId) => {
-    // navigation.replace("Note", {
     navigation.navigate("Note", {
       screen: "Note",
       params: {
@@ -246,7 +246,12 @@ const Statistics = ({ year, month }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ marginTop: 24, marginBottom: 30 }}>
+      <View
+        style={{
+          marginTop: isIphone7 ? -10 : 24,
+          marginBottom: isIphone7 ? 15 : 30,
+        }}
+      >
         <DonutChart
           data={data}
           noData={noData}

@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import Statistics from "./statistics";
 import History from "./history";
 import { useRoute } from "@react-navigation/native";
@@ -51,13 +58,7 @@ const Spending = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-around",
-            marginTop: 15,
-          }}
-        >
+        <View style={styles.box}>
           <TouchableOpacity onPress={statisticsClick} activeOpacity={0.6}>
             <Text style={[styles.tabText, statistics && styles.activeTabText]}>
               지출 통계
@@ -78,30 +79,14 @@ const Spending = () => {
           />
         </View>
         {!history && (
-          <View
-            style={{
-              flexDirection: "row",
-              gap: 8,
-              marginBottom: 8,
-              marginTop: 16,
-              justifyContent: "center",
-            }}
-          >
+          <View style={styles.section}>
             <TouchableOpacity onPress={previousMonth}>
               <Image
                 source={require("../../assets/arrowLeft.png")}
                 style={[styles.vectorImage, { transform: [{ scaleX: -1 }] }]}
               />
             </TouchableOpacity>
-            <Text
-              style={{
-                fontSize: 22,
-                color: "#1F1F1F",
-                fontFamily: "SUITE_Bold",
-              }}
-            >
-              {formatDate(currentDate)}
-            </Text>
+            <Text style={styles.date}>{formatDate(currentDate)}</Text>
             <TouchableOpacity onPress={nextMonth}>
               <Image
                 source={require("../../assets/arrowLeft.png")}
@@ -117,6 +102,10 @@ const Spending = () => {
   );
 };
 
+const windowWidth = Dimensions.get("window").width;
+const baseWidth = 390;
+const isIphone7 = windowWidth < baseWidth;
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
@@ -126,8 +115,20 @@ const styles = StyleSheet.create({
   contentContainer: {
     marginBottom: 40,
   },
+  box: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: isIphone7 ? 13 : 15,
+  },
+  section: {
+    flexDirection: "row",
+    gap: 8,
+    marginBottom: 8,
+    marginTop: isIphone7 ? 13 : 16,
+    justifyContent: "center",
+  },
   tabText: {
-    fontSize: 20,
+    fontSize: isIphone7 ? 18 : 20,
     fontFamily: "SUITE_Bold",
     color: "#C1C1C1",
     paddingTop: 9,
@@ -157,6 +158,11 @@ const styles = StyleSheet.create({
   vectorImage: {
     width: 24,
     height: 24,
+  },
+  date: {
+    fontSize: isIphone7 ? 20 : 22,
+    color: "#1F1F1F",
+    fontFamily: "SUITE_Bold",
   },
 });
 
