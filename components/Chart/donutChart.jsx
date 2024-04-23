@@ -6,9 +6,14 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 import { useIsFocused } from "@react-navigation/native";
+
+const windowWidth = Dimensions.get("window").width;
+const baseWidth = 390;
+const isIphone7 = windowWidth < baseWidth;
 
 const DonutChart = ({
   data,
@@ -18,7 +23,6 @@ const DonutChart = ({
   month,
   selectedCategory,
 }) => {
-  const windowWidth = Dimensions.get("window").width;
   // const [selectedCategory, setSelectedCategory] = useState(null);
 
   const isFocused = useIsFocused();
@@ -38,8 +42,8 @@ const DonutChart = ({
   // 도넛 차트의 중심 좌표 및 반지름 설정
   const centerX = 110; // 중앙 X 좌표를 수정
   const centerY = 110; // 중앙 Y 좌표를 수정
-  const radius = 100; // 반지름을 수정
-  const strokeWidth = 110; // 선의 두께를 조정
+  const radius = isIphone7 ? 80 : 100; // 반지름을 수정
+  const strokeWidth = isIphone7 ? 90 : 110; // 선의 두께를 조정
   const textOffset = 20; // 텍스트의 수직 오프셋을 조정
   const textDistance = 15; // 텍스트의 수평 거리를 조정
 
@@ -158,7 +162,12 @@ const DonutChart = ({
             source={require("../../assets/donutText.png")}
             x={centerX}
             y={centerY}
-            style={{ top: 90, right: -18, width: 184, height: 36 }}
+            style={{
+              top: isIphone7 ? 95 : 90,
+              right: isIphone7 ? -38 : -18,
+              width: isIphone7 ? 144 : 184,
+              height: isIphone7 ? 28 : 36,
+            }}
           />
         )}
       </Svg>
@@ -169,14 +178,7 @@ const DonutChart = ({
             onPress={() => handleCategorySelect(item.category)}
             activeOpacity={0.8}
           >
-            <View
-              style={{
-                gap: 3,
-                marginTop: 10,
-                alignItems: "center",
-                width: 53,
-              }}
-            >
+            <View style={styles.section}>
               <View
                 style={[
                   styles.imageContainer,
@@ -186,11 +188,15 @@ const DonutChart = ({
               >
                 <Image source={item.url} style={styles.image} />
               </View>
-              <Text style={[styles.text, { fontSize: 12 }]}>{item.title}</Text>
+              <Text style={[styles.text, { fontSize: isIphone7 ? 10 : 12 }]}>
+                {item.title}
+              </Text>
               {item.allZero ? (
-                <Text style={[styles.text, { fontSize: 16 }]}>%</Text>
+                <Text style={[styles.text, { fontSize: isIphone7 ? 12 : 16 }]}>
+                  %
+                </Text>
               ) : (
-                <Text style={[styles.text, { fontSize: 16 }]}>
+                <Text style={[styles.text, { fontSize: isIphone7 ? 12 : 16 }]}>
                   {item.value}%
                 </Text>
               )}
@@ -208,8 +214,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   imageContainer: {
-    width: 36,
-    height: 36,
+    width: isIphone7 ? 30 : 36,
+    height: isIphone7 ? 30 : 36,
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 7,
@@ -221,23 +227,29 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: "contain",
-    width: 20,
-    height: 20,
+    width: isIphone7 ? 16 : 20,
+    height: isIphone7 ? 16 : 20,
   },
   text: {
     fontFamily: "SUITE_Bold",
     color: "#1F1F1F",
+    fontSize: isIphone7 ? 10 : 12,
   },
   selectedCategory: {
-    // transform: [{ scale: 1.1 }],
-    width: 40,
-    height: 40,
+    width: isIphone7 ? 35 : 40,
+    height: isIphone7 ? 35 : 40,
     shadowOffset: {
       width: 0,
       height: 1,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
+  },
+  section: {
+    gap: 3,
+    marginTop: isIphone7 ? -18 : 10,
+    alignItems: "center",
+    width: isIphone7 ? 43 : 53,
   },
 });
 
