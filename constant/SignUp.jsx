@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, Alert } from "react-native";
+import { View, Text, Image, Alert, Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import LargeBtnDisable from "../components/Btn/largeBtnDisable";
 import InputNickName from "../components/Input/inputNickname";
 import LargeBtn from "../components/Btn/largeBtn";
 import apiClient from "../api/apiClient";
+const windowWidth = Dimensions.get("window").width;
+const baseWidth = 390;
+const isIphone7 = windowWidth < baseWidth;
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -93,18 +96,18 @@ const SignUp = () => {
       <Image
         source={require("../assets/SUNNY.png")}
         style={{
-          marginTop: 75,
+          marginTop: isIphone7 ? 55 : 75,
           alignSelf: "center",
-          width: 120,
-          height: 170,
+          width: isIphone7 ? 100 : 120,
+          height: isIphone7 ? 150 : 170,
         }}
       />
       <Text
         style={{
-          fontSize: 16,
+          fontSize: isIphone7 ? 14 : 16,
           color: "#1F1F1F",
           fontFamily: "SUITE_Medium",
-          marginTop: 40,
+          marginTop: isIphone7 ? 30 : 40,
           alignSelf: "center",
           marginBottom: 16,
         }}
@@ -119,13 +122,13 @@ const SignUp = () => {
       />
       <Text
         style={{
-          marginTop: 8,
-          fontSize: 12,
+          marginTop: isIphone7 ? 6 : 8,
+          fontSize: isIphone7 ? 10 : 12,
           fontFamily: "SUITE_Medium",
           color: "#5C5C5C",
           textAlign: "left",
           paddingLeft: 12,
-          marginBottom: 278,
+          marginBottom: isIphone7 ? 180 : 278,
         }}
       >
         * 2~10자 이내, 특수문자 및 숫자 사용 가능, 이모지 사용 불가
