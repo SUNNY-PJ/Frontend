@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Keyboard,
   Alert,
+  Dimensions,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
@@ -20,6 +21,8 @@ import Line from "../../components/Line";
 import apiClient from "../../api/apiClient";
 import { useCommunity } from "../../context/communityContext";
 import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
+const { width } = Dimensions.get("window");
+const isLargeScreen = width > 375;
 
 const COMMUNITY_CATEGORY = [
   { title: "절약 꿀팁", data: "절약 꿀팁" },
@@ -274,10 +277,10 @@ const Modify = () => {
               {/* 카테고리 선택 */}
               <Text
                 style={{
-                  fontSize: 16,
+                  fontSize: isLargeScreen ? 16 : 14,
                   color: "#1F1F1F",
-                  marginBottom: 8,
-                  marginTop: 16,
+                  marginBottom: isLargeScreen ? 8 : 4,
+                  marginTop: isLargeScreen ? 16 : 8,
                   paddingLeft: 12,
                   fontFamily: "SUITE_Medium",
                 }}
@@ -311,7 +314,8 @@ const Modify = () => {
               />
               <Text
                 style={{
-                  fontSize: 16,
+                  fontSize: isLargeScreen ? 16 : 14,
+
                   color: "#1F1F1F",
                   marginBottom: 8,
                   marginTop: 10,
@@ -326,8 +330,8 @@ const Modify = () => {
                     <Image
                       source={{ uri: image }}
                       style={{
-                        width: 70,
-                        height: 70,
+                        width: isLargeScreen ? 70 : 60,
+                        height: isLargeScreen ? 70 : 60,
                         borderColor: "#C1C1C1",
                         borderRadius: 8,
                         borderWidth: 1.5,
@@ -358,7 +362,10 @@ const Modify = () => {
                   <Pressable onPress={uploadImage}>
                     <Image
                       source={require("../../assets/photo.png")}
-                      style={{ width: 70, height: 70 }}
+                      style={{
+                        width: isLargeScreen ? 70 : 60,
+                        height: isLargeScreen ? 70 : 60,
+                      }}
                     />
                   </Pressable>
                 )}

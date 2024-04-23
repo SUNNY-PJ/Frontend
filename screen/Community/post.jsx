@@ -9,8 +9,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  Dimensions,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { useCommunity } from "../../context/communityContext";
 import * as ImagePicker from "expo-image-picker";
@@ -20,6 +20,8 @@ import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
 import apiClient from "../../api/apiClient";
+const { width } = Dimensions.get("window");
+const isLargeScreen = width > 375;
 
 const Post = () => {
   const { fetchData } = useCommunity();
@@ -221,10 +223,10 @@ const Post = () => {
             {/* 카테고리 선택 */}
             <Text
               style={{
-                fontSize: 16,
+                fontSize: isLargeScreen ? 16 : 14,
                 color: "#1F1F1F",
-                marginBottom: 8,
-                marginTop: 16,
+                marginBottom: isLargeScreen ? 8 : 4,
+                marginTop: isLargeScreen ? 16 : 8,
                 paddingLeft: 12,
                 fontFamily: "SUITE_Medium",
               }}
@@ -238,7 +240,7 @@ const Post = () => {
             />
             <Text
               style={{
-                fontSize: 16,
+                fontSize: isLargeScreen ? 16 : 14,
                 color: "#1F1F1F",
                 marginBottom: 8,
                 marginTop: 10,
@@ -257,7 +259,7 @@ const Post = () => {
             />
             <Text
               style={{
-                fontSize: 16,
+                fontSize: isLargeScreen ? 16 : 14,
                 color: "#1F1F1F",
                 marginBottom: 8,
                 marginTop: 10,
@@ -272,8 +274,8 @@ const Post = () => {
                   <Image
                     source={{ uri: image }}
                     style={{
-                      width: 70,
-                      height: 70,
+                      width: isLargeScreen ? 70 : 60,
+                      height: isLargeScreen ? 70 : 60,
                       borderColor: "#C1C1C1",
                       borderRadius: 8,
                       borderWidth: 1.5,
@@ -304,7 +306,10 @@ const Post = () => {
                 <Pressable onPress={uploadImage}>
                   <Image
                     source={require("../../assets/photo.png")}
-                    style={{ width: 70, height: 70 }}
+                    style={{
+                      width: isLargeScreen ? 70 : 60,
+                      height: isLargeScreen ? 70 : 60,
+                    }}
                   />
                 </Pressable>
               )}

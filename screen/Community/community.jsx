@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { proxyUrl } from "../../constant/common";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import { useCommunity } from "../../context/communityContext";
 import { useNavigation } from "@react-navigation/native";
 import Board from "./board";
 import Tip from "./tip";
 import Line from "../../components/Line";
 import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
+const windowWidth = Dimensions.get("window").width;
+const baseWidth = 390;
+const isIphone7 = windowWidth < baseWidth;
 
 const COMMUNITY_SORT = [
   { title: "최신순", data: "LATEST" },
@@ -70,13 +79,7 @@ const Community = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-around",
-            marginTop: 15,
-          }}
-        >
+        <View style={styles.box}>
           <TouchableOpacity onPress={tipClick} activeOpacity={0.6}>
             <Text style={[styles.tabText, tip && styles.activeTabText]}>
               절약 꿀팁
@@ -164,8 +167,13 @@ const styles = StyleSheet.create({
   contentContainer: {
     marginBottom: 40,
   },
+  box: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: isIphone7 ? 13 : 15,
+  },
   tabText: {
-    fontSize: 20,
+    fontSize: isIphone7 ? 18 : 20,
     fontFamily: "SUITE_Bold",
     color: "#C1C1C1",
     paddingTop: 9,
