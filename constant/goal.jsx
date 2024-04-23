@@ -17,7 +17,8 @@ import moment from "moment";
 
 function Goal({ navigation }) {
   const inputURL = "/save";
-  const windowHeight = Dimensions.get("window").height;
+  const { width } = Dimensions.get("window");
+  const isLargeScreen = width > 375;
 
   const [isAllFieldsFilled, setIsAllFieldsFilled] = useState(false);
   const [isStartDatePickerVisible, setStartDatePickerVisibility] =
@@ -189,7 +190,7 @@ function Goal({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={{ marginBottom: 100 }}>
+      <ScrollView style={{ marginBottom: isLargeScreen ? 0 : 80 }}>
         <View style={styles.contentContainer}>
           <Text style={styles.headerText}>절약 목표 설정 </Text>
           <Text style={styles.label}>지출 목표 금액을 입력해주세요</Text>

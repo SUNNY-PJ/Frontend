@@ -18,9 +18,11 @@ import DatePicker from "../components/DatePicker/datePicker";
 import LargeBtn from "../components/Btn/largeBtn";
 import apiClient from "../api/apiClient";
 
+const { width } = Dimensions.get("window");
+const isLargeScreen = width > 375;
+
 const Note = () => {
   const route = useRoute();
-  const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();
   const { consumptionId } = route.params?.params ?? {};
   const { screen } = route.params?.params ?? {};
@@ -199,7 +201,7 @@ const Note = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={closeNoticeMsg} activeOpacity={1}>
-        <ScrollView style={{ height: windowHeight - 200 }}>
+        <ScrollView style={{ marginBottom: isLargeScreen ? 0 : 80 }}>
           <View style={styles.contentContainer}>
             {exists ? (
               <Text style={styles.headerText}>지출 내역 수정</Text>
