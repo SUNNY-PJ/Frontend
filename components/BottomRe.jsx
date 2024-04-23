@@ -12,6 +12,8 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useSaveData } from "../context/saveDataContext";
 import { useRoute } from "@react-navigation/native";
+const { width } = Dimensions.get("window");
+const isLargeScreen = width > 375;
 
 const BottomRe = () => {
   const { saveData } = useSaveData();
@@ -116,8 +118,6 @@ const styles = StyleSheet.create({
   container: {
     borderTopColor: "#fff",
     backgroundColor: "#FFF",
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
     bottom: 0,
     position: "absolute",
     width: "100%",
@@ -131,22 +131,22 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     paddingBottom: 24,
     paddingTop: 16,
-    height: 100,
+    height: isLargeScreen ? 100 : 80,
   },
   menuText: {
-    fontSize: 10,
+    fontSize: isLargeScreen ? 10 : 9,
     fontFamily: "SUITE",
     color: "#1F1F1F",
     textAlign: "center",
     marginTop: 4,
   },
   icon: {
-    height: 24,
-    width: 24,
+    height: isLargeScreen ? 24 : 22,
+    width: isLargeScreen ? 24 : 22,
   },
   selectedIconContainer: {
     backgroundColor: "#5C5C5C",
-    padding: 6,
+    padding: isLargeScreen ? 6 : 4,
     borderRadius: 8,
   },
   bottomContainer: {
@@ -163,12 +163,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
   },
   iconClick: {
-    width: 36,
-    height: 36,
+    width: isLargeScreen ? 36 : 32,
+    height: isLargeScreen ? 36 : 32,
   },
   iconBg: {
-    width: 36,
-    height: 36,
+    width: isLargeScreen ? 36 : 32,
+    height: isLargeScreen ? 36 : 32,
     justifyContent: "center",
     alignItems: "center",
   },
