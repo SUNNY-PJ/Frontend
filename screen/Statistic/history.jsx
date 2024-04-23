@@ -15,6 +15,8 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 import CalendarComponent from "../../components/Calendar/calendar";
 import apiClient from "../../api/apiClient";
 import { useNavigation } from "@react-navigation/native";
+const { width } = Dimensions.get("window");
+const isLargeScreen = width > 375;
 
 const History = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -206,7 +208,7 @@ const styles = StyleSheet.create({
     minHeight: "100%",
   },
   contentContainer: {
-    marginTop: 24,
+    marginTop: isLargeScreen ? 24 : 0,
   },
   image: {
     width: 32,
