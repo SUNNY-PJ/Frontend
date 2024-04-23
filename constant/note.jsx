@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
+  Dimensions,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
@@ -19,6 +20,7 @@ import apiClient from "../api/apiClient";
 
 const Note = () => {
   const route = useRoute();
+  const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();
   const { consumptionId } = route.params?.params ?? {};
   const { screen } = route.params?.params ?? {};
@@ -197,7 +199,7 @@ const Note = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={closeNoticeMsg} activeOpacity={1}>
-        <ScrollView>
+        <ScrollView style={{ height: windowHeight - 200 }}>
           <View style={styles.contentContainer}>
             {exists ? (
               <Text style={styles.headerText}>지출 내역 수정</Text>
