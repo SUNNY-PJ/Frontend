@@ -18,6 +18,8 @@ import LeaveMsg from "../../components/Modal/myPage/leaveMsg";
 import * as Linking from "expo-linking";
 import apiClient from "../../api/apiClient";
 import { proxyUrl } from "../../constant/common";
+const { width } = Dimensions.get("window");
+const isLargeScreen = width > 375;
 
 const MyPage = () => {
   const url = proxyUrl;
@@ -224,23 +226,27 @@ const MyPage = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={{ height: windowHeight - 125 - 88 }}>
+      <ScrollView style={{ marginBottom: isLargeScreen ? 100 : 80 }}>
         <View style={styles.contentContainer}>
           {profile.map((item) => (
             <View
               style={{
                 flexDirection: "row",
-                marginTop: 24,
-                marginBottom: 16,
+                marginTop: isLargeScreen ? 24 : 20,
+                marginBottom: isLargeScreen ? 16 : 14,
                 paddingLeft: 20,
-                gap: 24,
+                gap: isLargeScreen ? 24 : 20,
               }}
               key={item.id}
             >
               <Image
                 // source={require("../../assets/myPage_profile.png")}
                 source={{ uri: item.profile }}
-                style={{ width: 56, height: 56, borderRadius: 50 }}
+                style={{
+                  width: isLargeScreen ? 56 : 46,
+                  height: isLargeScreen ? 56 : 46,
+                  borderRadius: 50,
+                }}
               />
               <View style={{ gap: 8 }}>
                 <Text style={styles.name}>{item.name}</Text>
@@ -376,45 +382,49 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     alignSelf: "center",
-    marginTop: 12,
+    marginTop: isLargeScreen ? 12 : 10,
   },
-  name: { fontSize: 20, color: "#1F1F1F", fontFamily: "SUITE_ExtraBold" },
+  name: {
+    fontSize: isLargeScreen ? 20 : 16,
+    color: "#1F1F1F",
+    fontFamily: "SUITE_ExtraBold",
+  },
   setting: {
-    fontSize: 16,
+    fontSize: isLargeScreen ? 16 : 14,
     color: "#5C5C5C",
     fontFamily: "SUITE_Medium",
   },
   title: {
     fontFamily: "SUITE_ExtraBold",
-    fontSize: 16,
+    fontSize: isLargeScreen ? 16 : 14,
     color: "#1F1F1F",
     paddingLeft: 20,
-    paddingTop: 16,
-    marginBottom: 8,
+    paddingTop: isLargeScreen ? 16 : 12,
+    marginBottom: isLargeScreen ? 8 : 6,
   },
   description: {
     fontFamily: "SUITE_Medium",
-    fontSize: 16,
+    fontSize: isLargeScreen ? 16 : 14,
     color: "#1F1F1F",
-    paddingBottom: 16,
-    paddingTop: 16,
+    paddingBottom: isLargeScreen ? 16 : 12,
+    paddingTop: isLargeScreen ? 16 : 12,
     paddingLeft: 20,
   },
   alarmTitle: {
-    fontSize: 16,
+    fontSize: isLargeScreen ? 16 : 14,
     color: "#1F1F1F",
     fontFamily: "SUITE_ExtraBold",
     paddingLeft: 20,
-    paddingTop: 16,
-    marginBottom: 8,
+    paddingTop: isLargeScreen ? 16 : 12,
+    marginBottom: isLargeScreen ? 8 : 6,
   },
   alarmDescription: {
-    fontSize: 16,
+    fontSize: isLargeScreen ? 16 : 14,
     color: "#1F1F1F",
     fontFamily: "SUITE_Medium",
   },
   alarmSubDescription: {
-    fontSize: 12,
+    fontSize: isLargeScreen ? 12 : 10,
     color: "#5C5C5C",
     fontFamily: "SUITE_Medium",
   },
