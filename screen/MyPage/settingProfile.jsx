@@ -278,7 +278,7 @@ const SettingProfile = () => {
             닉네임
           </Text>
           <InputNickName
-            placeholder={"별명"}
+            placeholder={item.name}
             inputValue={name}
             handleInputChange={handleNameChange}
             onValidation={handleValidation}
