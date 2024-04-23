@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import Line from "../../components/Line";
 import { useRoute } from "@react-navigation/native";
@@ -17,6 +18,9 @@ import FriendsComponent3 from "./friendsComponent3";
 import CompetitionMsg from "../../components/Modal/battle/CompetitionMsg";
 import FriendsMsg from "../../components/Modal/friendsMsg";
 import MatchMsg from "../../components/Modal/battle/matchMsg";
+const windowWidth = Dimensions.get("window").width;
+const baseWidth = 390;
+const isIphone7 = windowWidth < baseWidth;
 
 function FriendsList() {
   const route = useRoute();
@@ -189,7 +193,7 @@ function FriendsList() {
         }}
       >
         <Text style={styles.mainTitle}>친구 목록</Text>
-        <ScrollView style={{ marginBottom: 100 }}>
+        <ScrollView style={{ marginBottom: isIphone7 ? 80 : 100 }}>
           {/* 대결 중인 친구 목록 */}
           <TouchableOpacity onPress={toggleFriendsComponent1} activeOpacity={1}>
             <View style={styles.titleSection}>
@@ -314,17 +318,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingLeft: 20,
     paddingRight: 20,
-    paddingBottom: 16,
+    paddingBottom: isIphone7 ? 10 : 16,
   },
   mainTitle: {
-    fontSize: 22,
+    fontSize: isIphone7 ? 18 : 22,
     fontFamily: "SUITE_Bold",
     color: "#1F1F1F",
     textAlign: "center",
-    marginBottom: 24,
+    marginBottom: isIphone7 ? 20 : 24,
   },
   title: {
-    fontSize: 20,
+    fontSize: isIphone7 ? 16 : 20,
     fontFamily: "SUITE_Bold",
     color: "#1F1F1F",
   },
