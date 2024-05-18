@@ -9,6 +9,7 @@ import { Alert, ActivityIndicator } from "react-native";
 import { jwtDecode } from "jwt-decode";
 import { proxyUrl } from "./constant/common";
 import "core-js/stable/atob";
+import apiClient from "./api/apiClient";
 // import { decode } from "base-64";
 // global.atob = decode;
 
