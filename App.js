@@ -77,7 +77,7 @@ export default function App() {
       // Prevent splash screen from hiding
       await SplashScreen.preventAutoHideAsync();
       // Artificial delay
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       // Hide splash screen
       await SplashScreen.hideAsync();
       // Set app as ready
