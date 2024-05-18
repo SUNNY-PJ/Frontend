@@ -10,6 +10,7 @@ import { jwtDecode } from "jwt-decode";
 import { proxyUrl } from "./constant/common";
 import "core-js/stable/atob";
 import apiClient from "./api/apiClient";
+import * as SplashScreen from "expo-splash-screen";
 // import { decode } from "base-64";
 // global.atob = decode;
 
@@ -33,11 +34,12 @@ async function schedulePushNotification(data) {
 }
 
 export default function App() {
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
   const [pushToken, setPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(null);
-  const notificationListener = useRef();
-  const responseListener = useRef();
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   // 폰트 적용
@@ -68,6 +70,21 @@ export default function App() {
 
   useEffect(() => {
     loadFonts();
+  }, []);
+
+  useEffect(() => {
+    async function prepare() {
+      // Prevent splash screen from hiding
+      await SplashScreen.preventAutoHideAsync();
+      // Artificial delay
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      // Hide splash screen
+      await SplashScreen.hideAsync();
+      // Set app as ready
+      setIsSignedIn(true);
+    }
+
+    prepare();
   }, []);
 
   useEffect(() => {
