@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   KeyboardAvoidingView,
   Platform,
   Image,
@@ -13,6 +12,7 @@ import {
   PanResponder,
   Alert,
 } from "react-native";
+import { styles } from "./comment.styles";
 import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 import Modal from "react-native-modal";
@@ -523,24 +523,8 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                               </Text>
                             </TouchableOpacity>
                             {childItem.author === true ? (
-                              <View
-                                style={{
-                                  backgroundColor: "#6ADCA3",
-                                  borderRadius: 12,
-                                  alignSelf: "center",
-                                }}
-                              >
-                                <Text
-                                  style={{
-                                    color: "#1F1F1F",
-                                    fontSize: 10,
-                                    paddingRight: 5,
-                                    paddingLeft: 5,
-                                    paddingTop: 4,
-                                    paddingBottom: 4,
-                                    fontFamily: "SUITE_Medium",
-                                  }}
-                                >
+                              <View style={styles.authorBox}>
+                                <Text style={StyleSheetList.author}>
                                   작성자
                                 </Text>
                               </View>
@@ -601,15 +585,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                           {childItem.content}
                         </Text>
                         {!childItem.deleted ? (
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              gap: 8,
-                              paddingLeft: 80,
-                              marginTop: 4,
-                              marginBottom: 15,
-                            }}
-                          >
+                          <View style={styles.childrenSection}>
                             <Text style={styles.subComment}>
                               {childItem.createdDate}
                             </Text>
@@ -696,79 +672,5 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
     </Modal>
   );
 };
-
-const styles = StyleSheet.create({
-  modal: {
-    margin: 0,
-    justifyContent: "flex-end",
-  },
-  modalContainer: {
-    backgroundColor: "white",
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    padding: 28,
-    paddingTop: 20,
-  },
-  commentSection: { paddingLeft: 17, paddingRight: 17 },
-  modalContent: {
-    marginBottom: 18,
-    gap: 8,
-  },
-  input: {
-    height: 30,
-    borderRadius: 9,
-    borderColor: "transparent",
-    borderWidth: 1.5,
-    width: "84%",
-  },
-  keyboard: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    height: 42,
-    borderRadius: 9,
-    borderColor: "#E8E9E8",
-    borderWidth: 1.5,
-    paddingLeft: 16,
-    paddingRight: 16,
-    marginBottom: 10,
-  },
-  button: {
-    borderRadius: 8,
-    borderColor: "#1F1F1F",
-    backgroundColor: "#FFA851",
-    borderWidth: 1,
-    color: "#000",
-  },
-  buttonText: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 6,
-    paddingBottom: 6,
-    fontSize: 12,
-    fontFamily: "SUITE_Bold",
-    color: "#1F1F1F",
-  },
-  comment: {
-    fontSize: 15,
-    color: "#1F1F1F",
-    fontFamily: "SUITE_Medium",
-  },
-  subComment: {
-    fontSize: 10,
-    color: "#C1C1C1",
-    fontFamily: "SUITE",
-  },
-  secretCommentSection: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    gap: 3,
-  },
-  secretComment: {
-    color: "#5C5C5C",
-    fontSize: 10,
-    fontFamily: "SUITE_Bold",
-  },
-});
 
 export default Comment;
