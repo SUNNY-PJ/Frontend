@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import { View, Text, Image, TouchableOpacity, Dimensions } from "react-native";
+import { styles } from "./community.styels";
 import { useCommunity } from "../../context/communityContext";
 import { useNavigation } from "@react-navigation/native";
 import Board from "./board";
@@ -98,7 +92,7 @@ const Community = () => {
         </View>
         <View style={styles.section}>
           <TouchableOpacity activeOpacity={0.6} onPress={handleSortClick}>
-            <View style={{ flexDirection: "row", gap: 3 }}>
+            <View style={styles.setting}>
               <Image
                 source={require("../../assets/sort.png")}
                 style={styles.icon}
@@ -114,12 +108,7 @@ const Community = () => {
               )}
             </View>
           </TouchableOpacity>
-          <View
-            style={{
-              flexDirection: "row",
-              gap: 22,
-            }}
-          >
+          <View style={styles.setting2}>
             <TouchableOpacity activeOpacity={0.6} onPress={handleSearch}>
               <Image
                 source={require("../../assets/search.png")}
@@ -157,66 +146,5 @@ const Community = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    backgroundColor: "#FFFBF6",
-    minHeight: "100%",
-  },
-  contentContainer: {
-    marginBottom: 40,
-  },
-  box: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: isIphone7 ? 13 : 15,
-  },
-  tabText: {
-    fontSize: isIphone7 ? 18 : 20,
-    fontFamily: "SUITE_Bold",
-    color: "#C1C1C1",
-    paddingTop: 9,
-    paddingBottom: 6,
-  },
-  activeTabText: {
-    color: "#1F1F1F",
-  },
-  tabBar: {
-    flexDirection: "row",
-  },
-  tabBarLine: {
-    flex: 1,
-    height: 2,
-    backgroundColor: "#C1C1C1",
-  },
-  activeTabBarLine: {
-    backgroundColor: "#1F1F1F",
-  },
-  image: {
-    width: 32,
-    height: 32,
-    alignSelf: "center",
-    marginTop: 12,
-  },
-  section: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingLeft: 16,
-    paddingRight: 24,
-    marginTop: 17,
-    marginBottom: 18,
-  },
-  icon: {
-    width: 20,
-    height: 20,
-  },
-  tipText: {
-    color: "#262626",
-    fontSize: 15,
-    alignSelf: "center",
-    fontFamily: "SUITE",
-  },
-});
 
 export default Community;
