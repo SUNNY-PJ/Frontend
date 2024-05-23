@@ -12,6 +12,14 @@ export const styles = StyleSheet.create({
     padding: 28,
     paddingTop: 20,
   },
+  slideSection: {
+    width: 64,
+    height: 4,
+    backgroundColor: "#C1C1C1",
+    alignSelf: "center",
+    borderRadius: 12,
+    marginBottom: 37,
+  },
   commentSection: { paddingLeft: 17, paddingRight: 17 },
   modalContent: {
     marginBottom: 18,
@@ -93,4 +101,11 @@ export const styles = StyleSheet.create({
     paddingBottom: 4,
     fontFamily: "SUITE_Medium",
   },
+  privateImg: { alignSelf: "center", width: 16, height: 16 },
+  profileImg: {
+    width: 32,
+    height: 32,
+    borderRadius: 50,
+  },
+  secretImg: { width: 12, height: 12, alignSelf: "center" },
 });
