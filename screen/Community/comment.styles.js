@@ -108,4 +108,26 @@ export const styles = StyleSheet.create({
     borderRadius: 50,
   },
   secretImg: { width: 12, height: 12, alignSelf: "center" },
+  dotMenuImg: { width: 20, height: 4, top: 10 },
+  setting: { flexDirection: "row", gap: 8 },
+  setting2: { flexDirection: "row", justifyContent: "space-between" },
+  setting3: {
+    flexDirection: "row",
+    paddingLeft: 40,
+    marginTop: 9,
+    justifyContent: "space-between",
+  },
+  container: {
+    flexDirection: "row",
+    gap: 8,
+    paddingLeft: 40,
+    marginTop: 4,
+    marginBottom: 15,
+  },
+  writer: {
+    fontSize: 15,
+    color: "#1F1F1F",
+    fontFamily: "SUITE_Medium",
+    alignSelf: "center",
+  },
 });

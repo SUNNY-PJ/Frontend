@@ -62,18 +62,15 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
   const handleCommentChange = (text) => {
     setComment(text);
-    // console.log(comment);
   };
 
   const handleSecretClick = () => {
     setSecret(!secret);
-    // console.log(secret);
   };
 
   const handleReCommentClick = (parentId, parentIdWriter) => {
     setComment(`@${parentIdWriter} `);
     setParentId(parentId);
-    // console.log("대댓글", comment);
   };
 
   // 댓글 조회
@@ -87,10 +84,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
       const ResCommentData = response.data.data;
       setCommentData(ResCommentData);
-      // console.log(
-      //   ResCommentData.map((item) => item.children)
-      // );
-      console.log("댓글 데이터", ResCommentData);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -162,7 +155,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       });
       if (response.status === 200) {
         Alert.alert("", "댓글을 삭제하였습니다.");
-        fetchData(); // 댓글 목록을 다시 불러옵니다.
+        fetchData();
       }
     } catch (error) {
       Alert.alert("error", "서버에 장애가 발생하였습니다.");
@@ -220,7 +213,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   };
 
   const handleBlockUser = () => {
-    console.log("차단", userId, parentWriter);
+    // console.log("차단", userId, parentWriter);
     // commentModal();
     setActionSheetVisible(false);
     setActionSheetViewerVisible(false);
@@ -314,9 +307,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       isVisible={isCommentModal}
       animationIn="slideInUp"
       animationOut="slideOutDown"
-      // onSwipeComplete={commentModal}
-      // swipeDirection={slide ? "down" : []}
-      // swipeDirection="down"
       onBackdropPress={commentModal}
       style={[styles.modal, { maxHeight: windowHeight }]}
     >
@@ -332,22 +322,11 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
             <Line color={"#E8E9E8"} h={2} />
             {commentData?.map((item, index) => (
               <View style={styles.commentSection} key={item.id}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      gap: 8,
-                      marginTop: 9,
-                    }}
-                  >
+                <View style={styles.setting2}>
+                  <View style={[styles.setting, { marginTop: 9 }]}>
                     <TouchableOpacity
                       onPress={() => handleProfile(item.userId)}
-                      style={{ flexDirection: "row", gap: 8 }}
+                      style={styles.setting}
                     >
                       <Image
                         source={
@@ -355,18 +334,9 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                             ? { uri: item.profileImg }
                             : require("../../assets/myPage_profile.png")
                         }
-                        style={{ width: 32, height: 32, borderRadius: 50 }}
+                        style={styles.profileImg}
                       />
-                      <Text
-                        style={{
-                          fontSize: 15,
-                          color: "#1F1F1F",
-                          fontFamily: "SUITE_Medium",
-                          alignSelf: "center",
-                        }}
-                      >
-                        {item.writer}
-                      </Text>
+                      <Text style={styles.writer}>{item.writer}</Text>
                     </TouchableOpacity>
                     {item.author === true ? (
                       <View style={styles.authorBox}>
@@ -398,7 +368,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                       >
                         <Image
                           source={require("../../assets/commentDotMenu.png")}
-                          style={{ width: 20, height: 4, top: 10 }}
+                          style={styles.dotMenuImg}
                         />
                       </TouchableOpacity>
                     </View>
@@ -416,21 +386,9 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                   {item.content}
                 </Text>
                 {item.deleted ? (
-                  <View
-                    style={{
-                      marginBottom: 15,
-                    }}
-                  />
+                  <View style={{ marginBottom: 15 }} />
                 ) : (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      gap: 8,
-                      paddingLeft: 40,
-                      marginTop: 4,
-                      marginBottom: 15,
-                    }}
-                  >
+                  <View style={styles.container}>
                     {!item.blockedUser && (
                       <Text style={styles.subComment}>{item.createdDate}</Text>
                     )}
@@ -454,23 +412,11 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                   <View>
                     {item.children.map((childItem) => (
                       <View key={childItem.id}>
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            paddingLeft: 40,
-                            marginTop: 9,
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <View
-                            style={{
-                              flexDirection: "row",
-                              gap: 8,
-                            }}
-                          >
+                        <View style={styles.setting3}>
+                          <View style={styles.setting}>
                             <TouchableOpacity
                               onPress={() => handleProfile(childItem.userId)}
-                              style={{ flexDirection: "row", gap: 8 }}
+                              style={styles.setting}
                             >
                               <Image
                                 source={
@@ -528,7 +474,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                                 >
                                   <Image
                                     source={require("../../assets/commentDotMenu.png")}
-                                    style={{ width: 20, height: 4, top: 10 }}
+                                    style={styles.dotMenuImg}
                                   />
                                 </TouchableOpacity>
                               </View>
@@ -554,11 +500,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                             </Text>
                           </View>
                         ) : (
-                          <View
-                            style={{
-                              marginBottom: 15,
-                            }}
-                          />
+                          <View style={{ marginBottom: 15 }} />
                         )}
                         <Line color={"#E8E9E8"} h={1} />
                       </View>
