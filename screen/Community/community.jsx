@@ -147,4 +147,19 @@ const Community = () => {
   );
 };
 
+const styles = StyleSheet.create({
+  box: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    marginTop: isIphone7 ? 13 : 15,
+  },
+  tabText: {
+    fontSize: isIphone7 ? 18 : 20,
+    fontFamily: "SUITE_Bold",
+    color: "#C1C1C1",
+    paddingTop: 9,
+    paddingBottom: 6,
+  },
+});
+
 export default Community;
