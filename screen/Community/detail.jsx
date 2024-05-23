@@ -4,11 +4,11 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  StyleSheet,
   ScrollView,
   Dimensions,
   Alert,
 } from "react-native";
+import { styles } from "./detail.styles";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import Line from "../../components/Line";
@@ -93,7 +93,6 @@ const Detail = () => {
       Alert.alert("", "게시글이 삭제되었습니다.");
     } catch (error) {
       console.error("에러:", error);
-      // Alert.alert("error", "서버에 장애가 발생하였습니다.");
       Alert.alert("", "게시글 삭제에 실패하였습니다.");
     }
   };
@@ -218,7 +217,7 @@ const Detail = () => {
   };
 
   const handleBlockUser = () => {
-    console.log("차단", writer, writerId);
+    // console.log("차단", writer, writerId);
     setNoAuthorModalVisible(false);
     setIsModalVisible(true);
   };
@@ -236,16 +235,7 @@ const Detail = () => {
     <View style={styles.container}>
       {data.map((item, index) => (
         <View style={styles.contentContainer} key={index}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginTop: 17,
-              marginBottom: 26,
-              paddingRight: 20,
-            }}
-          >
+          <View style={styles.section}>
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("Community", {
@@ -255,29 +245,11 @@ const Detail = () => {
             >
               <Image
                 source={require("../../assets/prevBtn.png")}
-                style={{
-                  width: 24,
-                  height: 24,
-                }}
+                style={styles.prevImg}
               />
             </TouchableOpacity>
-            <Text
-              style={{
-                fontSize: 16,
-                color: "#1F1F1F",
-                fontFamily: "SUITE_Bold",
-                left: 12,
-              }}
-            >
-              {item.type}
-            </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                gap: 12,
-              }}
-            >
+            <Text style={styles.typeText}>{item.type}</Text>
+            <View style={styles.scrapSection}>
               <TouchableOpacity onPress={handleScrapClick}>
                 <Image
                   source={
@@ -286,10 +258,7 @@ const Detail = () => {
                       ? require("../../assets/scrapActive.png")
                       : require("../../assets/scrapInactive.png")
                   }
-                  style={{
-                    width: 24,
-                    height: 24,
-                  }}
+                  style={styles.prevImg}
                 />
               </TouchableOpacity>
               <TouchableOpacity
@@ -301,10 +270,7 @@ const Detail = () => {
               >
                 <Image
                   source={require("../../assets/menu.png")}
-                  style={{
-                    width: 20,
-                    height: 4,
-                  }}
+                  style={styles.menuImg}
                 />
               </TouchableOpacity>
             </View>
@@ -313,25 +279,8 @@ const Detail = () => {
       ))}
       {data.map((item) => (
         <View style={styles.contentContainer} key={item.id}>
-          <Text
-            style={{
-              fontSize: 20,
-              color: "#1F1F1F",
-              fontFamily: "SUITE_Medium",
-              marginBottom: 9,
-              padding: 4,
-              marginBottom: 28,
-            }}
-          >
-            {item.title}
-          </Text>
-          <View
-            style={{
-              flexDirection: "row",
-              gap: 8,
-              marginBottom: 28,
-            }}
-          >
+          <Text style={styles.title}>{item.title}</Text>
+          <View style={styles.box}>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => {
@@ -340,7 +289,7 @@ const Detail = () => {
             >
               <Image
                 source={{ uri: item.profileImg }}
-                style={{ width: 40, height: 40, borderRadius: 50 }}
+                style={styles.profileImg}
               />
             </TouchableOpacity>
             <View style={{ gap: 4 }}>
@@ -387,12 +336,7 @@ const Detail = () => {
                   <Image
                     key={index}
                     source={{ uri: photo }}
-                    style={{
-                      width: 300,
-                      height: 300,
-                      resizeMode: "contain",
-                      marginTop: 14,
-                    }}
+                    style={styles.photoImg}
                   />
                 ))}
               </View>
@@ -400,38 +344,15 @@ const Detail = () => {
             <Line color={"#E8E9E8"} h={2} />
             <View style={styles.contentContainer}>
               <TouchableOpacity activeOpacity={0.6} onPress={commentModal}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 5,
-                    marginTop: 20,
-                    paddingBottom: 20,
-                  }}
-                >
+                <View style={styles.bottomSection}>
                   <Image
                     source={require("../../assets/chatIcon.png")}
-                    style={{
-                      width: 24,
-                      height: 24,
-                    }}
+                    style={styles.prevImg}
                   />
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      color: "#1F1F1F",
-                      fontFamily: "SUITE",
-                    }}
-                  >
-                    {item.commentCnt}
-                  </Text>
+                  <Text style={styles.commentCnt}>{item.commentCnt}</Text>
                   <Image
                     source={require("../../assets/arrowLeft.png")}
-                    style={{
-                      width: 18,
-                      height: 18,
-                      right: 4,
-                    }}
+                    style={styles.arrowImg}
                   />
                 </View>
               </TouchableOpacity>
@@ -485,42 +406,5 @@ const Detail = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    backgroundColor: "#FFFBF6",
-    minHeight: "100%",
-  },
-  contentContainer: {
-    paddingLeft: 20,
-  },
-  image: {
-    width: 32,
-    height: 32,
-    alignSelf: "center",
-    marginTop: 12,
-  },
-  name: {
-    fontSize: 20,
-    color: "#1F1F1F",
-    fontFamily: "SUITE",
-  },
-  setting: {
-    fontSize: 16,
-    color: "#5C5C5C",
-    fontFamily: "SUITE_Medium",
-  },
-  subDescription: {
-    fontSize: 10,
-    color: "#1F1F1F",
-    fontFamily: "SUITE",
-  },
-  contents: {
-    fontSize: 15,
-    color: "#1F1F1F",
-    fontFamily: "SUITE",
-  },
-});
 
 export default Detail;
