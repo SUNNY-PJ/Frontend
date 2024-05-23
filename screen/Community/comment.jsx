@@ -325,16 +325,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
         style={styles.modalContainer}
       >
         <TouchableOpacity onPress={handleSlideDown} activeOpacity={1}>
-          <View
-            style={{
-              width: 64,
-              height: 4,
-              backgroundColor: "#C1C1C1",
-              alignSelf: "center",
-              borderRadius: 12,
-              marginBottom: 37,
-            }}
-          />
+          <View style={styles.slideSection} />
         </TouchableOpacity>
         <View style={styles.modalContent} {...panResponder.panHandlers}>
           <ScrollView style={{ maxHeight: windowHeight - 200 }}>
@@ -378,32 +369,14 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                       </Text>
                     </TouchableOpacity>
                     {item.author === true ? (
-                      <View
-                        style={{
-                          backgroundColor: "#6ADCA3",
-                          borderRadius: 12,
-                          alignSelf: "center",
-                        }}
-                      >
-                        <Text
-                          style={{
-                            color: "#1F1F1F",
-                            fontFamily: "SUITE",
-                            fontSize: 10,
-                            paddingRight: 5,
-                            paddingLeft: 5,
-                            paddingTop: 4,
-                            paddingBottom: 4,
-                          }}
-                        >
-                          작성자
-                        </Text>
+                      <View style={styles.authorBox}>
+                        <Text style={styles.author}>작성자</Text>
                       </View>
                     ) : null}
                     {item.privated === true ? (
                       <Image
                         source={require("../../assets/lock.png")}
-                        style={{ alignSelf: "center", width: 16, height: 16 }}
+                        style={styles.privateImg}
                       />
                     ) : null}
                   </View>
@@ -493,7 +466,6 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                             style={{
                               flexDirection: "row",
                               gap: 8,
-                              // marginTop: 9,
                             }}
                           >
                             <TouchableOpacity
@@ -501,17 +473,12 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                               style={{ flexDirection: "row", gap: 8 }}
                             >
                               <Image
-                                // source={require("../../assets/myPage_profile.png")}
                                 source={
                                   childItem.profileImg
                                     ? { uri: childItem.profileImg }
                                     : require("../../assets/myPage_profile.png")
                                 }
-                                style={{
-                                  width: 32,
-                                  height: 32,
-                                  borderRadius: 50,
-                                }}
+                                style={styles.profileImg}
                               />
                               <Text
                                 style={[
@@ -532,11 +499,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                             {childItem.privated === true ? (
                               <Image
                                 source={require("../../assets/lock.png")}
-                                style={{
-                                  alignSelf: "center",
-                                  width: 16,
-                                  height: 16,
-                                }}
+                                style={styles.privateImg}
                               />
                             ) : null}
                           </View>
@@ -612,10 +575,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
             style={styles.secretCommentSection}
           >
             <Text style={styles.secretComment}>비밀 댓글</Text>
-            <Image
-              source={imageSource}
-              style={{ width: 8, height: 8, alignSelf: "center" }}
-            />
+            <Image source={imageSource} style={styles.secretImg} />
           </TouchableOpacity>
           <View style={styles.keyboard}>
             <TextInput
