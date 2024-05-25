@@ -20,7 +20,6 @@ import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
 import apiClient from "../../api/apiClient";
-import { styles } from "./post.styles";
 const { width } = Dimensions.get("window");
 const isLargeScreen = width > 375;
 
