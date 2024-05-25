@@ -214,25 +214,8 @@ const Modify = () => {
         <View style={styles.container}>
           {data.map((item) => (
             <View style={styles.contentContainer} key={item.MediaTypeOptions}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: "#1F1F1F",
-                  alignSelf: "center",
-                  marginTop: 17,
-                  fontFamily: "SUITE_Bold",
-                }}
-              >
-                게시글 수정
-              </Text>
-              <View
-                style={{
-                  marginTop: 8,
-                  marginBottom: 20,
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
+              <Text style={styles.mainTitle}>게시글 수정</Text>
+              <View style={styles.topSection}>
                 <SmallBtn
                   title={"취소"}
                   color={"#E8E9E8"}
@@ -246,20 +229,8 @@ const Modify = () => {
               </View>
               {/* 카테고리 선택 */}
               <TouchableOpacity onPress={handleCategoryClick}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    marginBottom: 5,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      borderColor: "#1F1F1F",
-                      fontFamily: "SUITE_Bold",
-                    }}
-                  >
+                <View style={styles.top}>
+                  <Text style={styles.categoryText}>
                     {/* 카테고리 선택 */}
                     {selectedCategory ? selectedCategory : item.type}
                   </Text>
@@ -291,18 +262,7 @@ const Modify = () => {
                 inputValue={title}
                 handleInputChange={handleTitleChange}
               />
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: "#1F1F1F",
-                  marginBottom: 8,
-                  marginTop: 10,
-                  paddingLeft: 12,
-                  fontFamily: "SUITE_Medium",
-                }}
-              >
-                내용
-              </Text>
+              <Text style={styles.contentText}>내용</Text>
               <InputMax
                 placeholder={
                   "내용을 입력하세요. (부적절하거나 불쾌감을 줄 수 있는 컨텐츠는 제재를 받을 수 있습니다)"
@@ -314,7 +274,6 @@ const Modify = () => {
               <Text
                 style={{
                   fontSize: isLargeScreen ? 16 : 14,
-
                   color: "#1F1F1F",
                   marginBottom: 8,
                   marginTop: 10,
@@ -338,21 +297,11 @@ const Modify = () => {
                     />
                     <Pressable
                       onPress={() => removeImage(index)}
-                      style={{
-                        position: "absolute",
-                        top: 0,
-                        right: 0,
-                      }}
+                      style={styles.removeImgSection}
                     >
                       <Image
                         source={require("../../assets/deletePhoto.png")}
-                        style={{
-                          width: 18,
-                          height: 18,
-                          position: "absolute",
-                          top: -6,
-                          right: -6,
-                        }}
+                        style={styles.removeImgSection}
                       />
                     </Pressable>
                   </View>
