@@ -164,7 +164,7 @@ const SettingProfile = () => {
         navigation.navigate("MyPage", { screen: "MyPage" });
       }
     } catch (error) {
-      console.error("서버 응답 오류:", error.response.data);
+      console.error("서버 응답 오류: setting profile", error.response.data);
       if (error.response.status === 403) {
         Alert.alert("", "이미 사용중인 닉네임입니다.");
       }

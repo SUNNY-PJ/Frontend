@@ -23,7 +23,7 @@ const tokenFetchData = async () => {
     return access_token;
   } catch (error) {
     if (error.response) {
-      console.error("서버 응답 오류:", error.response.data);
+      console.error("서버 응답 오류::", error.response.data);
     } else {
       console.error("에러:", error);
     }

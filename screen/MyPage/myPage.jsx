@@ -112,7 +112,7 @@ const MyPage = () => {
       navigation.navigate("KakaoScreen", { screen: "Login" });
     } catch (error) {
       if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 오류: logout", error.response.data);
         Alert.alert("error", "서버에 장애가 발생하였습니다.");
       } else {
         console.error("에러:", error);
@@ -177,7 +177,7 @@ const MyPage = () => {
       }
     } catch (error) {
       if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 오류: leave", error.response.data);
         Alert.alert("error", "서버에 장애가 발생하였습니다.");
       } else {
         console.error("에러:", error);

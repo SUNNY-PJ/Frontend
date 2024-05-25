@@ -60,7 +60,7 @@ const Report = () => {
       }
     } catch (error) {
       if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 오류: report", error.response.data);
         console.error("서버 응답 메세지:", error.message);
       } else {
         console.error("에러:", error);

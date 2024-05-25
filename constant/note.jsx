@@ -148,7 +148,7 @@ const Note = () => {
       navigation.navigate("MainScreen", { screen: "Spending" });
     } catch (error) {
       if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 오류: note", error.response.data);
         console.error("서버 응답 메세지:", error.message);
         Alert.alert("error", "서버에 장애가 발생하였습니다.");
       } else {

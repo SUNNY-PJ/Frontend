@@ -59,7 +59,7 @@ const Kakao = () => {
     } catch (error) {
       console.log("errorMessage:::", error);
       if (error.response) {
-        console.error("서버 응답 오류:", error.response);
+        console.error("서버 응답 오류: kakao login", error.response);
       } else {
         console.error("에러:", error);
       }

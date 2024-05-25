@@ -108,7 +108,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
       }
     } catch (error) {
       if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 오류: friend post", error.response.data);
         if (error.response.data.status === 500) {
           Alert.alert("", "이미 친구 신청을 한 사용자입니다.");
         }
