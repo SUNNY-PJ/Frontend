@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   Image,
   Pressable,
   TouchableWithoutFeedback,
@@ -11,6 +10,7 @@ import {
   Alert,
   Dimensions,
 } from "react-native";
+import { styles } from "./modify.styles";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
@@ -160,7 +160,6 @@ const Modify = () => {
           });
         }
       });
-
       const postResponse = await apiClient.put(inputURL, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -396,26 +395,5 @@ const Modify = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    backgroundColor: "#FFFBF6",
-    minHeight: "100%",
-  },
-  contentContainer: {
-    paddingLeft: 20,
-    paddingRight: 21,
-  },
-  media: {
-    flexDirection: "row",
-    gap: 16,
-  },
-  text: {
-    fontSize: 16,
-    color: "#1F1F1F",
-    fontFamily: "SUITE_Medium",
-  },
-});
 
 export default Modify;
