@@ -81,7 +81,8 @@ export default function App() {
       // Hide splash screen
       await SplashScreen.hideAsync();
       // Set app as ready
-      setIsSignedIn(true);
+      // setIsSignedIn(true);
+      // setIsSignedIn(false);
     }
 
     prepare();
