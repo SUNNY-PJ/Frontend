@@ -144,7 +144,7 @@ const Post = () => {
       navigation.navigate("Community", { screen: "Community" });
     } catch (error) {
       if (error.response) {
-        console.error("서버 응답 오류:", error.response.status);
+        console.error("서버 응답 오류: post error msg", error.response.status);
         if (error.response.status === 400) {
           Alert.alert("", "카테고리를 선택해주세요.");
         }

@@ -55,7 +55,7 @@ const BattleStatus = () => {
       }
     } catch (error) {
       if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 오류: battle status", error.response.data);
         console.error("서버 응답 메세지:", error.message);
       } else {
         console.error("에러:", error);
@@ -98,7 +98,10 @@ const BattleStatus = () => {
       }
     } catch (error) {
       if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
+        console.error(
+          "서버 응답 오류: battle status disabled",
+          error.response.data
+        );
         console.error("서버 응답 메세지:", error.message);
       } else {
         console.error("에러:", error);

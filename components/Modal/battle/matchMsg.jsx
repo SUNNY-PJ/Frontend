@@ -45,7 +45,7 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
       }
     } catch (error) {
       if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 오류: competition", error.response.data);
         console.error("서버 응답 메세지:", error.message);
       } else {
         console.error("에러:", error);
@@ -77,7 +77,7 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
     } catch (error) {
       Alert.alert("error", "유효하지 않은 대결 신청입니다.");
       if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 오류: match approve", error.response.data);
         console.error("서버 응답 메세지:", error.message);
       } else {
         console.error("에러:", error);
@@ -102,7 +102,7 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
     } catch (error) {
       if (error.response) {
         Alert.alert("error", "유효하지 않은 대결 신청입니다.");
-        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 오류: match refuse", error.response.data);
         console.error("서버 응답 메세지:", error.message);
       } else {
         console.error("에러:", error);

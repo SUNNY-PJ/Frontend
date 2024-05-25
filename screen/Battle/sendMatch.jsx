@@ -134,7 +134,7 @@ function SendMatch() {
       }
     } catch (error) {
       if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 오류: send match msg", error.response.data);
         console.error("서버 응답 메세지:", error.message);
         Alert.alert("error", error.response.data.message);
       } else {

@@ -82,7 +82,7 @@ const AppleLogin = () => {
         `로그인 중 에러가 발생했습니다.\n관리자에게 문의 바랍니다.`
       );
       if (error.response) {
-        console.error("서버 응답 오류:", error.response);
+        console.error("서버 응답 오류: login", error.response);
       } else {
         console.error("에러:", error);
       }

@@ -81,7 +81,7 @@ const CalendarComponent = ({ onDataFetched, markedDates }) => {
       onDataFetched(response.data.data);
     } catch (error) {
       if (error.response) {
-        console.error("서버 응답 오류:", error.response.data);
+        console.error("서버 응답 오류 : calendar", error.response.data);
       } else {
         console.error("에러:", error);
       }
