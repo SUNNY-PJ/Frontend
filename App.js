@@ -191,6 +191,10 @@ export default function App() {
       return access_token;
     } catch (error) {
       console.error("토큰 갱신 실패:", error);
+      Alert.alert(
+        "Authentication Error",
+        "세션이 만료되었습니다. 다시 로그인해주세요."
+      );
       setIsSignedIn(false); // 토큰 갱신 실패 시 로그아웃 처리
       return null;
     }
