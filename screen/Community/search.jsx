@@ -102,7 +102,7 @@ const Search = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <View style={{ paddingRight: 20, paddingLeft: 20 }}>
+        <View style={styles.section}>
           <View style={styles.keyboard}>
             <TextInput
               placeholderTextColor="#C1C1C1"
@@ -118,7 +118,7 @@ const Search = () => {
             >
               <Image
                 source={require("../../assets/searchIcon.png")}
-                style={{ width: 20, height: 20 }}
+                style={styles.searchImg}
               />
             </TouchableOpacity>
           </View>
@@ -161,18 +161,7 @@ const Search = () => {
                 activeOpacity={0.6}
               >
                 <View key={index} style={{ backgroundColor: "#fff" }}>
-                  <View
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      paddingRight: 20,
-                      paddingLeft: 20,
-                      paddingBottom: 16,
-                      paddingTop: 16,
-                      gap: 8,
-                    }}
-                  >
+                  <View style={styles.detailSection}>
                     <Text style={[styles.type]}>{item.type}</Text>
                     <Text style={[styles.title]}>{item.title}</Text>
                     <View
@@ -195,22 +184,12 @@ const Search = () => {
           <ScrollView>
             {recentSearches.map((search, index) => (
               <View key={index} style={{ backgroundColor: "#fff" }}>
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    paddingRight: 20,
-                    paddingLeft: 20,
-                    paddingBottom: 16,
-                    paddingTop: 16,
-                  }}
-                >
+                <View style={styles.contentSection}>
                   <Text style={styles.recentSearch}>{search}</Text>
                   <TouchableOpacity onPress={() => removeSearchTerm(index)}>
                     <Image
                       source={require("../../assets/grayClose.png")}
-                      style={{ width: 24, height: 24 }}
+                      style={styles.closeImg}
                       hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                     />
                   </TouchableOpacity>

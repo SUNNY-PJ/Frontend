@@ -13,6 +13,8 @@ export const styles = StyleSheet.create({
     // paddingRight: 20,
     // paddingLeft: 20,
   },
+  section: { paddingRight: 20, paddingLeft: 20 },
+  searchImg: { width: 20, height: 20 },
   input: {
     height: 30,
     borderRadius: 48,
@@ -20,6 +22,25 @@ export const styles = StyleSheet.create({
     borderWidth: 1.5,
     width: "84%",
     backgroundColor: "#F1F1F1",
+  },
+  detailSection: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    paddingRight: 20,
+    paddingLeft: 20,
+    paddingBottom: 16,
+    paddingTop: 16,
+    gap: 8,
+  },
+  contentSection: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingRight: 20,
+    paddingLeft: 20,
+    paddingBottom: 16,
+    paddingTop: 16,
   },
   keyboard: {
     flexDirection: "row",
@@ -66,4 +87,5 @@ export const styles = StyleSheet.create({
     fontFamily: "SUITE",
     color: "#1F1F1F",
   },
+  closeImg: { width: 24, height: 24 },
 });
