@@ -73,14 +73,42 @@ const Community = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-        <View style={styles.box}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-around",
+            marginTop: isIphone7 ? 13 : 15,
+          }}
+        >
           <TouchableOpacity onPress={tipClick} activeOpacity={0.6}>
-            <Text style={[styles.tabText, tip && styles.activeTabText]}>
+            <Text
+              style={[
+                {
+                  fontSize: isIphone7 ? 18 : 20,
+                  fontFamily: "SUITE_Bold",
+                  color: "#C1C1C1",
+                  paddingTop: 9,
+                  paddingBottom: 6,
+                },
+                tip && styles.activeTabText,
+              ]}
+            >
               절약 꿀팁
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={boardClick} activeOpacity={0.6}>
-            <Text style={[styles.tabText, board && styles.activeTabText]}>
+            <Text
+              style={[
+                {
+                  fontSize: isIphone7 ? 18 : 20,
+                  fontFamily: "SUITE_Bold",
+                  color: "#C1C1C1",
+                  paddingTop: 9,
+                  paddingBottom: 6,
+                },
+                board && styles.activeTabText,
+              ]}
+            >
               자유 게시판
             </Text>
           </TouchableOpacity>
@@ -146,20 +174,5 @@ const Community = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  box: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginTop: isIphone7 ? 13 : 15,
-  },
-  tabText: {
-    fontSize: isIphone7 ? 18 : 20,
-    fontFamily: "SUITE_Bold",
-    color: "#C1C1C1",
-    paddingTop: 9,
-    paddingBottom: 6,
-  },
-});
 
 export default Community;
