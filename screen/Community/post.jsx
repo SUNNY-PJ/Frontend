@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   Image,
   Pressable,
   TouchableOpacity,
@@ -11,6 +10,7 @@ import {
   Alert,
   Dimensions,
 } from "react-native";
+import { styles } from "./post.styles";
 import { useNavigation } from "@react-navigation/native";
 import { useCommunity } from "../../context/communityContext";
 import * as ImagePicker from "expo-image-picker";
@@ -20,6 +20,7 @@ import SmallBtn from "../../components/Btn/smallBtn";
 import Line from "../../components/Line";
 import BottomSheetScreen from "../../components/BottomSheet/BottomSheetScreen";
 import apiClient from "../../api/apiClient";
+import { styles } from "./post.styles";
 const { width } = Dimensions.get("window");
 const isLargeScreen = width > 375;
 
@@ -48,8 +49,6 @@ const Post = () => {
 
   const handleCategoryClick = () => {
     setOpen(!open);
-    console.log(open);
-    console.log("카테고리 클릭");
   };
 
   const handleCategorySelect = (data) => {
@@ -166,14 +165,7 @@ const Post = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
           <View style={styles.contentContainer}>
-            <View
-              style={{
-                marginTop: 12,
-                marginBottom: 20,
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
+            <View style={styles.section}>
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate("Community", {
@@ -183,10 +175,7 @@ const Post = () => {
               >
                 <Image
                   source={require("../../assets/close.png")}
-                  style={{
-                    width: 16,
-                    height: 16,
-                  }}
+                  style={styles.closeImg}
                   hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 />
               </TouchableOpacity>
@@ -194,20 +183,8 @@ const Post = () => {
             </View>
             {/* 카테고리 선택 */}
             <TouchableOpacity onPress={handleCategoryClick}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginBottom: 5,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 15,
-                    borderColor: "#1F1F1F",
-                    fontFamily: "SUITE_Bold",
-                  }}
-                >
+              <View style={styles.topSection}>
+                <Text style={styles.categoryText}>
                   {selectedCategory ? selectedCategory : "카테고리 선택"}
                 </Text>
                 <Image
@@ -291,13 +268,7 @@ const Post = () => {
                   >
                     <Image
                       source={require("../../assets/deletePhoto.png")}
-                      style={{
-                        width: 18,
-                        height: 18,
-                        position: "absolute",
-                        top: -6,
-                        right: -6,
-                      }}
+                      style={styles.deleteImg}
                     />
                   </Pressable>
                 </View>
@@ -314,14 +285,7 @@ const Post = () => {
                 </Pressable>
               )}
             </View>
-            <Text
-              style={{
-                fontSize: 10,
-                color: "#5C5C5C",
-                marginTop: 8,
-                fontFamily: "SUITE_Medium",
-              }}
-            >
+            <Text style={styles.notiText}>
               미디어는 최대 4장까지 첨부가 가능합니다.
             </Text>
           </View>
@@ -339,26 +303,5 @@ const Post = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    backgroundColor: "#FFFBF6",
-    minHeight: "100%",
-  },
-  contentContainer: {
-    paddingLeft: 20,
-    paddingRight: 21,
-  },
-  media: {
-    flexDirection: "row",
-    gap: 16,
-  },
-  text: {
-    fontSize: 16,
-    color: "#1F1F1F",
-    fontFamily: "SUITE",
-  },
-});
 
 export default Post;
