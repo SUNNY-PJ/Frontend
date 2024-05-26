@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { styles } from "./battleStatus.styles";
 import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 import Progress from "../../components/progress/progress";
@@ -22,7 +23,7 @@ const BattleStatusDisable = () => {
   return (
     <View style={styles.container}>
       <View style={styles.section}>
-        <Text style={[styles.boldText, { textAlign: "center", marginTop: 16 }]}>
+        <Text style={[styles.boldText, { textAlign: "center", marginTop: 30 }]}>
           {/* {data.compensation}을 걸고 {"\n"} */}
           {end_date}까지 {price}원 쓰기
         </Text>
@@ -40,17 +41,12 @@ const BattleStatusDisable = () => {
         </Text>
         <Progress progress={user_percent} color={"#C1C1C1"} />
         <Text style={[styles.boldText]}>
-          {user_percent}%<Text style={[styles.text]}>남았어요</Text>
+          {user_percent}%
+          <Text style={[styles.text, { color: "#C1C1C1" }]}>남았어요</Text>
         </Text>
         <Image
           source={require("../../assets/VSIconDisable.png")}
-          style={{
-            width: 51,
-            height: 64,
-            alignSelf: "center",
-            marginTop: 25,
-            marginBottom: 11,
-          }}
+          style={styles.vsIcon}
         />
         <Text style={[styles.boldText, { marginBottom: 10 }]}>
           {nickname}님은
@@ -74,40 +70,5 @@ const BattleStatusDisable = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#FFFBF6",
-    height: "100%",
-  },
-  section: {
-    // paddingTop: 22,
-    paddingBottom: 14,
-    backgroundColor: "#fff",
-    alignItems: "center",
-  },
-  boldText: {
-    fontSize: 22,
-    color: "#C1C1C1",
-    marginTop: 14,
-    fontFamily: "SUITE_ExtraBold",
-  },
-  boldSmallText: {
-    fontSize: 16,
-    color: "#1F1F1F",
-    marginTop: 14,
-    fontFamily: "SUITE_ExtraBold",
-  },
-  text: {
-    fontSize: 20,
-    color: "#C1C1C1",
-    fontFamily: "SUITE",
-  },
-  subText: {
-    fontSize: 16,
-    color: "#5C5C5C",
-    fontFamily: "SUITE_Bold",
-  },
-});
 
 export default BattleStatusDisable;

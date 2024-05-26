@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { View, Text, Image, TouchableOpacity, Alert } from "react-native";
+import { styles } from "./battleStatus.styles";
 import { useNavigation } from "@react-navigation/native";
 import Line from "../../components/Line";
 import Progress from "../../components/progress/progress";
@@ -148,63 +142,23 @@ const BattleStatus = () => {
         </Text>
         <Image
           source={require("../../assets/VSIcon.png")}
-          style={{
-            width: 51,
-            height: 64,
-            alignSelf: "center",
-            marginTop: 25,
-            marginBottom: 11,
-          }}
+          style={styles.vsIcon}
         />
         <Text style={[styles.boldText, { marginBottom: 10, marginTop: 28 }]}>
           {nickname}님은
         </Text>
         <Progress progress={data.friends_percent} />
         <Text style={[styles.boldText, { marginTop: 24 }]}>
-          {data.friends_percent}% <Text style={[styles.text]}>남았어요</Text>
+          {data.friends_percent}%
+          <Text style={[styles.text, { color: "#1F1F1F" }]}>남았어요</Text>
         </Text>
         <TouchableOpacity onPress={handleGiveUp}>
-          <Text
-            style={[
-              styles.subText,
-              { textDecorationLine: "underline", marginTop: 40 },
-            ]}
-          >
-            포기하기
-          </Text>
+          <Text style={[styles.subText, styles.giveUp]}>포기하기</Text>
         </TouchableOpacity>
       </View>
       {/* </ScrollView> */}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#FFFBF6",
-    height: "100%",
-  },
-  section: {
-    // paddingTop: 22,
-    paddingBottom: 14,
-    backgroundColor: "#fff",
-    alignItems: "center",
-  },
-  boldText: {
-    fontSize: 22,
-    color: "#1F1F1F",
-    fontFamily: "SUITE_ExtraBold",
-  },
-  text: {
-    fontSize: 20,
-    color: "#1F1F1F",
-    fontFamily: "SUITE",
-  },
-  subText: {
-    fontSize: 16,
-    color: "#5C5C5C",
-    fontFamily: "SUITE_Bold",
-  },
-});
 
 export default BattleStatus;
