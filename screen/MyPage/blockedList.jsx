@@ -26,18 +26,6 @@ const BlockedListScreen = () => {
       });
       console.log("차단된 사용자 조회", response.data);
       setData(response.data);
-      //   setData([
-      //     {
-      //       id: 1,
-      //       nickname: "test111",
-      //       profile: "string",
-      //     },
-      //     {
-      //       id: 23,
-      //       nickname: "string",
-      //       profile: "string",
-      //     },
-      //   ]);
     } catch (error) {
       if (error.response) {
         Alert.alert("error", error.response.data);
@@ -97,11 +85,7 @@ const BlockedListScreen = () => {
             <>
               <View style={styles.section} key={item.id}>
                 <View style={{ flexDirection: "row" }}>
-                  <Image
-                    source={{ uri: item.profile }}
-                    // source={require("../../assets/Avatar.png")}
-                    style={styles.icon}
-                  />
+                  <Image source={{ uri: item.profile }} style={styles.icon} />
                   <Text style={styles.name}>{item.nickname}</Text>
                 </View>
                 <TouchableOpacity
