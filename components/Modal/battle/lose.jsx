@@ -7,17 +7,13 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  Button,
 } from "react-native";
 import Line from "../../Line";
 import LottieView from "lottie-react-native";
 
 const LoseModal = ({ isOpenProfile, openProfile }) => {
   const windowWidth = Dimensions.get("window").width;
-  const windowHeight = Dimensions.get("window").height;
   const animation = useRef(null);
-
-  useEffect(() => {}, []);
 
   return (
     <View style={styles.container}>
