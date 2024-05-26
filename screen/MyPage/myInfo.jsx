@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import { View, Image, Text, TouchableOpacity, Dimensions } from "react-native";
+import { styles } from "./myInfo.styles";
 import { TabView, SceneMap } from "react-native-tab-view";
 import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
@@ -79,20 +73,10 @@ const MyInfo = () => {
         >
           <Image
             source={require("../../assets/prevBtn.png")}
-            style={{ width: 24, height: 24, marginTop: 16, marginLeft: 20 }}
+            style={styles.prevImg}
           />
         </TouchableOpacity>
-        <Text
-          style={{
-            fontSize: 16,
-            color: "#1F1F1F",
-            alignSelf: "center",
-            bottom: 20,
-            fontFamily: "SUITE_Bold",
-          }}
-        >
-          커뮤니티
-        </Text>
+        <Text style={styles.categoryText}>커뮤니티</Text>
       </View>
       <View style={styles.contentContainer}>
         <TabView
@@ -101,14 +85,7 @@ const MyInfo = () => {
           onIndexChange={setIndex}
           initialLayout={initialLayout}
         />
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: 29,
-            marginBottom: 6,
-          }}
-        >
+        <View style={styles.scrapSection}>
           <TouchableOpacity
             onPress={() => handleTabClick("scrap")}
             activeOpacity={0.6}
@@ -180,77 +157,5 @@ const MyInfo = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    backgroundColor: "#FFFBF6",
-    minHeight: "100%",
-  },
-  section: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingLeft: 16,
-    paddingRight: 24,
-    marginTop: 17,
-    marginBottom: 18,
-  },
-  tabText: {
-    fontSize: 20,
-    color: "#C1C1C1",
-    fontFamily: "SUITE_Bold",
-  },
-  activeTabText: {
-    color: "#1F1F1F",
-  },
-  tabBar: {
-    flexDirection: "row",
-    // marginBottom: 12,
-  },
-  tabBarLine: {
-    flex: 1,
-    height: 2,
-    backgroundColor: "#C1C1C1",
-  },
-  activeTabBarLine: {
-    backgroundColor: "#1F1F1F",
-  },
-  image: {
-    width: 32,
-    height: 32,
-    alignSelf: "center",
-    marginTop: 12,
-  },
-  name: {
-    fontSize: 20,
-    color: "#1F1F1F",
-    fontFamily: "SUITE_ExtraBold",
-  },
-  setting: {
-    fontSize: 16,
-    color: "#5C5C5C",
-    fontFamily: "SUITE_Medium",
-  },
-  box: {
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingBottom: 12,
-    paddingTop: 12,
-    backgroundColor: "#fff",
-  },
-  title: {
-    fontSize: 20,
-    color: "#000",
-    padding: 4,
-    fontFamily: "SUITE",
-  },
-  description: {
-    fontSize: 12,
-    color: "#000",
-    padding: 4,
-    fontFamily: "SUITE",
-    gap: 8,
-  },
-});
 
 export default MyInfo;
