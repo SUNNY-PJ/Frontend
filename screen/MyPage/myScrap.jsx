@@ -3,11 +3,11 @@ import {
   View,
   Image,
   Text,
-  StyleSheet,
   TouchableOpacity,
   Dimensions,
   ScrollView,
 } from "react-native";
+import { styles } from "./my.styles";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import { formatDate } from "../../constant/formatData/format";
@@ -113,7 +113,7 @@ const MyScrap = () => {
               }
               activeOpacity={0.6}
             >
-              <View style={styles.box}>
+              <View style={styles.scrapBox}>
                 <View>
                   <Text style={[styles.title]}>{item.title}</Text>
                   <View style={{ flexDirection: "row" }}>
@@ -151,39 +151,5 @@ const MyScrap = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    backgroundColor: "#FFFBF6",
-    minHeight: "100%",
-  },
-  box: {
-    flexDirection: "row",
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingBottom: 12,
-    paddingTop: 12,
-    backgroundColor: "#fff",
-    justifyContent: "space-between",
-  },
-  title: {
-    fontSize: 20,
-    color: "#000",
-    padding: 4,
-    fontFamily: "SUITE_Medium",
-  },
-  description: {
-    fontSize: 12,
-    color: "#000",
-    padding: 4,
-    gap: 8,
-    fontFamily: "SUITE",
-  },
-  icon: {
-    width: 24,
-    height: 24,
-  },
-});
 
 export default MyScrap;
