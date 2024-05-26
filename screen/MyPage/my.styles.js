@@ -13,6 +13,15 @@ export const styles = StyleSheet.create({
     paddingTop: 8,
     backgroundColor: "#fff",
   },
+  scrapBox: {
+    flexDirection: "row",
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 12,
+    paddingTop: 12,
+    backgroundColor: "#fff",
+    justifyContent: "space-between",
+  },
   title: {
     fontSize: 20,
     color: "#000",
@@ -25,5 +34,9 @@ export const styles = StyleSheet.create({
     fontFamily: "SUITE",
     padding: 4,
     gap: 8,
+  },
+  icon: {
+    width: 24,
+    height: 24,
   },
 });

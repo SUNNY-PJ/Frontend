@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   Dimensions,
   ScrollView,
 } from "react-native";
+import { styles } from "./my.styles";
 import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import { formatDate } from "../../constant/formatData/format";
@@ -77,33 +77,5 @@ const MyWrite = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    backgroundColor: "#FFFBF6",
-    minHeight: "100%",
-  },
-  box: {
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingBottom: 12,
-    paddingTop: 12,
-    backgroundColor: "#fff",
-  },
-  title: {
-    fontSize: 20,
-    color: "#000",
-    fontFamily: "SUITE_Medium",
-    padding: 4,
-  },
-  description: {
-    fontSize: 12,
-    color: "#000",
-    fontFamily: "SUITE",
-    padding: 4,
-    gap: 8,
-  },
-});
 
 export default MyWrite;
