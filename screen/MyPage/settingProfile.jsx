@@ -4,10 +4,10 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  StyleSheet,
   Pressable,
   Alert,
 } from "react-native";
+import { styles } from "./settingProfile.styles";
 import InputNickName from "../../components/Input/inputNickname";
 import LargeBtn from "../../components/Btn/largeBtn";
 import LargeBtnDisable from "../../components/Btn/largeBtnDisable";
@@ -232,21 +232,11 @@ const SettingProfile = () => {
         >
           <Image
             source={require("../../assets/prevBtn.png")}
-            style={{ width: 24, height: 24, marginTop: 16 }}
+            style={styles.prevImg}
           />
         </TouchableOpacity>
       </View>
-      <Text
-        style={{
-          fontSize: 16,
-          color: "#1F1F1F",
-          alignSelf: "center",
-          bottom: 17,
-          fontFamily: "SUITE_Bold",
-        }}
-      >
-        프로필 설정
-      </Text>
+      <Text style={styles.topTitle}>프로필 설정</Text>
       {profile.map((item, index) => (
         <Pressable onPress={() => handleImagePress(index)} key={index}>
           {selectedImage ? (
@@ -266,34 +256,14 @@ const SettingProfile = () => {
       ))}
       {profile.map((item, index) => (
         <View style={styles.contentContainer} key={index}>
-          <Text
-            style={{
-              paddingLeft: 12,
-              fontSize: 16,
-              color: "#1F1F1F",
-              marginBottom: 16,
-              fontFamily: "SUITE",
-            }}
-          >
-            닉네임
-          </Text>
+          <Text style={styles.nicknameText}>닉네임</Text>
           <InputNickName
             placeholder={item.name}
             inputValue={name}
             handleInputChange={handleNameChange}
             onValidation={handleValidation}
           />
-          <Text
-            style={{
-              marginTop: 8,
-              fontSize: 12,
-              color: "#5C5C5C",
-              textAlign: "left",
-              paddingLeft: 12,
-              marginBottom: 278,
-              fontFamily: "SUITE",
-            }}
-          >
+          <Text style={styles.notiText}>
             * 2~10자 이내, 특수문자 및 숫자 사용 가능, 이모지 사용 불가
           </Text>
           <View style={{ marginTop: 23 }}>
@@ -314,56 +284,5 @@ const SettingProfile = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    backgroundColor: "#FFFBF6",
-    minHeight: "100%",
-  },
-  contentContainer: {
-    paddingLeft: 28,
-    paddingRight: 27,
-  },
-  section: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingLeft: 16,
-    paddingRight: 24,
-    marginTop: 17,
-    marginBottom: 18,
-  },
-  image: {
-    width: 32,
-    height: 32,
-    alignSelf: "center",
-    marginTop: 12,
-  },
-  name: {
-    fontSize: 20,
-    color: "#1F1F1F",
-    fontFamily: "SUITE",
-  },
-  setting: {
-    fontSize: 16,
-    color: "#5C5C5C",
-    fontFamily: "SUITE_Medium",
-  },
-  title: {
-    fontSize: 16,
-    color: "#1F1F1F",
-    paddingLeft: 20,
-    paddingTop: 16,
-    marginBottom: 8,
-    fontFamily: "SUITE_ExtraBold",
-  },
-  profileImage: {
-    width: 80,
-    height: 80,
-    alignSelf: "center",
-    marginBottom: 28,
-    borderRadius: 50,
-  },
-});
 
 export default SettingProfile;
