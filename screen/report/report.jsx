@@ -4,11 +4,11 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
 } from "react-native";
+import { styles } from "./report.styles";
 import { useRoute } from "@react-navigation/native";
 import InputMax from "../../components/Input/inputMax";
 import LargeBtn from "../../components/Btn/largeBtn";
@@ -98,12 +98,7 @@ const Report = () => {
             <Image
               source={require("../../assets/close.png")}
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-              style={{
-                width: 16,
-                height: 16,
-                alignSelf: "flex-end",
-                bottom: 25,
-              }}
+              style={styles.closeImg}
               onPress={() => {}}
             />
           </TouchableOpacity>
@@ -152,29 +147,5 @@ const Report = () => {
     </TouchableWithoutFeedback>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    backgroundColor: "#FFFBF6",
-    minHeight: "100%",
-  },
-  section: {
-    paddingRight: 20,
-    paddingLeft: 20,
-    marginTop: 16,
-  },
-  mainText: {
-    fontSize: 16,
-    color: "#1F1F1F",
-    fontFamily: "SUITE_Bold",
-    marginBottom: 8,
-  },
-  text: {
-    fontSize: 16,
-    color: "#1F1F1F",
-    fontFamily: "SUITE",
-  },
-});
 
 export default Report;
