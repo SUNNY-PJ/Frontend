@@ -1,5 +1,3 @@
-<--
-
 # Frontend
 
 frontend
@@ -20,4 +18,3 @@ https://developer.apple.com/account/resources/devices/list
 
 npx expo install --fix
 
--->
