@@ -1,9 +1,10 @@
 ## SUNNY
-<p align="start">
-  <img src="https://github.com/SUNNY-PJ/Frontend/assets/100350818/080d874b-8aa2-469b-a343-05e0020fd8b1" width="200" title="스크린샷_06_6.5 inch">
-  <img src="https://github.com/SUNNY-PJ/Frontend/assets/100350818/85190ec6-c17d-4b56-9f0c-1a5947c8b24b" width="200" title="스크린샷_05_6.5 inch">
-  <img src="https://github.com/SUNNY-PJ/Frontend/assets/100350818/3c5ec895-cb2c-490d-b196-0d76b7cfb0bc" width="200" title="스크린샷_04_6.5 inch">
-  <img src="https://github.com/SUNNY-PJ/Frontend/assets/100350818/cb2d467a-9a29-4b44-b007-7010e5fa6230" width="200" title="스크린샷_03_6.5 inch">
+<p align="center">
+  <img src="https://github.com/hot-foot/hot_foot_app/assets/100350818/6ccc4300-b78b-4ac9-a8ba-a493cedcd673" alt="Screenshot 01" width="200">
+  <img src="https://github.com/hot-foot/hot_foot_app/assets/100350818/ee5962fb-bb55-489f-984f-64844f90f486" alt="Screenshot 02" width="200">
+  <img src="https://github.com/hot-foot/hot_foot_app/assets/100350818/1faf3260-e5a2-4c39-8952-4a6ae5a577c3" alt="Screenshot 03" width="200">
+  <img src="https://github.com/hot-foot/hot_foot_app/assets/100350818/e26e79d2-69f0-4e8b-9ad9-798e6b0579db" alt="Screenshot 04" width="200">
+  <img src="https://github.com/hot-foot/hot_foot_app/assets/100350818/bd4d4bb9-cfab-4f0f-b762-75ff4a76cbff" alt="Screenshot 05" width="200">
 </p>
 
 <br />
