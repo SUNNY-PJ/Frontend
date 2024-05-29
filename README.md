@@ -1,6 +1,5 @@
 # 프로젝트 이름
 ## SUNNY
-
 <p align="center">
   <img src="https://github.com/SUNNY-PJ/Frontend/assets/100350818/9756daf3-caaf-46ee-81af-1973b9a19a51" width="200" title="스크린샷_01_6.5 inch">
   <img src="https://github.com/SUNNY-PJ/Frontend/assets/100350818/c0f42bc1-4a98-4983-946a-2fe3c287aae6" width="200" title="스크린샷_02_6.5 inch">
