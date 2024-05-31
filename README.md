@@ -44,6 +44,7 @@
 
 ## 프로젝트 구조
 
+```plaintext
 .
 ├── api/                   # REST API 호출 관련 코드
 ├── assets/                # 이미지, 폰트 등 정적 자원
@@ -61,6 +62,5 @@
 ├── MainScreen.js          # 메인 화면 컴포넌트
 ├── Navigation.js          # 네비게이션 설정
 └── README.md              # 프로젝트에 대한 설명
-
 
 
