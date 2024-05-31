@@ -36,9 +36,31 @@
 
 이 프로젝트는 다음과 같은 기술 스택을 사용합니다:
 
-- ![React Native](https://img.shields.io/badge/React%20Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) **React Native**: 모바일 애플리케이션 개발을 위한 프레임워크. React의 철학을 바탕으로 네이티브 앱을 작성할 수 있습니다.
-- ![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white) **Expo**: React Native 애플리케이션의 개발을 단순화하고 배포를 용이하게 하는 도구. Expo SDK는 다양한 빌트인 API와 컴포넌트를 제공합니다.
-- ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E) **JavaScript**: 프로젝트의 주요 프로그래밍 언어. React Native와 Expo를 사용하여 애플리케이션을 개발합니다.
-- ![REST API](https://img.shields.io/badge/REST-02569B?style=for-the-badge&logo=rest&logoColor=white) **REST API**: 클라이언트와 서버 간의 통신을 위한 아키텍처 스타일. 데이터를 주고 받기 위해 HTTP 요청을 사용합니다.
+- ![React Native](https://img.shields.io/badge/React%20Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+- ![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)
+- ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E) 
+- ![REST API](https://img.shields.io/badge/REST-02569B?style=for-the-badge&logo=rest&logoColor=white)
+
+
+## 프로젝트 구조
+
+.
+├── api/                   # REST API 호출 관련 코드
+├── assets/                # 이미지, 폰트 등 정적 자원
+├── components/            # 재사용 가능한 컴포넌트
+├── constant/              # 상수 값들
+├── context/               # 전역 상태 관리
+├── data/                  # 데이터 및 모델
+├── hook/                  # 커스텀 훅
+├── screen/                # 화면 컴포넌트
+├── test/                  # 테스트 코드
+├── .gitignore             # Git 무시 파일 목록
+├── App.js                 # 애플리케이션의 진입점
+├── ChatScreen.js          # 채팅 화면 컴포넌트
+├── KakaoScreen.js         # 카카오톡 연동 화면 컴포넌트
+├── MainScreen.js          # 메인 화면 컴포넌트
+├── Navigation.js          # 네비게이션 설정
+└── README.md              # 프로젝트에 대한 설명
+
 
 
