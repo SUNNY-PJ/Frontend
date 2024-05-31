@@ -31,3 +31,14 @@
 3. **지출 현황**: 카테고리별 및 월별 지출 현황을 한눈에 볼 수 있도록 시각적으로 제공합니다.
 4. **커뮤니티**: 절약 팁을 공유하고, 다른 사용자들의 절약을 응원하면서 사회적 상호작용을 즐길 수 있습니다.
 
+
+## Frontend 기술 스택
+
+이 프로젝트는 다음과 같은 기술 스택을 사용합니다:
+
+- ![React Native](https://img.shields.io/badge/React%20Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) **React Native**: 모바일 애플리케이션 개발을 위한 프레임워크. React의 철학을 바탕으로 네이티브 앱을 작성할 수 있습니다.
+- ![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white) **Expo**: React Native 애플리케이션의 개발을 단순화하고 배포를 용이하게 하는 도구. Expo SDK는 다양한 빌트인 API와 컴포넌트를 제공합니다.
+- ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E) **JavaScript**: 프로젝트의 주요 프로그래밍 언어. React Native와 Expo를 사용하여 애플리케이션을 개발합니다.
+- ![REST API](https://img.shields.io/badge/REST-02569B?style=for-the-badge&logo=rest&logoColor=white) **REST API**: 클라이언트와 서버 간의 통신을 위한 아키텍처 스타일. 데이터를 주고 받기 위해 HTTP 요청을 사용합니다.
+
+
