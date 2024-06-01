@@ -17,6 +17,8 @@ const MsgModal = ({
   onCancel,
   msgTitle,
   msgContent,
+  leftText,
+  rightText,
 }) => {
   return (
     <Modal animationType="none" transparent={true} visible={isVisible}>
@@ -39,10 +41,10 @@ const MsgModal = ({
             </TouchableOpacity>
           </View>
           <Text style={styles.title}>{msgTitle}</Text>
-          <Text style={styles.content}>{msgContent}</Text>
+          {msgContent && <Text style={styles.content}>{msgContent}</Text>}
           <View style={styles.buttonContainer}>
-            <MiddleBtn text={"네"} onClick={onDelete} />
-            <MiddleBtnBlack text={"아니오"} onClick={onCancel} />
+            <MiddleBtn text={leftText || "네"} onClick={onDelete} />
+            <MiddleBtnBlack text={rightText || "아니오"} onClick={onCancel} />
           </View>
         </View>
       </View>
