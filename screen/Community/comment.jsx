@@ -39,6 +39,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   const [isOpenOptionModal, setIsOpenOptionModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [isChildComment, setIsChildComment] = useState(true);
   const [isActionSheetVisible, setActionSheetVisible] = useState(false);
   const [isActionSheetViewerVisible, setActionSheetViewerVisible] =
@@ -155,6 +156,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
       });
       if (response.status === 200) {
         Alert.alert("", "댓글을 삭제하였습니다.");
+        setIsDeleteModalVisible(false);
         fetchData();
       }
     } catch (error) {
@@ -188,8 +190,12 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
   };
 
   const handleRemoveClick = () => {
-    deleteData();
+    setIsDeleteModalVisible(true);
     setActionSheetVisible(false);
+  };
+
+  const handleRemoveComment = () => {
+    deleteData();
   };
 
   const handleCommentClick = () => {
@@ -296,6 +302,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
 
   const handleCancelDelete = () => {
     setIsModalVisible(false);
+    setIsDeleteModalVisible(false);
   };
 
   const handleBlockFriend = () => {
@@ -570,6 +577,15 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
         onCancel={handleCancelDelete}
         msgTitle="차단하시겠어요?"
         msgContent="해당 사용자가 커뮤니티에서 작성한 글과 댓글, 답글을 볼 수 없습니다."
+      />
+      <MsgModal
+        isVisible={isDeleteModalVisible}
+        toggleModal={handleCancelDelete}
+        onDelete={handleCancelDelete}
+        onCancel={handleRemoveComment}
+        msgTitle="댓글을 삭제할까요?"
+        leftText="아니오"
+        rightText="네"
       />
     </Modal>
   );
