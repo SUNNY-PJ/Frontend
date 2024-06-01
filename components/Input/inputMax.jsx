@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 
-const InputMax = ({ placeholder, inputValue, handleInputChange }) => {
+const InputMax = ({ placeholder, inputValue, handleInputChange, height }) => {
   const [isInputFocused, setInputFocused] = useState(false);
 
   const handleFocus = () => {
@@ -28,6 +28,9 @@ const InputMax = ({ placeholder, inputValue, handleInputChange }) => {
               : "#C1C1C1",
             borderBottomWidth: isInputFocused ? 1.5 : inputValue ? 3 : 1.5,
             borderRightWidth: isInputFocused ? 1.5 : inputValue ? 3 : 1.5,
+            height: height ? height : "auto",
+            minHeight: height ? "auto" : 180,
+            maxHeight: height ? "auto" : 250,
           },
         ]}
         onFocus={handleFocus}
@@ -44,8 +47,6 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    minHeight: 180,
-    maxHeight: 250,
     paddingVertical: 14,
     paddingHorizontal: 11,
     paddingTop: 15,
