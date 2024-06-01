@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#FFF9EF"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "notification": {
       "icon": "./assets/app_icon.png"
     },
@@ -21,7 +19,7 @@
       "usesAppleSignIn": true,
       "supportsTablet": false,
       "bundleIdentifier": "com.sunnymoney2024.SUNNY",
-      "buildNumber": "1.1.9",
+      "buildNumber": "1.2.0",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "게시글에 사진을 첨부, 내 프로필 사진을 등록하는 기능 사용을 위해 사진 라이브러리에 접근하도록 허용합니다.  사진에는 위치, 심도 정보, 캡션 및 오디오와 관련된 데이터가 포함될 수 있습니다."
       }
@@ -32,10 +30,7 @@
         "backgroundColor": "#FFF9EF"
       },
       "versionCode": 25,
-      "permissions": [
-        "CAMERA",
-        "NOTIFICATIONS"
-      ],
+      "permissions": ["CAMERA", "NOTIFICATIONS"],
       "package": "com.sunny.inout_webview",
       "googleServicesFile": "./google-services.json"
     },
@@ -47,10 +42,7 @@
         "projectId": "badbfb2c-f7ac-4ace-9b2b-74f36571714c"
       }
     },
-    "plugins": [
-      "expo-apple-authentication",
-      "expo-font"
-    ],
+    "plugins": ["expo-apple-authentication", "expo-font"],
     "owner": "suyoooi"
   }
 }
