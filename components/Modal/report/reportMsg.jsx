@@ -39,8 +39,8 @@ const ReportMsg = ({ isVisible, onSubmit, onCancel }) => {
             소요됩니다.
           </Text>
           <View style={styles.buttonContainer}>
-            <MiddleBtn text={"네"} onClick={onSubmit} />
-            <MiddleBtnBlack text={"아니오"} onClick={onCancel} />
+            <MiddleBtn text={"아니오"} onClick={onCancel} />
+            <MiddleBtnBlack text={"네"} onClick={onSubmit} />
           </View>
         </View>
       </View>
