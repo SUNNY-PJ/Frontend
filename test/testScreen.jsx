@@ -12,7 +12,7 @@ const TestScreen = () => {
       <ScrollView style={{ padding: 20 }}>
         {/* <WebSocketComponent /> */}
         {/* <StompClientComponent /> */}
-        <StompWebSocketComponent />
+        {/* <StompWebSocketComponent /> */}
         {/* <StompWebSocketComponent2 /> */}
       </ScrollView>
     </>
