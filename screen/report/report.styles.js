@@ -28,4 +28,26 @@ export const styles = StyleSheet.create({
     alignSelf: "flex-end",
     bottom: 25,
   },
+  radioIcon: {
+    width: 24,
+    height: 24,
+    marginLeft: 16,
+  },
+  content: {
+    borderColor: "#C1C1C1",
+    borderWidth: 1.5,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+  },
+  reasonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 14,
+  },
+  reasonText: {
+    fontSize: 16,
+    color: "#1F1F1F",
+    marginLeft: 10,
+    fontFamily: "SUITE",
+  },
 });
