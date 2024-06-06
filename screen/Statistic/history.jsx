@@ -182,7 +182,7 @@ const History = () => {
             width: 52,
             height: 52,
             transform: [{ translateY }],
-            // marginBottom: 15,
+            marginBottom: 8,
           }}
         />
       </TouchableOpacity>
