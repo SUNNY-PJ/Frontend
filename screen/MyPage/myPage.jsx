@@ -398,23 +398,6 @@ const MyPage = () => {
             <Text style={styles.description}>테스트용</Text>
           </TouchableOpacity> */}
         </View>
-        {/* <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            gap: 80,
-            marginTop: 16,
-          }}
-        >
-            <Image
-              source={require("../../assets/myPage_notice.png")}
-              style={{ width: 56, height: 84 }}
-            />
-          <Image
-            source={require("../../assets/myPage_center.png")}
-            style={{ width: 56, height: 84 }}
-          />
-        </View> */}
       </ScrollView>
       <LoseModal isOpenProfile={isOpenProfile} openProfile={openProfile} />
       <LeaveMsg
