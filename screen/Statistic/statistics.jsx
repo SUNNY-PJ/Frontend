@@ -250,7 +250,7 @@ const Statistics = ({ year, month }) => {
       </View>
       <Line h={4} color={"#C1C1C1"} />
       <SafeAreaView style={styles.bottomSection}>
-        <ScrollView style={{ height: windowHeight - 700, flex: 1 }}>
+        <ScrollView style={{ height: windowHeight - 698, flex: 1 }}>
           {Array.isArray(categoryData) &&
             categoryData.map((item, index) => (
               <TouchableOpacity
