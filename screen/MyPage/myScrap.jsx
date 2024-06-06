@@ -98,7 +98,7 @@ const MyScrap = () => {
   return (
     <View style={styles.container}>
       <View>
-        <ScrollView style={{ height: windowHeight - 259 - 57 }}>
+        <ScrollView style={{ height: windowHeight - 259 - 65 }}>
           {data.map((item) => (
             <TouchableOpacity
               key={item.id}
