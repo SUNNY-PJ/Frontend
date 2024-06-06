@@ -168,7 +168,8 @@ const MyPage = () => {
       console.log("데이터:", response.data);
       if (response.data.status === 200) {
         Alert.alert("회원 탈퇴", "탈퇴 되었습니다.");
-        navigation.navigate("KakaoScreen", { screen: "Login" });
+        navigation.replace("KakaoScreen", { screen: "Login" });
+        // navigation.navigate("KakaoScreen", { screen: "Login" });
       } else {
         Alert.alert(
           "error",
