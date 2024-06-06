@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
+  ActivityIndicator,
 } from "react-native";
 import { styles } from "./tip.styles";
 import { useCommunity } from "../../context/communityContext";
@@ -20,19 +21,23 @@ const Tip = () => {
   const navigation = useNavigation();
   const { data, fetchData } = useCommunity();
   const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(true); // 로딩 상태 추가
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     wait(700).then(() => {
       console.log(refreshing);
       setRefreshing(false);
-      // 데이터를 새로고침
       fetchData();
     });
   }, []);
 
   useEffect(() => {
-    fetchData();
+    const fetchInitialData = async () => {
+      await fetchData();
+      setLoading(false); // 데이터를 가져온 후 로딩 상태 업데이트
+    };
+    fetchInitialData();
   }, []);
 
   const isFocused = useIsFocused();
@@ -42,6 +47,14 @@ const Tip = () => {
       fetchData();
     }
   }, [isFocused]);
+
+  if (loading) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
     <ScrollView
@@ -53,9 +66,8 @@ const Tip = () => {
     >
       <View style={styles.container}>
         <View style={styles.contentContainer}>
-          {data &&
-            data.map((item, index) => (
-              // {data.map((item) => (
+          {data && data.length > 0 ? (
+            data.map((item) => (
               <TouchableOpacity
                 key={item.id}
                 onPress={() =>
@@ -84,7 +96,10 @@ const Tip = () => {
                 </View>
                 <Line color={"#C1C1C1"} h={2} />
               </TouchableOpacity>
-            ))}
+            ))
+          ) : (
+            <Text style={styles.noDataText}>No data available</Text>
+          )}
         </View>
       </View>
     </ScrollView>
