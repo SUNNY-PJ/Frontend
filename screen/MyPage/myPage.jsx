@@ -50,7 +50,6 @@ const MyPage = () => {
   const [profile, setProfile] = useState([]);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [modal, setModal] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const [alarmDataVal, setAlarmDataVal] = useState(true);
 
@@ -87,8 +86,6 @@ const MyPage = () => {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-
-      console.log("프로필 정보:::", response.data);
       const profileData = response.data;
       setProfile([profileData]);
     } catch (error) {
@@ -101,12 +98,6 @@ const MyPage = () => {
   }, []);
 
   // 로그아웃
-  // const logoutData = async () => {
-  //   await AsyncStorage.removeItem("access_token");
-  //   await AsyncStorage.removeItem("refresh_token");
-  //   navigation.replace("KakaoScreen", { screen: "Login" });
-  // };
-
   const logoutData = async () => {
     const logout_url = `${url}/apple/auth/logout`;
     const accessToken = await AsyncStorage.getItem("access_token");
@@ -169,10 +160,6 @@ const MyPage = () => {
     }
   };
 
-  useEffect(() => {
-    alarmData();
-  }, [isEnabled]);
-
   const toggleSwitch = async () => {
     setIsEnabled(!isEnabled);
     await alarmData();
@@ -189,19 +176,15 @@ const MyPage = () => {
       });
       const alarmPermission = response.data.data;
       setAlarmDataVal(alarmPermission);
+      console.log("alarmPermission", alarmPermission);
     } catch (error) {
       console.error("에러:", error);
     }
   };
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      fetchData();
-      alarmFetchData();
-    });
-
-    return unsubscribe;
-  }, [navigation]);
+    alarmFetchData();
+  }, []);
 
   // apple authorizationCode 발급
   async function handleAppleCode() {
@@ -251,7 +234,6 @@ const MyPage = () => {
       if (response.data.status === 200) {
         Alert.alert("회원 탈퇴", "탈퇴 되었습니다.");
         navigation.replace("KakaoScreen", { screen: "Login" });
-        // navigation.navigate("KakaoScreen", { screen: "Login" });
       } else {
         Alert.alert(
           "error",
@@ -323,7 +305,6 @@ const MyPage = () => {
               key={item.id}
             >
               <Image
-                // source={require("../../assets/myPage_profile.png")}
                 source={{ uri: item.profile }}
                 style={{
                   width: isLargeScreen ? 56 : 46,
