@@ -127,10 +127,10 @@ const MyPage = () => {
       await AsyncStorage.removeItem("access_token");
       await AsyncStorage.removeItem("refresh_token");
       if (response.data.status === 200) {
+        navigation.replace("KakaoScreen", { screen: "Login" });
+        // navigation.navigate("KakaoScreen", { screen: "Login" });
         Alert.alert("", "로그아웃 되었습니다.");
       }
-
-      navigation.navigate("KakaoScreen", { screen: "Login" });
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류: logout", error.response.data);
