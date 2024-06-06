@@ -10,41 +10,31 @@ import { SaveDataProvider } from "./context/saveDataContext";
 
 const Stack = createStackNavigator();
 
-function Navigation({ isSignedIn }) {
+// function Navigation({ isSignedIn }) {
+function Navigation() {
   return (
     <CommunityProvider>
       <SaveDataProvider>
         <NavigationContainer>
           <Stack.Navigator>
-            {isSignedIn ? (
-              <>
-                {/* 로그인 상태 */}
-                <Stack.Screen
-                  name="MainScreen"
-                  component={MainScreen}
-                  options={{ headerShown: false }}
-                />
-              </>
-            ) : (
-              <>
-                {/* 비로그인 상태 */}
-                <Stack.Screen
-                  name="KakaoScreen"
-                  component={KakaoScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="SignUpScreen"
-                  component={SignUpScreen}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="MainScreen"
-                  component={MainScreen}
-                  options={{ headerShown: false }}
-                />
-              </>
-            )}
+            <>
+              {/* 비로그인 상태 */}
+              <Stack.Screen
+                name="KakaoScreen"
+                component={KakaoScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="SignUpScreen"
+                component={SignUpScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="MainScreen"
+                component={MainScreen}
+                options={{ headerShown: false }}
+              />
+            </>
             {/* <Stack.Screen
               name="ChatScreen"
               component={ChatScreen}

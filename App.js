@@ -247,7 +247,8 @@ export default function App() {
   return (
     <>
       {fontsLoaded ? (
-        <Navigation isSignedIn={isSignedIn} />
+        // <Navigation isSignedIn={isSignedIn} />
+        <Navigation />
       ) : (
         <ActivityIndicator size="large" color="#000" />
       )}
