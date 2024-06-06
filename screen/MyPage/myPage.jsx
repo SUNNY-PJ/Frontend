@@ -282,7 +282,6 @@ const MyPage = () => {
 
   const handleTestClick = () => {
     navigation.navigate("MainScreen", { screen: "TestScreen" });
-    // navigation.navigate("MainScreen", { screen: "BattleStatus" });
   };
 
   const handleBlockedClick = () => {
@@ -333,7 +332,6 @@ const MyPage = () => {
               </View>
             </View>
           ))}
-          {/* <Line color={"#C1C1C1"} h={4} /> */}
           <Text style={styles.title}>커뮤니티</Text>
           <TouchableOpacity
             activeOpacity={0.6}
@@ -373,12 +371,6 @@ const MyPage = () => {
             <ToggleBtn isEnabled={alarmDataVal} toggleSwitch={toggleSwitch} />
           </View>
           {/* </TouchableOpacity> */}
-          {/* <TouchableOpacity
-            activeOpacity={0.6}
-            onPress={handldSettingAlarmClick}
-          >
-            <Text style={styles.description}>알림 설정</Text>
-          </TouchableOpacity> */}
           <Line color={"#C1C1C1"} h={4} />
           <Text style={styles.title}>기타</Text>
           <TouchableOpacity activeOpacity={1} onPress={handleTermsClick}>
