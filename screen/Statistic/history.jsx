@@ -144,7 +144,7 @@ const History = () => {
       </View>
       {/* {data.map((item, index) => ( */}
       <SafeAreaView style={styles.bottomSection}>
-        <ScrollView style={{ height: windowHeight - 700, flex: 1 }}>
+        <ScrollView style={{ height: windowHeight - 685, flex: 1 }}>
           {Array.isArray(data) &&
             data.map((item, index) => (
               <TouchableOpacity
