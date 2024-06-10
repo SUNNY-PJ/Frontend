@@ -73,11 +73,15 @@ export default function App() {
   }, []);
 
   // 스플래시
-  async function prepare() {
-    await SplashScreen.preventAutoHideAsync();
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    await SplashScreen.hideAsync();
-  }
+  useEffect(() => {
+    const prepareSplash = async () => {
+      await SplashScreen.preventAutoHideAsync();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await SplashScreen.hideAsync();
+    };
+
+    prepareSplash();
+  }, []);
 
   useEffect(() => {
     const registerForPushNotificationsAsync = async () => {
