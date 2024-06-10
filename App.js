@@ -72,17 +72,12 @@ export default function App() {
     loadFonts();
   }, []);
 
+  // 스플래시
   useEffect(() => {
     async function prepare() {
-      // Prevent splash screen from hiding
       await SplashScreen.preventAutoHideAsync();
-      // Artificial delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      // Hide splash screen
       await SplashScreen.hideAsync();
-      // Set app as ready
-      // setIsSignedIn(true);
-      // setIsSignedIn(false);
     }
 
     prepare();
