@@ -2,18 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
-import { Platform } from "react-native";
+import { Platform, Alert, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
 import Navigation from "./Navigation";
-import { Alert, ActivityIndicator } from "react-native";
 import { jwtDecode } from "jwt-decode";
 import { proxyUrl } from "./constant/common";
 import "core-js/stable/atob";
 import apiClient from "./api/apiClient";
 import * as SplashScreen from "expo-splash-screen";
-// import { decode } from "base-64";
-// global.atob = decode;
 
+// Notifications setup
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -63,113 +61,96 @@ export default function App() {
     SUITE_ExtraBold: require("./assets/fonts/SUITE-ExtraBold.otf"),
     SUITE_Heavy: require("./assets/fonts/SUITE-Heavy.otf"),
   };
+
   async function loadFonts() {
     await Font.loadAsync(customFonts);
     setFontsLoaded(true);
   }
 
   useEffect(() => {
-    loadFonts();
-  }, []);
-
-  // 스플래시
-  useEffect(() => {
-    const prepareSplash = async () => {
-      await SplashScreen.preventAutoHideAsync();
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      await SplashScreen.hideAsync();
+    const initializeApp = async () => {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        await loadFonts();
+        await checkTokenExpiry();
+        await initPushNotifications();
+      } catch (error) {
+        console.error("Initialization error:", error);
+      } finally {
+        await SplashScreen.hideAsync();
+      }
     };
 
-    prepareSplash();
-  }, []);
-
-  useEffect(() => {
-    const registerForPushNotificationsAsync = async () => {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-
-      if (finalStatus !== "granted") {
-        Alert.alert(
-          "",
-          "알림을 거부하였습니다. 앱에 대한 알림을 받을 수 없습니다."
-        );
-        return;
-      }
-
-      const { data } = await Notifications.getExpoPushTokenAsync();
-      console.log("Expo Push Token:", data);
-      await AsyncStorage.setItem("device_token", data);
-      const device_token = await AsyncStorage.getItem("device_token");
-      console.log("이게 디바이스 토큰이지이이이", device_token);
-
-      const expoPushToken = `${data}`;
-
-      // 정규 표현식을 사용하여 토큰 값 추출
-      const tokenRegex = /\[([^\]]+)\]/;
-      const match = expoPushToken.match(tokenRegex);
-
-      // match 배열의 두 번째 요소에 토큰 값이 있음
-      // 이게 진짜 토큰임
-      const token = match && match[1];
-
-      console.log("푸시 토큰 값:", token);
-
-      return data;
-    };
-
-    const initPushNotifications = async () => {
-      if (Platform.OS === "android") {
-        await Notifications.setNotificationChannelAsync("default", {
-          name: "default",
-          importance: Notifications.AndroidImportance.MAX,
-          vibrationPattern: [0, 250, 250, 250],
-          lightColor: "#FF231F7C",
-        });
-      }
-
-      const pushToken = await registerForPushNotificationsAsync();
-      setPushToken(pushToken);
-      console.log(pushToken);
-
-      Notifications.addNotificationReceivedListener((notification) => {
-        console.log("NOTIFICATION:", notification);
-      });
-
-      notificationListener.current =
-        Notifications.addNotificationReceivedListener((notification) => {
-          setNotification(notification);
-        });
-
-      responseListener.current =
-        Notifications.addNotificationResponseReceivedListener((response) => {
-          console.log(response);
-        });
-    };
-
-    initPushNotifications();
+    initializeApp();
 
     return () => {
-      Notifications.removeNotificationSubscription(
-        notificationListener.current
-      );
-      Notifications.removeNotificationSubscription(responseListener.current);
+      if (notificationListener.current && responseListener.current) {
+        Notifications.removeNotificationSubscription(
+          notificationListener.current
+        );
+        Notifications.removeNotificationSubscription(responseListener.current);
+      }
     };
   }, []);
 
-  // 알림 예약 함수 호출
+  const registerForPushNotificationsAsync = async () => {
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+
+    if (finalStatus !== "granted") {
+      Alert.alert(
+        "",
+        "알림을 거부하였습니다. 앱에 대한 알림을 받을 수 없습니다."
+      );
+      return;
+    }
+
+    const { data } = await Notifications.getExpoPushTokenAsync();
+    console.log("Expo Push Token:", data);
+    await AsyncStorage.setItem("device_token", data);
+    const device_token = await AsyncStorage.getItem("device_token");
+    console.log("이게 디바이스 토큰이지이이이", device_token);
+
+    return data;
+  };
+
+  const initPushNotifications = async () => {
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    const pushToken = await registerForPushNotificationsAsync();
+    setPushToken(pushToken);
+    console.log(pushToken);
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+  };
+
   const handleScheduleNotification = async () => {
     const notificationData = "알림 내용을 여기에 입력하세요";
     await schedulePushNotification(notificationData);
   };
 
   const refreshToken = async () => {
-    console.log("리프레시 토큰 ");
     const inputURL = proxyUrl + `/apple/auth/reissue`;
     const refresh_token = await AsyncStorage.getItem("refresh_token");
 
@@ -191,50 +172,26 @@ export default function App() {
         "Authentication Error",
         "세션이 만료되었습니다. 다시 로그인해주세요."
       );
-      setIsSignedIn(false); // 토큰 갱신 실패 시 로그아웃 처리
+      setIsSignedIn(false);
       return null;
     }
   };
 
   const checkTokenExpiry = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
-    console.log("1111");
     if (access_token) {
-      console.log("222");
       const decoded = jwtDecode(access_token);
-      console.log("decoded", decoded);
       const currentTime = Date.now() / 1000;
       if (decoded.exp < currentTime) {
-        console.log("토큰 만료됨, 갱신 시도...");
-        await refreshToken(); // 토큰 갱신 시도 후 로그인 상태는 refreshToken 함수 내에서 설정
+        await refreshToken();
       } else {
-        console.log("토큰 유효함");
         setIsSignedIn(true);
       }
     } else {
-      setIsSignedIn(false); // 토큰이 없는 경우 로그아웃 처리
+      setIsSignedIn(false);
     }
   };
 
-  useEffect(() => {
-    checkTokenExpiry();
-  }, []);
-
-  // // 로그인 상태 확인
-  // const checkSignInStatus = async () => {
-  //   try {
-  //     const token = await AsyncStorage.getItem("access_token");
-  //   } catch (e) {
-  //     // 에러 처리
-  //     console.error(e);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   checkSignInStatus();
-  // }, []);
-
-  // return <Navigation handleScheduleNotification={handleScheduleNotification} />;
   if (isSignedIn === null) {
     return null; // 로딩 화면 표시
   }
@@ -242,7 +199,6 @@ export default function App() {
   return (
     <>
       {fontsLoaded ? (
-        // <Navigation isSignedIn={isSignedIn} />
         <Navigation />
       ) : (
         <ActivityIndicator size="large" color="#000" />
