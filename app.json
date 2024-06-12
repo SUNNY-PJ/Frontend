@@ -45,7 +45,7 @@
         "projectId": "badbfb2c-f7ac-4ace-9b2b-74f36571714c"
       }
     },
-    "plugins": ["expo-apple-authentication", "expo-font"],
+    "plugins": ["expo-apple-authentication"],
     "owner": "suyoooi"
   }
 }
