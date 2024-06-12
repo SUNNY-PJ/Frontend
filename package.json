@@ -20,7 +20,7 @@
     "@use-expo/font": "^2.0.0",
     "axios": "^1.5.0",
     "core-js": "^3.37.0",
-    "expo": "^51.0.12",
+    "expo": "^51.0.13",
     "expo-apple-authentication": "~6.4.1",
     "expo-calendar": "~13.0.5",
     "expo-firebase-app": "^2.0.0",
@@ -28,7 +28,7 @@
     "expo-image-picker": "~15.0.5",
     "expo-linear-gradient": "~13.0.2",
     "expo-linking": "~6.3.1",
-    "expo-notifications": "~0.28.8",
+    "expo-notifications": "~0.28.9",
     "expo-splash-screen": "~0.27.5",
     "expo-status-bar": "~1.12.1",
     "firebase": "^10.6.0",
@@ -59,7 +59,10 @@
     "react-native-web": "~0.19.10",
     "react-native-webview": "13.8.6",
     "react-navigation": "^4.4.4",
-    "react-navigation-stack": "^2.10.4"
+    "react-navigation-stack": "^2.10.4",
+    "metro": "~0.80.8",
+    "metro-resolver": "~0.80.8",
+    "metro-config": "~0.80.8"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0"
