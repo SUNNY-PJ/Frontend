@@ -234,6 +234,7 @@ const MyPage = () => {
       if (response.data.status === 200) {
         Alert.alert("회원 탈퇴", "탈퇴 되었습니다.");
         navigation.replace("KakaoScreen", { screen: "Login" });
+        // navigation.navigate("KakaoScreen", { screen: "Login" });
       } else {
         Alert.alert(
           "error",

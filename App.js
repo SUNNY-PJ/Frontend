@@ -10,6 +10,8 @@ import { proxyUrl } from "./constant/common";
 import "core-js/stable/atob";
 import apiClient from "./api/apiClient";
 import * as SplashScreen from "expo-splash-screen";
+// import { decode } from "base-64";
+// global.atob = decode;
 
 // Notifications setup
 Notifications.setNotificationHandler({
@@ -68,16 +70,33 @@ export default function App() {
   }
 
   useEffect(() => {
-    const initializeApp = async () => {
-      try {
-        await SplashScreen.preventAutoHideAsync();
-        await loadFonts();
-        await checkTokenExpiry();
-        await initPushNotifications();
-      } catch (error) {
-        console.error("Initialization error:", error);
-      } finally {
-        await SplashScreen.hideAsync();
+    loadFonts();
+  }, []);
+
+  useEffect(() => {
+    async function prepare() {
+      // Prevent splash screen from hiding
+      await SplashScreen.preventAutoHideAsync();
+      // Artificial delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Hide splash screen
+      await SplashScreen.hideAsync();
+      // Set app as ready
+      setIsSignedIn(true);
+    }
+
+    prepare();
+  }, []);
+
+  useEffect(() => {
+    const registerForPushNotificationsAsync = async () => {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
       }
     };
 
@@ -172,7 +191,7 @@ export default function App() {
         "Authentication Error",
         "세션이 만료되었습니다. 다시 로그인해주세요."
       );
-      setIsSignedIn(false);
+      setIsSignedIn(false); // 토큰 갱신 실패 시 로그아웃 처리
       return null;
     }
   };
