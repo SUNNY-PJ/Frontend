@@ -77,14 +77,24 @@ const AppleLogin = () => {
       }
     } catch (error) {
       console.log("errorMessage:::", error);
-      Alert.alert(
-        "error",
-        `로그인 중 에러가 발생했습니다.\n관리자에게 문의 바랍니다.`
-      );
       if (error.response) {
         console.error("서버 응답 오류: login", error.response);
+        Alert.alert(
+          "error",
+          `로그인 중 에러가 발생했습니다.\n응답 코드: ${error.response.status}\n응답 메시지: ${error.response.data}`
+        );
+      } else if (error.request) {
+        console.error("요청 오류: login", error.request);
+        Alert.alert(
+          "error",
+          `로그인 중 에러가 발생했습니다.\n서버 응답 없음. 네트워크 상태를 확인하세요.`
+        );
       } else {
-        console.error("에러:", error);
+        console.error("설정 오류: login", error.message);
+        Alert.alert(
+          "error",
+          `로그인 중 에러가 발생했습니다.\n오류 메시지: ${error.message}`
+        );
       }
     }
   };
