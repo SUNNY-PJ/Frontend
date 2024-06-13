@@ -21,3 +21,4 @@ export const GestureHandlerRootView = jest.fn();
 export const GestureDetector = jest.fn();
 export const Directions = {};
 export const createNativeWrapper = jest.fn();
+export const GestureHandlerRootHOC = jest.fn();
