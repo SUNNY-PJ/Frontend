@@ -7,8 +7,12 @@ module.exports = {
     '^@react-native-async-storage/async-storage$': '<rootDir>/__mocks__/async-storage.js',
     '^expo-notifications$': '<rootDir>/__mocks__/expo-notifications.js',
     '^expo-font$': '<rootDir>/__mocks__/expo-font.js',
+    '^react-native-gesture-handler$': '<rootDir>/__mocks__/react-native-gesture-handler.js',
   },
   transformIgnorePatterns: [
     "node_modules/(?!(@react-native|react-native|react-native-.*|@react-navigation|expo-.*)/)"
   ],
+  transform: {
+    "^.+\\.[jt]sx?$": "babel-jest"
+  },
 };
