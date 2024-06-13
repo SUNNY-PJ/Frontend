@@ -57,13 +57,14 @@ const AppleLogin = () => {
   const fetchData = async (idToken) => {
     const apple_url = `${url}/apple/auth/callback`;
     try {
+      console.log("Sending request to:", apple_url); // 요청 URL 로그
       const response = await axios.get(apple_url, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
         params: { code: idToken },
       });
-      console.log("apple 로그인 실행", response.data);
+      console.log("Response data:", response.data); // 응답 데이터 로그
 
       if (response.status === 200) {
         const access_token = response.data.data.accessToken;
@@ -83,7 +84,7 @@ const AppleLogin = () => {
         );
       }
     } catch (error) {
-      logErrorToServer(error.message, error.stack); // 서버로 로그 전송
+      Sentry.captureException(error); // Sentry에 오류를 전송합니다.
       console.log("Error message:", error.message);
       if (error.response) {
         console.error("Server response error:", error.response);
