@@ -1,4 +1,4 @@
-export const Swipeable = jest.fn();
+export const Swipeable = jest.fn().mockImplementation(({ children }) => children);
 export const DrawerLayout = jest.fn();
 export const State = {};
 export const PanGestureHandler = jest.fn();
@@ -17,7 +17,7 @@ export const ToolbarAndroid = jest.fn();
 export const ViewPagerAndroid = jest.fn();
 export const DrawerLayoutAndroid = jest.fn();
 export const WebView = jest.fn();
-export const GestureHandlerRootView = jest.fn();
+export const GestureHandlerRootView = jest.fn().mockImplementation(({ children }) => children);
 export const GestureDetector = jest.fn();
 export const Directions = {};
 export const createNativeWrapper = jest.fn();
