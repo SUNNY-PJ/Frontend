@@ -10,7 +10,7 @@ module.exports = {
     '^react-native-gesture-handler$': '<rootDir>/__mocks__/react-native-gesture-handler.js',
   },
   transformIgnorePatterns: [
-    "node_modules/(?!(@react-native|react-native|react-native-.*|@react-navigation|expo-.*)/)"
+    "node_modules/(?!(@react-native|react-native|react-native-.*|@react-navigation|expo-.*|@react-native-community/.*)/)"
   ],
   transform: {
     "^.+\\.[jt]sx?$": "babel-jest"
