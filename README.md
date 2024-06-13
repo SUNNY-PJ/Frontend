@@ -49,7 +49,7 @@
 [![runs with Expo Go](https://img.shields.io/badge/Runs%20with%20Expo%20Go-000.svg?style=flat-square&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.dev/client)
 [![runs with Expo Go](https://img.shields.io/badge/Runs%20with%20Expo%20Go-4630EB.svg?style=flat-square&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.dev/client)
 
-Expo Go 앱을 설치하면 디바이스에서 SUNNY를 확인할 수 있습니다.
+Expo Go 앱을 설치하면 디바이스에서 SUNNY를 실행할 수 있습니다.
 
 <br />
 
