@@ -47,6 +47,13 @@ const AppleLogin = () => {
     }
   }
 
+  const logErrorToServer = async (message, stack) => {
+    await axios.post("https://your-logging-server.com/logs", {
+      message,
+      stack,
+    });
+  };
+
   const fetchData = async (idToken) => {
     const apple_url = `${url}/apple/auth/callback`;
     try {
@@ -76,21 +83,22 @@ const AppleLogin = () => {
         );
       }
     } catch (error) {
-      console.log("errorMessage:::", error);
+      logErrorToServer(error.message, error.stack); // 서버로 로그 전송
+      console.log("Error message:", error.message);
       if (error.response) {
-        console.error("서버 응답 오류: login", error.response);
+        console.error("Server response error:", error.response);
         Alert.alert(
           "error",
           `로그인 중 에러가 발생했습니다.\n응답 코드: ${error.response.status}\n응답 메시지: ${error.response.data}`
         );
       } else if (error.request) {
-        console.error("요청 오류: login", error.request);
+        console.error("Network request error:", error.request);
         Alert.alert(
           "error",
-          `로그인 중 에러가 발생했습니다.\n서버 응답 없음. 네트워크 상태를 확인하세요.`
+          "로그인 중 에러가 발생했습니다.\n서버 응답 없음. 네트워크 상태를 확인하세요."
         );
       } else {
-        console.error("설정 오류: login", error.message);
+        console.error("Error setting up request:", error.message);
         Alert.alert(
           "error",
           `로그인 중 에러가 발생했습니다.\n오류 메시지: ${error.message}`
