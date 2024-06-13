@@ -10,8 +10,6 @@ import { proxyUrl } from "./constant/common";
 import "core-js/stable/atob";
 import apiClient from "./api/apiClient";
 import * as SplashScreen from "expo-splash-screen";
-// import { decode } from "base-64";
-// global.atob = decode;
 
 // Notifications setup
 Notifications.setNotificationHandler({
@@ -89,7 +87,7 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const registerForPushNotificationsAsync = async () => {
+    async function registerForPushNotificationsAsync() {
       const { status: existingStatus } =
         await Notifications.getPermissionsAsync();
       let finalStatus = existingStatus;
@@ -98,9 +96,34 @@ export default function App() {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
-    };
 
-    initializeApp();
+      if (finalStatus !== "granted") {
+        Alert.alert(
+          "",
+          "알림을 거부하였습니다. 앱에 대한 알림을 받을 수 없습니다."
+        );
+        return;
+      }
+
+      const { data } = await Notifications.getExpoPushTokenAsync();
+      console.log("Expo Push Token:", data);
+      await AsyncStorage.setItem("device_token", data);
+      const device_token = await AsyncStorage.getItem("device_token");
+      console.log("이게 디바이스 토큰이지이이이", device_token);
+      setPushToken(data);
+    }
+
+    registerForPushNotificationsAsync();
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
 
     return () => {
       if (notificationListener.current && responseListener.current) {
@@ -112,65 +135,13 @@ export default function App() {
     };
   }, []);
 
-  const registerForPushNotificationsAsync = async () => {
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-
-    if (existingStatus !== "granted") {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-
-    if (finalStatus !== "granted") {
-      Alert.alert(
-        "",
-        "알림을 거부하였습니다. 앱에 대한 알림을 받을 수 없습니다."
-      );
-      return;
-    }
-
-    const { data } = await Notifications.getExpoPushTokenAsync();
-    console.log("Expo Push Token:", data);
-    await AsyncStorage.setItem("device_token", data);
-    const device_token = await AsyncStorage.getItem("device_token");
-    console.log("이게 디바이스 토큰이지이이이", device_token);
-
-    return data;
-  };
-
-  const initPushNotifications = async () => {
-    if (Platform.OS === "android") {
-      await Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
-    }
-
-    const pushToken = await registerForPushNotificationsAsync();
-    setPushToken(pushToken);
-    console.log(pushToken);
-
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
-
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
-  };
-
   const handleScheduleNotification = async () => {
     const notificationData = "알림 내용을 여기에 입력하세요";
     await schedulePushNotification(notificationData);
   };
 
   const refreshToken = async () => {
-    const inputURL = proxyUrl + `/apple/auth/reissue`;
+    const inputURL = `${proxyUrl}/apple/auth/reissue`;
     const refresh_token = await AsyncStorage.getItem("refresh_token");
 
     try {
