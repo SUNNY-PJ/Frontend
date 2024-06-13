@@ -8,19 +8,6 @@
     "web": "expo start --web",
     "test": "jest"
   },
-  "jest": {
-    "preset": "react-native",
-    "testEnvironment": "node",
-    "setupFilesAfterEnv": [
-      "@testing-library/jest-native/extend-expect"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.js"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native|react-native|react-native-.*|@react-navigation|expo-.*)/)"
-    ]
-  },
   "dependencies": {
     "@expo/webpack-config": "^19.0.1",
     "@invertase/react-native-apple-authentication": "^2.3.0",
