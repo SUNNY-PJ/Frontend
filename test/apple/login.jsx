@@ -56,6 +56,8 @@ const AppleLogin = () => {
 
   const fetchData = async (idToken) => {
     const apple_url = `${url}/apple/auth/callback`;
+    console.log("Sending request to:", apple_url); // 요청 URL 로그
+
     try {
       console.log("Sending request to:", apple_url); // 요청 URL 로그
       const response = await axios.get(apple_url, {
@@ -72,12 +74,14 @@ const AppleLogin = () => {
         await AsyncStorage.setItem("access_token", access_token);
         await AsyncStorage.setItem("refresh_token", refresh_token);
         console.log("토큰:::", access_token);
+
         if (response.data.data.isUserRegistered) {
           navigation.replace("MainScreen", { screen: "Spending" });
         } else {
           navigation.replace("SignUpScreen", { screen: "SignUp" });
         }
       } else {
+        console.error(`Error: Status code ${response.status}`);
         Alert.alert(
           "error",
           `로그인 중 에러가 발생했습니다.\n관리자에게 문의 바랍니다.`
