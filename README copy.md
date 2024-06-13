@@ -5,6 +5,7 @@ frontend
 ## start
 
 npx expo start
+npx expo start --web
 
 build 명령어
 eas build -p ios
