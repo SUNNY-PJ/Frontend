@@ -17,7 +17,6 @@ export const ToolbarAndroid = jest.fn();
 export const ViewPagerAndroid = jest.fn();
 export const DrawerLayoutAndroid = jest.fn();
 export const WebView = jest.fn();
-export const NativeViewGestureHandler = jest.fn();
 export const GestureHandlerRootView = jest.fn();
 export const GestureDetector = jest.fn();
 export const Directions = {};
