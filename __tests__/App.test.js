@@ -4,5 +4,5 @@ import App from '../App';
 
 test('renders correctly', () => {
   const { getByText } = render(<App />);
-  expect(getByText('Welcome to React Native!')).toBeTruthy();
+  expect(getByText('Welcome to SUNNY!')).toBeTruthy();
 });
