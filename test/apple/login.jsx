@@ -4,6 +4,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { proxyUrl } from "../../constant/common";
+import * as Sentry from "@sentry/react-native";
 
 const AppleLogin = () => {
   const url = proxyUrl;
@@ -47,13 +48,6 @@ const AppleLogin = () => {
     }
   }
 
-  const logErrorToServer = async (message, stack) => {
-    await axios.post("https://your-logging-server.com/logs", {
-      message,
-      stack,
-    });
-  };
-
   const fetchData = async (idToken) => {
     const apple_url = `${url}/apple/auth/callback`;
     console.log("Sending request to:", apple_url); // 요청 URL 로그
@@ -88,7 +82,7 @@ const AppleLogin = () => {
         );
       }
     } catch (error) {
-      Sentry.captureException(error); // Sentry에 오류를 전송합니다.
+      Sentry.captureException(error); // Sentry에 오류를 전송
       console.log("Error message:", error.message);
       if (error.response) {
         console.error("Server response error:", error.response);
