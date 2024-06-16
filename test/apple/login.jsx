@@ -22,6 +22,7 @@ const AppleLogin = () => {
       // console.log("인증 코드:", credential.identityToken);
       if (credential.authorizationCode) {
         AsyncStorage.setItem("authorizationCode", credential.authorizationCode);
+        console.log("서버로 인증 코드를 전송합니다 :::", idTokenVal);
         // 서버로 인증 코드 전송
         fetchData(idTokenVal);
       }
@@ -49,6 +50,7 @@ const AppleLogin = () => {
   }
 
   const fetchData = async (idToken) => {
+    console.log("login api를 요청합니다 :::");
     const apple_url = `${url}/apple/auth/callback`;
     console.log("Sending request to:", apple_url); // 요청 URL 로그
 
