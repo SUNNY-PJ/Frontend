@@ -9,12 +9,10 @@ import { jwtDecode } from "jwt-decode";
 import { proxyUrl } from "./constant/common";
 import "core-js/stable/atob";
 import apiClient from "./api/apiClient";
+import Constants from "expo-constants";
 import * as SplashScreen from "expo-splash-screen";
-import * as Sentry from "@sentry/react-native";
 
-Sentry.init({
-  dsn: "https://c95d443b0c9028d7f8de457dd4c374db@o4507425556463616.ingest.us.sentry.io/4507425560461312",
-});
+const projectId = Constants.expoConfig.extra.eas.projectId;
 
 // Notifications setup
 Notifications.setNotificationHandler({
@@ -23,6 +21,7 @@ Notifications.setNotificationHandler({
     shouldPlaySound: false,
     shouldSetBadge: false,
   }),
+  projectId: projectId,
 });
 
 // 알림 울리기
@@ -73,62 +72,20 @@ export default function App() {
   }
 
   useEffect(() => {
-    loadFonts();
-  }, []);
-
-  useEffect(() => {
-    async function prepare() {
-      // Prevent splash screen from hiding
-      await SplashScreen.preventAutoHideAsync();
-      // Artificial delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      // Hide splash screen
-      await SplashScreen.hideAsync();
-      // Set app as ready
-      setIsSignedIn(true);
-    }
-
-    prepare();
-  }, []);
-
-  useEffect(() => {
-    async function registerForPushNotificationsAsync() {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
+    const initializeApp = async () => {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+        await loadFonts();
+        await checkTokenExpiry();
+        await initPushNotifications();
+      } catch (error) {
+        console.error("Initialization error:", error);
+      } finally {
+        await SplashScreen.hideAsync();
       }
+    };
 
-      if (finalStatus !== "granted") {
-        Alert.alert(
-          "",
-          "알림을 거부하였습니다. 앱에 대한 알림을 받을 수 없습니다."
-        );
-        return;
-      }
-
-      const { data } = await Notifications.getExpoPushTokenAsync();
-      console.log("Expo Push Token:", data);
-      await AsyncStorage.setItem("device_token", data);
-      const device_token = await AsyncStorage.getItem("device_token");
-      console.log("이게 디바이스 토큰이지이이이", device_token);
-      setPushToken(data);
-    }
-
-    registerForPushNotificationsAsync();
-
-    notificationListener.current =
-      Notifications.addNotificationReceivedListener((notification) => {
-        setNotification(notification);
-      });
-
-    responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
+    initializeApp();
 
     return () => {
       if (notificationListener.current && responseListener.current) {
@@ -140,13 +97,65 @@ export default function App() {
     };
   }, []);
 
+  const registerForPushNotificationsAsync = async () => {
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+
+    if (finalStatus !== "granted") {
+      Alert.alert(
+        "",
+        "알림을 거부하였습니다. 앱에 대한 알림을 받을 수 없습니다."
+      );
+      return;
+    }
+
+    const { data } = await Notifications.getExpoPushTokenAsync();
+    console.log("Expo Push Token:", data);
+    await AsyncStorage.setItem("device_token", data);
+    const device_token = await AsyncStorage.getItem("device_token");
+    console.log("이게 디바이스 토큰이지이이이", device_token);
+
+    return data;
+  };
+
+  const initPushNotifications = async () => {
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+      });
+    }
+
+    const pushToken = await registerForPushNotificationsAsync();
+    setPushToken(pushToken);
+    console.log(pushToken);
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+  };
+
   const handleScheduleNotification = async () => {
     const notificationData = "알림 내용을 여기에 입력하세요";
     await schedulePushNotification(notificationData);
   };
 
   const refreshToken = async () => {
-    const inputURL = `${proxyUrl}/apple/auth/reissue`;
+    const inputURL = proxyUrl + `/apple/auth/reissue`;
     const refresh_token = await AsyncStorage.getItem("refresh_token");
 
     try {
@@ -167,7 +176,7 @@ export default function App() {
         "Authentication Error",
         "세션이 만료되었습니다. 다시 로그인해주세요."
       );
-      setIsSignedIn(false); // 토큰 갱신 실패 시 로그아웃 처리
+      setIsSignedIn(false);
       return null;
     }
   };
