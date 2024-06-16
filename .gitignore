@@ -56,3 +56,6 @@ yarn-error.*
 *.tsbuildinfo
 
 # @end expo-cli
+
+# Ignore the common.js file in the api directory
+api/common.js
