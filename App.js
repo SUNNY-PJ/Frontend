@@ -11,6 +11,11 @@ import "core-js/stable/atob";
 import apiClient from "./api/apiClient";
 import Constants from "expo-constants";
 import * as SplashScreen from "expo-splash-screen";
+import * as Sentry from "@sentry/react-native";
+
+Sentry.init({
+  dsn: "https://c95d443b0c9028d7f8de457dd4c374db@o4507425556463616.ingest.us.sentry.io/4507425560461312",
+});
 
 const projectId = Constants.expoConfig.extra.eas.projectId;
 
