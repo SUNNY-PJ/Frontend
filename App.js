@@ -120,7 +120,13 @@ export default function App() {
       return;
     }
 
-    const { data } = await Notifications.getExpoPushTokenAsync();
+    // const { data } = await Notifications.getExpoPushTokenAsync();
+
+    const res = await Notifications.getExpoPushTokenAsync({
+      projectId: projectId,
+    });
+    const data = res.data;
+
     console.log("Expo Push Token:", data);
     await AsyncStorage.setItem("device_token", data);
     const device_token = await AsyncStorage.getItem("device_token");
