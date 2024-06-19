@@ -27,7 +27,7 @@
         "CFBundleLocalizations": ["ko"],
         "NSAppTransportSecurity": {
           "NSExceptionDomains": {
-            "43.201.176.22:8080": {
+            "43.201.176.22": {
               "NSIncludesSubdomains": true,
               "NSTemporaryExceptionAllowsInsecureHTTPLoads": true,
               "NSTemporaryExceptionMinimumTLSVersion": "TLSv1.0"
