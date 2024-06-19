@@ -19,6 +19,8 @@ Sentry.init({
 
 const projectId = Constants.expoConfig.extra.eas.projectId;
 
+console.log("project Id 입니다 :::", projectId);
+
 // Notifications setup
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
