@@ -22,9 +22,7 @@ import apiClient from "../../api/apiClient";
 import { proxyUrl } from "../../constant/common";
 const { width } = Dimensions.get("window");
 const isLargeScreen = width > 375;
-import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
-import apiClient from "./api/apiClient";
 
 const projectId = Constants.expoConfig.extra.eas.projectId;
 
