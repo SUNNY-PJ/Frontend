@@ -83,9 +83,12 @@ export default function App() {
         await loadFonts();
         await checkTokenExpiry();
         await initPushNotifications();
+
+        setTimeout(async () => {
+          await SplashScreen.hideAsync();
+        }, 3000);
       } catch (error) {
         console.error("Initialization error:", error);
-      } finally {
         await SplashScreen.hideAsync();
       }
     };
