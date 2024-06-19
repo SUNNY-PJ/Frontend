@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
 import { Platform, Alert, ActivityIndicator } from "react-native";
@@ -7,7 +6,6 @@ import * as Font from "expo-font";
 import Navigation from "./Navigation";
 import { jwtDecode } from "jwt-decode";
 import { proxyUrl } from "./constant/common";
-import "core-js/stable/atob";
 import apiClient from "./api/apiClient";
 import Constants from "expo-constants";
 import * as SplashScreen from "expo-splash-screen";
@@ -32,15 +30,15 @@ Notifications.setNotificationHandler({
 });
 
 // 알림 울리기
-async function schedulePushNotification(data) {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "테스트 알림",
-      body: data,
-    },
-    trigger: null,
-  });
-}
+// async function schedulePushNotification(data) {
+//   await Notifications.scheduleNotificationAsync({
+//     content: {
+//       title: "테스트 알림",
+//       body: data,
+//     },
+//     trigger: null,
+//   });
+// }
 
 export default function App() {
   const notificationListener = useRef();
@@ -147,10 +145,10 @@ export default function App() {
       });
   };
 
-  const handleScheduleNotification = async () => {
-    const notificationData = "알림 내용을 여기에 입력하세요";
-    await schedulePushNotification(notificationData);
-  };
+  // const handleScheduleNotification = async () => {
+  //   const notificationData = "알림 내용을 여기에 입력하세요";
+  //   await schedulePushNotification(notificationData);
+  // };
 
   const refreshToken = async () => {
     const inputURL = proxyUrl + `/apple/auth/reissue`;
