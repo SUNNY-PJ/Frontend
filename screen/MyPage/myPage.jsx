@@ -22,6 +22,11 @@ import apiClient from "../../api/apiClient";
 import { proxyUrl } from "../../constant/common";
 const { width } = Dimensions.get("window");
 const isLargeScreen = width > 375;
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
+import apiClient from "./api/apiClient";
+
+const projectId = Constants.expoConfig.extra.eas.projectId;
 
 const getDeviceToken = async () => {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -33,11 +38,15 @@ const getDeviceToken = async () => {
   }
 
   if (finalStatus !== "granted") {
-    alert("알림을 허용할 수 없습니다.");
+    Alert.alert("알림을 허용할 수 없습니다.");
     return;
   }
 
-  const token = (await Notifications.getExpoPushTokenAsync()).data;
+  // const token = (await Notifications.getExpoPushTokenAsync()).data;
+  const res = await Notifications.getExpoPushTokenAsync({
+    projectId: projectId,
+  });
+  const token = res.data;
   return token;
 };
 
