@@ -5,7 +5,7 @@ import * as Notifications from "expo-notifications";
 import { Platform, Alert, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
 import Navigation from "./Navigation";
-import { jwtDecode } from "jwt-decode";
+import jwtDecode from "jwt-decode";
 import { proxyUrl } from "./constant/common";
 import "core-js/stable/atob";
 import apiClient from "./api/apiClient";
@@ -28,19 +28,18 @@ Notifications.setNotificationHandler({
     shouldPlaySound: false,
     shouldSetBadge: false,
   }),
-  projectId: projectId,
 });
 
 // 알림 울리기
-async function schedulePushNotification(data) {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "테스트 알림",
-      body: data,
-    },
-    trigger: null,
-  });
-}
+// async function schedulePushNotification(data) {
+//   await Notifications.scheduleNotificationAsync({
+//     content: {
+//       title: "테스트 알림",
+//       body: data,
+//     },
+//     trigger: null,
+//   });
+// }
 
 export default function App() {
   const notificationListener = useRef();
@@ -122,7 +121,11 @@ export default function App() {
       return;
     }
 
-    const { data } = await Notifications.getExpoPushTokenAsync();
+    const res = await Notifications.getExpoPushTokenAsync({
+      projectId: projectId,
+    });
+    const data = res.data;
+
     console.log("Expo Push Token:", data);
     await AsyncStorage.setItem("device_token", data);
     const device_token = await AsyncStorage.getItem("device_token");
@@ -156,10 +159,10 @@ export default function App() {
       });
   };
 
-  const handleScheduleNotification = async () => {
-    const notificationData = "알림 내용을 여기에 입력하세요";
-    await schedulePushNotification(notificationData);
-  };
+  // const handleScheduleNotification = async () => {
+  //   const notificationData = "알림 내용을 여기에 입력하세요";
+  //   await schedulePushNotification(notificationData);
+  // };
 
   const refreshToken = async () => {
     const inputURL = proxyUrl + `/apple/auth/reissue`;
