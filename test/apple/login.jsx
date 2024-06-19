@@ -1,6 +1,7 @@
 import * as AppleAuthentication from "expo-apple-authentication";
 import { View, StyleSheet, Alert } from "react-native";
 import axios from "axios";
+import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { proxyUrl } from "../../constant/common";
@@ -51,6 +52,9 @@ const AppleLogin = () => {
 
   const fetchData = async (idToken) => {
     console.log("login api를 요청합니다 :::");
+    const projectId = Constants.expoConfig.extra.eas.projectId;
+
+    console.log("project Id 입니다 :::", projectId);
     const apple_url = `${url}/apple/auth/callback`;
     console.log("Sending request to:", apple_url); // 요청 URL 로그
 
