@@ -21,7 +21,9 @@
       "bundleIdentifier": "com.sunnymoney2024.SUNNY",
       "buildNumber": "1.4.4",
       "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "게시글에 사진을 첨부, 내 프로필 사진을 등록하는 기능 사용을 위해 사진 라이브러리에 접근하도록 허용합니다.  사진에는 위치, 심도 정보, 캡션 및 오디오와 관련된 데이터가 포함될 수 있습니다.",
+        "NSPhotoLibraryUsageDescription": "게시글에 사진을 첨부, 내 프로필 사진을 등록하는 기능 사용을 위해 사진 라이브러리에 접근하도록 허용합니다. 사진에는 위치, 심도 정보, 캡션 및 오디오와 관련된 데이터가 포함될 수 있습니다.",
+        "NSUserNotificationUsageDescription": "푸시 알림을 허용하면 새로운 알림을 받을 수 있습니다.",
+        "UIBackgroundModes": ["fetch", "remote-notification"],
         "CFBundleAllowMixedLocalizations": true,
         "CFBundleDevelopmentRegion": "ko",
         "CFBundleLocalizations": ["ko"],
