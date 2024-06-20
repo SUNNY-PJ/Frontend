@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
-import { Platform, Alert, ActivityIndicator } from "react-native";
+import Constants from "expo-constants";
+// import * as Permissions from 'expo-permissions';
+import { Alert, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
 import Navigation from "./Navigation";
 import { jwtDecode } from "jwt-decode";
 import { proxyUrl } from "./constant/common";
 import apiClient from "./api/apiClient";
-import Constants from "expo-constants";
 import * as SplashScreen from "expo-splash-screen";
 import * as Sentry from "@sentry/react-native";
 
@@ -105,6 +106,29 @@ export default function App() {
     };
   }, []);
 
+  // async function registerForPushNotificationsAsync() {
+  //   if (Constants.isDevice) {
+  //     const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+  //     let finalStatus = existingStatus;
+
+  //     if (existingStatus !== 'granted') {
+  //       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+  //       finalStatus = status;
+  //     }
+
+  //     if (finalStatus !== 'granted') {
+  //       alert('Failed to get push token for push notification!');
+  //       return;
+  //     }
+
+  //     const token = (await Notifications.getExpoPushTokenAsync()).data;
+  //     console.log(token);
+  //     return token;
+  //   } else {
+  //     alert('Must use physical device for Push Notifications');
+  //   }
+  // }
+
   const registerForPushNotificationsAsync = async () => {
     const { status: existingStatus } =
       await Notifications.getPermissionsAsync();
@@ -123,12 +147,9 @@ export default function App() {
       return;
     }
 
-    // const { data } = await Notifications.getExpoPushTokenAsync();
-
-    const res = await Notifications.getExpoPushTokenAsync({
-      projectId: projectId,
+    const { data } = await Notifications.getExpoPushTokenAsync({
+      projectId: Constants.expoConfig.extra.eas.projectId,
     });
-    const data = res.data;
 
     console.log("Expo Push Token:", data);
     await AsyncStorage.setItem("device_token", data);
