@@ -98,6 +98,7 @@
 ├── MainScreen.js          # 메인 화면 컴포넌트
 ├── Navigation.js          # 네비게이션 설정
 └── README.md              # 프로젝트에 대한 설명
+```
 
 <br />
 <br />
