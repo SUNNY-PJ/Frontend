@@ -86,7 +86,7 @@ export default function App() {
 
         setTimeout(async () => {
           await SplashScreen.hideAsync();
-        }, 3000);
+        }, 1200);
       } catch (error) {
         console.error("Initialization error:", error);
         await SplashScreen.hideAsync();
