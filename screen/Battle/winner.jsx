@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { proxyUrl } from "../../constant/common";
+import { proxyUrl } from "../../api/common";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Line from "../../components/Line";
