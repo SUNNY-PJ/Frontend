@@ -5,7 +5,7 @@ import { Platform, Alert, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
 import Navigation from "./Navigation";
 import { jwtDecode } from "jwt-decode";
-import { proxyUrl } from "./constant/common";
+import { proxyUrl } from "./api/common";
 import apiClient from "./api/apiClient";
 import Constants from "expo-constants";
 import * as SplashScreen from "expo-splash-screen";
