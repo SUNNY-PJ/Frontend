@@ -19,7 +19,7 @@ import LoseModal from "../../components/Modal/battle/lose";
 import LeaveMsg from "../../components/Modal/myPage/leaveMsg";
 import * as Linking from "expo-linking";
 import apiClient from "../../api/apiClient";
-import { proxyUrl } from "../../constant/common";
+import { proxyUrl } from "../../api/common";
 const { width } = Dimensions.get("window");
 const isLargeScreen = width > 375;
 import Constants from "expo-constants";

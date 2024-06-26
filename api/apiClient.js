@@ -1,6 +1,6 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { proxyUrl } from "../constant/common";
+import { proxyUrl } from "./common";
 
 const apiClient = axios.create({
   baseURL: proxyUrl,

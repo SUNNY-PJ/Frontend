@@ -7,7 +7,7 @@ import { Alert, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
 import Navigation from "./Navigation";
 import { jwtDecode } from "jwt-decode";
-import { proxyUrl } from "./constant/common";
+import { proxyUrl } from "./api/common";
 import apiClient from "./api/apiClient";
 import * as SplashScreen from "expo-splash-screen";
 import * as Sentry from "@sentry/react-native";

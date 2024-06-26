@@ -4,7 +4,7 @@ import axios from "axios";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { proxyUrl } from "../../constant/common";
+import { proxyUrl } from "../../api/common";
 import * as Sentry from "@sentry/react-native";
 
 const AppleLogin = () => {
