@@ -1,0 +1,41 @@
+name: front_deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.10.0'
+
+    - name: Install npm dependencies
+      run: npm install
+
+    - name: Install Expo CLI
+      run: npm install -g expo-cli
+
+    - name: Expo login
+      env:
+        EXPO_CLI_USERNAME: ${{ secrets.EXPO_CLI_USERNAME }}
+        EXPO_CLI_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
+      run: expo login -u $EXPO_CLI_USERNAME -p $EXPO_CLI_PASSWORD
+
+    # - name: Build Expo project
+    #   run: expo build:web
+
+    # - name: Run tests
+    #   run: npm test

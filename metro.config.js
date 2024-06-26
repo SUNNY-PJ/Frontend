@@ -1,7 +1,12 @@
-// Learn more https://docs.expo.io/guides/customizing-metro
 const { getDefaultConfig } = require('expo/metro-config');
 
-/** @type {import('expo/metro-config').MetroConfig} */
-const config = getDefaultConfig(__dirname);
+module.exports = (async () => {
+  const config = await getDefaultConfig(__dirname);
 
-module.exports = config;
+  config.resolver.extraNodeModules = {
+    crypto: require.resolve('react-native-crypto'),
+    stream: require.resolve('stream-browserify'),
+  };
+
+  return config;
+})();
