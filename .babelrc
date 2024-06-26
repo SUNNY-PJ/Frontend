@@ -1,0 +1,10 @@
+{
+  "presets": ["babel-preset-expo"],
+  "plugins": [
+    ["babel-plugin-rewrite-require", {
+      "aliases": {
+        "crypto": "react-native-crypto"
+      }
+    }]
+  ]
+}
