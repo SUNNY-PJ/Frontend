@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, TextInput } from "react-native";
+import { View, Text, Button, TextInput, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Client } from "@stomp/stompjs";
-import { proxy_url } from "../../constant/common";
+import { proxy_url } from "../../api/common";
 import { TextDecoder, TextEncoder } from "text-encoding";
 
 // 글로벌 스코프에 TextDecoder와 TextEncoder를 추가
 global.TextDecoder = TextDecoder;
 global.TextEncoder = TextEncoder;
 
-const WebSocketComponent = () => {
+const WebSocket = () => {
   const [client, setClient] = useState(null);
   const [message, setMessage] = useState("");
   const [receivedMessage, setReceivedMessage] = useState("");
   const [accessToken, setAccessToken] = useState("");
+
+  console.log("receivedMessage ::::", receivedMessage);
 
   useEffect(() => {
     const initializeWebSocket = async () => {
@@ -30,9 +32,19 @@ const WebSocketComponent = () => {
         },
         reconnectDelay: 5000,
         onConnect: () => {
-          console.log("connected");
+          console.log("Connected to the server");
           client.subscribe("/sub/chat/1", (message) => {
-            setReceivedMessage(message.body);
+            console.log("Received message:", message);
+            try {
+              const parsedMessage = JSON.parse(message.body);
+              console.log("Parsed message:", parsedMessage);
+              setReceivedMessage(
+                parsedMessage.message ||
+                  "No message field in the received object"
+              );
+            } catch (error) {
+              console.error("Failed to parse message body:", message.body);
+            }
           });
         },
         onStompError: (frame) => {
@@ -69,19 +81,20 @@ const WebSocketComponent = () => {
           message: message,
         }),
       });
-      console.log(`Message sent: ${message}`); // 메시지 전송 후 로그 출력
-      setMessage(""); // 메시지 전송 후 입력 필드 초기화
+      console.log(`Message sent: ${message}`);
+      setMessage("");
     } else {
       console.log("Client not connected");
     }
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
         value={message}
         onChangeText={setMessage}
         placeholder="Type your message"
+        style={styles.input}
       />
       <Button title="Send Message" onPress={sendMessage} />
       <Text>Received Message: {receivedMessage}</Text>
@@ -89,4 +102,19 @@ const WebSocketComponent = () => {
   );
 };
 
-export default WebSocketComponent;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 16,
+  },
+  input: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 12,
+    padding: 8,
+  },
+});
+
+export default WebSocket;
