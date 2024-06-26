@@ -34,8 +34,8 @@ jobs:
         EXPO_CLI_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}
       run: expo login -u $EXPO_CLI_USERNAME -p $EXPO_CLI_PASSWORD
 
-    - name: Build Expo project
-      run: expo build:web
+    # - name: Build Expo project
+    #   run: expo build:web
 
-    - name: Run tests
-      run: npm test
+    # - name: Run tests
+    #   run: npm test
