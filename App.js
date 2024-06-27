@@ -5,7 +5,7 @@ import { Platform, Alert, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
 import Navigation from "./Navigation";
 import { jwtDecode } from "jwt-decode";
-import { proxyUrl } from "./constant/common";
+import { proxyUrl } from "./api/common";
 import apiClient from "./api/apiClient";
 import Constants from "expo-constants";
 import * as SplashScreen from "expo-splash-screen";
@@ -158,9 +158,8 @@ export default function App() {
   //   const notificationData = "알림 내용을 여기에 입력하세요";
   //   await schedulePushNotification(notificationData);
   // };
-
   const refreshToken = async () => {
-    const inputURL = proxyUrl + `/apple/auth/reissue`;
+    const inputURL = `${proxyUrl}/apple/auth/reissue`;
     const refresh_token = await AsyncStorage.getItem("refresh_token");
 
     try {
@@ -202,7 +201,7 @@ export default function App() {
   };
 
   if (isSignedIn === null) {
-    return null; // 로딩 화면 표시
+    return <ActivityIndicator size="large" color="#000" />; // 로딩 화면 표시
   }
 
   return (

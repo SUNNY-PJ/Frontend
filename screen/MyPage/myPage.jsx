@@ -19,7 +19,7 @@ import LoseModal from "../../components/Modal/battle/lose";
 import LeaveMsg from "../../components/Modal/myPage/leaveMsg";
 import * as Linking from "expo-linking";
 import apiClient from "../../api/apiClient";
-import { proxyUrl } from "../../constant/common";
+import { proxyUrl } from "../../api/common";
 const { width } = Dimensions.get("window");
 const isLargeScreen = width > 375;
 import Constants from "expo-constants";
@@ -394,9 +394,9 @@ const MyPage = () => {
           </TouchableOpacity>
           <Line color={"#C1C1C1"} h={1} />
           {/* 테스트 */}
-          {/* <TouchableOpacity activeOpacity={1} onPress={handleTestClick}>
+          <TouchableOpacity activeOpacity={1} onPress={handleTestClick}>
             <Text style={styles.description}>테스트용</Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
       </ScrollView>
       <LoseModal isOpenProfile={isOpenProfile} openProfile={openProfile} />

@@ -56,7 +56,7 @@ const FriendComment = ({ userId, closeProfile }) => {
   return (
     <View style={styles.container}>
       <View>
-        <ScrollView style={{ height: windowHeight - 259 - 80 }}>
+        <ScrollView style={{ height: windowHeight - 259 - 100 }}>
           {data &&
             data.map((item, index) => (
               <TouchableOpacity

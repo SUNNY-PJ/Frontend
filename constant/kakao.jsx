@@ -9,7 +9,7 @@ import {
 import WebView from "react-native-webview";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { proxyUrl } from "../constant/common";
+import { proxyUrl } from "../api/common";
 import axios from "axios";
 
 const REST_API_KEY = "56e15a4c7aaa857397437034b58c0016";

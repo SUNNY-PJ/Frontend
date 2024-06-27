@@ -1,19 +1,15 @@
 import { ScrollView, Text, StyleSheet } from "react-native";
-import DonutChart from "../components/Chart/donutChart";
-import PieChartComponent from "../components/Chart/pieChartComponent";
-import WebSocketComponent from "../constant/socket/testSocket";
-import StompClientComponent from "../constant/socket/testSocket2";
+import WebSocket from "../constant/socket/socket";
 import StompWebSocketComponent from "../constant/socket/testSocket3";
-import StompWebSocketComponent2 from "../constant/socket/testSocket4";
+import WebSocket2 from "../constant/socket/socket2";
 
 const TestScreen = () => {
   return (
     <>
       <ScrollView style={{ padding: 20 }}>
-        {/* <WebSocketComponent /> */}
-        {/* <StompClientComponent /> */}
+        <WebSocket />
+        {/* <WebSocket2 /> */}
         {/* <StompWebSocketComponent /> */}
-        {/* <StompWebSocketComponent2 /> */}
       </ScrollView>
     </>
   );
