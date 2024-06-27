@@ -444,9 +444,7 @@ const Comment = ({ isCommentModal, commentModal, communityId }) => {
                             </TouchableOpacity>
                             {childItem.author === true ? (
                               <View style={styles.authorBox}>
-                                <Text style={StyleSheetList.author}>
-                                  작성자
-                                </Text>
+                                <Text style={styles.author}>작성자</Text>
                               </View>
                             ) : null}
                             {childItem.privated === true ? (
