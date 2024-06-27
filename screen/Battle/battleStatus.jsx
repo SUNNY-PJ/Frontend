@@ -124,7 +124,9 @@ const BattleStatus = () => {
   return (
     <View style={styles.container}>
       <View style={styles.section}>
-        <Text style={[styles.boldText, { textAlign: "center", marginTop: 16 }]}>
+        <Text
+          style={[styles.boldText2, { textAlign: "center", marginTop: 16 }]}
+        >
           {/* {data.compensation}을 걸고 {"\n"} */}
           {data.end_date}까지 {price}원 쓰기
         </Text>
@@ -132,23 +134,25 @@ const BattleStatus = () => {
       <Line h={2} color={"#1F1F1F"} />
       {/* <ScrollView> */}
       <View style={{ alignItems: "center" }}>
-        <Text style={[styles.boldText, { marginTop: 49 }]}>D - {data.day}</Text>
-        <Text style={[styles.boldText, { marginTop: 13, marginBottom: 10 }]}>
+        <Text style={[styles.boldText2, { marginTop: 49 }]}>
+          D - {data.day}
+        </Text>
+        <Text style={[styles.boldText2, { marginTop: 13, marginBottom: 10 }]}>
           나는
         </Text>
         <Progress progress={data.user_percent} />
-        <Text style={[styles.boldText, { marginTop: 24 }]}>
+        <Text style={[styles.boldText2, { marginTop: 24 }]}>
           {data.user_percent}% <Text style={[styles.text]}>남았어요</Text>
         </Text>
         <Image
           source={require("../../assets/VSIcon.png")}
           style={styles.vsIcon}
         />
-        <Text style={[styles.boldText, { marginBottom: 10, marginTop: 28 }]}>
+        <Text style={[styles.boldText2, { marginBottom: 10, marginTop: 28 }]}>
           {nickname}님은
         </Text>
         <Progress progress={data.friends_percent} />
-        <Text style={[styles.boldText, { marginTop: 24 }]}>
+        <Text style={[styles.boldText2, { marginTop: 24 }]}>
           {data.friends_percent}%
           <Text style={[styles.text, { color: "#1F1F1F" }]}>남았어요</Text>
         </Text>
