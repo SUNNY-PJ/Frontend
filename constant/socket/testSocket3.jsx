@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as StompJs from "@stomp/stompjs";
-import { proxyUrl } from "../../constant/common";
+import { proxyUrl } from "../../api/common";
 import GoalMsg from "../../components/Modal/goal/goalMsg";
 import { TextEncoder, TextDecoder } from "text-encoding";
 
