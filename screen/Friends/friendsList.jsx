@@ -193,7 +193,7 @@ function FriendsList() {
         }}
       >
         <Text style={styles.mainTitle}>친구 목록</Text>
-        <ScrollView style={{ marginBottom: isIphone7 ? 80 : 100 }}>
+        <ScrollView style={{ marginBottom: isIphone7 ? 80 : 150 }}>
           {/* 대결 중인 친구 목록 */}
           <TouchableOpacity onPress={toggleFriendsComponent1} activeOpacity={1}>
             <View style={styles.titleSection}>
