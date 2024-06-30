@@ -48,6 +48,7 @@ export default function App() {
   const [notification, setNotification] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(null);
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
 
   // 폰트 적용
   const customFonts = {
@@ -115,6 +116,8 @@ export default function App() {
       finalStatus = status;
     }
 
+    setIsEnabled(finalStatus === "granted");
+
     if (finalStatus !== "granted") {
       Alert.alert(
         "",
@@ -122,8 +125,6 @@ export default function App() {
       );
       return;
     }
-
-    // const { data } = await Notifications.getExpoPushTokenAsync();
 
     const res = await Notifications.getExpoPushTokenAsync({
       projectId: projectId,
@@ -134,6 +135,8 @@ export default function App() {
     await AsyncStorage.setItem("device_token", data);
     const device_token = await AsyncStorage.getItem("device_token");
     console.log("이게 디바이스 토큰이지이이이", device_token);
+
+    await alarmData();
 
     return data;
   };
@@ -198,6 +201,31 @@ export default function App() {
       }
     } else {
       setIsSignedIn(false);
+    }
+  };
+
+  const alarmData = async () => {
+    const inputURL = `/alarm/permission`;
+    const device_token = await AsyncStorage.getItem("device_token");
+    console.log("device_token ::: ", device_token);
+    if (!device_token) {
+      console.error("디바이스 토큰을 가져오지 못했습니다.");
+      return;
+    }
+
+    const bodyData = {
+      allow: isEnabled,
+      target_token: device_token,
+    };
+
+    try {
+      const response = await apiClient.post(inputURL, bodyData, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      });
+    } catch (error) {
+      console.error("에러:", error);
     }
   };
 
