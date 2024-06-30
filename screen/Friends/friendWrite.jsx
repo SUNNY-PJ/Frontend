@@ -59,11 +59,10 @@ const FriendWrite = ({ userId, closeProfile }) => {
           {data &&
             data.map((item, index) => (
               <TouchableOpacity
-                key={item.id}
                 onPress={() => navigateToDetail(item.communityId, item.userId)}
                 activeOpacity={0.6}
               >
-                <View style={styles.box}>
+                <View style={styles.box} key={item.id}>
                   <Text style={styles.title}>{item.title}</Text>
                   <View style={{ flexDirection: "row" }}>
                     <Text style={styles.description}>{item.writer}</Text>
