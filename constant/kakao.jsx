@@ -1,29 +1,14 @@
-import React, { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
+import React from "react";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import WebView from "react-native-webview";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { proxyUrl } from "../constant/common";
+import { REST_API_KEY, REDIRECT_URI, INJECTED_JAVASCRIPT } from "../api/common";
 import axios from "axios";
 
-const REST_API_KEY = "56e15a4c7aaa857397437034b58c0016";
-const REDIRECT_URI = "http://192.168.50.45:19006";
-const INJECTED_JAVASCRIPT = `window.ReactNativeWebView.postMessage('message from webView')`;
-
 const Kakao = () => {
-  const url = proxyUrl;
-
-  const [showOverlay, setShowOverlay] = useState(true);
-
   const navigation = useNavigation();
-
-  const kakao_url = `https://kauth.kakao.com/oauth/authorize?client_id=7ff971db2010c97a3e191dd319ec45cd&redirect_uri=${url}/auth/kakao/callback&response_type=code`;
+  const kakao_url = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}/auth/kakao/callback&response_type=code`;
 
   const handleWebViewMessage = (data) => {
     KakaoLoginWebView(data);
