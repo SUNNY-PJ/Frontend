@@ -5,11 +5,13 @@ import WebSocketComponent from "../constant/socket/testSocket";
 import StompClientComponent from "../constant/socket/testSocket2";
 import StompWebSocketComponent from "../constant/socket/testSocket3";
 import StompWebSocketComponent2 from "../constant/socket/testSocket4";
+import WebSocket3 from "../constant/socket/socket3";
 
 const TestScreen = () => {
   return (
     <>
       <ScrollView style={{ padding: 20 }}>
+        <WebSocket3 />
         {/* <WebSocketComponent /> */}
         {/* <StompClientComponent /> */}
         {/* <StompWebSocketComponent /> */}
