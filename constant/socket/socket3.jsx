@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Button, TextInput, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Client } from "@stomp/stompjs";
-import { proxy_url } from "../../api/common";
+import { SOCKET_URI } from "../../api/common";
 import { TextDecoder, TextEncoder } from "text-encoding";
 
 // 글로벌 스코프에 TextDecoder와 TextEncoder를 추가
@@ -24,7 +24,7 @@ const WebSocket3 = () => {
       setAccessToken(token);
 
       const client = new Client({
-        brokerURL: `ws://${proxy_url}/stomp`,
+        brokerURL: `ws://${SOCKET_URI}/stomp`,
         connectHeaders: {
           Authorization: `Bearer ${token}`,
         },
@@ -84,7 +84,7 @@ const WebSocket3 = () => {
         destination: "/pub/chat/message/room",
         body: JSON.stringify({
           roomId: roomId,
-          sendUserId: 1,
+          sendUserId: 30,
           message: message,
         }),
       });
