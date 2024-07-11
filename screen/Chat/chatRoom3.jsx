@@ -23,8 +23,8 @@ const ChatRoom3 = () => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [receivedMessages, setReceivedMessages] = useState([]);
   const [accessToken, setAccessToken] = useState("");
-  const [roomId, setRoomId] = useState(null); // roomId 초기값을 null로 설정
-  const [userIds, setUserIds] = useState(""); // userIds 추가
+  const [roomId, setRoomId] = useState(1); // roomId 초기값을 null로 설정
+  const [userIds, setUserIds] = useState(34); // userIds 추가
   const sendUserId = 30;
   const scrollViewRef = useRef(); // scrollViewRef 추가
 

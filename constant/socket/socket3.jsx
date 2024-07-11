@@ -84,7 +84,7 @@ const WebSocket3 = () => {
         destination: "/pub/chat/message/room",
         body: JSON.stringify({
           roomId: roomId,
-          sendUserId: 30,
+          sendUserId: 34,
           message: message,
         }),
       });
