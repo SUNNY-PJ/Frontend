@@ -296,6 +296,14 @@ const MyPage = () => {
     navigation.navigate("MainScreen", { screen: "BlockedListScreen" });
   };
 
+  const handleChatClick = () => {
+    navigation.navigate("ChatScreen", { screen: "ChatRoom3" });
+  };
+
+  const handleChatListClick = () => {
+    navigation.navigate("MainScreen", { screen: "ChatList" });
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView style={{ marginBottom: isLargeScreen ? 100 : 80 }}>
@@ -396,6 +404,12 @@ const MyPage = () => {
           {/* 테스트 */}
           <TouchableOpacity activeOpacity={1} onPress={handleTestClick}>
             <Text style={styles.description}>테스트용</Text>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={1} onPress={handleChatClick}>
+            <Text style={styles.description}>채팅방</Text>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={1} onPress={handleChatListClick}>
+            <Text style={styles.description}>채팅 목록</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
