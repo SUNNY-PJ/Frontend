@@ -35,11 +35,11 @@ function Navigation() {
                 options={{ headerShown: false }}
               />
             </>
-            {/* <Stack.Screen
+            <Stack.Screen
               name="ChatScreen"
               component={ChatScreen}
               options={{ headerShown: false }}
-            /> */}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </SaveDataProvider>
