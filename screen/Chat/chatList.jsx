@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -29,7 +29,7 @@ const ChatList = () => {
 
   const handleChatRoomClick = () => {
     console.log("채팅방으로 이동합니다...11");
-    navigation.navigate("ChatScreen", { screen: "ChatRoom" });
+    navigation.navigate("ChatScreen", { screen: "ChatRoom3" });
   };
 
   // 채팅방 리스트
