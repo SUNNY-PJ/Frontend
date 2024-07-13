@@ -286,6 +286,15 @@ const MyPage = () => {
     navigation.navigate("MainScreen", { screen: "ChatList" });
   };
 
+  const options = [
+    { title: "이용 약관", onPress: handleTermsClick },
+    { title: "로그아웃", onPress: handleLogoutClick },
+    { title: "회원 탈퇴", onPress: handleLeaveClick },
+    { title: "테스트용", onPress: handleTestClick },
+    { title: "채팅방", onPress: handleChatClick },
+    { title: "채팅 목록", onPress: handleChatListClick },
+  ];
+
   return (
     <View style={styles.container}>
       <ScrollView style={{ marginBottom: isLargeScreen ? 100 : 80 }}>
@@ -368,28 +377,14 @@ const MyPage = () => {
           {/* </TouchableOpacity> */}
           <Line color={"#C1C1C1"} h={4} />
           <Text style={styles.title}>기타</Text>
-          <TouchableOpacity activeOpacity={1} onPress={handleTermsClick}>
-            <Text style={styles.description}>이용 약관</Text>
-          </TouchableOpacity>
-          <Line color={"#C1C1C1"} h={1} />
-          <TouchableOpacity activeOpacity={1} onPress={handleLogoutClick}>
-            <Text style={styles.description}>로그아웃</Text>
-          </TouchableOpacity>
-          <Line color={"#C1C1C1"} h={1} />
-          <TouchableOpacity activeOpacity={1} onPress={handleLeaveClick}>
-            <Text style={styles.description}>회원 탈퇴</Text>
-          </TouchableOpacity>
-          <Line color={"#C1C1C1"} h={1} />
-          {/* 테스트 */}
-          <TouchableOpacity activeOpacity={1} onPress={handleTestClick}>
-            <Text style={styles.description}>테스트용</Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1} onPress={handleChatClick}>
-            <Text style={styles.description}>채팅방</Text>
-          </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1} onPress={handleChatListClick}>
-            <Text style={styles.description}>채팅 목록</Text>
-          </TouchableOpacity>
+          {options.map((option, index) => (
+            <View key={index}>
+              <TouchableOpacity activeOpacity={1} onPress={option.onPress}>
+                <Text style={styles.description}>{option.title}</Text>
+              </TouchableOpacity>
+              <Line color={"#C1C1C1"} h={1} />
+            </View>
+          ))}
         </View>
       </ScrollView>
       <LoseModal isOpenProfile={isOpenProfile} openProfile={openProfile} />
