@@ -4,10 +4,8 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  StyleSheet,
   Alert,
   ScrollView,
-  Dimensions,
 } from "react-native";
 import Line from "../../components/Line";
 import * as Notifications from "expo-notifications";
