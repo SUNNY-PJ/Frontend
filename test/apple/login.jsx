@@ -6,10 +6,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { proxyUrl } from "../../constant/common";
 import * as Sentry from "@sentry/react-native";
+import useStore from "../../store/store";
 
 const AppleLogin = () => {
   const url = proxyUrl;
   const navigation = useNavigation();
+  const setProfile = useStore((state) => state.setProfile);
 
   async function handleAppleLogin() {
     try {
@@ -20,15 +22,12 @@ const AppleLogin = () => {
         ],
       });
       const idTokenVal = credential.identityToken;
-      // console.log("인증 코드:", credential.identityToken);
       if (credential.authorizationCode) {
         AsyncStorage.setItem("authorizationCode", credential.authorizationCode);
         console.log("서버로 인증 코드를 전송합니다 :::", idTokenVal);
         // 서버로 인증 코드 전송
-        fetchData(idTokenVal);
+        await fetchData(idTokenVal);
       }
-
-      // 서버로 인증 코드 전송 및 사용자 정보 처리 로직 구현
     } catch (e) {
       if (e.code === "ERR_CANCELED") {
         console.log("로그인 프로세스가 취소되었습니다.");
@@ -56,17 +55,17 @@ const AppleLogin = () => {
 
     console.log("project Id 입니다 :::", projectId);
     const apple_url = `${url}/apple/auth/callback`;
-    console.log("Sending request to:", apple_url); // 요청 URL 로그
+    console.log("Sending request to:", apple_url);
 
     try {
-      console.log("Sending request to:", apple_url); // 요청 URL 로그
+      console.log("Sending request to:", apple_url);
       const response = await axios.get(apple_url, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
         params: { code: idToken },
       });
-      console.log("Response data:", response.data); // 응답 데이터 로그
+      console.log("Response data:", response.data);
 
       if (response.status === 200) {
         const access_token = response.data.data.accessToken;
@@ -74,6 +73,9 @@ const AppleLogin = () => {
         await AsyncStorage.setItem("access_token", access_token);
         await AsyncStorage.setItem("refresh_token", refresh_token);
         console.log("토큰:::", access_token);
+
+        // 사용자 정보 가져오기
+        await fetchUserProfile();
 
         if (response.data.data.isUserRegistered) {
           navigation.replace("MainScreen", { screen: "Spending" });
@@ -88,7 +90,7 @@ const AppleLogin = () => {
         );
       }
     } catch (error) {
-      Sentry.captureException(error); // Sentry에 오류를 전송
+      Sentry.captureException(error);
       console.log("Error message:", error.message);
       if (error.response) {
         console.error("Server response error:", error.response);
@@ -112,6 +114,27 @@ const AppleLogin = () => {
     }
   };
 
+  const fetchUserProfile = async () => {
+    const accessToken = await AsyncStorage.getItem("access_token");
+    try {
+      const response = await axios.get(`${url}/users`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      if (response.status === 200) {
+        setProfile(response.data); // 프로필 데이터를 zustand 스토어에 저장
+      } else {
+        console.error(
+          `Error fetching user profile: Status code ${response.status}`
+        );
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+      console.error("Error fetching user profile:", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <AppleAuthentication.AppleAuthenticationButton
@@ -129,7 +152,6 @@ const AppleLogin = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     alignItems: "center",
     justifyContent: "center",
     alignSelf: "center",
