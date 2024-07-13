@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Image,
-  StyleSheet,
   TouchableOpacity,
   ScrollView,
   Dimensions,
@@ -14,12 +13,12 @@ import { useNavigation } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import apiClient from "../../api/apiClient";
 import useStore from "../../store/store";
+import styles from "./chatList.styles";
 
 const ChatList = () => {
   const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();
   const profile = useStore((state) => state.profile);
-  console.log("profile >>>", profile);
 
   const truncateText = (text) => {
     const maxLength = 20;
@@ -104,32 +103,9 @@ const ChatList = () => {
   };
 
   return (
-    <View
-      style={{
-        flexDirection: "column",
-        backgroundColor: "#FFFBF6",
-        height: "100%",
-      }}
-    >
-      <View
-        style={{
-          flexDirection: "column",
-          marginTop: 25,
-          marginBottom: 40,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: 700,
-            color: "#1F1F1F",
-            textAlign: "center",
-            marginBottom: 24,
-            fontFamily: "SUITE_Bold",
-          }}
-        >
-          채팅 목록
-        </Text>
+    <View style={styles.container}>
+      <View style={styles.section}>
+        <Text style={styles.title}>채팅 목록</Text>
         <Line color={"#C1C1C1"} h={1} />
         <ScrollView style={{ height: windowHeight - 125 - 88 }}>
           <Swipeable renderRightActions={renderRightActions}>
@@ -144,183 +120,23 @@ const ChatList = () => {
                   style={styles.icon}
                 />
                 <View>
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      fontWeight: 700,
-                      color: "#1F1F1F",
-                      marginBottom: 8,
-                      fontFamily: "SUITE_Bold",
-                    }}
-                  >
-                    민지
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 15,
-                      fontWeight: 500,
-                      color: "#1F1F1F",
-                      fontFamily: "SUITE",
-                    }}
-                  >
-                    {truncateText("뭐하고 있니")}
-                  </Text>
+                  <Text style={styles.userName}>민지</Text>
+                  <Text style={styles.msg}>{truncateText("뭐하고 있니")}</Text>
                 </View>
               </View>
               <View style={{ gap: 4 }}>
-                <Text
-                  style={{
-                    fontSize: 10,
-                    fontWeight: 500,
-                    color: "#1F1F1F",
-                    fontFamily: "SUITE",
-                  }}
-                >
-                  07:09
-                </Text>
-                <View
-                  style={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: 50,
-                    borderColor: "#6ADCA3",
-                    backgroundColor: "#6ADCA3",
-                    marginLeft: 4,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 500,
-                      color: "#fff",
-                      textAlign: "center",
-                      top: 4,
-                      fontFamily: "SUITE",
-                    }}
-                  >
-                    22
-                  </Text>
+                <Text style={styles.time}>07:09</Text>
+                <View style={styles.cntBox}>
+                  <Text style={styles.cnt}>22</Text>
                 </View>
               </View>
             </TouchableOpacity>
           </Swipeable>
-          <Line color={"#C1C1C1"} h={1} />
-          <View style={styles.chatSection}>
-            <View style={{ flexDirection: "row", gap: 13 }}>
-              <Image
-                source={require("../../assets/Avatar.png")}
-                style={styles.icon}
-              />
-              <View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      fontWeight: 700,
-                      color: "#1F1F1F",
-                      marginBottom: 8,
-                      fontFamily: "SUITE_Bold",
-                    }}
-                  >
-                    수연
-                  </Text>
-                  {/* <Text
-                    style={{
-                      fontSize: 10,
-                      fontWeight: 500,
-                      color: "#1F1F1F",
-                    }}
-                  >
-                    07:09
-                  </Text> */}
-                </View>
-                <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: 500,
-                    color: "#1F1F1F",
-                    fontFamily: "SUITE",
-                  }}
-                >
-                  {truncateText(
-                    "어쩌라고 무러하ㅏ로오오오오오 오아우우오오오아아ㅁ아러망러"
-                  )}
-                </Text>
-              </View>
-            </View>
-            <View style={{ gap: 4 }}>
-              <Text
-                style={{
-                  fontSize: 10,
-                  fontWeight: 500,
-                  color: "#1F1F1F",
-                  fontFamily: "SUITE",
-                }}
-              >
-                07:09
-              </Text>
-              <View
-                style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: 50,
-                  borderColor: "#6ADCA3",
-                  backgroundColor: "#6ADCA3",
-                  marginLeft: 4,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 10,
-                    fontWeight: 500,
-                    color: "#fff",
-                    textAlign: "center",
-                    top: 4,
-                  }}
-                >
-                  99
-                </Text>
-              </View>
-            </View>
-          </View>
           <Line color={"#C1C1C1"} h={1} />
         </ScrollView>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  chatSection: {
-    flexDirection: "row",
-    paddingTop: 14,
-    paddingBottom: 17,
-    justifyContent: "space-between",
-    paddingLeft: 13,
-    paddingRight: 19,
-    backgroundColor: "#fff",
-  },
-  icon: {
-    width: 48,
-    height: 48,
-  },
-  deleteBox: {
-    backgroundColor: "#5C5C5C",
-    justifyContent: "center",
-    alignItems: "flex-end",
-    width: "100%",
-    height: "100%",
-  },
-  deleteText: {
-    color: "white",
-    paddingHorizontal: 20,
-    fontFamily: "SUITE",
-  },
-});
 
 export default ChatList;
