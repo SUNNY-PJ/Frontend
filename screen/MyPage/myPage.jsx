@@ -23,6 +23,7 @@ import { proxyUrl } from "../../constant/common";
 const { width } = Dimensions.get("window");
 const isLargeScreen = width > 375;
 import Constants from "expo-constants";
+import useStore from "../../store/store";
 
 const projectId = Constants.expoConfig.extra.eas.projectId;
 
@@ -51,10 +52,11 @@ const getDeviceToken = async () => {
 const MyPage = () => {
   const url = proxyUrl;
   const navigation = useNavigation();
+  const profile = useStore((state) => state.profile);
+  console.log("profileVal >>> ", profile);
   const handleTabClick = (tab) => {
     navigation.navigate("MyInfo", { activeTab: tab });
   };
-  const [profile, setProfile] = useState([]);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
@@ -83,26 +85,6 @@ const MyPage = () => {
   const openProfile = () => {
     setIsOpenProfile(!isOpenProfile);
   };
-
-  // 프로필 정보
-  const fetchData = async () => {
-    const inputURL = `/users`;
-    try {
-      const response = await apiClient.get(inputURL, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      });
-      const profileData = response.data;
-      setProfile([profileData]);
-    } catch (error) {
-      console.error("에러:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   // 로그아웃
   const logoutData = async () => {
@@ -308,46 +290,43 @@ const MyPage = () => {
     <View style={styles.container}>
       <ScrollView style={{ marginBottom: isLargeScreen ? 100 : 80 }}>
         <View style={styles.contentContainer}>
-          {profile.map((item) => (
-            <View
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: isLargeScreen ? 24 : 20,
+              marginBottom: isLargeScreen ? 16 : 14,
+              paddingLeft: 20,
+              gap: isLargeScreen ? 24 : 20,
+            }}
+          >
+            <Image
+              source={{ uri: profile.profile }}
               style={{
-                flexDirection: "row",
-                marginTop: isLargeScreen ? 24 : 20,
-                marginBottom: isLargeScreen ? 16 : 14,
-                paddingLeft: 20,
-                gap: isLargeScreen ? 24 : 20,
+                width: isLargeScreen ? 56 : 46,
+                height: isLargeScreen ? 56 : 46,
+                borderRadius: 50,
               }}
-              key={item.id}
-            >
-              <Image
-                source={{ uri: item.profile }}
-                style={{
-                  width: isLargeScreen ? 56 : 46,
-                  height: isLargeScreen ? 56 : 46,
-                  borderRadius: 50,
-                }}
-              />
-              <View style={{ gap: 8 }}>
-                <Text style={styles.name}>{item.name}</Text>
-                <TouchableOpacity
-                  activeOpacity={0.6}
-                  onPress={() =>
-                    navigation.navigate("SettingProfile", {
-                      screen: "SettingProfile",
-                    })
-                  }
-                >
-                  <View style={{ flexDirection: "row" }}>
-                    <Text style={styles.setting}>프로필 설정</Text>
-                    <Image
-                      source={require("../../assets/myPage_setting.png")}
-                      style={{ width: 16, height: 16, padding: 2, top: 2 }}
-                    />
-                  </View>
-                </TouchableOpacity>
-              </View>
+            />
+            <View style={{ gap: 8 }}>
+              <Text style={styles.name}>{profile.name}</Text>
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() =>
+                  navigation.navigate("SettingProfile", {
+                    screen: "SettingProfile",
+                  })
+                }
+              >
+                <View style={{ flexDirection: "row" }}>
+                  <Text style={styles.setting}>프로필 설정</Text>
+                  <Image
+                    source={require("../../assets/myPage_setting.png")}
+                    style={{ width: 16, height: 16, padding: 2, top: 2 }}
+                  />
+                </View>
+              </TouchableOpacity>
             </View>
-          ))}
+          </View>
           <Text style={styles.title}>커뮤니티</Text>
           <TouchableOpacity
             activeOpacity={0.6}
