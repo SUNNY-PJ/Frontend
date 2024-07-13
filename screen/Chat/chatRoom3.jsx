@@ -10,10 +10,10 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import apiClient from "../../api/apiClient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { Client } from "@stomp/stompjs";
-import SockJS from "sockjs-client";
 import Line from "../../components/Line";
 import { SOCKET_URI } from "../../api/common";
 
@@ -23,10 +23,33 @@ const ChatRoom3 = () => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [receivedMessages, setReceivedMessages] = useState([]);
   const [accessToken, setAccessToken] = useState("");
-  const [roomId, setRoomId] = useState(1); // roomId 초기값을 null로 설정
-  const [userIds, setUserIds] = useState(34); // userIds 추가
+  const [roomId, setRoomId] = useState(1);
+  const [userIds, setUserIds] = useState(34);
   const sendUserId = 30;
-  const scrollViewRef = useRef(); // scrollViewRef 추가
+  const scrollViewRef = useRef();
+
+  // 대화 내용 조회
+  const fetchData = async () => {
+    const inputURL = `/chat/${roomId}`;
+
+    try {
+      const response = await apiClient.get(inputURL, {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+        // params: { userId: profile.id },
+      });
+
+      const chatData = response.data;
+      console.log("대화 내용 :::", chatData);
+    } catch (error) {
+      console.error("에러:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const initializeWebSocket = async () => {
