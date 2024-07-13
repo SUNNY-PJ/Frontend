@@ -13,10 +13,13 @@ import Line from "../../components/Line";
 import { useNavigation } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import apiClient from "../../api/apiClient";
+import useStore from "../../store/store";
 
 const ChatList = () => {
   const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();
+  const profile = useStore((state) => state.profile);
+  console.log("profile >>>", profile);
 
   const truncateText = (text) => {
     const maxLength = 20;
@@ -39,9 +42,10 @@ const ChatList = () => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
+        params: { userId: profile.id },
       });
 
-      const chatListData = response.data.data;
+      const chatListData = response.data;
       console.log("채팅방 목록:::", chatListData);
     } catch (error) {
       console.error("에러:", error);
