@@ -32,9 +32,14 @@ const ChatRoom3 = () => {
   const myId = profile.id;
 
   const formatDate = (dateString) => {
-    const options = { month: "2-digit", day: "2-digit" };
     const date = new Date(dateString);
-    return new Intl.DateTimeFormat("ko-KR", options).format(date);
+    const formattedDate = new Intl.DateTimeFormat("ko-KR", {
+      month: "2-digit",
+      day: "2-digit",
+    }).format(date);
+
+    const [month, day] = formattedDate.split(".");
+    return `${month}월 ${day}일`;
   };
 
   // 대화 내용 조회
@@ -189,19 +194,9 @@ const ChatRoom3 = () => {
             <View style={styles.dateSection}>
               <Text style={styles.date}>Today</Text>
             </View>
-            <View style={styles.topBox}>
-              <Text style={styles.noti}>
-                "친구가 아닌 사용자입니다. 친구를 맺을까요?"
-              </Text>
-              <Image
-                source={require("../../assets/infoCircle.png")}
-                style={{ width: 24, height: 24, bottom: 11 }}
-              />
-            </View>
           </View> */}
-
           {receivedMessages.map((messageGroup, groupIndex) => (
-            <View key={groupIndex}>
+            <View key={groupIndex} style={{ marginBottom: 50 }}>
               <View style={styles.dateSection}>
                 <Text style={styles.date}>{messageGroup.createDate}</Text>
               </View>
