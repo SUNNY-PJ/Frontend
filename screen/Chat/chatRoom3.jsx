@@ -70,6 +70,7 @@ const ChatRoom3 = () => {
       });
 
       setReceivedMessages(updatedChatData);
+      scrollToEnd();
     } catch (error) {
       console.error("에러:", error);
     }
@@ -104,6 +105,7 @@ const ChatRoom3 = () => {
                   ...prevMessages,
                   parsedMessage,
                 ]);
+                scrollToEnd();
               } catch (error) {
                 console.error("Failed to parse message body:", message.body);
               }
@@ -164,6 +166,7 @@ const ChatRoom3 = () => {
       });
       console.log(`Message sent: ${currentMessage}`);
       setCurrentMessage("");
+      scrollToEnd();
     } else {
       console.log("Client not connected or roomId not set");
     }
@@ -172,10 +175,6 @@ const ChatRoom3 = () => {
   const handleChatList = () => {
     navigation.navigate("MainScreen", { screen: "ChatList" });
   };
-
-  useEffect(() => {
-    scrollViewRef.current?.scrollToEnd({ animated: true });
-  }, [receivedMessages]);
 
   const scrollToEnd = () => {
     setTimeout(() => {
@@ -198,6 +197,10 @@ const ChatRoom3 = () => {
       hideSubscription.remove();
     };
   }, []);
+
+  useEffect(() => {
+    scrollToEnd();
+  }, [receivedMessages]);
 
   return (
     <View style={styles.container}>
