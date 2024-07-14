@@ -117,8 +117,8 @@ function MainScreen() {
         <Stack.Screen name="BlockedListScreen" component={BlockedListScreen} />
         {/* <Stack.Screen name="Winner" component={Winner} /> */}
       </Stack.Navigator>
-      {/* <Bottom /> */}
-      <BottomRe />
+      <Bottom />
+      {/* <BottomRe /> */}
     </>
   );
 }
