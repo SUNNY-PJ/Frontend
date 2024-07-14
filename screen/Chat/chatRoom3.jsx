@@ -8,6 +8,7 @@ import {
   Platform,
   Image,
   TouchableOpacity,
+  Keyboard,
 } from "react-native";
 import apiClient from "../../api/apiClient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -176,28 +177,51 @@ const ChatRoom3 = () => {
     scrollViewRef.current?.scrollToEnd({ animated: true });
   }, [receivedMessages]);
 
+  const scrollToEnd = () => {
+    setTimeout(() => {
+      scrollViewRef.current?.scrollToEnd({ animated: true });
+    }, 100);
+  };
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener(
+      "keyboardDidShow",
+      scrollToEnd
+    );
+    const hideSubscription = Keyboard.addListener(
+      "keyboardDidHide",
+      scrollToEnd
+    );
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
-    >
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.backButton} onPress={handleChatList}>
-          <Image
-            source={require("../../assets/prevBtn.png")}
-            style={styles.backButtonImage}
-          />
-        </TouchableOpacity>
-        <ScrollView style={[styles.messagesContainer]} ref={scrollViewRef}>
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.backButton} onPress={handleChatList}>
+        <Image
+          source={require("../../assets/prevBtn.png")}
+          style={styles.backButtonImage}
+        />
+      </TouchableOpacity>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+      >
+        <ScrollView
+          style={[styles.messagesContainer]}
+          ref={scrollViewRef}
+          // contentContainerStyle={{ paddingBottom: 20 }}
+        >
           {receivedMessages.map((messageGroup, groupIndex) => (
             <View key={groupIndex} style={{ marginBottom: 50 }}>
               <View style={styles.dateSection}>
                 <Text style={styles.date}>{messageGroup.createDate}</Text>
               </View>
-              {/* <Text style={styles.noti}>
-                "친구가 아닌 사용자입니다. 친구를 맺을까요?"
-              </Text> */}
               {messageGroup.messages.map((message, messageIndex) => {
                 const showProfileAndName =
                   messageIndex === 0 ||
@@ -264,6 +288,7 @@ const ChatRoom3 = () => {
               value={currentMessage}
               onChangeText={setCurrentMessage}
               placeholder="메시지를 입력해주세요"
+              onFocus={scrollToEnd}
             />
             <TouchableOpacity onPress={sendMessage}>
               <Image
@@ -273,8 +298,8 @@ const ChatRoom3 = () => {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </View>
   );
 };
 
