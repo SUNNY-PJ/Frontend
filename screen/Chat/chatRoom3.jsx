@@ -16,9 +16,11 @@ import { Client } from "@stomp/stompjs";
 import Line from "../../components/Line";
 import { SOCKET_URI } from "../../api/common";
 import styles from "./chatRoom3.styels";
+import useStore from "../../store/store";
 
 const ChatRoom3 = () => {
   const navigation = useNavigation();
+  const profile = useStore((state) => state.profile);
   const [client, setClient] = useState(null);
   const [currentMessage, setCurrentMessage] = useState("");
   const [receivedMessages, setReceivedMessages] = useState([]);
@@ -27,6 +29,13 @@ const ChatRoom3 = () => {
   const [userIds, setUserIds] = useState(34);
   const sendUserId = 30;
   const scrollViewRef = useRef();
+  const myId = profile.id;
+
+  const formatDate = (dateString) => {
+    const options = { month: "2-digit", day: "2-digit" };
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("ko-KR", options).format(date);
+  };
 
   // 대화 내용 조회
   const fetchData = async () => {
@@ -37,12 +46,24 @@ const ChatRoom3 = () => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
-        // params: { userId: profile.id },
       });
 
       const chatData = response.data;
       console.log("대화 내용 :::", chatData);
-      setReceivedMessages(chatData);
+
+      // 각 메시지에 isMine 플래그 추가 및 날짜 형식 변환
+      const updatedChatData = chatData.map((group) => {
+        return {
+          ...group,
+          createDate: formatDate(group.createDate),
+          messages: group.messages.map((message) => ({
+            ...message,
+            isMine: message.userId === myId,
+          })),
+        };
+      });
+
+      setReceivedMessages(updatedChatData);
     } catch (error) {
       console.error("에러:", error);
     }
@@ -69,7 +90,18 @@ const ChatRoom3 = () => {
         onConnect: () => {
           console.log("Connected to the server");
           if (roomId) {
-            subscribeToRoom(client, roomId);
+            client.subscribe(`/sub/room/${roomId}`, (message) => {
+              console.log("Received message:", message);
+              try {
+                const parsedMessage = JSON.parse(message.body);
+                setReceivedMessages((prevMessages) => [
+                  ...prevMessages,
+                  parsedMessage,
+                ]);
+              } catch (error) {
+                console.error("Failed to parse message body:", message.body);
+              }
+            });
           }
         },
         onStompError: (frame) => {
@@ -95,19 +127,7 @@ const ChatRoom3 = () => {
         client.deactivate();
       }
     };
-  }, []);
-
-  const subscribeToRoom = (client, roomId) => {
-    client.subscribe(`/sub/room/${roomId}`, (message) => {
-      console.log("Received message:", message);
-      try {
-        const parsedMessage = JSON.parse(message.body);
-        setReceivedMessages((prevMessages) => [...prevMessages, parsedMessage]);
-      } catch (error) {
-        console.error("Failed to parse message body:", message.body);
-      }
-    });
-  };
+  }, [roomId]);
 
   const createRoom = () => {
     if (client && client.connected) {
@@ -127,23 +147,17 @@ const ChatRoom3 = () => {
   };
 
   const sendMessage = () => {
-    if (client && client.connected) {
-      if (!roomId) {
-        // 채팅방이 없으면 생성
-        createRoom();
-      } else {
-        // 채팅방이 있으면 메시지 전송
-        client.publish({
-          destination: "/pub/chat/message/room",
-          body: JSON.stringify({
-            roomId: roomId,
-            sendUserId: sendUserId,
-            message: currentMessage,
-          }),
-        });
-        console.log(`Message sent: ${currentMessage}`);
-        setCurrentMessage("");
-      }
+    if (client && client.connected && roomId) {
+      client.publish({
+        destination: "/pub/chat/message/room",
+        body: JSON.stringify({
+          roomId: roomId,
+          sendUserId: sendUserId,
+          message: message,
+        }),
+      });
+      console.log(`Message sent: ${message}`);
+      setMessage("");
     } else {
       console.log("Client not connected or roomId not set");
     }
@@ -164,24 +178,18 @@ const ChatRoom3 = () => {
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
     >
       <View style={styles.container}>
+        <TouchableOpacity style={styles.backButton} onPress={handleChatList}>
+          <Image
+            source={require("../../assets/prevBtn.png")}
+            style={styles.backButtonImage}
+          />
+        </TouchableOpacity>
         <ScrollView style={[styles.messagesContainer]} ref={scrollViewRef}>
-          <View style={styles.topSection}>
+          {/* <View style={styles.topSection}>
             <View style={styles.dateSection}>
               <Text style={styles.date}>Today</Text>
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <TouchableOpacity onPress={handleChatList}>
-                <Image
-                  source={require("../../assets/prevBtn.png")}
-                  style={{ width: 24, height: 24, bottom: 11 }}
-                />
-              </TouchableOpacity>
+            <View style={styles.topBox}>
               <Text style={styles.noti}>
                 "친구가 아닌 사용자입니다. 친구를 맺을까요?"
               </Text>
@@ -190,18 +198,20 @@ const ChatRoom3 = () => {
                 style={{ width: 24, height: 24, bottom: 11 }}
               />
             </View>
-          </View>
+          </View> */}
 
           {receivedMessages.map((messageGroup, groupIndex) => (
             <View key={groupIndex}>
-              <Text style={styles.date}>{messageGroup.createDate}</Text>
+              <View style={styles.dateSection}>
+                <Text style={styles.date}>{messageGroup.createDate}</Text>
+              </View>
               {messageGroup.messages.map((message, messageIndex) => (
-                <View key={messageIndex}>
+                <View key={messageIndex} style={styles.messageContainer}>
                   {!message.isMine && (
-                    <View style={{ flexDirection: "row", gap: 4 }}>
+                    <View style={styles.friendMessageContainer}>
                       <Image
                         source={require("../../assets/Avatar.png")}
-                        style={{ width: 40, height: 40 }}
+                        style={styles.avatar}
                       />
                       <Text style={styles.friendsName}>{message.nickname}</Text>
                     </View>
@@ -222,14 +232,16 @@ const ChatRoom3 = () => {
                     <View
                       style={[
                         message.isMine ? styles.message : styles.friendMessage,
-                        { marginBottom: 25 },
                       ]}
                     >
                       <Text>{message.message}</Text>
                     </View>
                     {!message.isMine && (
                       <Text
-                        style={[styles.time, { marginLeft: 8, bottom: 25 }]}
+                        style={[
+                          styles.time,
+                          { marginLeft: 8, bottom: 18, left: 45 },
+                        ]}
                       >
                         {message.time}
                       </Text>
