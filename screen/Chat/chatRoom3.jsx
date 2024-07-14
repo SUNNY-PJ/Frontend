@@ -64,15 +64,13 @@ const ChatRoom3 = () => {
       console.log("대화 내용 :::", chatData);
 
       // 각 메시지에 isMine 플래그 추가 및 날짜 형식 변환
-      const updatedChatData = chatData.map((group) => {
-        return {
-          ...group,
-          createDate: formatDate(group.createDate),
-          messages: group.messages.map((message) => ({
-            ...message,
-            isMine: message.userId === myId,
-          })),
-        };
+      const updatedChatData = chatData.flatMap((group) => {
+        const formattedDate = formatDate(group.createDate);
+        return group.messages.map((message) => ({
+          ...message,
+          isMine: message.userId === myId,
+          formattedDate,
+        }));
       });
 
       setReceivedMessages(updatedChatData);
@@ -231,24 +229,32 @@ const ChatRoom3 = () => {
         <ScrollView
           style={[styles.messagesContainer]}
           ref={scrollViewRef}
-          contentContainerStyle={{ paddingBottom: 20 }}
+          contentContainerStyle={{ paddingBottom: 70 }}
         >
-          {receivedMessages.map((messageGroup, groupIndex) => (
-            <View key={groupIndex} style={{ marginBottom: 50 }}>
-              {messageGroup.createDate && (
-                <View style={styles.dateSection}>
-                  <Text style={styles.date}>{messageGroup.createDate}</Text>
-                </View>
-              )}
-              {messageGroup.messages?.map((message, messageIndex) => {
-                const showProfileAndName =
-                  messageIndex === 0 ||
-                  messageGroup.messages[messageIndex - 1].userId !==
-                    message.userId;
+          {receivedMessages.map((message, index) => {
+            const showProfileAndName =
+              index === 0 ||
+              receivedMessages[index - 1].userId !== message.userId;
 
-                return (
-                  <View key={messageIndex} style={styles.messageContainer}>
-                    {!message.isMine && showProfileAndName && (
+            return (
+              <View key={index} style={styles.messageContainer}>
+                {message.formattedDate && index === 0 && (
+                  <View style={styles.dateSection}>
+                    <Text style={styles.date}>{message.formattedDate}</Text>
+                  </View>
+                )}
+                {message.isMine ? (
+                  <View style={{ alignItems: "flex-end" }}>
+                    <View style={{ flexDirection: "row", gap: 5 }}>
+                      <Text style={[styles.time]}>{message.time}</Text>
+                      <View style={styles.message}>
+                        <Text style={styles.msgText}>{message.message}</Text>
+                      </View>
+                    </View>
+                  </View>
+                ) : (
+                  <View>
+                    {showProfileAndName && (
                       <View style={styles.friendMessageContainer}>
                         <Image
                           source={require("../../assets/Avatar.png")}
@@ -260,47 +266,25 @@ const ChatRoom3 = () => {
                       </View>
                     )}
                     <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: message.isMine
-                          ? "flex-end"
-                          : "flex-start",
-                      }}
+                      style={{ flexDirection: "row", alignItems: "flex-end" }}
                     >
-                      {message.isMine ? (
-                        <>
-                          <Text style={[styles.time, { marginRight: 8 }]}>
-                            {message.time}
-                          </Text>
-                          <View style={styles.message}>
-                            <Text style={styles.msgText}>
-                              {message.message}
-                            </Text>
-                          </View>
-                        </>
-                      ) : (
-                        <>
-                          <View style={styles.friendMessage}>
-                            <Text style={styles.msgText}>
-                              {message.message}
-                            </Text>
-                          </View>
-                          <Text
-                            style={[
-                              styles.time,
-                              { marginLeft: 8, bottom: 18, left: 45 },
-                            ]}
-                          >
-                            {message.time}
-                          </Text>
-                        </>
-                      )}
+                      <View style={styles.friendMessage}>
+                        <Text style={styles.msgText}>{message.message}</Text>
+                      </View>
+                      <Text
+                        style={[
+                          styles.time,
+                          { marginLeft: 8, bottom: 18, left: 45 },
+                        ]}
+                      >
+                        {message.time}
+                      </Text>
                     </View>
                   </View>
-                );
-              })}
-            </View>
-          ))}
+                )}
+              </View>
+            );
+          })}
         </ScrollView>
         <Line h={1} color={"#C1C1C1"} />
         <View style={styles.inputSection}>
