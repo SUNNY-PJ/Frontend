@@ -106,35 +106,19 @@ const ChatRoom3 = () => {
             client.subscribe(`/sub/room/${roomId}`, (message) => {
               console.log("Received message:", message);
               try {
-                // const parsedMessage = JSON.parse(message.body);
-                const parsedMessage = message.body;
-                const formattedMessage = {
-                  ...parsedMessage,
-                  isMine: parsedMessage.userId === myId,
-                };
-
-                setReceivedMessages((prevMessages) => {
-                  const updatedMessages = [...prevMessages];
-                  const groupIndex = updatedMessages.findIndex(
-                    (group) =>
-                      group.createDate === formatDate(parsedMessage.createDate)
-                  );
-
-                  if (groupIndex > -1) {
-                    // If group exists, push the message to the group
-                    updatedMessages[groupIndex].messages.push(formattedMessage);
-                  } else {
-                    // If group does not exist, create a new group
-                    updatedMessages.push({
-                      createDate: formatDate(parsedMessage.createDate),
-                      messages: [formattedMessage],
-                    });
-                  }
-
-                  return updatedMessages;
-                });
-
-                scrollToEnd();
+                const parsedMessage = JSON.parse(message.body);
+                console.log(parsedMessage);
+                setReceivedMessages((prevMessages) => [
+                  ...prevMessages,
+                  {
+                    id: parsedMessage.id,
+                    message: parsedMessage.message,
+                    userId: parsedMessage.userId,
+                    nickname: parsedMessage.nickname,
+                    time: parsedMessage.time,
+                    isMine: parsedMessage.userId === myId,
+                  },
+                ]);
               } catch (error) {
                 console.error("Failed to parse message body:", message.body);
               }
@@ -249,11 +233,13 @@ const ChatRoom3 = () => {
           ref={scrollViewRef}
           contentContainerStyle={{ paddingBottom: 20 }}
         >
-          {receivedMessages?.map((messageGroup, groupIndex) => (
+          {receivedMessages.map((messageGroup, groupIndex) => (
             <View key={groupIndex} style={{ marginBottom: 50 }}>
-              <View style={styles.dateSection}>
-                <Text style={styles.date}>{messageGroup.createDate}</Text>
-              </View>
+              {messageGroup.createDate && (
+                <View style={styles.dateSection}>
+                  <Text style={styles.date}>{messageGroup.createDate}</Text>
+                </View>
+              )}
               {messageGroup.messages?.map((message, messageIndex) => {
                 const showProfileAndName =
                   messageIndex === 0 ||
@@ -281,29 +267,29 @@ const ChatRoom3 = () => {
                           : "flex-start",
                       }}
                     >
-                      {message.isMine && (
-                        <Text style={[styles.time, { marginRight: 8 }]}>
-                          {message.time}
-                        </Text>
-                      )}
-                      <View
-                        style={[
-                          message.isMine
-                            ? styles.message
-                            : styles.friendMessage,
-                        ]}
-                      >
-                        <Text>{message.message}</Text>
-                      </View>
-                      {!message.isMine && (
-                        <Text
-                          style={[
-                            styles.time,
-                            { marginLeft: 8, bottom: 18, left: 45 },
-                          ]}
-                        >
-                          {message.time}
-                        </Text>
+                      {message.isMine ? (
+                        <>
+                          <Text style={[styles.time, { marginRight: 8 }]}>
+                            {message.time}
+                          </Text>
+                          <View style={styles.message}>
+                            <Text>{message.message}</Text>
+                          </View>
+                        </>
+                      ) : (
+                        <>
+                          <View style={styles.friendMessage}>
+                            <Text>{message.message}</Text>
+                          </View>
+                          <Text
+                            style={[
+                              styles.time,
+                              { marginLeft: 8, bottom: 18, left: 45 },
+                            ]}
+                          >
+                            {message.time}
+                          </Text>
+                        </>
                       )}
                     </View>
                   </View>
