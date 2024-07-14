@@ -16,7 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Client } from "@stomp/stompjs";
 import Line from "../../components/Line";
 import { SOCKET_URI } from "../../api/common";
-import styles from "./chatRoom3.styels";
+import styles from "./chatRoom3.styles";
 import useStore from "../../store/store";
 
 const ChatRoom3 = () => {
