@@ -6,14 +6,15 @@ import {
   ImageBackground,
   TouchableOpacity,
   StyleSheet,
-  Animated,
   Dimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useSaveData } from "../context/saveDataContext";
 
 const Bottom = () => {
   const windowWidth = Dimensions.get("window").width;
   const navigation = useNavigation();
+  const { saveData } = useSaveData();
   const [selectedIcon, setSelectedIcon] = useState("Note");
 
   const imageSource =
@@ -35,6 +36,22 @@ const Bottom = () => {
     selectedIcon === "Community"
       ? require("../assets/communityClick.png")
       : require("../assets/community.png");
+
+  const [homeImageSource, setHomeImageSource] = useState(
+    require("../assets/logo/default.png")
+  );
+
+  useEffect(() => {
+    if (saveData.isLoaded) {
+      if (saveData.progress <= 20) {
+        setHomeImageSource(require("../assets/logo/bad.png"));
+      } else if (saveData.progress <= 49) {
+        setHomeImageSource(require("../assets/logo/moderate.png"));
+      } else if (saveData.progress <= 100) {
+        setHomeImageSource(require("../assets/logo/good.png"));
+      }
+    }
+  }, [saveData]);
 
   const toggleIcons = (iconName) => {
     if (selectedIcon !== iconName) {
@@ -103,14 +120,13 @@ const Bottom = () => {
         <TouchableOpacity
           activeOpacity={1}
           style={styles.menuItem}
-          // onPress={handleMainIcon}
           onPress={() => {
-            setSelectedIcon(null);
+            setSelectedIcon("Spending");
             navigation.navigate("Spending");
           }}
         >
           <Image
-            source={require("../assets/bottomIcon.png")}
+            source={homeImageSource}
             style={{ width: 64, height: 64, top: -40, left: 5 }}
           />
         </TouchableOpacity>
