@@ -28,12 +28,18 @@ const ChatRoom3 = () => {
   const [accessToken, setAccessToken] = useState("");
   const [roomId, setRoomId] = useState(1);
   const [userIds, setUserIds] = useState(34);
-  const sendUserId = 30;
+  const sendUserId = 34;
   const scrollViewRef = useRef();
   const myId = profile.id;
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
+    if (!dateString) return "";
+
+    const dateParts = dateString.split("-");
+    if (dateParts.length !== 3) return dateString;
+
+    const isoDateString = `${dateParts[0]}-${dateParts[1]}-${dateParts[2]}T00:00:00Z`;
+    const date = new Date(isoDateString);
     const formattedDate = new Intl.DateTimeFormat("ko-KR", {
       month: "2-digit",
       day: "2-digit",
@@ -100,11 +106,34 @@ const ChatRoom3 = () => {
             client.subscribe(`/sub/room/${roomId}`, (message) => {
               console.log("Received message:", message);
               try {
-                const parsedMessage = JSON.parse(message.body);
-                setReceivedMessages((prevMessages) => [
-                  ...prevMessages,
-                  parsedMessage,
-                ]);
+                // const parsedMessage = JSON.parse(message.body);
+                const parsedMessage = message.body;
+                const formattedMessage = {
+                  ...parsedMessage,
+                  isMine: parsedMessage.userId === myId,
+                };
+
+                setReceivedMessages((prevMessages) => {
+                  const updatedMessages = [...prevMessages];
+                  const groupIndex = updatedMessages.findIndex(
+                    (group) =>
+                      group.createDate === formatDate(parsedMessage.createDate)
+                  );
+
+                  if (groupIndex > -1) {
+                    // If group exists, push the message to the group
+                    updatedMessages[groupIndex].messages.push(formattedMessage);
+                  } else {
+                    // If group does not exist, create a new group
+                    updatedMessages.push({
+                      createDate: formatDate(parsedMessage.createDate),
+                      messages: [formattedMessage],
+                    });
+                  }
+
+                  return updatedMessages;
+                });
+
                 scrollToEnd();
               } catch (error) {
                 console.error("Failed to parse message body:", message.body);
@@ -218,14 +247,14 @@ const ChatRoom3 = () => {
         <ScrollView
           style={[styles.messagesContainer]}
           ref={scrollViewRef}
-          // contentContainerStyle={{ paddingBottom: 20 }}
+          contentContainerStyle={{ paddingBottom: 20 }}
         >
-          {receivedMessages.map((messageGroup, groupIndex) => (
+          {receivedMessages?.map((messageGroup, groupIndex) => (
             <View key={groupIndex} style={{ marginBottom: 50 }}>
               <View style={styles.dateSection}>
                 <Text style={styles.date}>{messageGroup.createDate}</Text>
               </View>
-              {messageGroup.messages.map((message, messageIndex) => {
+              {messageGroup.messages?.map((message, messageIndex) => {
                 const showProfileAndName =
                   messageIndex === 0 ||
                   messageGroup.messages[messageIndex - 1].userId !==
