@@ -195,6 +195,9 @@ const ChatRoom3 = () => {
               <View style={styles.dateSection}>
                 <Text style={styles.date}>{messageGroup.createDate}</Text>
               </View>
+              {/* <Text style={styles.noti}>
+                "친구가 아닌 사용자입니다. 친구를 맺을까요?"
+              </Text> */}
               {messageGroup.messages.map((message, messageIndex) => {
                 const showProfileAndName =
                   messageIndex === 0 ||

@@ -86,6 +86,7 @@ export default StyleSheet.create({
     fontWeight: 700,
     color: "#5C5C5C",
     textAlign: "center",
+    marginBottom: 10,
   },
   date: {
     fontSize: 15,
@@ -105,8 +106,7 @@ export default StyleSheet.create({
     paddingRight: 16,
     paddingLeft: 16,
     alignSelf: "center",
-    marginBottom: 15,
-    marginTop: 15,
+    marginBottom: 20,
   },
   topSection: {
     alignItems: "center",
