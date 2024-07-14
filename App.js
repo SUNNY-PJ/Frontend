@@ -136,7 +136,7 @@ export default function App() {
     const device_token = await AsyncStorage.getItem("device_token");
     console.log("이게 디바이스 토큰이지이이이", device_token);
 
-    await alarmData();
+    // await alarmData();
 
     return data;
   };
@@ -163,16 +163,17 @@ export default function App() {
   // };
 
   const refreshToken = async () => {
-    const inputURL = proxyUrl + `/apple/auth/reissue`;
+    const inputURL = proxyUrl + `/auth/reissue`;
+    // const inputURL = proxyUrl + `/apple/auth/reissue`;
     const refresh_token = await AsyncStorage.getItem("refresh_token");
 
     try {
       const response = await apiClient.get(inputURL, {
-        params: { refresh_token },
+        params: { refreshToken: refresh_token },
       });
 
-      const access_token = response.data.data.accessToken;
-      const new_refresh_token = response.data.data.refreshToken;
+      const access_token = response.data.accessToken;
+      const new_refresh_token = response.data.refreshToken;
       await AsyncStorage.setItem("access_token", access_token);
       await AsyncStorage.setItem("refresh_token", new_refresh_token);
       console.log("새로운 토큰 저장:", access_token);
