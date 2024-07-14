@@ -287,9 +287,9 @@ const MyPage = () => {
     { title: "이용 약관", onPress: handleTermsClick },
     { title: "로그아웃", onPress: handleLogoutClick },
     { title: "회원 탈퇴", onPress: handleLeaveClick },
-    { title: "테스트용", onPress: handleTestClick },
-    { title: "채팅방", onPress: handleChatClick },
-    { title: "채팅 목록", onPress: handleChatListClick },
+    // { title: "테스트용", onPress: handleTestClick },
+    // { title: "채팅방", onPress: handleChatClick },
+    // { title: "채팅 목록", onPress: handleChatListClick },
   ];
 
   return (
