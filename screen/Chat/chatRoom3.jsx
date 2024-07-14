@@ -158,11 +158,11 @@ const ChatRoom3 = () => {
         body: JSON.stringify({
           roomId: roomId,
           sendUserId: sendUserId,
-          message: message,
+          message: currentMessage,
         }),
       });
-      console.log(`Message sent: ${message}`);
-      setMessage("");
+      console.log(`Message sent: ${currentMessage}`);
+      setCurrentMessage("");
     } else {
       console.log("Client not connected or roomId not set");
     }
@@ -190,60 +190,66 @@ const ChatRoom3 = () => {
           />
         </TouchableOpacity>
         <ScrollView style={[styles.messagesContainer]} ref={scrollViewRef}>
-          {/* <View style={styles.topSection}>
-            <View style={styles.dateSection}>
-              <Text style={styles.date}>Today</Text>
-            </View>
-          </View> */}
           {receivedMessages.map((messageGroup, groupIndex) => (
             <View key={groupIndex} style={{ marginBottom: 50 }}>
               <View style={styles.dateSection}>
                 <Text style={styles.date}>{messageGroup.createDate}</Text>
               </View>
-              {messageGroup.messages.map((message, messageIndex) => (
-                <View key={messageIndex} style={styles.messageContainer}>
-                  {!message.isMine && (
-                    <View style={styles.friendMessageContainer}>
-                      <Image
-                        source={require("../../assets/Avatar.png")}
-                        style={styles.avatar}
-                      />
-                      <Text style={styles.friendsName}>{message.nickname}</Text>
-                    </View>
-                  )}
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: message.isMine
-                        ? "flex-end"
-                        : "flex-start",
-                    }}
-                  >
-                    {message.isMine && (
-                      <Text style={[styles.time, { marginRight: 8 }]}>
-                        {message.time}
-                      </Text>
+              {messageGroup.messages.map((message, messageIndex) => {
+                const showProfileAndName =
+                  messageIndex === 0 ||
+                  messageGroup.messages[messageIndex - 1].userId !==
+                    message.userId;
+
+                return (
+                  <View key={messageIndex} style={styles.messageContainer}>
+                    {!message.isMine && showProfileAndName && (
+                      <View style={styles.friendMessageContainer}>
+                        <Image
+                          source={require("../../assets/Avatar.png")}
+                          style={styles.avatar}
+                        />
+                        <Text style={styles.friendsName}>
+                          {message.nickname}
+                        </Text>
+                      </View>
                     )}
                     <View
-                      style={[
-                        message.isMine ? styles.message : styles.friendMessage,
-                      ]}
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: message.isMine
+                          ? "flex-end"
+                          : "flex-start",
+                      }}
                     >
-                      <Text>{message.message}</Text>
-                    </View>
-                    {!message.isMine && (
-                      <Text
+                      {message.isMine && (
+                        <Text style={[styles.time, { marginRight: 8 }]}>
+                          {message.time}
+                        </Text>
+                      )}
+                      <View
                         style={[
-                          styles.time,
-                          { marginLeft: 8, bottom: 18, left: 45 },
+                          message.isMine
+                            ? styles.message
+                            : styles.friendMessage,
                         ]}
                       >
-                        {message.time}
-                      </Text>
-                    )}
+                        <Text>{message.message}</Text>
+                      </View>
+                      {!message.isMine && (
+                        <Text
+                          style={[
+                            styles.time,
+                            { marginLeft: 8, bottom: 18, left: 45 },
+                          ]}
+                        >
+                          {message.time}
+                        </Text>
+                      )}
+                    </View>
                   </View>
-                </View>
-              ))}
+                );
+              })}
             </View>
           ))}
         </ScrollView>
