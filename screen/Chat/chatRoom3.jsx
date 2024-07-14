@@ -106,6 +106,9 @@ const ChatRoom3 = () => {
               try {
                 const parsedMessage = JSON.parse(message.body);
                 console.log(parsedMessage);
+                const formattedDate = formatDate(
+                  new Date().toISOString().split("T")[0]
+                ); // 현재 날짜 형식화
                 setReceivedMessages((prevMessages) => [
                   ...prevMessages,
                   {
@@ -115,6 +118,7 @@ const ChatRoom3 = () => {
                     nickname: parsedMessage.nickname,
                     time: parsedMessage.time,
                     isMine: parsedMessage.userId === myId,
+                    formattedDate,
                   },
                 ]);
               } catch (error) {
@@ -236,9 +240,14 @@ const ChatRoom3 = () => {
               index === 0 ||
               receivedMessages[index - 1].userId !== message.userId;
 
+            const showDate =
+              index === 0 ||
+              receivedMessages[index - 1].formattedDate !==
+                message.formattedDate;
+
             return (
               <View key={index} style={styles.messageContainer}>
-                {message.formattedDate && index === 0 && (
+                {showDate && message.formattedDate && (
                   <View style={styles.dateSection}>
                     <Text style={styles.date}>{message.formattedDate}</Text>
                   </View>
@@ -246,10 +255,10 @@ const ChatRoom3 = () => {
                 {message.isMine ? (
                   <View style={{ alignItems: "flex-end" }}>
                     <View style={{ flexDirection: "row", gap: 5 }}>
-                      <Text style={[styles.time]}>{message.time}</Text>
                       <View style={styles.message}>
                         <Text style={styles.msgText}>{message.message}</Text>
                       </View>
+                      <Text style={[styles.time]}>{message.time}</Text>
                     </View>
                   </View>
                 ) : (
