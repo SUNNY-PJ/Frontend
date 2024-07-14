@@ -55,7 +55,8 @@ export default StyleSheet.create({
     flex: 1,
     fontSize: 12,
     fontWeight: 700,
-    color: "#5C5C5C",
+    color: "#1F1F1F",
+    fontFamily: "SUITE_Medium",
   },
   icon: {
     width: 20,
@@ -133,4 +134,5 @@ export default StyleSheet.create({
     width: 40,
     height: 40,
   },
+  msgText: { color: "#1F1F1F", fontFamily: "SUITE_Medium" },
 });

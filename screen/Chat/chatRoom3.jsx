@@ -273,13 +273,17 @@ const ChatRoom3 = () => {
                             {message.time}
                           </Text>
                           <View style={styles.message}>
-                            <Text>{message.message}</Text>
+                            <Text style={styles.msgText}>
+                              {message.message}
+                            </Text>
                           </View>
                         </>
                       ) : (
                         <>
                           <View style={styles.friendMessage}>
-                            <Text>{message.message}</Text>
+                            <Text style={styles.msgText}>
+                              {message.message}
+                            </Text>
                           </View>
                           <Text
                             style={[
