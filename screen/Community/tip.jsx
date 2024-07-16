@@ -51,7 +51,7 @@ const Tip = () => {
   if (loading) {
     return (
       <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#000" />
       </View>
     );
   }
@@ -66,40 +66,38 @@ const Tip = () => {
     >
       <View style={styles.container}>
         <View style={styles.contentContainer}>
-          {data && data.length > 0 ? (
-            data.map((item) => (
-              <TouchableOpacity
-                key={item.id}
-                onPress={() =>
-                  navigation.navigate("Detail", {
-                    screen: "Detail",
-                    params: {
-                      itemId: item.id,
-                      userId: item.userId,
-                    },
-                  })
-                }
-                activeOpacity={0.6}
-              >
-                <View style={styles.box}>
-                  <Text style={styles.title}>{item.title}</Text>
-                  <View style={{ flexDirection: "row" }}>
-                    <Text style={styles.writer}>{item.writer}</Text>
-                    <Text style={styles.description}>{item.createdAt}</Text>
-                    <Text style={styles.description}>
-                      조회 {item.viewCount}
-                    </Text>
-                    <Text style={styles.description}>
-                      댓글 {item.commentCount}
-                    </Text>
+          {data && data.length > 0
+            ? data.map((item) => (
+                <TouchableOpacity
+                  key={item.id}
+                  onPress={() =>
+                    navigation.navigate("Detail", {
+                      screen: "Detail",
+                      params: {
+                        itemId: item.id,
+                        userId: item.userId,
+                      },
+                    })
+                  }
+                  activeOpacity={0.6}
+                >
+                  <View style={styles.box}>
+                    <Text style={styles.title}>{item.title}</Text>
+                    <View style={{ flexDirection: "row" }}>
+                      <Text style={styles.writer}>{item.writer}</Text>
+                      <Text style={styles.description}>{item.createdAt}</Text>
+                      <Text style={styles.description}>
+                        조회 {item.viewCount}
+                      </Text>
+                      <Text style={styles.description}>
+                        댓글 {item.commentCount}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-                <Line color={"#C1C1C1"} h={2} />
-              </TouchableOpacity>
-            ))
-          ) : (
-            <Text style={styles.noDataText}>No data available</Text>
-          )}
+                  <Line color={"#C1C1C1"} h={2} />
+                </TouchableOpacity>
+              ))
+            : null}
         </View>
       </View>
     </ScrollView>
