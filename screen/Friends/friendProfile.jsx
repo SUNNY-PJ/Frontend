@@ -317,6 +317,12 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
               ) : (
                 <>
                   <TouchableOpacity
+                    style={[styles.button, { backgroundColor: "#FFC891" }]}
+                    onPress={() => {}}
+                  >
+                    <Text style={[styles.btnText]}>대화하기</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
                     style={[
                       styles.button,
                       {
