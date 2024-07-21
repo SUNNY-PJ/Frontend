@@ -237,6 +237,16 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
     );
   };
 
+  const handleChatClick = () => {
+    console.log("채팅방 이동 >>>", friendId);
+    navigation.navigate("ChatScreen", {
+      screen: "ChatRoom3",
+      params: {
+        friendsId: friendId,
+      },
+    });
+  };
+
   const blockUser = async () => {
     const bodyData = {
       userId: friendId,
@@ -307,7 +317,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
                   <TouchableOpacity
                     activeOpacity={0.8}
                     style={[styles.button, { backgroundColor: "#FFC891" }]}
-                    onPress={() => {}}
+                    onPress={handleChatClick}
                   >
                     <Text style={[styles.btnText]}>대화하기</Text>
                   </TouchableOpacity>
