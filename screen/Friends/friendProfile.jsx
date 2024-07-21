@@ -295,34 +295,24 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
             <View
               style={{
                 flexDirection: "row",
-                gap: 40,
+                gap: 16,
                 alignSelf: "center",
                 marginTop: 27,
               }}
             >
-              {/* <TouchableOpacity style={styles.button}>
-                <Text
-                  style={{
-                    color: "#1F1F1F ",
-                    fontSize: 15,
-                    fontWeight: 700,
-                    alignSelf: "center",
-                  }}
-                >
-                  대화하기
-                </Text>
-              </TouchableOpacity> */}
               {item.owner ? (
                 <View style={{ height: 12 }} />
               ) : (
                 <>
                   <TouchableOpacity
+                    activeOpacity={0.8}
                     style={[styles.button, { backgroundColor: "#FFC891" }]}
                     onPress={() => {}}
                   >
                     <Text style={[styles.btnText]}>대화하기</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
+                    activeOpacity={0.8}
                     style={[
                       styles.button,
                       {
@@ -348,6 +338,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
+                    activeOpacity={0.8}
                     style={[styles.button, { backgroundColor: "#FFFFFF" }]}
                     onPress={handleBlockUser}
                   >
