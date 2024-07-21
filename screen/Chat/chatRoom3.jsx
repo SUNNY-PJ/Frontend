@@ -23,7 +23,7 @@ import useStore from "../../store/store";
 const ChatRoom3 = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { friendsId } = route.params.params;
+  const { friendsId } = route.params;
   console.log("친구 아이디다 :::", friendsId);
   const profile = useStore((state) => state.profile);
   const [client, setClient] = useState(null);
