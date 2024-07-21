@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import apiClient from "../../api/apiClient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { Client } from "@stomp/stompjs";
 import Line from "../../components/Line";
@@ -21,6 +22,9 @@ import useStore from "../../store/store";
 
 const ChatRoom3 = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { friendsId } = route.params.params;
+  console.log("친구 아이디다 :::", friendsId);
   const profile = useStore((state) => state.profile);
   const [client, setClient] = useState(null);
   const [currentMessage, setCurrentMessage] = useState("");
