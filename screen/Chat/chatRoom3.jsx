@@ -12,23 +12,27 @@ import {
 } from "react-native";
 import apiClient from "../../api/apiClient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { Client } from "@stomp/stompjs";
 import Line from "../../components/Line";
-import { SOCKET_URI } from "../../api/common";
+import { DEV_SOCKET_URI, SOCKET_URI } from "../../api/common";
 import styles from "./chatRoom3.styles";
 import useStore from "../../store/store";
 
 const ChatRoom3 = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { friendsId } = route.params;
+  console.log("친구 아이디다 :::", friendsId);
   const profile = useStore((state) => state.profile);
   const [client, setClient] = useState(null);
   const [currentMessage, setCurrentMessage] = useState("");
   const [receivedMessages, setReceivedMessages] = useState([]);
   const [accessToken, setAccessToken] = useState("");
-  const [roomId, setRoomId] = useState(1);
-  const [userIds, setUserIds] = useState(34);
-  const sendUserId = 34;
+  const [roomId, setRoomId] = useState(2);
+  const [userIds, setUserIds] = useState(1);
+  const sendUserId = profile.id;
   const scrollViewRef = useRef();
   const myId = profile.id;
 
@@ -49,10 +53,8 @@ const ChatRoom3 = () => {
     return `${month}월 ${day}일`;
   };
 
-  // 대화 내용 조회
   const fetchData = async () => {
     const inputURL = `/chat/${roomId}`;
-
     try {
       const response = await apiClient.get(inputURL, {
         headers: {
@@ -63,7 +65,6 @@ const ChatRoom3 = () => {
       const chatData = response.data;
       console.log("대화 내용 :::", chatData);
 
-      // 각 메시지에 isMine 플래그 추가 및 날짜 형식 변환
       const updatedChatData = chatData.flatMap((group) => {
         const formattedDate = formatDate(group.createDate);
         return group.messages.map((message) => ({
@@ -82,7 +83,7 @@ const ChatRoom3 = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [roomId]);
 
   useEffect(() => {
     const initializeWebSocket = async () => {
@@ -90,7 +91,7 @@ const ChatRoom3 = () => {
       setAccessToken(token);
 
       const client = new Client({
-        brokerURL: `ws://${SOCKET_URI}/stomp`,
+        brokerURL: `ws://${DEV_SOCKET_URI}/stomp`,
         connectHeaders: {
           Authorization: `Bearer ${token}`,
         },
@@ -105,10 +106,10 @@ const ChatRoom3 = () => {
               console.log("Received message:", message);
               try {
                 const parsedMessage = JSON.parse(message.body);
-                console.log(parsedMessage);
+                console.log("Parsed message:", parsedMessage);
                 const formattedDate = formatDate(
                   new Date().toISOString().split("T")[0]
-                ); // 현재 날짜 형식화
+                );
                 setReceivedMessages((prevMessages) => [
                   ...prevMessages,
                   {
@@ -121,6 +122,7 @@ const ChatRoom3 = () => {
                     formattedDate,
                   },
                 ]);
+                console.log("Updated received messages:", receivedMessages);
               } catch (error) {
                 console.error("Failed to parse message body:", message.body);
               }
@@ -154,20 +156,23 @@ const ChatRoom3 = () => {
 
   const createRoom = () => {
     if (client && client.connected) {
-      const usersArray = userIds.split(",").map((id) => parseInt(id.trim()));
       client.publish({
         destination: "/pub/chat/message/users",
         body: JSON.stringify({
-          users: usersArray,
+          users: userIds,
           sendUserId: sendUserId,
           message: "새로운 채팅방이 생성되었습니다.",
         }),
       });
-      console.log(`Room creation message sent for users: ${usersArray}`);
+      console.log(`Room creation message sent for users: ${userIds}`);
     } else {
       console.log("Client not connected");
     }
   };
+
+  useEffect(() => {
+    createRoom();
+  }, [client]);
 
   const sendMessage = () => {
     if (client && client.connected && roomId) {

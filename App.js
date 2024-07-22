@@ -163,7 +163,7 @@ export default function App() {
   // };
 
   const refreshToken = async () => {
-    const inputURL = proxyUrl + `/auth/reissue`;
+    const inputURL = `${proxyUrl}/auth/reissue`;
     // const inputURL = proxyUrl + `/apple/auth/reissue`;
     const refresh_token = await AsyncStorage.getItem("refresh_token");
 
@@ -181,6 +181,20 @@ export default function App() {
       return access_token;
     } catch (error) {
       console.error("토큰 갱신 실패:", error);
+
+      if (error.response) {
+        // 서버가 응답을 했지만 상태 코드가 2xx 범위가 아닌 경우
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+      } else if (error.request) {
+        // 요청이 만들어졌으나 응답을 받지 못한 경우
+        console.error("Request data:", error.request);
+      } else {
+        // 요청을 설정하는 중에 문제가 발생한 경우
+        console.error("Error message:", error.message);
+      }
+
       Alert.alert(
         "Authentication Error",
         "세션이 만료되었습니다. 다시 로그인해주세요."
