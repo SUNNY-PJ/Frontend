@@ -28,7 +28,7 @@ function SendMatch() {
   const [date, setDate] = useState("");
   const [money, setMoney] = useState(0);
   const [message, setMessage] = useState("");
-  // const [reward, setReward] = useState("");
+  const [reward, setReward] = useState("");
   const [isStartDatePickerVisible, setStartDatePickerVisibility] =
     useState(false);
   const [isEndDatePickerVisible, setEndDatePickerVisibility] = useState(false);
@@ -76,9 +76,9 @@ function SendMatch() {
   const handleMessageChange = (text) => {
     setMessage(text);
   };
-  // const handleRewardChange = (text) => {
-  //   setReward(text);
-  // };
+  const handleRewardChange = (text) => {
+    setReward(text);
+  };
 
   const formattedMoney = (value) => {
     const parsedValue = parseFloat(value.replace(/,/g, ""));
@@ -160,12 +160,12 @@ function SendMatch() {
             handleInputChange={handleMessageChange}
           />
           <Text style={[styles.subText]}>* 최대 20자</Text>
-          {/* <Text style={styles.label}>무엇을 걸고 대결할까요?</Text>
+          <Text style={styles.label}>무엇을 걸고 대결할까요?</Text>
           <Input
             placeholder={"대결 보상"}
             inputValue={reward}
             handleInputChange={handleRewardChange}
-          /> */}
+          />
           {/* <Text style={styles.label}>대결 기간과 금액을 선택해주세요</Text>
           <Input
             placeholder={"대결 기간"}
