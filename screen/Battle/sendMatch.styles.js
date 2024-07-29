@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     color: "#1F1F1F",
     marginBottom: 8,
     marginTop: 24,
-    paddingLeft: 10,
+    // paddingLeft: 10,
     fontFamily: "SUITE_Medium",
   },
 
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
   subText: {
     fontSize: 12,
     color: "#5C5C5C",
-    paddingLeft: 10,
+    // paddingLeft: 10,
     fontFamily: "SUITE",
     marginTop: 8,
   },

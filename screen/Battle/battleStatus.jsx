@@ -127,8 +127,12 @@ const BattleStatus = () => {
         <Text
           style={[styles.boldText2, { textAlign: "center", marginTop: 16 }]}
         >
-          {/* {data.compensation}을 걸고 {"\n"} */}
-          {data.end_date}까지 {price}원 쓰기
+          {data.compensation}
+          <Text style={styles.text}>을 걸고</Text>
+          {"\n"}
+          {data.end_date}
+          <Text style={styles.text}>까지</Text> {price}원{" "}
+          <Text style={styles.text}>쓰기</Text>
         </Text>
       </View>
       <Line h={2} color={"#1F1F1F"} />

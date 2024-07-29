@@ -24,8 +24,12 @@ const BattleStatusDisable = () => {
     <View style={styles.container}>
       <View style={styles.section}>
         <Text style={[styles.boldText, { textAlign: "center", marginTop: 30 }]}>
-          {/* {data.compensation}을 걸고 {"\n"} */}
-          {end_date}까지 {price}원 쓰기
+          {data.compensation}
+          <Text style={styles.text}>을 걸고</Text>
+          {"\n"}
+          {end_date}
+          <Text style={styles.text}>까지</Text> {price}원{" "}
+          <Text style={styles.text}>쓰기</Text>
         </Text>
       </View>
       <Line h={2} color={"#1F1F1F"} />
@@ -53,7 +57,7 @@ const BattleStatusDisable = () => {
         </Text>
         <Progress progress={friends_percent} color={"#C1C1C1"} />
         <Text style={[styles.boldText]}>
-          {friends_percent}% <Text style={[styles.text]}>남았어요</Text>
+          {friends_percent}% <Text style={styles.text}>남았어요</Text>
         </Text>
         <TouchableOpacity onPress={handleGoBack}>
           <Text

@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#1F1F1F",
     fontFamily: "SUITE_Medium",
-    paddingLeft: 10,
+    // paddingLeft: 10,
   },
   subText: {
     fontSize: 12,

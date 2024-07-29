@@ -243,6 +243,10 @@ const MyPage = () => {
     });
   };
 
+  const handleInquireClick = () => {
+    console.log("문희하기 클릭~");
+  };
+
   const handleLogoutClick = () => {
     Alert.alert(
       "",
@@ -284,7 +288,8 @@ const MyPage = () => {
   };
 
   const options = [
-    { title: "이용 약관", onPress: handleTermsClick },
+    { title: "이용약관", onPress: handleTermsClick },
+    { title: "문의하기", onPress: handleInquireClick },
     { title: "로그아웃", onPress: handleLogoutClick },
     { title: "회원 탈퇴", onPress: handleLeaveClick },
     // { title: "테스트용", onPress: handleTestClick },
