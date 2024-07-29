@@ -76,6 +76,8 @@ const AppleLogin = () => {
 
         // 사용자 정보 가져오기
         await fetchUserProfile();
+        // sse 연결하기
+        await sseConnect();
 
         if (response.data.data.isUserRegistered) {
           navigation.replace("MainScreen", { screen: "Spending" });
@@ -132,6 +134,22 @@ const AppleLogin = () => {
     } catch (error) {
       Sentry.captureException(error);
       console.error("Error fetching user profile:", error);
+    }
+  };
+
+  // sse connect
+  const sseConnect = async () => {
+    const accessToken = await AsyncStorage.getItem("access_token");
+    try {
+      const response = await axios.get(`${url}/api/sse/subscribe`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: {},
+      });
+      console.log("sse connect test ::: 연결합니다....", response.data);
+    } catch (error) {
+      console.error("sse 에러:", error);
     }
   };
 
