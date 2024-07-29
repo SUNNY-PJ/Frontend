@@ -97,12 +97,12 @@ function SendMatch() {
 
   useEffect(() => {
     // if (message && money && startDate && endDate) {
-    if (message && money && startDate && endDate) {
+    if (message && money && startDate && endDate && reward) {
       setIsAllFieldsFilled(true);
     } else {
       setIsAllFieldsFilled(false);
     }
-  }, [message, money, startDate, endDate]);
+  }, [message, money, startDate, endDate, reward]);
 
   const postData = async () => {
     try {
