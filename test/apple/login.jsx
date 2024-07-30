@@ -23,7 +23,10 @@ const AppleLogin = () => {
       });
       const idTokenVal = credential.identityToken;
       if (credential.authorizationCode) {
-        AsyncStorage.setItem("authorizationCode", credential.authorizationCode);
+        await AsyncStorage.setItem(
+          "authorizationCode",
+          credential.authorizationCode
+        );
         console.log("서버로 인증 코드를 전송합니다 :::", idTokenVal);
         // 서버로 인증 코드 전송
         await fetchData(idTokenVal);
@@ -74,10 +77,9 @@ const AppleLogin = () => {
         await AsyncStorage.setItem("refresh_token", refresh_token);
         console.log("토큰:::", access_token);
 
-        // 사용자 정보 가져오기
+        // 사용자 정보 가져오기 및 SSE 연결
         await fetchUserProfile();
-        // sse 연결하기
-        await sseConnect();
+        // await sseConnect();
 
         if (response.data.data.isUserRegistered) {
           navigation.replace("MainScreen", { screen: "Spending" });
