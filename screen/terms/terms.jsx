@@ -28,6 +28,26 @@ const Terms = () => {
     }
   };
 
+  // event:SSE CONNECTED
+  // data:"SSE 연결"
+
+  // event:heartbeat
+  // data:"heartbeat message"
+
+  // event:heartbeat
+  // data:"heartbeat message"
+
+  // event:heartbeat
+  // data:"heartbeat message"
+
+  // event:heartbeat
+  // data:"heartbeat message"
+
+  // event:heartbeat
+  // data:"heartbeat message"
+
+  // {"status":400}
+
   useEffect(() => {
     console.log("test");
     sseConnect();
