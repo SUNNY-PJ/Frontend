@@ -11,11 +11,11 @@ sunny를 통해 소비를 줄이고 친구들과 소소한 재미를 느꼈으�
 <table>
   <tr>
     <td align="center">
+      <a href="https://github.com/yeoniii20">
       <img src="https://avatars.githubusercontent.com/yeoniii20" width="100px;" alt="Yeoniii20's profile picture"/>
+      </a>
       <br />
       <b>Yeoniii20</b>
-      <br />
-      <a href="https://github.com/yeoniii20">GitHub</a>
       <br />
       <sub>프론트엔드 개발자</sub>
       <br />
