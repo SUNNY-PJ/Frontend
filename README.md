@@ -21,7 +21,7 @@ sunny를 통해 소비를 줄이고 친구들과 소소한 재미를 느꼈으�
 | Framework |   ReactNative + Expo |
 | --- | --- |
 | Language |   Javascript |
-| 상태관리 |   Redux |
+| 상태관리 |   Zustand |
 | API |   REST API |
 | HTTP Client |   Axios |
 | API Document |   Swagger |
