@@ -6,6 +6,15 @@ sunny를 통해 소비를 줄이고 친구들과 소소한 재미를 느꼈으�
 <br/>
 <br/>
 
+## Frontend 팀원
+
+![Yeoniii20's profile picture](https://avatars.githubusercontent.com/yeoniii20)
+- **GitHub:** [yeoniii20](https://github.com/yeoniii20)
+
+
+<br/>
+<br/>
+
 ## Frontend 기술 스택
 
 이 프로젝트는 다음과 같은 기술 스택을 사용합니다:
