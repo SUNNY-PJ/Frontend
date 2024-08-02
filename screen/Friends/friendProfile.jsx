@@ -263,24 +263,10 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
         params: { chatRoomId: chatRoomId, friendsId: friendId },
       });
     } else {
-      // 새로운 채팅방 생성
-      createChatRoom();
-    }
-  };
-
-  const createChatRoom = () => {
-    if (client && client.connected) {
-      client.publish({
-        destination: "/pub/chat/message/users",
-        body: JSON.stringify({
-          users: [myId, friendId],
-          sendUserId: myId,
-          message: "새로운 채팅방이 생성되었습니다.",
-        }),
+      navigation.navigate("ChatScreen", {
+        screen: "ChatRoom3",
+        params: { friendsId: friendId },
       });
-      console.log(`Room creation message sent for users: ${friendId}`);
-    } else {
-      console.log("Client not connected");
     }
   };
 
