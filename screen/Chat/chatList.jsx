@@ -14,6 +14,7 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 import apiClient from "../../api/apiClient";
 import useStore from "../../store/store";
 import styles from "./chatList.styles";
+import { formatTime } from "../../utils/dateUtils";
 
 const ChatList = () => {
   const windowHeight = Dimensions.get("window").height;
@@ -28,9 +29,9 @@ const ChatList = () => {
       : text;
   };
 
-  const handleChatRoomClick = () => {
-    console.log("채팅방으로 이동합니다...11");
-    navigation.navigate("ChatScreen", { screen: "ChatRoom3" });
+  const handleChatRoomClick = (chatRoomId) => {
+    console.log(`채팅방으로 이동합니다... ID: ${chatRoomId}`);
+    navigation.navigate("ChatRoom3", { chatRoomId });
   };
 
   // 채팅방 리스트
@@ -70,6 +71,7 @@ const ChatList = () => {
 
       const chatData = response.data;
       console.log("채팅방 목록:::", chatData);
+      fetchData();
     } catch (error) {
       console.error("에러:", error);
     }
@@ -82,7 +84,6 @@ const ChatList = () => {
       [
         {
           text: "취소",
-          // onPress: () => console.log("수정을 취소했습니다."),
           style: "cancel",
         },
         {
@@ -111,15 +112,18 @@ const ChatList = () => {
         <Line color={"#C1C1C1"} h={1} />
         <ScrollView style={{ height: windowHeight - 125 - 88 }}>
           <>
-            {chatListData.map((item) => {
-              <Swipeable renderRightActions={renderRightActions}>
+            {chatListData.map((item) => (
+              <Swipeable
+                key={item.chatRoomId}
+                renderRightActions={() => renderRightActions(item.chatRoomId)}
+              >
                 <TouchableOpacity
                   activeOpacity={1}
                   style={styles.chatSection}
-                  onPress={handleChatRoomClick}
+                  onPress={() => handleChatRoomClick(item.chatRoomId)}
                 >
                   <View style={{ flexDirection: "row", gap: 13 }}>
-                    <Image source={item.profile} style={styles.icon} />
+                    <Image source={{ uri: item.profile }} style={styles.icon} />
                     <View>
                       <Text style={styles.userName}>{item.nickname}</Text>
                       <Text style={styles.msg}>
@@ -128,14 +132,14 @@ const ChatList = () => {
                     </View>
                   </View>
                   <View style={{ gap: 4 }}>
-                    <Text style={styles.time}>07:09</Text>
+                    <Text style={styles.time}>{formatTime(item.time)}</Text>
                     <View style={styles.cntBox}>
                       <Text style={styles.cnt}>{item.notReadCnt}</Text>
                     </View>
                   </View>
                 </TouchableOpacity>
-              </Swipeable>;
-            })}
+              </Swipeable>
+            ))}
           </>
           <Line color={"#C1C1C1"} h={1} />
         </ScrollView>
