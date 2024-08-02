@@ -31,6 +31,7 @@ export default styles = StyleSheet.create({
   icon: {
     width: 48,
     height: 48,
+    borderRadius: 50,
   },
   deleteBox: {
     backgroundColor: "#5C5C5C",
