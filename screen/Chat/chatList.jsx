@@ -57,7 +57,7 @@ const ChatList = () => {
 
   // 채팅방 삭제
   const deleteData = async (chatRoomId) => {
-    const inputURL = `/chat/${chatRoomId}`;
+    const inputURL = `/chat/room/${chatRoomId}`;
 
     try {
       const response = await apiClient.delete(inputURL, {
