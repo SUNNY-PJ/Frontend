@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -19,6 +19,7 @@ const ChatList = () => {
   const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();
   const profile = useStore((state) => state.profile);
+  const [chatListData, setChatListData] = useState([]);
 
   const truncateText = (text) => {
     const maxLength = 20;
@@ -45,6 +46,7 @@ const ChatList = () => {
       });
 
       const chatListData = response.data;
+      setChatListData(chatListData);
       console.log("채팅방 목록:::", chatListData);
     } catch (error) {
       console.error("에러:", error);
@@ -108,30 +110,33 @@ const ChatList = () => {
         <Text style={styles.title}>채팅 목록</Text>
         <Line color={"#C1C1C1"} h={1} />
         <ScrollView style={{ height: windowHeight - 125 - 88 }}>
-          <Swipeable renderRightActions={renderRightActions}>
-            <TouchableOpacity
-              activeOpacity={1}
-              style={styles.chatSection}
-              onPress={handleChatRoomClick}
-            >
-              <View style={{ flexDirection: "row", gap: 13 }}>
-                <Image
-                  source={require("../../assets/Avatar.png")}
-                  style={styles.icon}
-                />
-                <View>
-                  <Text style={styles.userName}>민지</Text>
-                  <Text style={styles.msg}>{truncateText("뭐하고 있니")}</Text>
-                </View>
-              </View>
-              <View style={{ gap: 4 }}>
-                <Text style={styles.time}>07:09</Text>
-                <View style={styles.cntBox}>
-                  <Text style={styles.cnt}>22</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          </Swipeable>
+          <>
+            {chatListData.map((item) => {
+              <Swipeable renderRightActions={renderRightActions}>
+                <TouchableOpacity
+                  activeOpacity={1}
+                  style={styles.chatSection}
+                  onPress={handleChatRoomClick}
+                >
+                  <View style={{ flexDirection: "row", gap: 13 }}>
+                    <Image source={item.profile} style={styles.icon} />
+                    <View>
+                      <Text style={styles.userName}>{item.nickname}</Text>
+                      <Text style={styles.msg}>
+                        {truncateText(item.message)}
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={{ gap: 4 }}>
+                    <Text style={styles.time}>07:09</Text>
+                    <View style={styles.cntBox}>
+                      <Text style={styles.cnt}>{item.notReadCnt}</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </Swipeable>;
+            })}
+          </>
           <Line color={"#C1C1C1"} h={1} />
         </ScrollView>
       </View>
