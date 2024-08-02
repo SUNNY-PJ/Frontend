@@ -16,21 +16,17 @@ import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { Client } from "@stomp/stompjs";
 import Line from "../../components/Line";
-import { DEV_SOCKET_URI, SOCKET_URI } from "../../api/common";
+import { DEV_SOCKET_URI } from "../../api/common";
 import styles from "./chatRoom3.styles";
 import useStore from "../../store/store";
-import { formatDate } from "../../utils/dateUtils";
+import { formatDate, formatTime } from "../../utils/dateUtils";
 
 const ChatRoom3 = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const scrollViewRef = useRef();
 
-  // 친구 아이디
   const { chatRoomId } = route.params;
-  console.log("채팅방 아이디 :::", chatRoomId);
-
-  // 본인 아이디
   const profile = useStore((state) => state.profile);
   const myId = profile.id;
 
@@ -50,19 +46,10 @@ const ChatRoom3 = () => {
       });
 
       const chatData = response.data;
-      console.log("대화 내용 >>>", chatData);
-
       const updatedChatData = chatData.flatMap((group) => {
         const formattedDate = formatDate(group.createDate);
-        console.log("날짜 >>>", formattedDate);
         return group.messages.map((message) => ({
           ...message,
-          id: message.id,
-          userId: message.userId,
-          message: message.message,
-          nickname: message.nickname,
-          profile: message.profile,
-          time: message.time,
           isMine: message.userId === myId,
           formattedDate,
         }));
@@ -71,7 +58,7 @@ const ChatRoom3 = () => {
       setReceivedMessages(updatedChatData);
       scrollToEnd();
     } catch (error) {
-      console.error("에러:", error);
+      console.error("Error fetching chat data:", error);
     }
   };
 
@@ -79,65 +66,55 @@ const ChatRoom3 = () => {
     fetchData();
   }, [chatRoomId]);
 
-  // 소캣 연결
+  // 소켓 연결
   useEffect(() => {
     const initializeWebSocket = async () => {
       const token = await AsyncStorage.getItem("access_token");
 
-      const client = new Client({
+      const newClient = new Client({
         brokerURL: `ws://${DEV_SOCKET_URI}/stomp`,
         connectHeaders: {
           Authorization: `Bearer ${token}`,
         },
-        debug: (str) => {
-          console.log(new Date(), str);
-        },
+        debug: (str) => console.log("WebSocket debug:", str),
         reconnectDelay: 5000,
         onConnect: () => {
           console.log("Connected to the server");
           if (chatRoomId) {
-            client.subscribe(`/sub/room/${chatRoomId}`, (message) => {
-              console.log("Received message:", message);
+            newClient.subscribe(`/sub/room/${chatRoomId}`, (message) => {
               try {
                 const parsedMessage = JSON.parse(message.body);
-                console.log("Parsed message:", parsedMessage);
-                const formattedDate = formatDate(
-                  new Date().toISOString().split("T")[0]
-                );
                 setReceivedMessages((prevMessages) => [
                   ...prevMessages,
                   {
-                    id: parsedMessage.id,
-                    message: parsedMessage.message,
-                    userId: parsedMessage.userId,
-                    nickname: parsedMessage.nickname,
-                    profile: parsedMessage.profile,
-                    time: parsedMessage.time,
+                    ...parsedMessage,
                     isMine: parsedMessage.userId === myId,
-                    formattedDate,
+                    formattedDate: formatDate(
+                      new Date().toISOString().split("T")[0]
+                    ),
                   },
                 ]);
-                console.log("Updated received messages:", receivedMessages);
+                scrollToEnd();
               } catch (error) {
-                console.error("Failed to parse message body:", message.body);
+                console.error("Failed to parse message:", message.body);
               }
             });
           }
         },
         onStompError: (frame) => {
-          console.error("STOMP error", frame.headers["message"]);
-          console.error("Additional details: " + frame.body);
+          console.error("STOMP error:", frame.headers["message"]);
+          console.error("Additional details:", frame.body);
         },
         onWebSocketError: (evt) => {
-          console.error("WebSocket error", evt);
+          console.error("WebSocket error:", evt);
         },
         onWebSocketClose: (evt) => {
-          console.log("WebSocket closed", evt);
+          console.log("WebSocket closed:", evt);
         },
       });
 
-      client.activate();
-      setClient(client);
+      newClient.activate();
+      setClient(newClient);
     };
 
     initializeWebSocket();
@@ -148,27 +125,6 @@ const ChatRoom3 = () => {
       }
     };
   }, [chatRoomId]);
-
-  // 이건 친구 프로필에서 채팅방 유무 확인하고 진행되어야하는 로직
-  // const createRoom = () => {
-  //   if (client && client.connected) {
-  //     client.publish({
-  //       destination: "/pub/chat/message/users",
-  //       body: JSON.stringify({
-  //         users: friendsId,
-  //         sendUserId: myId,
-  //         message: "새로운 채팅방이 생성되었습니다.",
-  //       }),
-  //     });
-  //     console.log(`Room creation message sent for users: ${friendsId}`);
-  //   } else {
-  //     console.log("Client not connected");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   createRoom();
-  // }, [client]);
 
   const sendMessage = () => {
     if (client && client.connected && chatRoomId) {
@@ -259,7 +215,9 @@ const ChatRoom3 = () => {
                       <View style={styles.message}>
                         <Text style={styles.msgText}>{message.message}</Text>
                       </View>
-                      <Text style={[styles.time]}>{message.time}</Text>
+                      <Text style={[styles.time]}>
+                        {formatTime(message.time)}
+                      </Text>
                     </View>
                   </View>
                 ) : (
@@ -287,7 +245,7 @@ const ChatRoom3 = () => {
                           { marginLeft: 8, bottom: 18, left: 45 },
                         ]}
                       >
-                        {message.time}
+                        {formatTime(message.time)}
                       </Text>
                     </View>
                   </View>
