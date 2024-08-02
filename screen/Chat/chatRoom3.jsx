@@ -26,17 +26,18 @@ const ChatRoom3 = () => {
   const route = useRoute();
   const scrollViewRef = useRef();
 
-  const { chatRoomId } = route.params;
+  const { chatRoomId, friendsId } = route.params;
   const profile = useStore((state) => state.profile);
   const myId = profile.id;
 
   const [client, setClient] = useState(null);
   const [currentMessage, setCurrentMessage] = useState("");
   const [receivedMessages, setReceivedMessages] = useState([]);
+  const [roomId, setRoomId] = useState(chatRoomId);
 
   // 대화 내용 조회
   const fetchData = async () => {
-    const inputURL = `/chat/${chatRoomId}`;
+    const inputURL = `/chat/${roomId}`;
     try {
       const response = await apiClient.get(inputURL, {
         headers: {
@@ -62,76 +63,100 @@ const ChatRoom3 = () => {
     }
   };
 
+  // 새로운 채팅방 생성
+  const createChatRoom = async () => {
+    const inputURL = `/chat/room`;
+    try {
+      const response = await apiClient.post(inputURL, {
+        users: [myId, friendsId],
+        sendUserId: myId,
+        message: currentMessage,
+      });
+
+      setRoomId(response.data.chatRoomId);
+      setReceivedMessages([
+        {
+          message: currentMessage,
+          isMine: true,
+          formattedDate: formatDate(new Date().toISOString().split("T")[0]),
+        },
+      ]);
+      scrollToEnd();
+      initializeWebSocket(response.data.chatRoomId);
+    } catch (error) {
+      console.error("Error creating chat room:", error);
+    }
+  };
+
   useEffect(() => {
-    fetchData();
+    // 채팅방id가 있을 경우
+    if (chatRoomId) {
+      // 기존 데이터 세팅 후 소켓 연결
+      fetchData();
+      initializeWebSocket(chatRoomId);
+    } else {
+      // 없을 경우 채팅방 생성
+      createChatRoom();
+    }
   }, [chatRoomId]);
 
   // 소켓 연결
-  useEffect(() => {
-    const initializeWebSocket = async () => {
-      const token = await AsyncStorage.getItem("access_token");
+  const initializeWebSocket = async (chatRoomId) => {
+    const token = await AsyncStorage.getItem("access_token");
 
-      const newClient = new Client({
-        brokerURL: `ws://${DEV_SOCKET_URI}/stomp`,
-        connectHeaders: {
-          Authorization: `Bearer ${token}`,
-        },
-        debug: (str) => console.log("WebSocket debug:", str),
-        reconnectDelay: 5000,
-        onConnect: () => {
-          console.log("Connected to the server");
-          if (chatRoomId) {
-            newClient.subscribe(`/sub/room/${chatRoomId}`, (message) => {
-              try {
-                const parsedMessage = JSON.parse(message.body);
-                setReceivedMessages((prevMessages) => [
-                  ...prevMessages,
-                  {
-                    ...parsedMessage,
-                    isMine: parsedMessage.userId === myId,
-                    formattedDate: formatDate(
-                      new Date().toISOString().split("T")[0]
-                    ),
-                  },
-                ]);
-                scrollToEnd();
-              } catch (error) {
-                console.error("Failed to parse message:", message.body);
-              }
-            });
-          }
-        },
-        onStompError: (frame) => {
-          console.error("STOMP error:", frame.headers["message"]);
-          console.error("Additional details:", frame.body);
-        },
-        onWebSocketError: (evt) => {
-          console.error("WebSocket error:", evt);
-        },
-        onWebSocketClose: (evt) => {
-          console.log("WebSocket closed:", evt);
-        },
-      });
+    const newClient = new Client({
+      brokerURL: `ws://${DEV_SOCKET_URI}/stomp`,
+      connectHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+      debug: (str) => console.log("WebSocket debug:", str),
+      reconnectDelay: 5000,
+      onConnect: () => {
+        console.log("Connected to the server");
+        if (chatRoomId) {
+          newClient.subscribe(`/sub/room/${chatRoomId}`, (message) => {
+            try {
+              const parsedMessage = JSON.parse(message.body);
+              setReceivedMessages((prevMessages) => [
+                ...prevMessages,
+                {
+                  ...parsedMessage,
+                  isMine: parsedMessage.userId === myId,
+                  formattedDate: formatDate(
+                    new Date().toISOString().split("T")[0]
+                  ),
+                },
+              ]);
+              scrollToEnd();
+            } catch (error) {
+              console.error("Failed to parse message:", message.body);
+            }
+          });
+        }
+      },
+      onStompError: (frame) => {
+        console.error("STOMP error:", frame.headers["message"]);
+        console.error("Additional details:", frame.body);
+      },
+      onWebSocketError: (evt) => {
+        console.error("WebSocket error:", evt);
+      },
+      onWebSocketClose: (evt) => {
+        console.log("WebSocket closed:", evt);
+      },
+    });
 
-      newClient.activate();
-      setClient(newClient);
-    };
+    newClient.activate();
+    setClient(newClient);
+  };
 
-    initializeWebSocket();
-
-    return () => {
-      if (client) {
-        client.deactivate();
-      }
-    };
-  }, [chatRoomId]);
-
+  // 메세지 전송
   const sendMessage = () => {
-    if (client && client.connected && chatRoomId) {
+    if (client && client.connected && roomId) {
       client.publish({
         destination: "/pub/chat/message/room",
         body: JSON.stringify({
-          roomId: chatRoomId,
+          roomId: roomId,
           sendUserId: myId,
           message: currentMessage,
         }),
@@ -145,6 +170,10 @@ const ChatRoom3 = () => {
   };
 
   const handleChatList = () => {
+    // 소켓 연결 끊음
+    if (client) {
+      client.deactivate();
+    }
     navigation.navigate("MainScreen", { screen: "ChatList" });
   };
 
