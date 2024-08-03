@@ -27,6 +27,10 @@ const ChatRoom3 = () => {
   const scrollViewRef = useRef();
 
   const { chatRoomId, friendsId, friendsName } = route.params;
+  console.log("채팅방 아이디 >>", chatRoomId);
+  console.log("친구 아이디 >>", friendsId);
+  console.log("친구 이름 >>", friendsName);
+
   const profile = useStore((state) => state.profile);
   const myId = profile.id;
 
@@ -177,6 +181,7 @@ const ChatRoom3 = () => {
     navigation.navigate("MainScreen", { screen: "ChatList" });
   };
 
+  // 스크롤 마지막으로 이동
   const scrollToEnd = () => {
     setTimeout(() => {
       scrollViewRef.current?.scrollToEnd({ animated: true });
