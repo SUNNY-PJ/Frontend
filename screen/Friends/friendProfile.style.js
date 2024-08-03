@@ -89,4 +89,10 @@ export const styles = StyleSheet.create({
     marginBottom: 6,
   },
   closeBtn: { width: 14, height: 14 },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 16,
+    marginTop: 24,
+  },
 });
