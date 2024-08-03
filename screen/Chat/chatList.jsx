@@ -20,6 +20,7 @@ const ChatList = () => {
   const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();
   const profile = useStore((state) => state.profile);
+  const myId = profile.id;
   const [chatListData, setChatListData] = useState([]);
 
   const truncateText = (text) => {
@@ -31,7 +32,10 @@ const ChatList = () => {
 
   const handleChatRoomClick = (chatRoomId) => {
     console.log(`채팅방으로 이동합니다... ID: ${chatRoomId}`);
-    navigation.navigate("ChatRoom3", { chatRoomId });
+    navigation.navigate("ChatScreen", {
+      screen: "ChatRoom3",
+      params: { chatRoomId: chatRoomId },
+    });
   };
 
   // 채팅방 리스트
@@ -43,7 +47,7 @@ const ChatList = () => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
-        params: { userId: profile.id },
+        params: { userId: myId },
       });
 
       const chatListData = response.data;
@@ -67,8 +71,9 @@ const ChatList = () => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
+        params: { userId: myId },
       });
-
+      Alert.alert("삭제 되었습니다.");
       const chatData = response.data;
       console.log("채팅방 목록:::", chatData);
       fetchData();
