@@ -265,7 +265,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
     } else {
       navigation.navigate("ChatScreen", {
         screen: "ChatRoom3",
-        params: { friendsId: friendId },
+        params: { friendsId: friendId, friendsName: friendName },
       });
     }
   };
