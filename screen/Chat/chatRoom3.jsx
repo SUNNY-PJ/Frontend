@@ -57,6 +57,7 @@ const ChatRoom3 = () => {
           ...message,
           isMine: message.userId === myId,
           formattedDate,
+          formattedTime: formatTime(`2024-08-04T${message.time}:00`), // Ensure time is in proper ISO format
         }));
       });
 
@@ -83,6 +84,7 @@ const ChatRoom3 = () => {
           message: currentMessage,
           isMine: true,
           formattedDate: formatDate(new Date().toISOString().split("T")[0]),
+          formattedTime: formatTime(new Date().toISOString()), // Ensure time is properly formatted
         },
       ]);
       scrollToEnd();
@@ -111,7 +113,8 @@ const ChatRoom3 = () => {
     const newClient = new Client({
       brokerURL: `ws://${DEV_SOCKET_URI}/stomp`,
       connectHeaders: {
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
+        Authorization: myId,
       },
       debug: (str) => console.log("WebSocket debug:", str),
       reconnectDelay: 5000,
@@ -129,6 +132,7 @@ const ChatRoom3 = () => {
                   formattedDate: formatDate(
                     new Date().toISOString().split("T")[0]
                   ),
+                  formattedTime: formatTime(new Date().toISOString()),
                 },
               ]);
               scrollToEnd();
@@ -277,7 +281,7 @@ const ChatRoom3 = () => {
                           { marginLeft: 8, bottom: 18, left: 45 },
                         ]}
                       >
-                        {formatTime(message.time)}
+                        {message.formattedTime}
                       </Text>
                     </View>
                   </View>
