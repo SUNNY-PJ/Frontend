@@ -110,9 +110,9 @@ const ChatList = () => {
       <View style={styles.section}>
         <Text style={styles.title}>채팅 목록</Text>
         <Line color={"#C1C1C1"} h={1} />
-        <ScrollView style={{ height: windowHeight - 125 - 88 }}>
-          <>
-            {chatListData.map((item) => (
+        <ScrollView style={{ height: windowHeight - 275 }}>
+          {chatListData.map((item) => (
+            <>
               <Swipeable
                 key={item.chatRoomId}
                 renderRightActions={() => renderRightActions(item.chatRoomId)}
@@ -139,9 +139,9 @@ const ChatList = () => {
                   </View>
                 </TouchableOpacity>
               </Swipeable>
-            ))}
-          </>
-          <Line color={"#C1C1C1"} h={1} />
+              <Line color={"#C1C1C1"} h={1} />
+            </>
+          ))}
         </ScrollView>
       </View>
     </View>

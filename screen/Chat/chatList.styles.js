@@ -71,6 +71,7 @@ export default styles = StyleSheet.create({
     borderColor: "#6ADCA3",
     backgroundColor: "#6ADCA3",
     marginLeft: 4,
+    marginTop: 5,
   },
   cnt: {
     fontSize: 10,
