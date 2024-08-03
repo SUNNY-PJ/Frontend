@@ -246,12 +246,10 @@ const ChatRoom3 = () => {
                 {message.isMine ? (
                   <View style={{ alignItems: "flex-end" }}>
                     <View style={{ flexDirection: "row", gap: 5 }}>
+                      <Text style={[styles.time]}>{message.formattedTime}</Text>
                       <View style={styles.message}>
                         <Text style={styles.msgText}>{message.message}</Text>
                       </View>
-                      <Text style={[styles.time]}>
-                        {formatTime(message.time)}
-                      </Text>
                     </View>
                   </View>
                 ) : (
