@@ -9,7 +9,6 @@ import {
   Alert,
 } from "react-native";
 import { styles } from "./friendProfile.style";
-import { Client } from "@stomp/stompjs";
 import FriendWrite from "./friendWrite";
 import FriendComment from "./friendComment";
 import apiClient from "../../api/apiClient";
@@ -17,8 +16,6 @@ import MsgModal from "../../components/Modal/msg/msgModal";
 import ProfileButton from "../../components/Profile/button";
 import ProfileTab from "../../components/Profile/tab";
 import useStore from "../../store/store";
-import { DEV_SOCKET_URI } from "../../api/common";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   const navigation = useNavigation();
@@ -41,46 +38,6 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
       fetchData();
     }
   }, [userId]);
-
-  // 소켓 초기화
-  useEffect(() => {
-    const initializeWebSocket = async () => {
-      const client = new Client({
-        brokerURL: `ws://${DEV_SOCKET_URI}/stomp`,
-        connectHeaders: {
-          Authorization: `Bearer ${await AsyncStorage.getItem("access_token")}`,
-        },
-        debug: (str) => {
-          console.log(new Date(), str);
-        },
-        reconnectDelay: 5000,
-        onConnect: () => {
-          console.log("Connected to the server");
-        },
-        onStompError: (frame) => {
-          console.error("STOMP error", frame.headers["message"]);
-          console.error("Additional details: " + frame.body);
-        },
-        onWebSocketError: (evt) => {
-          console.error("WebSocket error", evt);
-        },
-        onWebSocketClose: (evt) => {
-          console.log("WebSocket closed", evt);
-        },
-      });
-
-      client.activate();
-      setClient(client);
-
-      return () => {
-        if (client) {
-          client.deactivate();
-        }
-      };
-    };
-
-    initializeWebSocket();
-  }, []);
 
   // 프로필 조회
   const fetchData = async () => {
