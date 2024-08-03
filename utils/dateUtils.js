@@ -22,5 +22,5 @@ export const formatTime = (timeString) => {
   if (!timeString) return "";
 
   const date = new Date(timeString);
-  return format(date, "HH시 mm분", { locale: ko });
+  return format(date, "HH:mm", { locale: ko });
 };
