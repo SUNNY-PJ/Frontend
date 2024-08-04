@@ -47,7 +47,7 @@ const ChatRoom3 = () => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
-        params: { userId: myId },
+        // params: { userId: myId },
       });
 
       const chatData = response.data;
@@ -57,7 +57,7 @@ const ChatRoom3 = () => {
           ...message,
           isMine: message.userId === myId,
           formattedDate,
-          formattedTime: formatTime(`2024-08-04T${message.time}:00`), // Ensure time is in proper ISO format
+          formattedTime: formatTime(`2024-08-04T${message.time}:00`),
         }));
       });
 
@@ -108,54 +108,60 @@ const ChatRoom3 = () => {
 
   // 소켓 연결
   const initializeWebSocket = async (chatRoomId) => {
-    const token = await AsyncStorage.getItem("access_token");
+    try {
+      const token = await AsyncStorage.getItem("access_token");
+      if (!token) {
+        throw new Error("No access token found");
+      }
 
-    const newClient = new Client({
-      brokerURL: `ws://${DEV_SOCKET_URI}/stomp`,
-      connectHeaders: {
-        // Authorization: `Bearer ${token}`,
-        Authorization: myId,
-      },
-      debug: (str) => console.log("WebSocket debug:", str),
-      reconnectDelay: 5000,
-      onConnect: () => {
-        console.log("Connected to the server");
-        if (chatRoomId) {
-          newClient.subscribe(`/sub/room/${chatRoomId}`, (message) => {
-            try {
-              const parsedMessage = JSON.parse(message.body);
-              setReceivedMessages((prevMessages) => [
-                ...prevMessages,
-                {
-                  ...parsedMessage,
-                  isMine: parsedMessage.userId === myId,
-                  formattedDate: formatDate(
-                    new Date().toISOString().split("T")[0]
-                  ),
-                  formattedTime: formatTime(new Date().toISOString()),
-                },
-              ]);
-              scrollToEnd();
-            } catch (error) {
-              console.error("Failed to parse message:", message.body);
-            }
-          });
-        }
-      },
-      onStompError: (frame) => {
-        console.error("STOMP error:", frame.headers["message"]);
-        console.error("Additional details:", frame.body);
-      },
-      onWebSocketError: (evt) => {
-        console.error("WebSocket error:", evt);
-      },
-      onWebSocketClose: (evt) => {
-        console.log("WebSocket closed:", evt);
-      },
-    });
+      const newClient = new Client({
+        brokerURL: `ws://${DEV_SOCKET_URI}/stomp`,
+        connectHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+        debug: (str) => console.log("WebSocket debug:", str),
+        reconnectDelay: 5000,
+        onConnect: () => {
+          console.log("Connected to the server");
+          if (chatRoomId) {
+            newClient.subscribe(`/sub/room/${chatRoomId}`, (message) => {
+              try {
+                const parsedMessage = JSON.parse(message.body);
+                setReceivedMessages((prevMessages) => [
+                  ...prevMessages,
+                  {
+                    ...parsedMessage,
+                    isMine: parsedMessage.userId === myId,
+                    formattedDate: formatDate(
+                      new Date().toISOString().split("T")[0]
+                    ),
+                    formattedTime: formatTime(new Date().toISOString()),
+                  },
+                ]);
+                scrollToEnd();
+              } catch (error) {
+                console.error("Failed to parse message:", message.body);
+              }
+            });
+          }
+        },
+        onStompError: (frame) => {
+          console.error("STOMP error:", frame.headers["message"]);
+          console.error("Additional details:", frame.body);
+        },
+        onWebSocketError: (evt) => {
+          console.error("WebSocket error:", evt);
+        },
+        onWebSocketClose: (evt) => {
+          console.log("WebSocket closed:", evt);
+        },
+      });
 
-    newClient.activate();
-    setClient(newClient);
+      newClient.activate();
+      setClient(newClient);
+    } catch (error) {
+      console.error("Error initializing WebSocket:", error);
+    }
   };
 
   // 메세지 전송
