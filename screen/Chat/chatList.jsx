@@ -47,7 +47,7 @@ const ChatList = () => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
-        params: { userId: myId },
+        // params: { userId: myId },
       });
 
       const chatListData = response.data;
@@ -71,7 +71,7 @@ const ChatList = () => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
-        params: { userId: myId },
+        // params: { userId: myId },
       });
       Alert.alert("삭제 되었습니다.");
       const chatData = response.data;
@@ -116,10 +116,10 @@ const ChatList = () => {
         <Text style={styles.title}>채팅 목록</Text>
         <Line color={"#C1C1C1"} h={1} />
         <ScrollView style={{ height: windowHeight - 275 }}>
-          {chatListData.map((item) => (
+          {chatListData.map((item, index) => (
             <>
               <Swipeable
-                key={item.chatRoomId}
+                key={index}
                 renderRightActions={() => renderRightActions(item.chatRoomId)}
               >
                 <TouchableOpacity
