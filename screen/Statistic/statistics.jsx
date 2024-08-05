@@ -125,7 +125,7 @@ const Statistics = ({ year, month }) => {
   useEffect(() => {
     setSelectedCategory(null);
     fetchData();
-    fetchCategoryData();
+    // fetchCategoryData();
   }, [year, month, noData]);
 
   const isFocused = useIsFocused();
@@ -133,7 +133,7 @@ const Statistics = ({ year, month }) => {
   useEffect(() => {
     if (isFocused) {
       fetchData();
-      fetchCategoryData();
+      // fetchCategoryData();
     }
   }, [isFocused]);
 

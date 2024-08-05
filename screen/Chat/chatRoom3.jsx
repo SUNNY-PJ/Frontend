@@ -16,43 +16,30 @@ import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
 import { Client } from "@stomp/stompjs";
 import Line from "../../components/Line";
-import { DEV_SOCKET_URI, SOCKET_URI } from "../../api/common";
+import { DEV_SOCKET_URI } from "../../api/common";
 import styles from "./chatRoom3.styles";
 import useStore from "../../store/store";
+import { formatDate, formatTime } from "../../utils/dateUtils";
 
 const ChatRoom3 = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { friendsId } = route.params;
-  console.log("친구 아이디다 :::", friendsId);
+  const scrollViewRef = useRef();
+
+  const { chatRoomId, friendsId, friendsName } = route.params;
+  console.log("채팅방 아이디 >>", chatRoomId);
+  console.log("친구 아이디 >>", friendsId);
+  console.log("친구 이름 >>", friendsName);
+
   const profile = useStore((state) => state.profile);
+  const myId = profile.id;
+
   const [client, setClient] = useState(null);
   const [currentMessage, setCurrentMessage] = useState("");
   const [receivedMessages, setReceivedMessages] = useState([]);
-  const [accessToken, setAccessToken] = useState("");
-  const [roomId, setRoomId] = useState(2);
-  const [userIds, setUserIds] = useState(1);
-  const sendUserId = profile.id;
-  const scrollViewRef = useRef();
-  const myId = profile.id;
+  const [roomId, setRoomId] = useState(chatRoomId);
 
-  const formatDate = (dateString) => {
-    if (!dateString) return "";
-
-    const dateParts = dateString.split("-");
-    if (dateParts.length !== 3) return dateString;
-
-    const isoDateString = `${dateParts[0]}-${dateParts[1]}-${dateParts[2]}T00:00:00Z`;
-    const date = new Date(isoDateString);
-    const formattedDate = new Intl.DateTimeFormat("ko-KR", {
-      month: "2-digit",
-      day: "2-digit",
-    }).format(date);
-
-    const [month, day] = formattedDate.split(".");
-    return `${month}월 ${day}일`;
-  };
-
+  // 대화 내용 조회
   const fetchData = async () => {
     const inputURL = `/chat/${roomId}`;
     try {
@@ -60,127 +47,131 @@ const ChatRoom3 = () => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
+        // params: { userId: myId },
       });
 
       const chatData = response.data;
-      console.log("대화 내용 :::", chatData);
-
       const updatedChatData = chatData.flatMap((group) => {
         const formattedDate = formatDate(group.createDate);
         return group.messages.map((message) => ({
           ...message,
           isMine: message.userId === myId,
           formattedDate,
+          formattedTime: formatTime(`2024-08-04T${message.time}:00`),
         }));
       });
 
       setReceivedMessages(updatedChatData);
       scrollToEnd();
     } catch (error) {
-      console.error("에러:", error);
+      console.error("Error fetching chat data:", error);
+    }
+  };
+
+  // 새로운 채팅방 생성
+  const createChatRoom = async () => {
+    const inputURL = `/chat/room`;
+    try {
+      const response = await apiClient.post(inputURL, {
+        users: [myId, friendsId],
+        sendUserId: myId,
+        message: currentMessage,
+      });
+
+      setRoomId(response.data.chatRoomId);
+      setReceivedMessages([
+        {
+          message: currentMessage,
+          isMine: true,
+          formattedDate: formatDate(new Date().toISOString().split("T")[0]),
+          formattedTime: formatTime(new Date().toISOString()), // Ensure time is properly formatted
+        },
+      ]);
+      scrollToEnd();
+      initializeWebSocket(response.data.chatRoomId);
+    } catch (error) {
+      console.error("Error creating chat room:", error);
     }
   };
 
   useEffect(() => {
-    fetchData();
-  }, [roomId]);
+    // 채팅방id가 있을 경우
+    if (chatRoomId) {
+      // 기존 데이터 세팅 후 소켓 연결
+      fetchData();
+      initializeWebSocket(chatRoomId);
+    } else {
+      // 없을 경우 채팅방 생성
+      createChatRoom();
+    }
+  }, [chatRoomId]);
 
-  useEffect(() => {
-    const initializeWebSocket = async () => {
+  // 소켓 연결
+  const initializeWebSocket = async (chatRoomId) => {
+    try {
       const token = await AsyncStorage.getItem("access_token");
-      setAccessToken(token);
+      if (!token) {
+        throw new Error("No access token found");
+      }
 
-      const client = new Client({
+      const newClient = new Client({
         brokerURL: `ws://${DEV_SOCKET_URI}/stomp`,
         connectHeaders: {
           Authorization: `Bearer ${token}`,
         },
-        debug: (str) => {
-          console.log(new Date(), str);
-        },
+        debug: (str) => console.log("WebSocket debug:", str),
         reconnectDelay: 5000,
         onConnect: () => {
           console.log("Connected to the server");
-          if (roomId) {
-            client.subscribe(`/sub/room/${roomId}`, (message) => {
-              console.log("Received message:", message);
+          if (chatRoomId) {
+            newClient.subscribe(`/sub/room/${chatRoomId}`, (message) => {
               try {
                 const parsedMessage = JSON.parse(message.body);
-                console.log("Parsed message:", parsedMessage);
-                const formattedDate = formatDate(
-                  new Date().toISOString().split("T")[0]
-                );
                 setReceivedMessages((prevMessages) => [
                   ...prevMessages,
                   {
-                    id: parsedMessage.id,
-                    message: parsedMessage.message,
-                    userId: parsedMessage.userId,
-                    nickname: parsedMessage.nickname,
-                    time: parsedMessage.time,
+                    ...parsedMessage,
                     isMine: parsedMessage.userId === myId,
-                    formattedDate,
+                    formattedDate: formatDate(
+                      new Date().toISOString().split("T")[0]
+                    ),
+                    formattedTime: formatTime(new Date().toISOString()),
                   },
                 ]);
-                console.log("Updated received messages:", receivedMessages);
+                scrollToEnd();
               } catch (error) {
-                console.error("Failed to parse message body:", message.body);
+                console.error("Failed to parse message:", message.body);
               }
             });
           }
         },
         onStompError: (frame) => {
-          console.error("STOMP error", frame.headers["message"]);
-          console.error("Additional details: " + frame.body);
+          console.error("STOMP error:", frame.headers["message"]);
+          console.error("Additional details:", frame.body);
         },
         onWebSocketError: (evt) => {
-          console.error("WebSocket error", evt);
+          console.error("WebSocket error:", evt);
         },
         onWebSocketClose: (evt) => {
-          console.log("WebSocket closed", evt);
+          console.log("WebSocket closed:", evt);
         },
       });
 
-      client.activate();
-      setClient(client);
-    };
-
-    initializeWebSocket();
-
-    return () => {
-      if (client) {
-        client.deactivate();
-      }
-    };
-  }, [roomId]);
-
-  const createRoom = () => {
-    if (client && client.connected) {
-      client.publish({
-        destination: "/pub/chat/message/users",
-        body: JSON.stringify({
-          users: userIds,
-          sendUserId: sendUserId,
-          message: "새로운 채팅방이 생성되었습니다.",
-        }),
-      });
-      console.log(`Room creation message sent for users: ${userIds}`);
-    } else {
-      console.log("Client not connected");
+      newClient.activate();
+      setClient(newClient);
+    } catch (error) {
+      console.error("Error initializing WebSocket:", error);
     }
   };
 
-  useEffect(() => {
-    createRoom();
-  }, [client]);
-
+  // 메세지 전송
   const sendMessage = () => {
     if (client && client.connected && roomId) {
       client.publish({
         destination: "/pub/chat/message/room",
         body: JSON.stringify({
           roomId: roomId,
-          sendUserId: sendUserId,
+          sendUserId: myId,
           message: currentMessage,
         }),
       });
@@ -188,14 +179,19 @@ const ChatRoom3 = () => {
       setCurrentMessage("");
       scrollToEnd();
     } else {
-      console.log("Client not connected or roomId not set");
+      console.log("Client not connected or chatRoomId not set");
     }
   };
 
   const handleChatList = () => {
+    // 소켓 연결 끊음
+    if (client) {
+      client.deactivate();
+    }
     navigation.navigate("MainScreen", { screen: "ChatList" });
   };
 
+  // 스크롤 마지막으로 이동
   const scrollToEnd = () => {
     setTimeout(() => {
       scrollViewRef.current?.scrollToEnd({ animated: true });
@@ -260,10 +256,10 @@ const ChatRoom3 = () => {
                 {message.isMine ? (
                   <View style={{ alignItems: "flex-end" }}>
                     <View style={{ flexDirection: "row", gap: 5 }}>
+                      <Text style={[styles.time]}>{message.formattedTime}</Text>
                       <View style={styles.message}>
                         <Text style={styles.msgText}>{message.message}</Text>
                       </View>
-                      <Text style={[styles.time]}>{message.time}</Text>
                     </View>
                   </View>
                 ) : (
@@ -271,7 +267,7 @@ const ChatRoom3 = () => {
                     {showProfileAndName && (
                       <View style={styles.friendMessageContainer}>
                         <Image
-                          source={require("../../assets/Avatar.png")}
+                          source={{ uri: message.profile }}
                           style={styles.avatar}
                         />
                         <Text style={styles.friendsName}>
@@ -291,7 +287,7 @@ const ChatRoom3 = () => {
                           { marginLeft: 8, bottom: 18, left: 45 },
                         ]}
                       >
-                        {message.time}
+                        {message.formattedTime}
                       </Text>
                     </View>
                   </View>

@@ -66,6 +66,7 @@ export default StyleSheet.create({
   time: {
     fontSize: 10,
     fontWeight: 500,
+    fontFamily: "SUITE_Medium",
     color: "#C1C1C1",
     alignSelf: "flex-end",
   },
