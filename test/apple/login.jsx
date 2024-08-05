@@ -23,7 +23,10 @@ const AppleLogin = () => {
       });
       const idTokenVal = credential.identityToken;
       if (credential.authorizationCode) {
-        AsyncStorage.setItem("authorizationCode", credential.authorizationCode);
+        await AsyncStorage.setItem(
+          "authorizationCode",
+          credential.authorizationCode
+        );
         console.log("서버로 인증 코드를 전송합니다 :::", idTokenVal);
         // 서버로 인증 코드 전송
         await fetchData(idTokenVal);
@@ -74,8 +77,9 @@ const AppleLogin = () => {
         await AsyncStorage.setItem("refresh_token", refresh_token);
         console.log("토큰:::", access_token);
 
-        // 사용자 정보 가져오기
+        // 사용자 정보 가져오기 및 SSE 연결
         await fetchUserProfile();
+        // await sseConnect();
 
         if (response.data.data.isUserRegistered) {
           navigation.replace("MainScreen", { screen: "Spending" });
@@ -132,6 +136,22 @@ const AppleLogin = () => {
     } catch (error) {
       Sentry.captureException(error);
       console.error("Error fetching user profile:", error);
+    }
+  };
+
+  // sse connect
+  const sseConnect = async () => {
+    const accessToken = await AsyncStorage.getItem("access_token");
+    try {
+      const response = await axios.get(`${url}/api/sse/subscribe`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        params: {},
+      });
+      console.log("sse connect test ::: 연결합니다....", response.data);
+    } catch (error) {
+      console.error("sse 에러:", error);
     }
   };
 
