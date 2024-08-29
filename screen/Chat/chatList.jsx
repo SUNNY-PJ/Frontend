@@ -138,9 +138,11 @@ const ChatList = () => {
                   </View>
                   <View style={{ gap: 4 }}>
                     <Text style={styles.time}>{formatTime(item.time)}</Text>
-                    <View style={styles.cntBox}>
-                      <Text style={styles.cnt}>{item.notReadCnt}</Text>
-                    </View>
+                    {item.notReadCnt !== 0 && (
+                      <View style={styles.cntBox}>
+                        <Text style={styles.cnt}>{item.notReadCnt}</Text>
+                      </View>
+                    )}
                   </View>
                 </TouchableOpacity>
               </Swipeable>
