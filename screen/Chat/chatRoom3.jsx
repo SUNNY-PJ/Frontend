@@ -20,6 +20,7 @@ import { DEV_SOCKET_URI } from "../../api/common";
 import styles from "./chatRoom3.styles";
 import useStore from "../../store/store";
 import { formatDate, formatTime } from "../../utils/dateUtils";
+import FriendProfile from "../Friends/friendProfile";
 
 const ChatRoom3 = () => {
   const navigation = useNavigation();
@@ -38,6 +39,17 @@ const ChatRoom3 = () => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [receivedMessages, setReceivedMessages] = useState([]);
   const [roomId, setRoomId] = useState(chatRoomId);
+  const [isOpenProfile, setIsOpenProfile] = useState(false);
+  const [friendId, setFriendId] = useState("");
+
+  const handleProfileClick = (id) => {
+    setFriendId(id);
+    openProfile();
+  };
+
+  const openProfile = () => {
+    setIsOpenProfile(!isOpenProfile);
+  };
 
   // 대화 내용 조회
   const fetchData = async () => {
@@ -265,7 +277,12 @@ const ChatRoom3 = () => {
                 ) : (
                   <View>
                     {showProfileAndName && (
-                      <View style={styles.friendMessageContainer}>
+                      <TouchableOpacity
+                        style={styles.friendMessageContainer}
+                        onPress={() => {
+                          handleProfileClick(message.userId);
+                        }}
+                      >
                         <Image
                           source={{ uri: message.profile }}
                           style={styles.avatar}
@@ -273,7 +290,7 @@ const ChatRoom3 = () => {
                         <Text style={styles.friendsName}>
                           {message.nickname}
                         </Text>
-                      </View>
+                      </TouchableOpacity>
                     )}
                     <View
                       style={{ flexDirection: "row", alignItems: "flex-end" }}
@@ -315,6 +332,11 @@ const ChatRoom3 = () => {
           </View>
         </View>
       </KeyboardAvoidingView>
+      <FriendProfile
+        isOpenProfile={isOpenProfile}
+        openProfile={openProfile}
+        userId={friendId}
+      />
     </View>
   );
 };
