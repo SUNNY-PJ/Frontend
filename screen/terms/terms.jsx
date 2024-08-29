@@ -3,7 +3,6 @@ import { View, Image, Text, TouchableOpacity, ScrollView } from "react-native";
 import { styles } from "./terms.styles";
 import { useNavigation } from "@react-navigation/native";
 import { TermsData } from "../../data/termsData";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import apiClient from "../../api/apiClient";
 
 const Terms = () => {
@@ -28,6 +27,7 @@ const Terms = () => {
     }
   };
 
+  // sse response
   // event:SSE CONNECTED
   // data:"SSE 연결"
 
