@@ -9,11 +9,9 @@ import {
   Animated,
   Dimensions,
 } from "react-native";
-import { scale, verticalScale, moderateScale } from "react-native-size-matters";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TopTooltip from "./Modal/topTooltip";
 import { useSaveData } from "../context/saveDataContext";
-import StompWebSocketComponent from "../constant/socket/testSocket3";
 
 const Top = ({ navigation }) => {
   const { saveData, fetchData } = useSaveData();
