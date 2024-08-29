@@ -117,7 +117,7 @@ const ChatRoom3 = () => {
       const newClient = new Client({
         brokerURL: `ws://${DEV_SOCKET_URI}/stomp`,
         connectHeaders: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `${token}`,
         },
         debug: (str) => console.log("WebSocket debug:", str),
         reconnectDelay: 5000,
