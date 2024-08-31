@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
+  Linking,
 } from "react-native";
 import Line from "../../components/Line";
 import * as Notifications from "expo-notifications";
@@ -244,7 +245,11 @@ const MyPage = () => {
   };
 
   const handleInquireClick = () => {
-    console.log("문희하기 클릭~");
+    const url = "https://forms.gle/A6TTd13X2cEcwGpq8";
+
+    Linking.openURL(url).catch((err) =>
+      console.error("Failed to open URL:", err)
+    );
   };
 
   const handleLogoutClick = () => {
