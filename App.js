@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Notifications from "expo-notifications";
 import { Platform, Alert, ActivityIndicator } from "react-native";
 import * as Font from "expo-font";
-import Navigation from "./Navigation";
+import Navigation from "./Navigate/Navigation";
 import { jwtDecode } from "jwt-decode";
 import { proxyUrl } from "./constant/common";
 import apiClient from "./api/apiClient";
