@@ -1,11 +1,11 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import Chat from "./screen/Chat/chat";
-import Chat2 from "./screen/Chat/chat2";
-import Bottom from "./components/Bottom";
-import ChatRoom from "./screen/Chat/chatRoom";
-import ChatRoom3 from "./screen/Chat/chatRoom3";
+import Chat from "../screen/Chat/chat";
+import Chat2 from "../screen/Chat/chat2";
+import Bottom from "../components/Bottom";
+import ChatRoom from "../screen/Chat/chatRoom";
+import ChatRoom3 from "../screen/Chat/chatRoom3";
 
 const Stack = createStackNavigator();
 

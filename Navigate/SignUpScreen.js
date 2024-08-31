@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import SignUp from "./constant/SignUp";
+import SignUp from "../constant/SignUp";
 
 const Stack = createStackNavigator();
 

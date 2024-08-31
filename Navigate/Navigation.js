@@ -1,12 +1,12 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { CommunityProvider } from "./context/communityContext";
+import { CommunityProvider } from "../context/communityContext";
 import MainScreen from "./MainScreen";
 import SignUpScreen from "./SignUpScreen";
 import ChatScreen from "./ChatScreen";
 import KakaoScreen from "./KakaoScreen";
-import { SaveDataProvider } from "./context/saveDataContext";
+import { SaveDataProvider } from "../context/saveDataContext";
 
 const Stack = createStackNavigator();
 
