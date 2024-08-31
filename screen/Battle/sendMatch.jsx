@@ -107,7 +107,7 @@ function SendMatch() {
   const postData = async () => {
     try {
       const bodyData = {
-        compensation: "없음",
+        compensation: reward,
         // day: date,
         startDate: startDateVal,
         endDate: endDateVal,
