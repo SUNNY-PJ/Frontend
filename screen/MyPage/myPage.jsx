@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
-  Linking,
 } from "react-native";
 import Line from "../../components/Line";
 import * as Notifications from "expo-notifications";
@@ -60,15 +59,15 @@ const MyPage = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [alarmDataVal, setAlarmDataVal] = useState(true);
 
-  const openSettings = () => {
-    if (Platform.OS === "ios") {
-      // iOS : 앱 설정 화면으로 직접 이동
-      Linking.openURL("app-settings:");
-    } else {
-      // Android : 시스템 설정 화면
-      Linking.openSettings();
-    }
-  };
+  // const openSettings = () => {
+  //   if (Platform.OS === "ios") {
+  //     // iOS : 앱 설정 화면으로 직접 이동
+  //     Linking.openURL("app-settings:");
+  //   } else {
+  //     // Android : 시스템 설정 화면
+  //     Linking.openSettings();
+  //   }
+  // };
 
   const handleConfirm = () => {
     handleAppleCode();
