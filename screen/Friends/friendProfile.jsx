@@ -225,6 +225,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
         params: { friendsId: friendId, friendsName: friendName },
       });
     }
+    openProfile();
   };
 
   const handleBlockUser = () => {
