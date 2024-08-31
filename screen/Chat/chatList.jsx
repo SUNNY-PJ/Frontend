@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Dimensions,
+  RefreshControl,
   Alert,
 } from "react-native";
 import Line from "../../components/Line";
@@ -16,12 +17,27 @@ import useStore from "../../store/store";
 import styles from "./chatList.styles";
 import { formatTime } from "../../utils/dateUtils";
 
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
 const ChatList = () => {
   const windowHeight = Dimensions.get("window").height;
   const navigation = useNavigation();
+  const [refreshing, setRefreshing] = useState(false);
   const profile = useStore((state) => state.profile);
   const myId = profile.id;
   const [chatListData, setChatListData] = useState([]);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    wait(700).then(() => {
+      console.log(refreshing);
+      setRefreshing(false);
+      // 데이터를 새로고침
+      fetchData();
+    });
+  }, []);
 
   const truncateText = (text) => {
     const maxLength = 20;
@@ -115,7 +131,12 @@ const ChatList = () => {
       <View style={styles.section}>
         <Text style={styles.title}>채팅 목록</Text>
         <Line color={"#C1C1C1"} h={1} />
-        <ScrollView style={{ height: windowHeight - 275 }}>
+        <ScrollView
+          style={{ height: windowHeight - 275 }}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
           {chatListData.map((item, index) => (
             <>
               <Swipeable
