@@ -86,7 +86,7 @@ const ChatRoom3 = () => {
     try {
       const response = await apiClient.post(inputURL, {
         users: [myId, friendsId],
-        sendUserId: myId,
+        // sendUserId: myId,
         message: currentMessage,
       });
 
@@ -101,6 +101,7 @@ const ChatRoom3 = () => {
       ]);
       scrollToEnd();
       initializeWebSocket(response.data.chatRoomId);
+      setCurrentMessage("");
     } catch (error) {
       console.error("Error creating chat room:", error);
     }
@@ -114,7 +115,7 @@ const ChatRoom3 = () => {
       initializeWebSocket(chatRoomId);
     } else {
       // 없을 경우 채팅방 생성
-      createChatRoom();
+      // createChatRoom();
     }
   }, [chatRoomId]);
 
@@ -177,7 +178,11 @@ const ChatRoom3 = () => {
   };
 
   // 메세지 전송
-  const sendMessage = () => {
+  const sendMessage = async () => {
+    if (!roomId) {
+      await createChatRoom();
+    }
+
     if (client && client.connected && roomId) {
       client.publish({
         destination: "/pub/chat/message/room",
