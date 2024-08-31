@@ -67,7 +67,7 @@ function FriendsList() {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-      const Data = response.data.data;
+      const Data = response.data;
       console.log("친구", Data);
       const CompetitionFriendsData = Data.competitions;
       const ApproveFriendsData = Data.approveList;
@@ -304,6 +304,7 @@ function FriendsList() {
           toggleModal={() => setIsMatchModalVisible(false)}
           friendsId={battleModalContent?.userId}
           nickname={battleModalContent?.name}
+          competitionId={battleModalContent?.competitionId}
         />
       ) : (
         <></>
