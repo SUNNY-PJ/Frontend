@@ -28,9 +28,9 @@ const ChatRoom3 = () => {
   const scrollViewRef = useRef();
 
   const { chatRoomId, friendsId, friendsName } = route.params;
-  console.log("채팅방 아이디 >>", chatRoomId);
-  console.log("친구 아이디 >>", friendsId);
-  console.log("친구 이름 >>", friendsName);
+  // console.log("채팅방 아이디 >>", chatRoomId);
+  // console.log("친구 아이디 >>", friendsId);
+  // console.log("친구 이름 >>", friendsName);
 
   const profile = useStore((state) => state.profile);
   const myId = profile.id;
@@ -59,7 +59,6 @@ const ChatRoom3 = () => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
-        // params: { userId: myId },
       });
 
       const chatData = response.data;
@@ -96,7 +95,7 @@ const ChatRoom3 = () => {
           message: currentMessage,
           isMine: true,
           formattedDate: formatDate(new Date().toISOString().split("T")[0]),
-          formattedTime: formatTime(new Date().toISOString()), // Ensure time is properly formatted
+          formattedTime: formatTime(new Date().toISOString()),
         },
       ]);
       scrollToEnd();
