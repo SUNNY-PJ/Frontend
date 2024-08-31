@@ -204,7 +204,9 @@ const ChatRoom3 = () => {
     if (client) {
       client.deactivate();
     }
-    navigation.navigate("MainScreen", { screen: "ChatList" });
+    // 이전 페이지로 돌아가기
+    navigation.goBack();
+    // navigation.navigate("MainScreen", { screen: "ChatList" });
   };
 
   // 스크롤 마지막으로 이동
