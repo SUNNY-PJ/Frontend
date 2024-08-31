@@ -89,7 +89,7 @@ const ChatList = () => {
         },
         // params: { userId: myId },
       });
-      Alert.alert("삭제 되었습니다.");
+      Alert.alert("채팅방이 삭제되었습니다.");
       const chatData = response.data;
       console.log("채팅방 목록:::", chatData);
       fetchData();
