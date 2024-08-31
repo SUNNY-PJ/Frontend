@@ -111,11 +111,11 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
 
   // 친구 신청하기
   const postData = async () => {
-    const inputURL = `/friends/${friendId}`;
+    const inputURL = `/friends`;
     try {
       const response = await apiClient.post(
         inputURL,
-        {},
+        { toUserId: friendId },
         {
           headers: { "Content-Type": "application/json; charset=utf-8" },
         }
