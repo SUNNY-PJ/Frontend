@@ -262,10 +262,15 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
         </View>
         {data.map((item) => (
           <View style={styles.contentContainer} key={item.id}>
-            <View style={{ alignSelf: "center", gap: 5 }}>
+            <View style={{ gap: 5 }}>
               <Image
                 source={{ uri: item.profile }}
-                style={{ width: 92, height: 92, borderRadius: 50 }}
+                style={{
+                  width: 92,
+                  height: 92,
+                  borderRadius: 50,
+                  alignSelf: "center",
+                }}
               />
               <Text style={styles.name}>{item.name}</Text>
             </View>
