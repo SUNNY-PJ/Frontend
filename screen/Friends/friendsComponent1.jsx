@@ -55,7 +55,7 @@ const FriendsComponent1 = ({ Data, onAddFriend, onRemoveFriend }) => {
                 handleBattleStatus(
                   item.friendId,
                   item.nickname,
-                  item.competitionId
+                  item.friendCompetitionId
                 );
               }}
             >
