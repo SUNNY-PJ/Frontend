@@ -58,4 +58,4 @@ yarn-error.*
 # @end expo-cli
 
 # Ignore the common.js file in the api directory
-api/common.js
+# api/common.js
