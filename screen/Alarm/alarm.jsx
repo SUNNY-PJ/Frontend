@@ -35,6 +35,7 @@ const Alarm = () => {
   const [reportUser, setReportUser] = useState("");
   const [reportContent, setReportContent] = useState("");
   const [reportCount, setReportCount] = useState(0);
+  const [competitionId, setCompetitionId] = useState(0);
 
   console.log(reportResultVisible);
 
@@ -52,13 +53,15 @@ const Alarm = () => {
     date,
     user,
     reportContent,
-    reportCount
+    reportCount,
+    friendCompetitionId
   ) => {
     setReportReason(reason);
     setReportDate(date);
     setReportUser(user);
     setReportContent(reportContent);
     setReportCount(reportCount);
+    setCompetitionId(friendCompetitionId);
     setClickedItemIds((prevClickedItemIds) => {
       const updatedClickedItemIds = prevClickedItemIds.includes(alarmId)
         ? prevClickedItemIds.filter((id) => id !== alarmId)
@@ -190,6 +193,7 @@ const Alarm = () => {
               name: name,
               userId: userId,
               open: true,
+              competitionId: competitionId,
             },
           },
         });
@@ -288,7 +292,8 @@ const Alarm = () => {
                         item.reportCreatedAt || "",
                         item.reportUser || "",
                         item.reportContent || "",
-                        item.userReportCount || 0
+                        item.userReportCount || 0,
+                        item.friendCompetitionId || 0
                       )
                     }
                   >
@@ -355,7 +360,8 @@ const Alarm = () => {
                         item.reportCreatedAt || "",
                         item.reportUser || "",
                         item.reportContent || "",
-                        item.userReportCount || 0
+                        item.userReportCount || 0,
+                        item.friendCompetitionId || 0
                       )
                     }
                   >

@@ -22,7 +22,7 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
   const navigation = useNavigation();
   const [userId, setUserId] = useState("");
   const [friendId, setFriendId] = useState("");
-  // const [competitionId, setCompetitionId] = useState(0);
+  const [competitionId, setCompetitionId] = useState(0);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
 
   const handleProfileClick = (id) => {
@@ -83,7 +83,7 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
   ) => {
     setNickname(nickname);
     setFriendId(friendId);
-    // setCompetitionId(competitionId);
+    setCompetitionId(competitionId);
     if (competitionStatus === "RECEIVE") {
       showMatchModal();
     } else if (competitionStatus === "SEND") {
@@ -154,8 +154,8 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
                     handleBattle(
                       item.friendId,
                       item.nickname,
-                      item.competitionStatus
-                      // item.competitionId
+                      item.competitionStatus,
+                      item.friendCompetitionId
                     );
                   }}
                 >
@@ -187,7 +187,7 @@ const FriendsComponent3 = ({ Data, onRemoveFriend }) => {
         toggleModal={hideMatchModal}
         friendsId={friendId}
         nickname={nickname}
-        // competitionId={competitionId}
+        competitionId={competitionId}
       />
     </ScrollView>
   );

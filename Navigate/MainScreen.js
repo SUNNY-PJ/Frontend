@@ -8,7 +8,7 @@ import Top from "../components/Top";
 import Bottom from "../components/Bottom";
 import Login from "../screen/Login";
 import SignUp from "../constant/SignUp";
-import Kakao from "../constant/kakao";
+// import Kakao from "../constant/kakao";
 import Spending from "../screen/Statistic/spending";
 import History from "../screen/Statistic/history";
 import Community from "../screen/Community/community";

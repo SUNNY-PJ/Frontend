@@ -12,8 +12,14 @@ import MiddleBtn from "../../Btn/middleBtn";
 import MiddleBtnBlack from "../../Btn/middleBtnBlack";
 import apiClient from "../../../api/apiClient";
 
-const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
-  const inputURL = `/competition/approve/${friendsId}`;
+const MatchMsg = ({
+  isVisible,
+  toggleModal,
+  friendsId,
+  nickname,
+  competitionId,
+}) => {
+  const inputURL = `/competition/approve/${competitionId}`;
   const [matchInfo, setMatchInfo] = useState(null);
   // price 포맷 함수
   const formatPrice = (price) => {
@@ -27,9 +33,9 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
 
   // 대결 확인
   const fetchData = async () => {
-    const inputURL = `/competition/${friendsId}`;
+    const uri = `/competition/${friendsId}`;
     try {
-      const response = await apiClient.get(inputURL, {
+      const response = await apiClient.get(uri, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
@@ -37,12 +43,8 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
         //   competitionId: { competitionId },
         // },
       });
-      console.log("대결 신청 조회", response.data.data);
-      if (response.status === 200) {
-        setMatchInfo(response.data.data[0]);
-      } else {
-        console.error("에러:", error);
-      }
+      console.log("대결 신청 조회", response.data);
+      setMatchInfo(response.data[0]);
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류: competition", error.response.data);
@@ -62,7 +64,7 @@ const MatchMsg = ({ isVisible, toggleModal, friendsId, nickname }) => {
   // 대결 신청 수락
   const approveMatch = async () => {
     try {
-      const response = await apiClient.post(
+      const response = await apiClient.patch(
         inputURL,
         {},
         {

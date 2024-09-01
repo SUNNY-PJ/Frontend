@@ -20,8 +20,8 @@ const BattleStatus = () => {
 
   const formatStatusData = (data) => {
     const formattedData = { ...data };
-    const endDate = new Date(data.end_date);
-    formattedData.end_date = `${
+    const endDate = new Date(data.endDate);
+    formattedData.endDate = `${
       endDate.getMonth() + 1
     }월 ${endDate.getDate()}일`;
     return formattedData;
@@ -40,13 +40,11 @@ const BattleStatus = () => {
         },
         params: { competitionId: competitionId },
       });
-      const StatusData = response.data.data;
+      const StatusData = response.data;
       console.log("StatusData:::", StatusData);
-      if (response.status === 200) {
-        const formattedData = formatStatusData(StatusData);
-        setData(formattedData);
-        setPrice(formatPriceData(StatusData.price));
-      }
+      const formattedData = formatStatusData(StatusData);
+      setData(formattedData);
+      setPrice(formatPriceData(StatusData.price));
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류: battle status", error.response.data);
@@ -63,7 +61,7 @@ const BattleStatus = () => {
 
   // 대결 포기
   const giveUpData = async () => {
-    const url = `competition/give-up/${friendId}`;
+    const url = `competition/give-up/${competitionId}`;
     try {
       const response = await apiClient.delete(
         url,
@@ -83,10 +81,10 @@ const BattleStatus = () => {
           params: {
             friendId: friendId,
             nickname: nickname,
-            end_date: data.end_date,
+            endDate: data.endDate,
             price: data.price,
-            user_percent: data.user_percent,
-            friends_percent: data.friends_percent,
+            userPercent: data.userPercent,
+            friendsPercent: data.friendsPercent,
           },
         });
       }
@@ -130,8 +128,8 @@ const BattleStatus = () => {
           {data.compensation}
           <Text style={styles.text}>을 걸고</Text>
           {"\n"}
-          {data.end_date}
-          <Text style={styles.text}>까지</Text> {price}원{" "}
+          {data.endDate}
+          <Text style={styles.text}>까지</Text> {price}원
           <Text style={styles.text}>쓰기</Text>
         </Text>
       </View>
@@ -144,9 +142,9 @@ const BattleStatus = () => {
         <Text style={[styles.boldText2, { marginTop: 13, marginBottom: 10 }]}>
           나는
         </Text>
-        <Progress progress={data.user_percent} />
+        <Progress progress={data.userPercent} />
         <Text style={[styles.boldText2, { marginTop: 24 }]}>
-          {data.user_percent}% <Text style={[styles.text]}>남았어요</Text>
+          {data.userPercent}% <Text style={[styles.text]}>남았어요</Text>
         </Text>
         <Image
           source={require("../../assets/VSIcon.png")}
@@ -155,9 +153,9 @@ const BattleStatus = () => {
         <Text style={[styles.boldText2, { marginBottom: 10, marginTop: 28 }]}>
           {nickname}님은
         </Text>
-        <Progress progress={data.friends_percent} />
+        <Progress progress={data.friendsPercent} />
         <Text style={[styles.boldText2, { marginTop: 24 }]}>
-          {data.friends_percent}%
+          {data.friendsPercent}%
           <Text style={[styles.text, { color: "#1F1F1F" }]}>남았어요</Text>
         </Text>
         <TouchableOpacity onPress={handleGiveUp}>

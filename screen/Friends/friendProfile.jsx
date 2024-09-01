@@ -53,12 +53,10 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
       if (response.status === 200) {
         const profileData = response.data;
 
-        const chatExists =
-          Array.isArray(profileData.chatRoomId) &&
-          profileData.chatRoomId.length > 0;
+        const chatExists = profileData.chatRoomId !== 0;
 
         setChatExists(chatExists);
-        setChatRoomId(profileData.chatRoomId[0]);
+        setChatRoomId(profileData.chatRoomId);
         setUserFriendId(profileData.friendId);
         setFriendId(profileData.id);
         setFriendName(profileData.name);
@@ -111,11 +109,11 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
 
   // 친구 신청하기
   const postData = async () => {
-    const inputURL = `/friends/${friendId}`;
+    const inputURL = `/friends`;
     try {
       const response = await apiClient.post(
         inputURL,
-        {},
+        { toUserId: friendId },
         {
           headers: { "Content-Type": "application/json; charset=utf-8" },
         }

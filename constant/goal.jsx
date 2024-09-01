@@ -93,8 +93,8 @@ function Goal({ navigation }) {
   const postData = async () => {
     try {
       const bodyData = {
-        start_date: startDateVal,
-        end_date: endDateVal,
+        startDate: startDateVal,
+        endDate: endDateVal,
         cost: cost.replace(/,/g, ""),
       };
 
@@ -171,8 +171,8 @@ function Goal({ navigation }) {
       );
 
       const bodyData = {
-        start_date: formattedStartDateVal,
-        end_date: formattedEndDateVal,
+        startDate: formattedStartDateVal,
+        endDate: formattedEndDateVal,
         cost: cost.replace(/,/g, ""),
       };
 

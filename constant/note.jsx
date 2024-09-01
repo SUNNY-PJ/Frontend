@@ -127,7 +127,7 @@ const Note = () => {
   const postData = async () => {
     try {
       const bodyData = {
-        date_field: date,
+        dateField: date,
         money: moneyNumeric,
         name: name,
         category: place,
@@ -163,7 +163,7 @@ const Note = () => {
     const url = `/consumption/${consumptionId}`;
     try {
       const bodyData = {
-        date_field: date,
+        dateField: date,
         money: moneyNumeric,
         name: name,
         category: place,

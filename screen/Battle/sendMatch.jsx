@@ -104,6 +104,7 @@ function SendMatch() {
     }
   }, [message, money, startDate, endDate, reward]);
 
+  // 대결 신청
   const postData = async () => {
     try {
       const bodyData = {
@@ -120,18 +121,8 @@ function SendMatch() {
           "Content-Type": "application/json; charset=utf-8",
         },
       });
-      console.log(response.data);
-      if (response.status === 200) {
-        if (response.data.status === 400) {
-          Alert.alert(
-            "error",
-            `서버 장애가 발생했습니다.\n관리자에게 문의 바랍니다.`
-          );
-        } else {
-          Alert.alert("", `${name}에게 대결 신청을 했습니다.`);
-          navigation.navigate("MainScreen", { screen: "FriendsList" });
-        }
-      }
+      Alert.alert("", `${name}에게 대결 신청을 했습니다.`);
+      navigation.navigate("MainScreen", { screen: "FriendsList" });
     } catch (error) {
       if (error.response) {
         console.error("서버 응답 오류: send match msg", error.response.data);

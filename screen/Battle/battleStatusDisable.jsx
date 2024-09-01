@@ -11,10 +11,10 @@ const BattleStatusDisable = () => {
   const route = useRoute();
   const { friendId } = route.params;
   const { nickname } = route.params;
-  const { end_date } = route.params;
+  const { endDate } = route.params;
   const { price } = route.params;
-  const { user_percent } = route.params;
-  const { friends_percent } = route.params;
+  const { userPercent } = route.params;
+  const { friendsPercent } = route.params;
 
   const handleGoBack = () => {
     navigation.navigate("MainScreen", { screen: "FriendsList" });
@@ -26,8 +26,7 @@ const BattleStatusDisable = () => {
         <Text style={[styles.boldText, { textAlign: "center", marginTop: 30 }]}>
           {data.compensation}
           <Text style={styles.text}>을 걸고</Text>
-          {"\n"}
-          {end_date}
+          {endDate}
           <Text style={styles.text}>까지</Text> {price}원{" "}
           <Text style={styles.text}>쓰기</Text>
         </Text>
@@ -43,9 +42,9 @@ const BattleStatusDisable = () => {
         <Text style={[styles.boldText, { marginTop: 13, marginBottom: 10 }]}>
           나는
         </Text>
-        <Progress progress={user_percent} color={"#C1C1C1"} />
+        <Progress progress={userPercent} color={"#C1C1C1"} />
         <Text style={[styles.boldText]}>
-          {user_percent}%
+          {userPercent}%
           <Text style={[styles.text, { color: "#C1C1C1" }]}>남았어요</Text>
         </Text>
         <Image
@@ -55,9 +54,9 @@ const BattleStatusDisable = () => {
         <Text style={[styles.boldText, { marginBottom: 10 }]}>
           {nickname}님은
         </Text>
-        <Progress progress={friends_percent} color={"#C1C1C1"} />
+        <Progress progress={friendsPercent} color={"#C1C1C1"} />
         <Text style={[styles.boldText]}>
-          {friends_percent}% <Text style={styles.text}>남았어요</Text>
+          {friendsPercent}% <Text style={styles.text}>남았어요</Text>
         </Text>
         <TouchableOpacity onPress={handleGoBack}>
           <Text
