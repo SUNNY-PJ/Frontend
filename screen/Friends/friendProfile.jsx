@@ -71,13 +71,13 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
 
   const getStatusLabel = (statusData) => {
     switch (statusData) {
-      case "RECEIVE":
+      case "WAIT":
         return "친구수락";
       case "FRIEND":
         return "친구끊기";
       case "NONE":
         return "친구맺기";
-      case "WAIT":
+      case "SEND":
         return "대기중";
       default:
         return "";
