@@ -85,7 +85,6 @@ const ChatRoom3 = () => {
     try {
       const response = await apiClient.post(inputURL, {
         users: [myId, friendsId],
-        // sendUserId: myId,
         message: currentMessage,
       });
 
@@ -112,11 +111,18 @@ const ChatRoom3 = () => {
       // 기존 데이터 세팅 후 소켓 연결
       fetchData();
       initializeWebSocket(chatRoomId);
-    } else {
-      // 없을 경우 채팅방 생성
-      // createChatRoom();
     }
   }, [chatRoomId]);
+
+  useEffect(() => {
+    return () => {
+      // 컴포넌트가 언마운트될 때 소켓 연결 해제
+      if (client) {
+        client.deactivate();
+        console.log("WebSocket connection closed");
+      }
+    };
+  }, [client]);
 
   // 소켓 연결
   const initializeWebSocket = async (chatRoomId) => {
@@ -206,7 +212,6 @@ const ChatRoom3 = () => {
     }
     // 이전 페이지로 돌아가기
     navigation.goBack();
-    // navigation.navigate("MainScreen", { screen: "ChatList" });
   };
 
   // 스크롤 마지막으로 이동
