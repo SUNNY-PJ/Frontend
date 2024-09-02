@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -10,7 +10,7 @@ import {
   Alert,
 } from "react-native";
 import Line from "../../components/Line";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import apiClient from "../../api/apiClient";
 import useStore from "../../store/store";
@@ -29,12 +29,10 @@ const ChatList = () => {
   const myId = profile.id;
   const [chatListData, setChatListData] = useState([]);
 
-  const onRefresh = React.useCallback(() => {
+  const onRefresh = useCallback(() => {
     setRefreshing(true);
     wait(700).then(() => {
-      console.log(refreshing);
       setRefreshing(false);
-      // 데이터를 새로고침
       fetchData();
     });
   }, []);
@@ -63,20 +61,20 @@ const ChatList = () => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
-        // params: { userId: myId },
       });
 
       const chatListData = response.data;
       setChatListData(chatListData);
-      console.log("채팅방 목록:::", chatListData);
     } catch (error) {
       console.error("에러:", error);
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
 
   // 채팅방 삭제
   const deleteData = async (chatRoomId) => {
@@ -87,11 +85,8 @@ const ChatList = () => {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
         },
-        // params: { userId: myId },
       });
       Alert.alert("채팅방이 삭제되었습니다.");
-      const chatData = response.data;
-      console.log("채팅방 목록:::", chatData);
       fetchData();
     } catch (error) {
       console.error("에러:", error);
@@ -138,9 +133,8 @@ const ChatList = () => {
           }
         >
           {chatListData.map((item, index) => (
-            <>
+            <React.Fragment key={index}>
               <Swipeable
-                key={index}
                 renderRightActions={() => renderRightActions(item.chatRoomId)}
               >
                 <TouchableOpacity
@@ -168,7 +162,7 @@ const ChatList = () => {
                 </TouchableOpacity>
               </Swipeable>
               <Line color={"#C1C1C1"} h={1} />
-            </>
+            </React.Fragment>
           ))}
         </ScrollView>
       </View>
