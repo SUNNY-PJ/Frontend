@@ -28,9 +28,6 @@ const ChatRoom3 = () => {
   const scrollViewRef = useRef();
 
   const { chatRoomId, friendsId, friendsName } = route.params;
-  // console.log("채팅방 아이디 >>", chatRoomId);
-  // console.log("친구 아이디 >>", friendsId);
-  // console.log("친구 이름 >>", friendsName);
 
   const profile = useStore((state) => state.profile);
   const myId = profile.id;
@@ -62,7 +59,6 @@ const ChatRoom3 = () => {
       });
 
       const chatData = response.data;
-      console.log("chatData", chatData);
       const updatedChatData = chatData.flatMap((group) => {
         const formattedDate = formatDate(group.createDate);
         return group.messages.map((message) => ({
@@ -70,9 +66,9 @@ const ChatRoom3 = () => {
           isMine: message.userId === myId,
           formattedDate,
           formattedTime: formatTime(`2024-08-04T${message.time}:00`),
+          showDate: true, // 날짜를 보여줄지 여부를 명시적으로 추가
         }));
       });
-      console.log("updatedChatData", updatedChatData);
 
       setReceivedMessages(updatedChatData);
       scrollToEnd();
@@ -97,6 +93,7 @@ const ChatRoom3 = () => {
           isMine: true,
           formattedDate: formatDate(new Date().toISOString().split("T")[0]),
           formattedTime: formatTime(new Date().toISOString()),
+          showDate: true,
         },
       ]);
       scrollToEnd();
@@ -108,7 +105,7 @@ const ChatRoom3 = () => {
   };
 
   useEffect(() => {
-    // 채팅방id가 있을 경우
+    // 채팅방 ID가 있을 경우
     if (chatRoomId) {
       // 기존 데이터 세팅 후 소켓 연결
       fetchData();
@@ -122,7 +119,6 @@ const ChatRoom3 = () => {
       if (client) {
         client.deactivate();
         console.log("WebSocket connection closed");
-        console.log("WebSocket 연결 해제 :::");
       }
     };
   }, [client]);
@@ -153,10 +149,8 @@ const ChatRoom3 = () => {
                   {
                     ...parsedMessage,
                     isMine: parsedMessage.userId === myId,
-                    formattedDate: formatDate(
-                      new Date().toISOString().split("T")[0]
-                    ),
                     formattedTime: formatTime(new Date().toISOString()),
+                    showDate: false, // 소켓으로 받은 메시지의 경우 날짜를 표시하지 않도록 설정
                   },
                 ]);
                 scrollToEnd();
@@ -269,9 +263,10 @@ const ChatRoom3 = () => {
               receivedMessages[index - 1].userId !== message.userId;
 
             const showDate =
-              index === 0 ||
-              receivedMessages[index - 1].formattedDate !==
-                message.formattedDate;
+              message.showDate &&
+              (index === 0 ||
+                receivedMessages[index - 1].formattedDate !==
+                  message.formattedDate);
 
             return (
               <View key={index} style={styles.messageContainer}>
@@ -283,9 +278,6 @@ const ChatRoom3 = () => {
                 {message.isMine ? (
                   <View style={{ alignItems: "flex-end" }}>
                     <View style={{ flexDirection: "row", gap: 5 }}>
-                      {/* <Text style={[styles.time]}>
-                        {message.notReadCnt} {message.formattedTime}
-                      </Text> */}
                       <View style={{ alignSelf: "flex-end", gap: 4 }}>
                         <Text style={styles.notReadCnt}>
                           {message.notReadCnt === 2 ? 1 : null}
