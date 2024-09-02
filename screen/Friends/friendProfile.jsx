@@ -52,6 +52,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
 
       if (response.status === 200) {
         const profileData = response.data;
+        console.log("친구 상태", profileData.friendStatus);
 
         const chatExists = profileData.chatRoomId !== 0;
 
@@ -76,7 +77,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
         return "친구끊기";
       case "NONE":
         return "친구맺기";
-      case "SEND":
+      case "WAIT":
         return "대기중";
       default:
         return "";
@@ -118,7 +119,7 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
           headers: { "Content-Type": "application/json; charset=utf-8" },
         }
       );
-
+      console.log("친구 신청 :::", response.status);
       handlePostResponse(response);
     } catch (error) {
       handleErrorResponse(error);
@@ -126,18 +127,11 @@ const FriendProfile = ({ openProfile, isOpenProfile, userId }) => {
   };
 
   const handlePostResponse = (response) => {
-    if (response.status === 200) {
-      if (response.data.status === 400) {
-        showAlert(
-          "error",
-          "서버 장애가 발생했습니다. 관리자에게 문의 바랍니다."
-        );
-      } else if (response.data.status === 500) {
-        showAlert("", "이미 친구 신청을 했습니다.");
-      } else {
-        showAlert("", `${friendName}에게 친구 신청을 했습니다.`);
-        fetchData();
-      }
+    if (response.status === 204) {
+      showAlert("", `${friendName}에게 친구 신청을 했습니다.`);
+      fetchData();
+    } else {
+      showAlert("", `이미 친구 신청을 한 사용자입니다.`);
     }
   };
 
