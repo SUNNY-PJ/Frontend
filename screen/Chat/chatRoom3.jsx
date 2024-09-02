@@ -62,6 +62,7 @@ const ChatRoom3 = () => {
       });
 
       const chatData = response.data;
+      console.log("chatData", chatData);
       const updatedChatData = chatData.flatMap((group) => {
         const formattedDate = formatDate(group.createDate);
         return group.messages.map((message) => ({
@@ -71,6 +72,7 @@ const ChatRoom3 = () => {
           formattedTime: formatTime(`2024-08-04T${message.time}:00`),
         }));
       });
+      console.log("updatedChatData", updatedChatData);
 
       setReceivedMessages(updatedChatData);
       scrollToEnd();
@@ -120,6 +122,7 @@ const ChatRoom3 = () => {
       if (client) {
         client.deactivate();
         console.log("WebSocket connection closed");
+        console.log("WebSocket 연결 해제 :::");
       }
     };
   }, [client]);
@@ -209,6 +212,7 @@ const ChatRoom3 = () => {
     // 소켓 연결 끊음
     if (client) {
       client.deactivate();
+      console.log("WebSocket 연결 해제 :::");
     }
     // 이전 페이지로 돌아가기
     navigation.goBack();
@@ -279,7 +283,15 @@ const ChatRoom3 = () => {
                 {message.isMine ? (
                   <View style={{ alignItems: "flex-end" }}>
                     <View style={{ flexDirection: "row", gap: 5 }}>
-                      <Text style={[styles.time]}>{message.formattedTime}</Text>
+                      {/* <Text style={[styles.time]}>
+                        {message.notReadCnt} {message.formattedTime}
+                      </Text> */}
+                      <View style={{ alignSelf: "flex-end", gap: 4 }}>
+                        <Text style={styles.notReadCnt}>
+                          {message.notReadCnt === 2 ? 1 : null}
+                        </Text>
+                        <Text style={styles.time}>{message.formattedTime}</Text>
+                      </View>
                       <View style={styles.message}>
                         <Text style={styles.msgText}>{message.message}</Text>
                       </View>

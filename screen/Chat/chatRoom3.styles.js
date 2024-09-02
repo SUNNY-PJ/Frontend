@@ -70,6 +70,13 @@ export default StyleSheet.create({
     color: "#C1C1C1",
     alignSelf: "flex-end",
   },
+  notReadCnt: {
+    fontSize: 12,
+    fontWeight: 500,
+    fontFamily: "SUITE_Medium",
+    color: "#007560",
+    alignSelf: "flex-end",
+  },
   inputSection: {
     paddingLeft: 22,
     paddingRight: 22,
