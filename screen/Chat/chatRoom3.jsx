@@ -38,6 +38,9 @@ const ChatRoom3 = () => {
   const [roomId, setRoomId] = useState(chatRoomId);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const [friendId, setFriendId] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [oldestMessageId, setOldestMessageId] = useState(null);
+  const [hasMoreMessages, setHasMoreMessages] = useState(true); // 더 불러올 메시지가 있는지 확인하는 상태
 
   const handleProfileClick = (id) => {
     setFriendId(id);
@@ -48,15 +51,23 @@ const ChatRoom3 = () => {
     setIsOpenProfile(!isOpenProfile);
   };
 
-  // 대화 내용 조회
-  const fetchData = async () => {
+  // 대화 내용 조회 (최신 또는 이전 메시지)
+  const fetchData = async (loadMore = false) => {
+    if (!hasMoreMessages || loading) return; // 불러올 메시지가 없거나 로딩 중일 경우 중복 호출 방지
+    setLoading(true);
+
     const inputURL = `/chat/${roomId}`;
+    const params = { size: 30 };
+
+    if (loadMore && oldestMessageId) {
+      params.chatMessageId = oldestMessageId; // 이전 메시지를 불러오기 위해 가장 오래된 메시지 ID를 파라미터로 보냄
+    }
+
     try {
-      const response = await apiClient.get(inputURL, {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-      });
+      const previousScrollHeight =
+        scrollViewRef.current?.contentSize?.height || 0;
+
+      const response = await apiClient.get(inputURL, { params });
 
       const chatData = response.data;
       const updatedChatData = chatData.flatMap((group) => {
@@ -66,14 +77,37 @@ const ChatRoom3 = () => {
           isMine: message.userId === myId,
           formattedDate,
           formattedTime: formatTime(`2024-08-04T${message.time}:00`),
-          showDate: true, // 날짜를 보여줄지 여부를 명시적으로 추가
+          showDate: true,
         }));
       });
 
-      setReceivedMessages(updatedChatData);
-      scrollToEnd();
+      if (updatedChatData.length > 0) {
+        if (loadMore) {
+          setReceivedMessages((prevMessages) => [
+            ...updatedChatData,
+            ...prevMessages,
+          ]);
+          setOldestMessageId(updatedChatData[0].id);
+
+          // 스크롤 위치 조정
+          const newScrollHeight =
+            scrollViewRef.current?.contentSize?.height || 0;
+          const scrollHeightDifference = newScrollHeight - previousScrollHeight;
+          scrollViewRef.current?.scrollTo({
+            y: scrollHeightDifference,
+            animated: false,
+          });
+        } else {
+          setReceivedMessages(updatedChatData);
+          scrollToEnd(); // 최신 메시지를 불러온 후에만 스크롤을 끝으로 이동
+        }
+      } else {
+        setHasMoreMessages(false); // 더 이상 불러올 메시지가 없을 경우
+      }
     } catch (error) {
       console.error("Error fetching chat data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -108,7 +142,7 @@ const ChatRoom3 = () => {
     // 채팅방 ID가 있을 경우
     if (chatRoomId) {
       // 기존 데이터 세팅 후 소켓 연결
-      fetchData();
+      fetchData(); // 최신 메시지를 불러옴
       initializeWebSocket(chatRoomId);
     }
   }, [chatRoomId]);
@@ -219,6 +253,14 @@ const ChatRoom3 = () => {
     }, 100);
   };
 
+  // 스크롤 업 이벤트 처리
+  const handleScroll = ({ nativeEvent }) => {
+    if (nativeEvent.contentOffset.y <= 0 && hasMoreMessages && !loading) {
+      // 스크롤이 상단에 도달했고, 더 불러올 메시지가 있으며, 현재 로딩 중이 아닌 경우
+      fetchData(true); // 이전 메시지를 불러옴
+    }
+  };
+
   useEffect(() => {
     const showSubscription = Keyboard.addListener(
       "keyboardDidShow",
@@ -234,10 +276,6 @@ const ChatRoom3 = () => {
       hideSubscription.remove();
     };
   }, []);
-
-  useEffect(() => {
-    scrollToEnd();
-  }, [receivedMessages]);
 
   return (
     <View style={styles.container}>
@@ -256,6 +294,8 @@ const ChatRoom3 = () => {
           style={[styles.messagesContainer]}
           ref={scrollViewRef}
           contentContainerStyle={{ paddingBottom: 70 }}
+          onScroll={handleScroll} // 스크롤 업 이벤트 핸들러 추가
+          scrollEventThrottle={16}
         >
           {receivedMessages.map((message, index) => {
             const showProfileAndName =
