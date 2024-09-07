@@ -44,11 +44,12 @@ const ChatList = () => {
       : text;
   };
 
-  const handleChatRoomClick = (chatRoomId) => {
+  const handleChatRoomClick = (chatRoomId, chatMessageId) => {
     console.log(`채팅방으로 이동합니다... ID: ${chatRoomId}`);
+    console.log(`마지막 채팅 아이디... ID: ${chatMessageId}`);
     navigation.navigate("ChatScreen", {
       screen: "ChatRoom3",
-      params: { chatRoomId: chatRoomId },
+      params: { chatRoomId: chatRoomId, chatMessageId: chatMessageId },
     });
   };
 
@@ -140,7 +141,9 @@ const ChatList = () => {
                 <TouchableOpacity
                   activeOpacity={1}
                   style={styles.chatSection}
-                  onPress={() => handleChatRoomClick(item.chatRoomId)}
+                  onPress={() =>
+                    handleChatRoomClick(item.chatRoomId, item.chatMessageId)
+                  }
                 >
                   <View style={{ flexDirection: "row", gap: 13 }}>
                     <Image source={{ uri: item.profile }} style={styles.icon} />

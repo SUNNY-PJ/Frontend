@@ -27,7 +27,7 @@ const ChatRoom3 = () => {
   const route = useRoute();
   const scrollViewRef = useRef();
 
-  const { chatRoomId, friendsId, friendsName } = route.params;
+  const { chatRoomId, friendsId, friendsName, chatMessageId } = route.params;
 
   const profile = useStore((state) => state.profile);
   const myId = profile.id;
