@@ -25,6 +25,11 @@ export const formatTime = (timeString) => {
   return format(date, "HH:mm", { locale: ko });
 };
 
+/**
+ *
+ * @param {*} dateString - 포맷할 시간 문자열 YYYY-MM-DD
+ * @returns - 포맷된 시간 문자열 YYYY.MM.DD
+ */
 export const formatStringDate = (dateString) => {
   const [year, month, day] = dateString.split("-");
   return `${year}.${month}.${day}`;
