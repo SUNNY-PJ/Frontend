@@ -1,22 +1,14 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, Button, Platform } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import apiClient from "../../api/apiClient";
+import { formatStringDate } from "../../utils/dateUtils";
 
 const CalendarComponent = ({ onDataFetched, markedDates }) => {
-  const [selected, setSelected] = useState("");
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState(
     currentDate.toISOString().split("T")[0]
   );
-
-  const formatDate = (dateString) => {
-    const [year, month, day] = dateString.split("-");
-    return `${year}.${month}.${day}`;
-  };
-
-  // console.log("1212", selected);
-  // console.log("3434", selectedDate);
 
   // 한국어 설정
   LocaleConfig.locales["kr"] = {
@@ -129,9 +121,8 @@ const CalendarComponent = ({ onDataFetched, markedDates }) => {
         textDayHeaderFontSize: 16,
       }}
       onDayPress={(day) => {
-        const formattedDate = formatDate(day.dateString);
+        const formattedDate = formatStringDate(day.dateString);
         // setSelected(day.dateString);
-        setSelected(formattedDate);
         // fetchData(day.dateString);
         fetchData(formattedDate);
         setSelectedDate(day.dateString);

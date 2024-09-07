@@ -24,3 +24,8 @@ export const formatTime = (timeString) => {
   const date = new Date(timeString);
   return format(date, "HH:mm", { locale: ko });
 };
+
+export const formatStringDate = (dateString) => {
+  const [year, month, day] = dateString.split("-");
+  return `${year}.${month}.${day}`;
+};
