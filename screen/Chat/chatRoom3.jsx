@@ -53,20 +53,23 @@ const ChatRoom3 = () => {
 
   // 대화 내용 조회 (최신 또는 이전 메시지)
   const fetchData = async (loadMore = false) => {
-    if (!hasMoreMessages || loading) return; // 불러올 메시지가 없거나 로딩 중일 경우 중복 호출 방지
+    if (!hasMoreMessages || loading) return;
     setLoading(true);
 
     const inputURL = `/chat/${roomId}`;
-    const params = { size: 30 };
+    const params = { size: 50 };
 
+    // 이전 메시지를 불러오는 경우, 가장 오래된 메시지 ID를 사용
     if (loadMore && oldestMessageId) {
-      params.chatMessageId = oldestMessageId; // 이전 메시지를 불러오기 위해 가장 오래된 메시지 ID를 파라미터로 보냄
+      params.chatMessageId = oldestMessageId;
+    } else if (!loadMore && chatMessageId) {
+      // 처음 로딩 시 chatMessageId가 있을 경우, 이를 기준으로 메시지 불러오기
+      params.chatMessageId = chatMessageId;
     }
 
     try {
       const previousScrollHeight =
         scrollViewRef.current?.contentSize?.height || 0;
-
       const response = await apiClient.get(inputURL, { params });
 
       const chatData = response.data;
@@ -99,10 +102,10 @@ const ChatRoom3 = () => {
           });
         } else {
           setReceivedMessages(updatedChatData);
-          scrollToEnd(); // 최신 메시지를 불러온 후에만 스크롤을 끝으로 이동
+          scrollToEnd();
         }
       } else {
-        setHasMoreMessages(false); // 더 이상 불러올 메시지가 없을 경우
+        setHasMoreMessages(false);
       }
     } catch (error) {
       console.error("Error fetching chat data:", error);
@@ -139,13 +142,16 @@ const ChatRoom3 = () => {
   };
 
   useEffect(() => {
-    // 채팅방 ID가 있을 경우
     if (chatRoomId) {
-      // 기존 데이터 세팅 후 소켓 연결
-      fetchData(); // 최신 메시지를 불러옴
+      // chatMessageId가 존재하는 경우, 이전 메시지를 불러오는 방식으로 데이터를 가져옴
+      if (chatMessageId) {
+        fetchData(true); // loadMore를 true로 설정해서 이전 메시지를 불러옴
+      } else {
+        fetchData(); // chatMessageId가 없으면 최신 메시지를 불러옴
+      }
       initializeWebSocket(chatRoomId);
     }
-  }, [chatRoomId]);
+  }, [chatRoomId, chatMessageId]);
 
   useEffect(() => {
     return () => {
