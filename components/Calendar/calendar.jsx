@@ -136,6 +136,25 @@ const CalendarComponent = ({ onDataFetched, markedDates }) => {
         fetchData(formattedDate);
         setSelectedDate(day.dateString);
       }}
+      // dayComponent={({ date, state }) => {
+      //   return (
+      //     <View>
+      //       <Text
+      //         style={{
+      //           textAlign: "center",
+      //           color: state === "disabled" ? "#b6c1cd" : "black",
+      //           marginTop: 10,
+      //         }}
+      //       >
+      //         {date.day}
+      //       </Text>
+      //       {/* 날짜 아래에 추가할 텍스트 */}
+      //       <Text style={{ fontSize: 10, textAlign: "center", color: "red" }}>
+      //         {date.day === 15 ? "특별한 날" : ""}
+      //       </Text>
+      //     </View>
+      //   );
+      // }}
       markedDates={{
         ...markedDates,
         [selectedDate]: {
@@ -186,6 +205,14 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderColor: "#E9E9E9",
     paddingBottom: 30,
+  },
+  dayText: {
+    textAlign: "center",
+  },
+  customText: {
+    textAlign: "center",
+    fontSize: 12,
+    color: "red",
   },
 });
 
