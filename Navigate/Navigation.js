@@ -9,6 +9,7 @@ import KakaoScreen from "./KakaoScreen";
 import { SaveDataProvider } from "../context/saveDataContext";
 
 const Stack = createStackNavigator();
+// route 경로는 name임.
 
 // function Navigation({ isSignedIn }) {
 function Navigation() {
