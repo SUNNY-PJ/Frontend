@@ -259,6 +259,12 @@ const ChatRoom3 = () => {
     }, 100);
   };
 
+  useEffect(() => {
+    if (receivedMessages.length > 0) {
+      scrollToEnd();
+    }
+  }, [receivedMessages]);
+
   // 스크롤 업 이벤트 처리
   const handleScroll = ({ nativeEvent }) => {
     if (nativeEvent.contentOffset.y <= 0 && hasMoreMessages && !loading) {
