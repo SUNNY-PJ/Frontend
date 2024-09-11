@@ -23,8 +23,6 @@ import Post from "../screen/Community/post";
 import Modify from "../screen/Community/modify";
 import Detail from "../screen/Community/detail";
 import Goal from "../constant/goal";
-import Chat from "../screen/Chat/chat";
-import Chat2 from "../screen/Chat/chat2";
 import FriendWrite from "../screen/Friends/friendWrite";
 import FriendComment from "../screen/Friends/friendComment";
 import ChatList from "../screen/Chat/chatList";
