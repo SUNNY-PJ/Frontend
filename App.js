@@ -185,7 +185,6 @@ export default function App() {
       if (error.response) {
         // 서버가 응답을 했지만 상태 코드가 2xx 범위가 아닌 경우
         console.error("Response data:", error.response.data);
-        console.error("Response status:", error.response.status);
         console.error("Response headers:", error.response.headers);
       } else if (error.request) {
         // 요청이 만들어졌으나 응답을 받지 못한 경우
